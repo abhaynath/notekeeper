@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <!--<link rel="stylesheet" type="text/css" href="google-code-prettify/skins/sons-of-obsidian.css">-->
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+    <title>TypeScript tutorials</title>
+
+</head>
+
+<body>
+    <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../ts/ts_index.html">TypeScript</a>
+
+    </nav>
+    <div class="content">
+
+        <h3>TypeScript Setup</h3>
+
+        <ol class="steps">
+            <li>Create an empty directory called 'sample'.</li>
+            <li> Run following command to create 'package.json'.
+                <pre>npm init -y</pre>
+
+            </li>
+            <li>Run following command to create 'tsconfig.json'
+                <pre>tsc --init</pre>
+                To enable source map, uncomment "sourceMap": true," line
+            </li>
+            <li> We need to add 'ts-loader' as develpment dependency.
+
+                <pre>npm install --save-dev ts-loader</pre>
+
+                this will add following entry in package.json
+
+                <pre>
+    "devDependencies": 
+    {
+        "ts-loader": "^6.0.4"
+    }
+</pre>
+            </li>
+            <li>Create a directory 'src' in 'sample' folder. This folder will contain all the typescript source files.
+            </li>
+            <li>create 'index.ts' file in src folder. Add following code snippet in the file.
+
+                <pre class="prettyprint">
+
+    class Person {
+        constructor(private name: string) {
+
+        }
+        show() {
+            console.log("My name is " + this.name);
+        }
+    }
+    var abhay = new Person("Abhay");
+    abhay.show();
+            
+    </pre>
+            </li>
+            <li>Create 'webpack.config.js' in 'sample' folder. Add follwing configuration in the file.
+
+                <pre class="prettyprint">
+                const path = require('path');
+            
+                module.exports = {
+                    mode: 'development',
+                    entry: './src/index.ts',
+                    devtool: 'inline-source-map',
+                    module: {
+                        rules: [{
+                            test: /\.tsx?$/,
+                            use: 'ts-loader',
+                            exclude: /node_modules/
+                        }]
+                    },
+                    resolve: {
+                        extensions: ['.tsx', '.ts', '.js']
+                    },
+                    output: {
+                        filename: 'bundle.js',
+                        path: path.resolve(__dirname, 'dist')
+                    }
+                };
+            </pre>
+            </li>
+            <li>Make sure you have webpack and typescript installed globally. If not, run following commands.
+
+                <pre>
+    npm intall -g webpack --verbose
+    npm install -g typescript --verbose
+</pre>
+            </li>
+            <li>Webpack needs typescript module to transpile files.
+                We need to link global typescript module to this project. To do that, run following command,
+
+                <pre>npm link typescript</pre>
+            </li>
+            <li>Now you can run 'webpack' command to build the project.
+                <pre>d:\sample\webpack</pre>
+
+
+                this will create 'dist' folder in sample directory.
+            </li>
+            <li>Suppose, we want to just test class/function without transpiling entire source, we can install ts-node
+                globally.
+                ts-node will execute typescript source directly.
+
+                <pre>d:\sample\ts-node src/index.ts</pre>
+            </li>
+            <li>If you want to use jquery,
+                <pre>npm install --save-dev @types/jquery</pre>
+            </li>
+            <li>
+                <h4>Unit Testing</h4>
+                Create new directory 'tests' in root folder
+                Create a new test file called 'Calculator.test.ts'
+
+
+                <pre class="prettyprint">
+    import Calculator from '../src/Calculator';
+
+    describe('calculate', function () {
+        it('add', function () {
+            let result = Calculator.Sum(5, 2);
+            expect(result).toBe(6);
+        });
+    });
+
+    /* In src / Calculator.ts add following code, */
+
+    export default class calculator {
+        static Sum(a: number, b: number): number {
+            let c = a + b;
+            return c;
+        }
+
+        static Difference(a: number, b: number): number {
+            let c = a - b;
+            return c;
+        }
+    }
+
+        </pre>
+
+                <pre>
+        npm i -D jasmine jasmine-ts nyc ts-node typescript
+
+        npm i -D @types/jasmine
+
+</pre>
+
+
+
+
+                In package.json add following configuration
+
+                <pre class="prettyprint">
+"scripts": {
+    "test": "jasmine-ts --config=jasmine.json",
+        "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" jasmine-ts --config=jasmine.json && nyc report"
+}
+
+        </pre>
+
+
+                Add jasmine.json at root directory
+                <pre>
+        {
+            "spec_dir": "tests",
+            "spec_files": ["**/*[tT]est.ts"]
+        }
+    
+</pre>
+            </li>
+
+
+        </ol>
+
+
+
+    </div>
+
+
+
+</body>
+
+<script>
+    PR.prettyPrint();
+</script>
+
+</html>
