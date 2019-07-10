@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Code Snippet</title>
+  <!--  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>-->
+  <link rel="stylesheet" type="text/css" href="google-code-prettify/prettify.css">
+  <!--<link rel="stylesheet" type="text/css" href="google-code-prettify/skins/sons-of-obsidian.css">-->
+  <script type="text/javascript" src="google-code-prettify/prettify.js"></script>
+</head>
+
+<body>
+  <pre class="prettyprint linenums">class Voila {
+        public:
+          // Voila
+          static const string VOILA = "Voila";
+        
+          // will not interfere with embedded <a href="#voila2">tags</a>.
+        }</pre>
+
+
+  <h2>Another piece of code</h2>
+  <pre class="prettyprint">
+    var http = require("http");
+    var server = http.createServer(function (request, response) {
+        if (request.method === "POST") {
+            var body = "";
+            request.on("data", function (data) {
+                body += data.toString();
+            });
+            request.on("end", function () {
+                var jsonRequest = {};
+                var jsonResponse = {};
+                try {
+                    jsonRequest = JSON.parse(body);
+                    jsonResponse = getReponse(request.url, jsonRequest);
+    
+                } catch (e) {
+                    jsonResponse = {
+                        data: {},
+                        message: "Invalid request string",
+                        success: false
+                    };
+    
+                }
+                var strResponse = JSON.stringify(jsonResponse);
+                response.writeHead(200, {
+                    "Content-Type": "application/json",
+                    "Content-Length": strResponse.length
+                });
+                response.end(strResponse);
+    
+            });
+    
+    
+        } else {
+          
+            response.writeHead(200, {
+                "Content-Type": "text/html",
+                "Content-Length": defaultPage.length
+            });
+            response.end(defaultPage);
+        }
+    
+    });
+        </pre>
+</body>
+<script>
+  PR.prettyPrint();
+</script>
+
+</html>
