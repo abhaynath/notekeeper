@@ -7,13 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="../../css/style.css">
     <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
-    <!--<link rel="stylesheet" type="text/css" href="google-code-prettify/skins/sons-of-obsidian.css">-->
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
     <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
     <title>TypeScript tutorials</title>
 
 </head>
 
 <body>
+
     <nav>
         <a href="../../index.html">Home</a>
         <a href="../ts/ts_index.html">TypeScript</a>
@@ -26,20 +29,20 @@
         <ol class="steps">
             <li>Create an empty directory called 'sample'.</li>
             <li> Run following command to create 'package.json'.
-                <pre class="shell">npm init -y</pre>
+                <pre class="shell">D:\sample\npm init -y</pre>
 
             </li>
             <li>Run following command to create 'tsconfig.json'
-                <pre class="shell">tsc --init</pre>
+                <pre class="shell">D:\sample\tsc --init</pre>
                 To enable source map, uncomment "sourceMap": true," line
             </li>
             <li> We need to add 'ts-loader' as develpment dependency.
 
-                <pre class="shell">npm install --save-dev ts-loader</pre>
+                <pre class="shell">D:\sample\npm install --save-dev ts-loader</pre>
 
                 this will add following entry in package.json
 
-                <pre>
+                <pre class="code">
     "devDependencies": 
     {
         "ts-loader": "^6.0.4"
@@ -94,14 +97,14 @@
             <li>Make sure you have webpack and typescript installed globally. If not, run following commands.
 
                 <pre class="shell">
-    npm intall -g webpack --verbose
-    npm install -g typescript --verbose
+                    D:\sample\npm intall -g webpack --verbose
+                    D:\sample\npm install -g typescript --verbose
 </pre>
             </li>
             <li>Webpack needs typescript module to transpile files.
                 We need to link global typescript module to this project. To do that, run following command,
 
-                <pre class="shell">npm link typescript</pre>
+                <pre class="shell">D:\sample\npm link typescript</pre>
             </li>
             <li>Now you can run 'webpack' command to build the project.
                 <pre class="shell">D:\sample\webpack</pre>
@@ -116,7 +119,7 @@
                 <pre class="shell">D:\sample\ts-node src/index.ts</pre>
             </li>
             <li>If you want to use jquery,
-                <pre class="shell">npm install --save-dev @types/jquery</pre>
+                <pre class="shell">D:\sample\npm install --save-dev @types/jquery</pre>
             </li>
             <li>
                 <h4>Unit Testing</h4>
@@ -151,9 +154,9 @@
         </pre>
 
                 <pre class="shell">
-        npm i -D jasmine jasmine-ts nyc ts-node typescript
+                    D:\sample\npm i -D jasmine jasmine-ts nyc ts-node typescript
 
-        npm i -D @types/jasmine
+                    D:\sample\npm i -D @types/jasmine
 
 </pre>
 
@@ -172,7 +175,7 @@
 
 
                 Add jasmine.json at root directory
-                <pre>
+                <pre class="code">
         {
             "spec_dir": "tests",
             "spec_files": ["**/*[tT]est.ts"]
@@ -188,12 +191,17 @@
 
     </div>
 
-
+    <div id="nav-placeholder"></div>
 
 </body>
 
 <script>
     PR.prettyPrint();
+
+    /*  $.get("navbar.html", function (data) {
+          $("#nav-placeholder").replaceWith(data);
+      });
+      */
 </script>
 
 </html>

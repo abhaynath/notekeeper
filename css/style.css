@@ -2,7 +2,8 @@ html,
 body {
     margin: 0;
     padding: 10px;
-    color: #3f3f3f;
+    background-color: #161616;
+    color: white;
 }
 
 body {
@@ -59,7 +60,16 @@ ol.steps li {
 
 pre.shell {
     background: black;
-    font-weight: bold;
-    color: white;
+    color: rgb(55, 235, 0);
+    background: black;
+
+    padding: 10px;
+}
+
+pre.code {
+    background: black;
+    color: rgb(255, 145, 0);
+    background: black;
+
     padding: 10px;
 }
