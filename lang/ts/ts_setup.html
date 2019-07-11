@@ -26,16 +26,16 @@
         <ol class="steps">
             <li>Create an empty directory called 'sample'.</li>
             <li> Run following command to create 'package.json'.
-                <pre>npm init -y</pre>
+                <pre class="shell">npm init -y</pre>
 
             </li>
             <li>Run following command to create 'tsconfig.json'
-                <pre>tsc --init</pre>
+                <pre class="shell">tsc --init</pre>
                 To enable source map, uncomment "sourceMap": true," line
             </li>
             <li> We need to add 'ts-loader' as develpment dependency.
 
-                <pre>npm install --save-dev ts-loader</pre>
+                <pre class="shell">npm install --save-dev ts-loader</pre>
 
                 this will add following entry in package.json
 
@@ -93,7 +93,7 @@
             </li>
             <li>Make sure you have webpack and typescript installed globally. If not, run following commands.
 
-                <pre>
+                <pre class="shell">
     npm intall -g webpack --verbose
     npm install -g typescript --verbose
 </pre>
@@ -101,10 +101,10 @@
             <li>Webpack needs typescript module to transpile files.
                 We need to link global typescript module to this project. To do that, run following command,
 
-                <pre>npm link typescript</pre>
+                <pre class="shell">npm link typescript</pre>
             </li>
             <li>Now you can run 'webpack' command to build the project.
-                <pre>d:\sample\webpack</pre>
+                <pre class="shell">D:\sample\webpack</pre>
 
 
                 this will create 'dist' folder in sample directory.
@@ -113,10 +113,10 @@
                 globally.
                 ts-node will execute typescript source directly.
 
-                <pre>d:\sample\ts-node src/index.ts</pre>
+                <pre class="shell">D:\sample\ts-node src/index.ts</pre>
             </li>
             <li>If you want to use jquery,
-                <pre>npm install --save-dev @types/jquery</pre>
+                <pre class="shell">npm install --save-dev @types/jquery</pre>
             </li>
             <li>
                 <h4>Unit Testing</h4>
@@ -150,7 +150,7 @@
 
         </pre>
 
-                <pre>
+                <pre class="shell">
         npm i -D jasmine jasmine-ts nyc ts-node typescript
 
         npm i -D @types/jasmine

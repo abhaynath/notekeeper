@@ -56,3 +56,10 @@ ol.steps {}
 ol.steps li {
     padding: 5px;
 }
+
+pre.shell {
+    background: black;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+}
