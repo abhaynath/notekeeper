@@ -60,7 +60,9 @@ ol.steps li {
 }
 
 ol.steps li img {
-    width: 100%;
+    display: block;
+    max-width: 100%;
+    height: auto
 }
 
 pre.shell {
