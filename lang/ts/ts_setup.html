@@ -183,6 +183,38 @@
     
 </pre>
             </li>
+            <li>
+                package.json will look similar to this,
+                <pre class="prettyprint">
+{
+    "name": "basic3",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jasmine-ts --config=jasmine.json",
+        "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" jasmine-ts --config=jasmine.json && nyc report"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jasmine": "^3.3.13",
+        "@types/jquery": "^3.3.30",
+        "jasmine": "^3.4.0",
+        "jasmine-ts": "^0.3.0",
+        "nyc": "^14.1.1",
+        "ts-loader": "^6.0.4"
+    }
+}
+</pre>
+                To run the tests,
+                <pre class="shell">D:\sample\npm test</pre>
+            </li>
+            <li>
+                Folder structure will look similar to this,
+                <img src="../../images/lang/ts/ts_001.jpg">
+            </li>
 
 
         </ol>

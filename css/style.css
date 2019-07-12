@@ -18,44 +18,49 @@ body {
 */
 }
 
-.card {
-
+.list {
     margin: 10px;
-    text-align: center;
-
-
-}
-
-.card h3 {
-    margin: 0;
     padding: 10px;
-    text-align: center;
 }
 
-.card ul {
+.list h3 {
+    background: rgb(70, 70, 70);
+    padding: 10px;
+}
+
+.list ul {
     margin: 0;
     padding: 0;
+    list-style: none;
+
 }
 
-.card li {
-    display: block;
-    text-align: center;
+.list li {
+    display: inline-block;
     padding: 10px;
+    margin: 5px;
 }
 
-.card li:hover {
-    background-color: rgba(255, 166, 0, 0.5);
+.list li:hover {
+    background: rgb(255, 73, 1);
+    color: white;
+    cursor: pointer;
 }
 
-.card a {
-    color: rgb(77, 103, 138);
+.list li a {
     text-decoration: none;
+    color: white;
 }
+
 
 ol.steps {}
 
 ol.steps li {
     padding: 5px;
+}
+
+ol.steps li img {
+    width: 100%;
 }
 
 pre.shell {
