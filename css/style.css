@@ -18,6 +18,14 @@ body {
 */
 }
 
+.nav_main a {
+    color: white;
+}
+
+.nav_main a i {
+    font-size: 1.6em;
+}
+
 .list {
     margin: 10px;
     padding: 10px;
@@ -42,9 +50,7 @@ body {
 }
 
 .list li:hover {
-    background: rgb(255, 73, 1);
-    color: white;
-    cursor: pointer;
+    text-decoration: underline;
 }
 
 .list li a {
@@ -79,4 +85,35 @@ pre.code {
     background: black;
 
     padding: 10px;
+}
+
+ol.toc {
+    column-count: 3;
+    column-gap: 50px;
+}
+
+ol.toc>li>a {
+
+    color: white;
+
+
+}
+
+ol.toc a {
+    text-decoration: none;
+    color: white;
+}
+
+ol.toc a:hover {
+    text-decoration: underline;
+}
+
+ol.toc li {
+    padding: 3px;
+    color: white;
+}
+
+ol.toc li ol li,
+ol.toc li ol li a {
+    color: rgb(141, 141, 141);
 }
