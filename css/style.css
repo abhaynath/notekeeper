@@ -114,3 +114,7 @@ ol.toc li ol li,
 ol.toc li ol li a {
     color: rgb(141, 141, 141);
 }
+
+.content section {
+    background: rgba(18, 15, 189, 0.267);
+}
