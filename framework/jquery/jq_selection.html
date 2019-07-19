@@ -24,6 +24,57 @@
 
     </nav>
     <div class="content">
+
+        <section>
+            <h3>Data Attributes</h3>
+
+            <h4>Using jQuery</h4>
+            <pre class="prettyprint">
+    &#x3C;ul&#x3E;
+        &#x3C;li data-snake=&#x22;anaconda&#x22;&#x3E;Anaconda&#x3C;/li&#x3E;
+        &#x3C;li data-snake=&#x22;cobra&#x22;&#x3E;King Kobra&#x3C;/li&#x3E;
+        &#x3C;li data-snake=&#x22;mamba&#x22;&#x3E;Black Mamba&#x3C;/li&#x3E;
+    &#x3C;/ul&#x3E;
+                </pre>
+            <pre class="prettyprint">
+    $("li").click(function (e) {
+        e.stopPropagation();
+        
+        // Reading data Attributes
+        var snakeType = $(this).attr("data-snake");
+
+        //Setting value of data attribute
+        $(this).attr('data-snake', "rattle snake");
+
+        console.log(snakeType);
+
+    });
+                </pre>
+
+            <h4>Using JavaScript</h4>
+            <pre class="prettyprint">
+
+    var links = document.getElementsByTagName("li");
+    for (var count = 0; count < links.length; count++) {
+        links[count].onclick = show;
+    }
+
+    function show(e) {
+        e.stopImmediatePropagation();
+
+        // Reading data Attributes
+        var snakeType = e.target.dataset.snake;
+
+        //Setting value of data attribute
+        e.target.dataset.snake = "rattle snake";
+
+        console.log(snakeType);
+
+    }
+                </pre>
+
+
+        </section>
         <section>
             <h3>Checkbox</h3>
             <div>
