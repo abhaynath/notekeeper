@@ -103,6 +103,40 @@
 
 
             </div>
+
+            <div>
+                <h4>Get list of all checked checkboxes</h4>
+
+                <pre class="prettyprint">
+
+    &#x3C;ol id=&#x22;skills&#x22;&#x3E;
+        &#x3C;li&#x3E;&#x3C;input type=&#x22;checkbox&#x22; id=&#x22;row_0&#x22; data-skill=&#x22;js&#x22;&#x3E;&#x3C;label for=&#x22;row_0&#x22;&#x3E;JavaScript&#x3C;/label&#x3E;&#x3C;/li&#x3E;
+        &#x3C;li&#x3E;&#x3C;input type=&#x22;checkbox&#x22; id=&#x22;row_1&#x22; data-skill=&#x22;cs&#x22;&#x3E;&#x3C;label for=&#x22;row_1&#x22;&#x3E;C#&#x3C;/label&#x3E;&#x3C;/li&#x3E;
+        &#x3C;li&#x3E;&#x3C;input type=&#x22;checkbox&#x22; id=&#x22;row_2&#x22; data-skill=&#x22;py&#x22;&#x3E;&#x3C;label for=&#x22;row_2&#x22;&#x3E;Python&#x3C;/label&#x3E;&#x3C;/li&#x3E;
+        &#x3C;li&#x3E;&#x3C;input type=&#x22;checkbox&#x22; id=&#x22;row_3&#x22; data-skill=&#x22;sql&#x22;&#x3E;&#x3C;label for=&#x22;row_3&#x22;&#x3E;SQL&#x3C;/label&#x3E;&#x3C;/li&#x3E;
+    &#x3C;/ol&#x3E;
+    &#x3C;button id=&#x22;submit&#x22;&#x3E;Submit&#x3C;/button&#x3E;
+
+                </pre>
+
+                <pre class="prettyprint">
+
+    $("#submit").click(function (e) {
+        e.stopPropagation();
+
+        var arrSkills = [];
+
+        $.each($("#skills input[type='checkbox']:checked"), function () {
+            var skill = $(this).attr("data-skill");
+            arrSkills.push(skill);
+
+        });
+
+        console.log(arrSkills);
+    });
+    
+                </pre>
+            </div>
         </section>
 
 
