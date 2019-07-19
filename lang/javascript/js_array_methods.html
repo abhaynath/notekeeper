@@ -24,7 +24,103 @@
 
     </nav>
     <div class="content">
+        <section>
+            <h4>Check if array includes a value</h4>
+            <pre class="prettyprint">
 
+    const arr = ["rohit", "shikhar", "virat"];
+    
+    console.log(arr.includes("virat")); //true
+    console.log(arr.includes("sachin")); //false
+
+            </pre>
+        </section>
+
+        <section>
+            <h4>Get all elements having specific property value</h4>
+            <pre class="prettyprint">
+
+    const players = [{
+            name: "Virat Kohli",
+            position: 3
+        },
+        {
+            name: "Rohit Sharma",
+            position: 1
+        },
+        {
+            name: "MS Dhoni",
+            position: 6
+        },
+        {
+            name: "Sachin Tendulkar",
+            position: 1
+        }
+    ];
+    
+    function getName(position) {
+        return players.filter(member => member.position == position);
+    
+    }
+    console.log(JSON.stringify(getName(3))); /* [{"name":"Virat Kohli","position":3}] */
+    console.log(JSON.stringify(getName(7))); /* [] */
+    console.log(JSON.stringify(getName(1))); /* [{"name":"Rohit Sharma","position":1},{"name":"Sachin Tendulkar","position":1}] */
+        
+    
+            </pre>
+        </section>
+
+
+        <section>
+            <h4>Combining arrays</h4>
+            <pre class="prettyprint">
+
+    const players = ["rohit", "shikhar", "virat"];
+
+    const arr = ["hardik", "bhuvneshwar", "ravichandran"];
+    
+    players.push(...arr);
+    
+    console.log(JSON.stringify(players)); /* ["rohit","shikhar","virat","hardik","bhuvneshwar","ravichandran"] */
+    
+                </pre>
+        </section>
+
+
+        <section>
+            <h4>Combining Arrays at specific position</h4>
+            <pre class="prettyprint">
+
+    const players = ["rohit", "shikhar", "virat"];
+
+    const arr = ["hardik", ...players, "bhuvneshwar", "ravichandran"];
+    
+    console.log(JSON.stringify(arr)); /* ["hardik","rohit","shikhar","virat","bhuvneshwar","ravichandran"] */
+
+                    </pre>
+        </section>
+
+
+
+        <section>
+            <h4>Combining Object properties</h4>
+            <pre class="prettyprint">
+
+    const players = {
+        captain: "Virat Kohli",
+        wicketKeeper: "MS Dhoni"
+    };
+    
+    const india = {
+        spinner: "R. Ashvin",
+        fast: "Bhuvneshwar Kumar",
+        ...players
+    };
+    
+    console.log(JSON.stringify(india)); /* {"spinner":"R. Ashvin","fast":"Bhuvneshwar Kumar","captain":"Virat Kohli","wicketKeeper":"MS Dhoni"} */
+
+                        </pre>
+        </section>
 
     </div>
 
