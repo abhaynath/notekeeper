@@ -85,8 +85,8 @@ pre.code {
 }
 
 ol.toc {
-    column-count: 3;
-    column-gap: 50px;
+    /* column-count: 3;
+    column-gap: 50px; */
 }
 
 ol.toc>li>a {
