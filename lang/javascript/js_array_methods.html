@@ -49,6 +49,63 @@
         </section>
 
         <section>
+            <h4>Find element & element index in an array (find & findIndex)</h4>
+            <p><b>find(): </b>If element is not found, <code>undefined</code> is returned</p>
+            <p><b>findIndex(): </b>If element is not found, '-1' is returned</p>
+
+            <pre class="prettyprint">
+
+    var arr = [{
+        label: "A",
+        value: 1
+    }, {
+        label: "B",
+        value: 2
+    }, {
+        label: "C",
+        value: 3
+    }, {
+        label: "D",
+        value: 4
+    }];
+    
+    var obj = arr.find(k => k.value == 4);
+    console.log(obj); //{label: "D", value: 4}
+    
+    var index = arr.findIndex(k => k.value == 4);
+    console.log(index); // 3
+
+            </pre>
+        </section>
+
+
+        <section>
+
+            <h4>Get shallow copy of an array from range of indices (slice)</h4>
+            <p></p>
+
+            <pre class="prettyprint">
+
+    var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
+
+    console.log(animals.slice(2));
+    // expected output: Array ["camel", "duck", "elephant"]
+    
+    console.log(animals.slice(2, 4));
+    // expected output: Array ["camel", "duck"]
+    
+    console.log(animals.slice(1, 5));
+    // expected output: Array ["bison", "camel", "duck", "elephant"]
+
+    //get shallow copy of an entire arrays
+
+    var zooAnimals = animals.slice(0);
+    
+
+            </pre>
+        </section>
+
+        <section>
             <h4>Get all elements having specific property value (filter)</h4>
             <pre class="prettyprint">
 
