@@ -24,8 +24,20 @@
 
     </nav>
     <div class="content">
+
         <section>
-            <h4>Check if array includes a value</h4>
+            <h4>Iterating an Array (forEach)</h4>
+            <pre class="prettyprint">
+
+    const arr = [1, 2, 3, 4, 5, 6];
+
+    arr.forEach(item => {
+        console.log(item); // output: 1 2 3 4 5 6
+    });
+                </pre>
+        </section>
+        <section>
+            <h4>Check if array includes a value (inclues)</h4>
             <pre class="prettyprint">
 
     const arr = ["rohit", "shikhar", "virat"];
@@ -37,7 +49,7 @@
         </section>
 
         <section>
-            <h4>Get all elements having specific property value</h4>
+            <h4>Get all elements having specific property value (filter)</h4>
             <pre class="prettyprint">
 
     const players = [{
@@ -70,9 +82,146 @@
             </pre>
         </section>
 
+        <section>
+            <h4>Apply function to every element and return new array (map)</h4>
+            <pre class="prettyprint">
+
+    const arr = [1, 2, 3, 4, 5, 6];
+
+    // add one to every element
+    const oneAdded = arr.map(num => num + 1);
+    console.log(oneAdded); // output [2, 3, 4, 5, 6, 7]
+    
+    console.log(arr); // output: [1, 2, 3, 4, 5, 6]
+
+
+    /* using anonymous function */
+
+    var arr_2 = [10, 30, 59, 3];
+
+    var arr_result = arr_2.map(function (num) {
+        if (num < 25) {
+            num = num * 2;
+        }
+
+        return num;
+
+    });
+    console.log(arr_2); //[10, 30, 59, 3]
+
+    console.log(arr_result); //[20, 30, 59, 6]
+
+            </pre>
+        </section>
 
         <section>
-            <h4>Combining arrays</h4>
+            <h4>Apply function to each element and return one value (reduce)</h4>
+            <p>
+                The reduce() method executes a reducer function (that you provide) on each element of the array,
+                resulting in a single output value.
+            </p>
+
+            <pre class="prettyprint">
+
+    var arr = [1, 2, 3, 4, 5];
+    var sum = arr.reduce(function (acc, elem) {
+        acc = acc + elem;
+        return acc;
+    
+    });
+    console.log("Sum : " + sum); // Sum : 15
+
+
+            </pre>
+        </section>
+
+        <section>
+            <h4>Checks if at least one element passes the condition (some)</h4>
+            <p>This method check if at least one of array's item passed the condition. If passed, it return 'true'
+                otherwise 'false'.</p>
+            <pre class="prettyprint">
+
+    const arr = [1, 2, 3, 4, 5, 6];
+
+    // at least one element is greater than 4?
+    const largeNum = arr.some(num => num > 4);
+    console.log(largeNum); // output: true
+    
+    // at least one element is less than or equal to 0?
+    const smallNum = arr.some(num => num <= 0);
+    console.log(smallNum); // output: false
+
+            </pre>
+        </section>
+
+        <section>
+            <h4>Check if every element passes the condition (every)</h4>
+            <p>This method check if all array's item passed the condition. If passed, it return 'true' otherwise
+                'false'.</p>
+            <pre class="prettyprint">
+
+    const arr = [1, 2, 3, 4, 5, 6];
+
+    // all elements are greater than 4
+    const greaterFour = arr.every(num => num > 4);
+    console.log(greaterFour); // output: false
+    
+    // all elements are less than 10
+    const lessTen = arr.every(num => num < 10);
+    console.log(lessTen); // output: true
+
+            </pre>
+        </section>
+
+        <section>
+            <h4>Sorting an array (sort)</h4>
+            <p></p>
+            <pre class="prettyprint">
+
+    const arr = [1, 2, 3, 4, 5, 6];
+    const alpha = ['e', 'a', 'c', 'u', 'y'];
+    
+    // sort in descending order
+    descOrder = arr.sort((a, b) => a > b ? -1 : 1);
+    console.log(descOrder); // output: [6, 5, 4, 3, 2, 1]
+    
+    // sort in ascending order
+    ascOrder = alpha.sort((a, b) => a > b ? 1 : -1);
+    console.log(ascOrder); // output: ['a', 'c', 'e', 'u', 'y']
+
+            </pre>
+            Sorting array of objects
+            <pre class="prettyprint">
+
+    var players = [{
+        name: "Rahul",
+        runs: 11000
+    }, {
+        name: "Virat",
+        runs: 800
+    }, {
+        name: "Rohit",
+        runs: 500
+    }, {
+        name: "Sachin",
+        runs: 18000
+    }];
+    
+    players.sort(function (a, b) {
+        //ascending
+        //return a.runs - b.runs; 
+    
+        //descending
+        return b.runs - a.runs;
+    });
+    
+    console.log(JSON.stringify(players));
+    //[{"name":"Sachin","runs":18000},{"name":"Rahul","runs":11000},{"name":"Virat","runs":800},{"name":"Rohit","runs":500}]
+
+            </pre>
+        </section>
+        <section>
+            <h4>Combining arrays (spread operator)</h4>
             <pre class="prettyprint">
 
     const players = ["rohit", "shikhar", "virat"];
@@ -88,7 +237,7 @@
 
 
         <section>
-            <h4>Combining Arrays at specific position</h4>
+            <h4>Combining Arrays at specific position (spread operator)</h4>
             <pre class="prettyprint">
 
     const players = ["rohit", "shikhar", "virat"];
@@ -103,7 +252,7 @@
 
 
         <section>
-            <h4>Combining Object properties</h4>
+            <h4>Combining Object properties (spread operator)</h4>
             <pre class="prettyprint">
 
     const players = {
