@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>JSDoc</title>
+
+</head>
+
+<body>
+
+    <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+
+
+    </nav>
+    <div class="content">
+        <section>
+            <h4>Documenting Class</h4>
+            <pre class="prettyprint">
+
+        /** Class representing a point. */
+        class Point 
+        {
+            /**
+            * Create a point.
+            * @param {number} x - The x value.
+            * @param {number} y - The y value.
+            */
+            constructor(x, y) {
+                // ...
+            }
+        
+            /**
+            * Get the x value.
+            * @return {number} The x value.
+            */
+            getX() {
+                // ...
+            }
+        
+            /**
+            * Get the y value.
+            * @return {number} The y value.
+            */
+            getY() {
+                // ...
+            }
+        
+            /**
+            * Convert a string containing two comma-separated numbers into a point.
+            * @param {string} str - The string containing two comma-separated numbers.
+            * @return {Point} A Point object.
+            */
+            static fromString(str) {
+                // ...
+            }
+        }
+        
+        /**
+        * Class representing a dot.
+        * @extends Point
+        */
+        class Dot extends Point 
+        {
+            /**
+            * Create a dot.
+            * @param {number} x - The x value.
+            * @param {number} y - The y value.
+            * @param {number} width - The width of the dot, in pixels.
+            */
+            constructor(x, y, width) {
+                // ...
+            }
+        
+            /**
+            * Get the dot's width.
+            * @return {number} The dot's width, in pixels.
+            */
+            getWidth() {
+                // ...
+            }
+        }
+            
+    </pre>
+        </section>
+
+    </div>
+
+
+
+</body>
+
+<script>
+    PR.prettyPrint();
+</script>
+
+</html>
