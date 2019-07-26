@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>JSDoc</title>
+    <title>Typdoc Setup</title>
 
 </head>
 
@@ -26,35 +26,77 @@
     <div class="content">
         <section>
             <h4>Installation</h4>
-            To install the jsdoc globally,
-            <pre class="shell">npm install -g jsdoc --verbose</pre>
+            To install the typedoc globally,
+            <pre class="shell">npm install -g typedoc --verbose</pre>
 
             <p>To install for development</p>
-            <pre class="shell">npm install --save-dev jsdoc --verbose</pre>
+            <pre class="shell">npm install --save-dev typedoc --verbose</pre>
 
 
         </section>
 
         <section>
             <h4>Generate Documentation</h4>
-            <p>Create a file 'Book.js' and write following code</p>
+            <p>In case all source code .ts files are in 'src' folder and the documentation is to be generated in 'docs'
+                folder.</p>
             <pre class="prettyprint">
 
-    /**
-    * Represents a book.
-    * @constructor
-    * @param {string} title - The title of the book.
-    * @param {string} author - The author of the book.
-    */
-    function Book(title, author) {
+        /**
+        * Actual module comment.
+        * @preferred
+        */
+        module MyModule { }
+        /**
+        * Dismissed module comment.
+        * This is the longer comment but will be dismissed in favor of the preferred comment.
+        */
+             
         
-    }
+        /**
+        * Returns the average of two numbers.
+        *
+        * @remarks
+        * This method is part of the {@link core-library#Statistics | Statistics subsystem}.
+        *
+        * @param x - The first input number
+        * @param y - The second input number
+        * @returns The arithmetic mean of `x` and `y`
+        *
+        * @beta
+        */
+        function getAverage(x, y) {
+            return (x + y) / 2.0;
+        }
+        
+        
+        
+        
+        /**
+        * @param text  Comment for parameter ´text´.
+        */
+        function doSomething(target: any, text: string): number;
+        
+        /**
+        * @param value  Comment for parameter ´value´.
+        * @returns      Comment for special return value.
+        */
+        function doSomething(target: any, value: number): number;
+        
+        /**
+        * Comment for method ´doSomething´.
+        * @param target  Comment for parameter ´target´.
+        * @returns       Comment for return value.
+        */
+        function doSomething(target: any, arg: any): number {
+            return 0;
+        }
 
             </pre>
             <p>To generate the Documentation, run following command</p>
-            <pre class="shell">jsdoc book.js</pre>
-            <p>This will create a Documentation inside 'out' folder</p>
-            <img src="../../images/documentation/jsdoc/jsdoc_01.JPG">
+            <pre class="shell">typedoc --out docs src</pre>
+            <code>typedoc --out [output dir] [source dir]</code>
+            <p>This will create a Documentation inside 'docs' folder</p>
+            <img src="../../images/documentation/typedoc/typedoc_01_01.JPG">
         </section>
 
     </div>
