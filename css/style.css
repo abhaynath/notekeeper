@@ -121,6 +121,7 @@ ol.toc li ol li a {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     display: inline;
+    margin: 10px;
 
 }
 
