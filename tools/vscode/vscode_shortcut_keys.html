@@ -19,6 +19,23 @@
 
         </nav>
 
+        <section>
+            <h4>Adding custom key bindings for switching between Editor/Terminal</h4>
+            <p>You can use following key combinations for Editor/Terminal switching</p>
+            <pre class="shell">
+    {
+        "key": "alt-`",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+`",
+        "command": "workbench.action.terminal.focus",
+        "when": "!terminalFocus"
+    }
+            </pre>
+        </section>
+
         <table>
             <caption>
                 Editing
@@ -142,25 +159,10 @@
                 <td>Ctrl + K Z</td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
+                <td>Toggle Focus between Terminal/Editor</td>
+                <td>Alt + `</td>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
+
         </table>
 
 
