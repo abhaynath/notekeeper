@@ -65,6 +65,44 @@
             <h4>Mouse Events</h4>
             <pre class="prettyprint">
 
+    var box = document.getElementById("box");
+
+    box.addEventListener("click", clickHandler);
+    box.addEventListener("mouseover", mouseOverHandler);
+    box.addEventListener("mouseout", mouseOutHandler);
+    box.addEventListener("mousemove", mouseMoveHandler);
+    box.addEventListener("dblclick", doubleClickHandler);
+    box.addEventListener("contextmenu", rightClickHandler);
+    
+    
+    function clickHandler(e) {
+        console.log("clicked");
+    }
+    
+    function mouseOverHandler() {
+        console.log("mouseOver");
+    
+    }
+    
+    function mouseOutHandler() {
+        console.log("mouse out handler");
+    }
+    
+    function mouseMoveHandler(e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        var coor = "Coordinates: (" + x + "," + y + ")";
+        //console.log(coor);
+    }
+    
+    function doubleClickHandler() {
+        console.log("double clicked");
+    }
+    
+    function rightClickHandler(e) {
+        e.preventDefault();
+        console.log("rightclick");
+    }
 
             </pre>
         </section>
