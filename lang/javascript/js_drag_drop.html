@@ -33,31 +33,33 @@
 
     &#x3C;div id=&#x22;div1&#x22; draggable=&#x22;true&#x22;&#x3E;Draggable Div&#x3C;/div&#x3E;
     &#x3C;div id=&#x22;divContainer&#x22;&#x3E;Container&#x3C;/div&#x3E;
-                
+
             </pre>
             <pre class="prettyprint">
 
     var div1 = document.getElementById("div1");
     var divContainer = document.getElementById("divContainer");
-    
+
     div1.ondragstart = function (ev) {
         var id = ev.target.id;
         ev.dataTransfer.setData("text", id);
-    
+
         console.log("ondrag start " + id);
-    
+
     };
-    
+
     divContainer.ondragover = function (ev) {
         ev.preventDefault();
-    
+
     };
     divContainer.ondrop = function (ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        console.log("here " + data);
-    
-    };                
+        divContainer.appendChild(document.getElementById(data));
+
+
+    };
+
             </pre>
 
         </section>
@@ -72,35 +74,35 @@
                 &#x3C;li id=&#x22;i2&#x22; ondragstart=&#x22;dragstart_handler(event);&#x22; draggable=&#x22;true&#x22;&#x3E;Drag Item 2 to the Drop Zone&#x3C;/li&#x3E;
             &#x3C;/ul&#x3E;
             &#x3C;div id=&#x22;target&#x22; ondrop=&#x22;drop_handler(event);&#x22; ondragover=&#x22;dragover_handler(event);&#x22;&#x3E;Drop Zone&#x3C;/div&#x3E;
-          
+
             </pre>
             <pre class="prettyprint">
 
 
         function dragstart_handler(ev) {
-    
+
             // Add this element's id to the drag payload so the drop handler will
             // know which element to add to its tree
             ev.dataTransfer.setData("text/plain", ev.target.id);
             ev.dataTransfer.effectAllowed = "move";
         }
-    
+
         function drop_handler(ev) {
-    
+
             ev.preventDefault();
             // Get the id of the target and add the moved element to the target's DOM
             var data = ev.dataTransfer.getData("text");
             ev.target.appendChild(document.getElementById(data));
-    
+
         }
-    
+
         function dragover_handler(ev) {
             ev.preventDefault();
             // Set the dropEffect to move
             ev.dataTransfer.dropEffect = "move"
         }
-               
-                                   
+
+
 
             </pre>
         </section>
