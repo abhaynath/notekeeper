@@ -25,8 +25,9 @@
     </nav>
     <div class="content">
 
-        <h3>TypeScript Setup (Typescript + jQuery + Bootstrap + Webpack)</h3>
+        <h3>TypeScript Setup (Typescript + jQuery + Bootstrap + Jasmine + Webpack)</h3>
 
+        <a href="https://github.com/abhaynath/TypeScript-jQuery-Bootstrap-Jasmine-Webpack.git">Project source code</a>
         <ol class="steps">
             <li>You will need following npm packages globally installed
 
@@ -111,27 +112,27 @@ npm install --save @types/bootstrap
             <li>Create 'webpack.config.js' in 'tsbasic' folder. Add follwing configuration in the file.
 
                 <pre class="prettyprint">
-                    module.exports = {
-                        mode: "production",
-                        //devtool: "inline-source-map",
-                        entry: "./ts-src/index.ts",
-                        output: {
-                            filename: "./build/bundle.js"
-                        },
-                        resolve: {
-                            // Add `.ts` and `.tsx` as a resolvable extension.
-                            extensions: [".ts", ".tsx", ".js"]
-                        },
-                        module: {
-                            rules: [
-                                // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
-                                {
-                                    test: /\.tsx?$/,
-                                    loader: "ts-loader"
-                                }
-                            ]
-                        }
-                    };
+    module.exports = {
+        mode: "production",
+        //devtool: "inline-source-map",
+        entry: "./ts-src/index.ts",
+        output: {
+            filename: "./build/bundle.js"
+        },
+        resolve: {
+            // Add `.ts` and `.tsx` as a resolvable extension.
+            extensions: [".ts", ".tsx", ".js"]
+        },
+        module: {
+            rules: [
+                // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+                {
+                    test: /\.tsx?$/,
+                    loader: "ts-loader"
+                }
+            ]
+        }
+    };
             </pre>
             </li>
             <li>
@@ -179,15 +180,12 @@ npm install --save @types/bootstrap
 
                 this will create 'dist' folder in sample directory.
             </li>
-            <li>Suppose, we want to just test class/function without transpiling entire source, we can install ts-node
-                globally.
-                ts-node will execute typescript source directly.
+            <li>
+                To generate documentation from the typescript source code, run following command.
 
-                <pre class="shell">D:\tsbasic\ts-node src/index.ts</pre>
+                <pre class="shell">typedoc --out docs ts-src</pre>
             </li>
-            <li>If you want to use jquery,
-                <pre class="shell">D:\tsbasic\npm install --save-dev @types/jquery</pre>
-            </li>
+
             <li>
                 <h4>Unit Testing</h4>
                 Create new directory 'tests' in root folder
@@ -221,9 +219,9 @@ npm install --save @types/bootstrap
         </pre>
 
                 <pre class="shell">
-                    D:\tsbasic\npm i -D jasmine jasmine-ts nyc ts-node typescript
+    D:\tsbasic\npm i -D jasmine jasmine-ts nyc ts-node typescript
 
-                    D:\tsbasic\npm i -D @types/jasmine
+    D:\tsbasic\npm i -D @types/jasmine
 
 </pre>
 
@@ -241,12 +239,12 @@ npm install --save @types/bootstrap
         </pre>
 
 
-                Add jasmine.json at root directory
+                Create a new file 'jasmine.json' which will contain the configuration for jasmine.
                 <pre class="code">
-        {
-            "spec_dir": "tests",
-            "spec_files": ["**/*[tT]est.ts"]
-        }
+{
+    "spec_dir": "tests",
+    "spec_files": ["**/*[tT]est.ts"]
+}
     
 </pre>
             </li>
@@ -254,7 +252,7 @@ npm install --save @types/bootstrap
                 package.json will look similar to this,
                 <pre class="prettyprint">
 {
-    "name": "basic3",
+    "name": "tsbasic",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -266,21 +264,29 @@ npm install --save @types/bootstrap
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@types/jasmine": "^3.3.13",
-        "@types/jquery": "^3.3.30",
-        "jasmine": "^3.4.0",
+        "@types/jasmine": "^3.5.10",
+        "@types/jquery": "^3.3.34",
+        "jasmine": "^3.5.0",
         "jasmine-ts": "^0.3.0",
-        "nyc": "^14.1.1",
-        "ts-loader": "^6.0.4"
+        "nyc": "^15.0.1",
+        "ts-loader": "^6.2.2",
+        "ts-node": "^8.8.2",
+        "typescript": "^3.8.3"
+    },
+    "dependencies": {
+        "@types/bootstrap": "^4.3.2",
+        "bootstrap": "^4.4.1",
+        "jquery": "^3.4.1",
+        "popper.js": "^1.16.1"
     }
-}
+    }
 </pre>
                 To run the tests,
                 <pre class="shell">D:\tsbasic\npm test</pre>
             </li>
             <li>
                 Folder structure will look similar to this,
-                <img src="../../images/lang/ts/ts_001.jpg">
+                <img src="../../images/lang/ts/ts_002.jpg">
             </li>
 
 
