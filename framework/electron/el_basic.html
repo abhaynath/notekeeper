@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Hello World in Electron</title>
+
+</head>
+
+<body>
+
+    <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="el_index.html">Electron</a>
+    </nav>
+    <div class="content">
+
+        <h3>Hello World Application</h3>
+
+        <ol class="steps">
+            <li>Create an empty folder 'basic'</li>
+            <li>Create package.json file by running following command.
+
+                <pre class="shell">npm init -y</pre>
+            </li>
+            <li>Install electron package as development dependency by running following command
+                <pre class="shell">npm install --save-dev electron --verbose</pre>
+            </li>
+            <li>Create <b>main.js</b>file and add following code in it.
+
+                <pre class="prettyprint">
+    const {
+        app,
+        BrowserWindow
+    } = require('electron')
+    
+    function createWindow() {
+        // Create the browser window.
+        const win = new BrowserWindow({
+            width: 800,
+            height: 600,
+            webPreferences: {
+                nodeIntegration: true
+            }
+        })
+    
+        // and load the index.html of the app.
+        win.loadFile('index.html')
+    
+        // Open the DevTools.
+        win.webContents.openDevTools()
+    }
+    
+    // This method will be called when Electron has finished
+    // initialization and is ready to create browser windows.
+    // Some APIs can only be used after this event occurs.
+    app.whenReady().then(createWindow)
+    
+    // Quit when all windows are closed.
+    app.on('window-all-closed', () => {
+        // On macOS it is common for applications and their menu bar
+        // to stay active until the user quits explicitly with Cmd + Q
+        if (process.platform !== 'darwin') {
+            app.quit()
+        }
+    })
+    
+    app.on('activate', () => {
+        // On macOS it's common to re-create a window in the app when the
+        // dock icon is clicked and there are no other windows open.
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow()
+        }
+    })
+    
+    // In this file you can include the rest of your app's specific main process
+    // code. You can also put them in separate files and require them here.
+            </pre>
+            </li>
+
+            <li>In package.json file, we need to set main key value to 'main.js' & need to add 'start' script to
+                'electron .'
+
+                <pre class="prettyprint">
+{
+    "name": "basic",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "electron ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "electron": "^8.2.0"
+    }
+    }
+            
+    </pre>
+                package.json file should look similar like this.
+            </li>
+            <li>Create <b>index.html</b> file and add following code.
+
+                <pre class="prettyprint">
+    &#x3C;!DOCTYPE html&#x3E;
+    &#x3C;html&#x3E;
+    
+    &#x3C;head&#x3E;
+        &#x3C;meta charset=&#x22;UTF-8&#x22;&#x3E;
+        &#x3C;title&#x3E;Hello World!&#x3C;/title&#x3E;
+        &#x3C;meta http-equiv=&#x22;Content-Security-Policy&#x22; content=&#x22;script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;;&#x22; /&#x3E;
+    &#x3C;/head&#x3E;
+    
+    &#x3C;body&#x3E;
+        &#x3C;h1&#x3E;Hello World!&#x3C;/h1&#x3E;
+        We are using node &#x3C;script&#x3E;
+            document.write(process.versions.node)
+        &#x3C;/script&#x3E;,
+        Chrome &#x3C;script&#x3E;
+            document.write(process.versions.chrome)
+        &#x3C;/script&#x3E;,
+        and Electron &#x3C;script&#x3E;
+            document.write(process.versions.electron)
+        &#x3C;/script&#x3E;.
+    &#x3C;/body&#x3E;
+    
+    &#x3C;/html&#x3E;
+
+            </pre>
+            </li>
+            <li>
+                To run the application, run following command,
+                <pre class="shell">npm start</pre>
+
+            </li>
+
+
+        </ol>
+
+
+
+    </div>
+
+
+
+</body>
+
+<script>
+    PR.prettyPrint();
+</script>
+
+</html>
