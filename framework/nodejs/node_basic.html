@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Node + Express Basic Setup</title>
+
+</head>
+
+<body>
+
+    <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="nodejs_index.html">Node + Express</a>
+    </nav>
+    <div class="content">
+        <section id="node_02_01">
+            <h4>Basic Page</h4>
+
+            <ol class="steps">
+                <li>Create an empty directory 'basic1'.</li>
+                <li>Create 'package.json' and install Express using following commands from the directory.
+
+                    <pre class="shell">
+    npm init -y
+    npm install express --verbose
+                </pre>
+                </li>
+                <li>
+                    Create 'index.js' file and add following code snippet.
+
+                    <pre class="prettyprint">
+    var http = require('http');
+    var port = 8180;
+    
+    function handleRequest(request, response) {
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+    
+        response.end('Hello World');
+        console.log('requested');
+    
+    }
+    
+    http.createServer(handleRequest).listen(port, '127.0.0.1');
+    console.log('Started Node.js server at http://127.0.0.1:' + port);
+                    </pre>
+                </li>
+                <li>Run following application, using following command
+                    <pre class="shell">node index.js</pre>
+                </li>
+            </ol>
+        </section>
+
+
+
+        <section id="node_02_02">
+            <h4>Basic GET/POST/PUT/DELETE</h4>
+
+            <ol class="steps">
+                <li>Create an empty directory 'basic1'.</li>
+                <li>Create 'package.json' and install Express using following commands from the directory.
+
+                    <pre class="shell">
+    npm init -y
+    npm install express --verbose
+                </pre>
+                </li>
+                <li>
+                    Create 'index.js' file and add following code snippet.
+
+                    <pre class="prettyprint">
+    var http = require('http');
+    var port = 8180;
+    
+    function handleGetRequest(response) {
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+        response.end('Get Action was requested');
+    
+    }
+    
+    function handlePostRequest(response) {
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+        response.end('Post Action was requested');
+    
+    }
+    
+    function handlePutRequest(response) {
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+        response.end('PUT Action was requested');
+    
+    }
+    
+    function handleHeadRequest(response) {
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+        response.end('Head Action was requested');
+    
+    }
+    
+    function handleDeleteRequest(response) {
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+        response.end('DELETE Action was requested');
+    
+    }
+    
+    function handleBadRequest(response) {
+        response.writeHead(400, {
+            'Content-Type': 'text/plain'
+        });
+        response.end('Bad request');
+    
+    }
+    
+    function handleRequest(request, response) {
+        switch (request.method) {
+            case 'GET':
+                handleGetRequest(response);
+                break;
+            case 'POST':
+                handlePostRequest(response);
+                break;
+            case 'PUT':
+                handlePutRequest(response);
+                break;
+            case 'DELETE':
+                handleDeleteRequest(response);
+                break;
+            case 'HEAD':
+                handleHeadRequest(response);
+                break;
+            default:
+                handleBadRequest(response);
+                break;
+    
+        }
+        console.log("Response processing ended.");
+    }
+    
+    http.createServer(handleRequest).listen(port, '127.0.0.1');
+    console.log("Sever started at http://127.0.0.1/" + port);
+                    </pre>
+                </li>
+                <li>Run following application, using following command
+                    <pre class="shell">node index.js</pre>
+                </li>
+            </ol>
+        </section>
+
+
+
+
+    </div>
+
+
+
+</body>
+
+<script>
+    PR.prettyPrint();
+</script>
+
+</html>
