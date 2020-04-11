@@ -102,16 +102,6 @@
                     </tr>
                 </table>
             </div>
-            <ol class="steps">
-                <li> While installing mongo db on windows, make sure to install as service. Go to windows services, and
-                    start 'Mongodb service'</li>
-                <li>Go to mongo db installation folder/bin </li>
-                <li>Run 'mongo' command from bin folder. It will start shell.</li>
-                <li>Show list of all databases
-                    <pre class="shell">show dbs</pre>
-                </li>
-
-            </ol>
 
         </section>
 
@@ -138,6 +128,8 @@
                         <pre class="shell">
 
     db.createCollection("post")
+
+                            
     db.post.insert([
 	{
 		title: "MongoDB Overview",
@@ -470,6 +462,52 @@
     db.empDetails.updateMany({Age:{ $gt: "25" }},{ $set: { Age: '00'}})</pre>
                 </li>
 
+            </ol>
+
+        </section>
+
+        <section id="mongo_02_05">
+            <h3>Delete the document</h3>
+            <ol class="steps">
+                <li>
+                    <h4>remove()</h4>
+                    MongoDB's remove() method is used to remove a document from the collection. remove() method accepts
+                    two parameters. One is deletion criteria and second is justOne flag.
+                    <ul>
+                        <li>
+                            <b>deletion criteria</b> − (Optional) deletion criteria according to documents will be
+                            removed.
+                        </li>
+                        <li>
+                            <b>justOne</b> − (Optional) if set to true or 1, then remove only one document.
+                        </li>
+                    </ul>
+                    Basic syntax of remove() method is as follows
+                    <pre>db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)</pre>
+                    Example : Consider the mycol collection has the following data.
+                    <pre>
+    {_id : ObjectId("507f191e810c19729de860e1"), title: "MongoDB Overview"},
+    {_id : ObjectId("507f191e810c19729de860e2"), title: "NoSQL Overview"},
+    {_id : ObjectId("507f191e810c19729de860e3"), title: "Tutorials Point Overview"}</pre>
+
+                    Following example will remove all the documents whose title is 'MongoDB Overview'.
+
+                    <pre class="shell">
+    db.mycol.remove({'title':'MongoDB Overview'})</pre>
+                </li>
+
+                <li>
+                    <h4>Remove Only One</h4>
+                    If there are multiple records and you want to delete only the first record, then set justOne
+                    parameter in remove() method.
+                    <pre>db.COLLECTION_NAME.remove(DELETION_CRITERIA,1)</pre>
+                </li>
+                <li>
+                    <h4>Remove all documents</h4>
+                    If you don't specify deletion criteria, then MongoDB will delete whole documents from the
+                    collection. This is equivalent of SQL's truncate command.
+                    <pre class="shell">db.mycol.remove({})</pre>
+                </li>
             </ol>
 
         </section>
