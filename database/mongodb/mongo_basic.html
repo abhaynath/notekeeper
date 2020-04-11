@@ -24,18 +24,172 @@
     </nav>
     <div class="content">
 
-        <h3>Starting MongoDB Server</h3>
 
-        <ol class="steps">
-            <li> While installing mongo db on windows, make sure to install as service. Go to windows services, and
-                start 'Mongodb service'</li>
-            <li>Go to mongo db installation folder/bin </li>
-            <li>Run 'mongo' command from bin folder. It will start shell.</li>
-            <li>Show list of all databases
-                <pre class="shell">show dbs</pre>
-            </li>
+        <section id="mongo_01_01">
+            <h4>Starting MongoDB Server</h4>
+            <ol class="steps">
+                <li> While installing mongo db on windows, make sure to install as service. Go to windows services, and
+                    start 'Mongodb service'</li>
+                <li>Go to mongo db installation folder/bin </li>
+                <li>Run 'mongo' command from bin folder. It will start shell.</li>
+                <li>Show list of all databases
+                    <pre class="shell">show dbs</pre>
+                </li>
 
-        </ol>
+            </ol>
+
+        </section>
+        <section id="mongo_01_02">
+
+            <ul class="steps">
+
+                <li>
+                    <h4>Create new Database</h4> To create a new database named 'mydata', use following command.
+                    <pre class="shell">use mydata</pre>
+                </li>
+
+
+                <li>
+                    <h4>Use existing Database</h4>To use the existing database, use same command.
+                    <pre class="shell">use mydata</pre>
+                </li>
+
+                <li>
+                    <h4>Check current selected database</h4>
+                    <pre class="shell">db</pre>
+                </li>
+                <li>
+                    <h4>Drop Database</h4>Basic syntax of dropDatabase() command is as follows −
+                    <pre class="shell">db.dropDatabase()</pre>
+                    This will delete the selected database. If you have not selected any database, then it will delete
+                    default 'test' database.
+                </li>
+            </ul>
+        </section>
+        <section id="mongo_01_03">
+            <h4>Backup and restore databases</h4>
+            <ul class="steps">
+                <li>Backup of database command
+                    <pre>
+    mongodump --db &#x3C;database name&#x3E; --out &#x3C;path to store database&#x3E;
+                    </pre>
+                    Example :
+                    <pre class="shell">
+    mongodump --db players --out F:\mongobackup   </pre>
+                </li>
+            </ul>
+
+            <ul class="steps">
+                <li>Restore database command
+                    <pre>
+    mongorestore &#x3C;path to restore database&#x3E;
+                    </pre>
+                    Example :
+                    <pre class="shell">
+    mongorestore F:\mongobackup   </pre>
+                </li>
+            </ul>
+        </section>
+
+        <section id="mongo_01_04">
+            <h3>Collections</h3>
+            <ol class="steps">
+                <li>
+                    <h4>Create new collection</h4>
+                    Basic syntax of createCollection() command is as follows −
+                    <pre class="shell">db.createCollection(name, options)</pre>
+                    In the command, name is name of collection to be created. Options is a document and is used to
+                    specify configuration of collection.
+
+                    <div class="margin10">
+                        <table>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td>String</td>
+                                <td>Name of the collection to be created</td>
+                            </tr>
+                            <tr>
+                                <td>Options</td>
+                                <td>Document</td>
+                                <td>(Optional) Specify options about memory size and indexing</td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    Options parameter is optional, so you need to specify only the name of the collection. Following is
+                    the list of options you can use −
+
+                    <div class="margin10">
+                        <table>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>capped</td>
+                                <td>Boolean</td>
+                                <td>(Optional) If true, enables a capped collection. Capped collection is a fixed size
+                                    collection that automatically overwrites its oldest entries when it reaches its
+                                    maximum size. If you specify true, you need to specify size parameter also.</td>
+                            </tr>
+                            <tr>
+                                <td>autoIndexId</td>
+                                <td>Boolean</td>
+                                <td>(Optional) If true, automatically create index on _id field.s Default value is
+                                    false.</td>
+                            </tr>
+
+                            <tr>
+                                <td>size</td>
+                                <td>number</td>
+                                <td>(Optional) Specifies a maximum size in bytes for a capped collection. If capped is
+                                    true, then you need to specify this field also.</td>
+                            </tr>
+
+                            <tr>
+                                <td>max</td>
+                                <td>number</td>
+                                <td>(Optional) Specifies the maximum number of documents allowed in the capped
+                                    collection.</td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <div class="margin10">
+                        Basic syntax of createCollection() method without options is as follows −
+                        <pre class="shell">
+    db.createCollection("players")  </pre>
+
+                        The following example shows the syntax of createCollection() method with few important options
+                        <pre class="shell">
+    db.createCollection("players", { capped : true, autoIndexID : true, size : 6142800, max : 10000 } )</pre>
+                    </div>
+
+
+
+                </li>
+
+                <li>
+                    <h4>Show all collections in database</h4>
+                    <pre class="shell">
+    show collections </pre>
+                </li>
+            </ol>
+
+        </section>
+
+
+
+
+
 
 
 
