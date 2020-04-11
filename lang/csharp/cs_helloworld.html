@@ -45,7 +45,7 @@
 
 
 
-        <section id="cs_01_2">
+        <section id="cs_01_02">
             <h3>Data Types</h3>
 
             <table>
@@ -135,10 +135,58 @@
 
 
         </section>
-        <pre class="prettyprint">
 
+        <section id="cs_01_03">
+            <h3>Console Output Formatting</h3>
+
+            <ol class="steps">
+                <li>
+                    <h4>Display value and string (Using Substitution markers)</h4>
+                    <pre class="prettyprint">
+    string name = "Sachin Tendulkar";
+    int score = 200;
+
+    Console.WriteLine("Player {0} scored {1} runs.",name,score);
 
 </pre>
+                    This will produce following Output
+                    <pre class="shell">
+    Player Sachin Tendulkar scored 200 runs.
+
+</pre>
+                </li>
+
+                <li>
+                    <h4>Display value and string (Using String interpolation)</h4>
+                    <pre class="prettyprint">
+    string name = "Mahendra singh Dhoni";
+    int score = 183;
+
+    Console.WriteLine($"Player {name} scored {score} runs.");
+
+</pre>
+                    This will produce following Output
+                    <pre class="shell">
+    Player Mahendra singh Dhoni scored 183 runs.</pre>
+                </li>
+
+                <li>
+                    <h4>Formatting decimals to specific decimal places</h4>
+                    <pre class="prettyprint">
+    double myDouble = 12.345678;
+
+    Console.WriteLine("{0,-10:F4} -- Fixed Point, Four decimal places",myDouble);
+    Console.WriteLine("{0,-10:E3} -- Scientific Notation, 3 decimal places",myDouble);
+                    </pre>
+
+                    This will produce following output
+                    <pre class="shell">
+    12.3457 --Fixed Point, Four decimal places
+    1.235E+001 -- Scientific Notation, 3 decimal places
+                    </pre>
+                </li>
+            </ol>
+        </section>
 
     </div>
 </body>
