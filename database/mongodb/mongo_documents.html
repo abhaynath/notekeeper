@@ -218,6 +218,261 @@
         </section>
 
 
+        <section id="mongo_02_03">
+            <h3>Querying the database</h3>
+            <ol class="step">
+                <li>
+                    <h4>find()</h4>
+                    The basic syntax of find() method is as follows
+                    <pre>db.COLLECTION_NAME.find()</pre>
+                    find() method will display all the documents in a non-structured way.
+                    <pre class="shell">db.players.find()</pre>
+                </li>
+
+                <li>
+                    <h4>pretty()</h4>
+                    To display the results in a formatted way, you can use pretty() method.
+                    <pre>db.COLLECTION_NAME.find().pretty()</pre>
+                    <pre class="shell">db.players.find().pretty()</pre>
+                </li>
+
+                <li>
+                    <h4>findOne()</h4>
+                    Apart from the find() method, there is findOne() method, that returns only one document.
+                    <pre>db.COLLECTIONNAME.findOne()</pre>
+                    <pre class="shell">db.players.findOne({name: "Sachin Tendulkar"})</pre>
+                </li>
+
+                <li>
+                    <h4>RDBMS Where Clause Equivalents in MongoDB</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th style="text-align:center;">Operation</th>
+                                <th style="text-align:center;">Syntax</th>
+                                <th style="text-align:center;">Example</th>
+                                <th style="width:35%; text-align:center;">RDBMS Equivalent</th>
+                            </tr>
+                            <tr>
+                                <td>Equality</td>
+                                <td>{&lt;key&gt;:{$eg;&lt;value&gt;}}</td>
+                                <td>db.mycol.find({"by":"tutorials point"}).pretty()</td>
+                                <td>where by = 'tutorials point'</td>
+                            </tr>
+                            <tr>
+                                <td>Less Than</td>
+                                <td>{&lt;key&gt;:{$lt:&lt;value&gt;}}</td>
+                                <td>db.mycol.find({"likes":{$lt:50}}).pretty()</td>
+                                <td>where likes &lt; 50</td>
+                            </tr>
+                            <tr>
+                                <td style="width:35%;">Less Than Equals</td>
+                                <td>{&lt;key&gt;:{$lte:&lt;value&gt;}}</td>
+                                <td>db.mycol.find({"likes":{$lte:50}}).pretty()</td>
+                                <td>where likes &lt;= 50</td>
+                            </tr>
+                            <tr>
+                                <td>Greater Than</td>
+                                <td>{&lt;key&gt;:{$gt:&lt;value&gt;}}</td>
+                                <td>db.mycol.find({"likes":{$gt:50}}).pretty()</td>
+                                <td>where likes &gt; 50</td>
+                            </tr>
+                            <tr>
+                                <td>Greater Than Equals</td>
+                                <td>{&lt;key&gt;:{$gte:&lt;value&gt;}}</td>
+                                <td>db.mycol.find({"likes":{$gte:50}}).pretty()</td>
+                                <td>where likes &gt;= 50</td>
+                            </tr>
+                            <tr>
+                                <td>Not Equals</td>
+                                <td>{&lt;key&gt;:{$ne:&lt;value&gt;}}</td>
+                                <td>db.mycol.find({"likes":{$ne:50}}).pretty()</td>
+                                <td>where likes != 50</td>
+                            </tr>
+                            <tr>
+                                <td>Values in an array</td>
+                                <td>{&lt;key&gt;:{$in:[&lt;value1&gt;, &lt;value2&gt;,……&lt;valueN&gt;]}}</td>
+                                <td>db.mycol.find({"name":{$in:["Raj", "Ram", "Raghu"]}}).pretty()</td>
+                                <td>Where name matches any of the value in :["Raj", "Ram", "Raghu"]</td>
+                            </tr>
+                            <tr>
+                                <td>Values not in an array</td>
+                                <td>{&lt;key&gt;:{$nin:&lt;value&gt;}}</td>
+                                <td>db.mycol.find({"name":{$nin:["Ramu", "Raghav"]}}).pretty()</td>
+                                <td>Where name values is not in the array :["Ramu", "Raghav"] or, doesn’t exist at all
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+
+                <li>
+                    <h4>AND in MongoDB</h4>
+                    To query documents based on the AND condition, you need to use $and keyword. Following is the basic
+                    syntax of AND −
+                    <pre>db.mycol.find({ $and: [ {<key1>:<value1>}, { <key2>:<value2>} ] })</pre>
+                    Example
+                    <pre
+                        class="shell">db.mycol.find({$and:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()</pre>
+                </li>
+
+                <li>
+                    <h4>OR in MongoDB</h4>
+                    To query documents based on the OR condition, you need to use $or keyword. Following is the basic
+                    syntax of OR −
+                    <pre>
+    db.mycol.find(
+    {
+        $or: [
+            {key1: value1}, {key2:value2}
+        ]
+    }
+    ).pretty()</pre>
+                    Example :
+                    <pre class="shell">
+    db.mycol.find({$or:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()</pre>
+                </li>
+
+                <li>
+                    <h4>Using AND and OR Together</h4>
+                    The following example will show the documents that have likes greater than 10 and whose title is
+                    either 'MongoDB Overview' or by is 'tutorials point'. Equivalent SQL where clause is 'where likes>10
+                    AND (by = 'tutorials point' OR title = 'MongoDB Overview')'
+                    <pre class="shell">
+    db.mycol.find({"likes": {$gt:10}, $or: [{"by": "tutorials point"},{"title": "MongoDB Overview"}]}).pretty()</pre>
+                </li>
+
+                <li>
+                    <h4>NOR in MongoDB</h4>
+                    To query documents based on the NOT condition, you need to use $not keyword. Following is the basic
+                    syntax of NOT −
+                    <pre>db.COLLECTION_NAME.find(
+                        {
+                            $not: [
+                                {key1: value1}, {key2:value2}
+                            ]
+                        }
+                    )</pre>
+                    Example :
+                    <pre class="shell">
+    db.empDetails.find( { "Age": { $not: { $gt: "25" } } } ) </pre>
+                </li>
+            </ol>
+        </section>
+
+        <section id="mongo_02_04">
+            <h3>Update the document</h3>
+            MongoDB's update() and save() methods are used to update document into a collection. The update() method
+            updates the values in the existing document while the save() method replaces the existing document with the
+            document passed in save() method.
+            <ol class="step">
+
+                <li>
+                    <h4>Update()</h4>
+                    The update() method updates the values in the existing document.
+                    <pre>db.COLLECTION_NAME.update(SELECTION_CRITERIA, UPDATED_DATA)</pre>
+                    Example :
+                    Consider the mycol collection has the following data.
+                    <pre>
+{ "_id" : ObjectId(5983548781331adf45ec5), "title":"MongoDB Overview"}
+{ "_id" : ObjectId(5983548781331adf45ec6), "title":"NoSQL Overview"}
+{ "_id" : ObjectId(5983548781331adf45ec7), "title":"Tutorials Point Overview"}
+                    </pre>
+
+                    Following example will set the new title 'New MongoDB Tutorial' of the documents whose title is
+                    'MongoDB Overview'.
+                    <pre class="shell">
+    db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}})
+</pre>
+
+                    By default, MongoDB will update only a single document. To update multiple documents, you need to
+                    set a parameter 'multi' to true.
+
+                    <pre class="shell">
+    db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}},{multi:true})
+</pre>
+                </li>
+
+                <li>
+                    <h4>Save()</h4>
+                    The save() method replaces the existing document with the new document passed in the save() method.
+                    <pre>
+    db.COLLECTION_NAME.save({_id:ObjectId(),NEW_DATA})
+                    </pre>
+                    Example : Following example will replace the document with the _id '5983548781331adf45ec5'.
+                    <pre class="shell">
+    db.mycol.save(
+   {
+      "_id" : ObjectId("507f191e810c19729de860ea"), 
+		"title":"Tutorials Point New Topic",
+      "by":"Tutorials Point"
+   }
+)
+                    </pre>
+                </li>
+
+                <li>
+                    <h4>findOneAndUpdate()</h4>
+                    The findOneAndUpdate() method updates the values in the existing document.
+                    <pre>db.COLLECTION_NAME.findOneAndUpdate(SELECTIOIN_CRITERIA, UPDATED_DATA)</pre>
+                    <b> Example :</b> Assume we have created a collection named empDetails and inserted three documents
+                    in it as shown below −
+                    <pre class="shell">
+    db.empDetails.insertMany(
+        [
+            {
+                First_Name: "Radhika",
+                Last_Name: "Sharma",
+                Age: "26",
+                e_mail: "radhika_sharma.123@gmail.com",
+                phone: "9000012345"
+            },
+            {
+                First_Name: "Rachel",
+                Last_Name: "Christopher",
+                Age: "27",
+                e_mail: "Rachel_Christopher.123@gmail.com",
+                phone: "9000054321"
+            },
+            {
+                First_Name: "Fathima",
+                Last_Name: "Sheik",
+                Age: "24",
+                e_mail: "Fathima_Sheik.123@gmail.com",
+                phone: "9000054321"
+            }
+        ]
+    )
+    </pre>
+                    Following example updates the age and email values of the document with name 'Radhika'.
+                    <pre class="shell">
+    db.empDetails.findOneAndUpdate(
+        {First_Name: 'Radhika'},
+        { $set: { Age: '30',e_mail: 'radhika_newemail@gmail.com'}}
+    )  
+    </pre>
+                </li>
+
+                <li>
+                    <h4>updateOne()</h4>
+                    This methods updates a single document which matches the given filter.
+                    <pre>db.COLLECTION_NAME.updateOne(&#x3C;filter&#x3E;, &#x3C;update&#x3E;)</pre>
+                    <pre class="shell">
+    db.empDetails.updateOne({First_Name: 'Radhika'},{ $set: { Age: '30',e_mail: 'radhika_newemail@gmail.com'}})</pre>
+
+                </li>
+
+                <li>
+                    <h4>updateMany() </h4>
+                    The updateMany() method updates all the documents that matches the given filter.
+                    <pre>db.COLLECTION_NAME.update(&#x3C;filter&#x3E;, &#x3C;update&#x3E;)</pre>
+                    <pre class="shell">
+    db.empDetails.updateMany({Age:{ $gt: "25" }},{ $set: { Age: '00'}})</pre>
+                </li>
+
+            </ol>
+
+        </section>
 
 
 
