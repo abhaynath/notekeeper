@@ -102,6 +102,304 @@
             </ol>
         </section>
 
+        <section id="pup_02_03">
+            <h4>Crickbuzz scraping the player data and saving in mongo db.</h4>
+
+            Install puppeteer and mongodb via shell.
+
+
+            <pre class="shell">
+    npm install puppeteer --verbose   
+    npm install mongodb --verbose    
+</pre>
+            Using MongoDB server, create a database 'cricket'. Create new collection 'players' in the 'cricket'
+            database.
+            <pre class="prettyprint">
+
+    const puppeteer = require('puppeteer');
+    var MongoClient = require('mongodb').MongoClient;
+    var mongo_url = "mongodb://localhost:27017/";
+    
+    (async () => {
+    
+        // const url = "https://www.cricbuzz.com/profiles/25/sachin-tendulkar";
+        const url = "https://www.cricbuzz.com/profiles/1446/shikhar-dhawan";
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.setDefaultNavigationTimeout(0);
+        await page.goto(url);
+    
+        /*** Personal Information   ****/
+        const [el_name] = await page.$x('//*[@id="playerProfile"]/div[1]/div[2]/h1');
+        const [el_dob] = await page.$x('//*[@id="playerProfile"]/div[2]/div[1]/div/div[3]');
+        const [el_birth_place] = await page.$x('//*[@id="playerProfile"]/div[2]/div[1]/div/div[5]');
+        const [el_height] = await page.$x('//*[@id="playerProfile"]/div[2]/div[1]/div/div[7]');
+        const [el_role] = await page.$x('//*[@id="playerProfile"]/div[2]/div[1]/div/div[9]');
+        const [el_batting_style] = await page.$x('//*[@id="playerProfile"]/div[2]/div[1]/div/div[11]');
+        const [el_bowling_style] = await page.$x('//*[@id="playerProfile"]/div[2]/div[1]/div/div[13]');
+    
+    
+        /* Test matches information  */
+    
+        const [el_test_matches] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[2]');
+        const [el_test_inn_bat] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[3]');
+        const [el_test_not_out] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[4]');
+        const [el_test_bat_runs] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[5]');
+        const [el_test_bat_high_score] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[6]');
+        const [el_test_bat_avg] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[7]');
+        const [el_test_bat_balls_faced] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[8]');
+        const [el_test_bat_strike_rate] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[9]');
+        const [el_test_bat_100] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[10]');
+        const [el_test_bat_200] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[11]');
+        const [el_test_bat_50] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[12]');
+        const [el_test_bat_4s] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[13]');
+        const [el_test_bat_6s] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[1]/td[14]');
+    
+        if (el_test_matches == null || el_test_matches == undefined) {
+            console.log("--test details not available for the player--");
+            await browser.close();
+            return;
+        }
+    
+        /* One day international information  */
+        const [el_odi_matches] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[2]');
+        const [el_odi_inn_bat] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[3]');
+        const [el_odi_not_out] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[4]');
+        const [el_odi_bat_runs] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[5]');
+        const [el_odi_bat_high_score] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[6]');
+        const [el_odi_bat_avg] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[7]');
+        const [el_odi_bat_balls_faced] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[8]');
+        const [el_odi_bat_strike_rate] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[9]');
+        const [el_odi_bat_100] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[10]');
+        const [el_odi_bat_200] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[11]');
+        const [el_odi_bat_50] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[12]');
+        const [el_odi_bat_4s] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[13]');
+        const [el_odi_bat_6s] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[2]/td[14]');
+    
+        if (el_odi_matches == null || el_odi_matches == undefined) {
+            console.log("--odi details not available for the player--");
+            await browser.close();
+            return;
+        }
+        /* T20 matches information  */
+    
+        const [el_t20_matches] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[2]');
+        const [el_t20_inn_bat] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[3]');
+        const [el_t20_not_out] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[4]');
+        const [el_t20_bat_runs] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[5]');
+        const [el_t20_bat_high_score] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[6]');
+        const [el_t20_bat_avg] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[7]');
+        const [el_t20_bat_balls_faced] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[8]');
+        const [el_t20_bat_strike_rate] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[9]');
+        const [el_t20_bat_100] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[10]');
+        const [el_t20_bat_200] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[11]');
+        const [el_t20_bat_50] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[12]');
+        const [el_t20_bat_4s] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[13]');
+        const [el_t20_bat_6s] = await page.$x('//*[@id="playerProfile"]/div[2]/div[2]/div/div[2]/table/tbody/tr[3]/td[14]');
+    
+        if (el_t20_matches == null || el_t20_matches == undefined) {
+            console.log("--t20 details not available for the player--");
+            await browser.close();
+            return;
+        }
+        const txt_name = await el_name.getProperty('textContent');
+        const txt_dob = await el_dob.getProperty('textContent');
+        const txt_birth_place = await el_birth_place.getProperty('textContent');
+        const txt_height = await el_height.getProperty('textContent');
+        const txt_role = await el_role.getProperty('textContent');
+        const txt_batting_style = await el_batting_style.getProperty('textContent');
+        const txt_bowling_style = await el_bowling_style.getProperty('textContent');
+    
+    
+        const txt_test_matches = await el_test_matches.getProperty('textContent');
+        const txt_test_inn_bat = await el_test_inn_bat.getProperty('textContent');
+        const txt_test_not_out = await el_test_not_out.getProperty('textContent');
+        const txt_test_bat_runs = await el_test_bat_runs.getProperty('textContent');
+        const txt_test_bat_high_score = await el_test_bat_high_score.getProperty('textContent');
+        const txt_test_bat_avg = await el_test_bat_avg.getProperty('textContent');
+        const txt_test_bat_balls_faced = await el_test_bat_balls_faced.getProperty('textContent');
+        const txt_test_bat_strike_rate = await el_test_bat_strike_rate.getProperty('textContent');
+        const txt_test_bat_100 = await el_test_bat_100.getProperty('textContent');
+        const txt_test_bat_200 = await el_test_bat_200.getProperty('textContent');
+        const txt_test_bat_50 = await el_test_bat_50.getProperty('textContent');
+        const txt_test_bat_4s = await el_test_bat_4s.getProperty('textContent');
+        const txt_test_bat_6s = await el_test_bat_6s.getProperty('textContent');
+    
+    
+    
+    
+        const txt_odi_matches = await el_odi_matches.getProperty('textContent');
+        const txt_odi_inn_bat = await el_odi_inn_bat.getProperty('textContent');
+        const txt_odi_not_out = await el_odi_not_out.getProperty('textContent');
+        const txt_odi_bat_runs = await el_odi_bat_runs.getProperty('textContent');
+        const txt_odi_bat_high_score = await el_odi_bat_high_score.getProperty('textContent');
+        const txt_odi_bat_avg = await el_odi_bat_avg.getProperty('textContent');
+        const txt_odi_bat_balls_faced = await el_odi_bat_balls_faced.getProperty('textContent');
+        const txt_odi_bat_strike_rate = await el_odi_bat_strike_rate.getProperty('textContent');
+        const txt_odi_bat_100 = await el_odi_bat_100.getProperty('textContent');
+        const txt_odi_bat_200 = await el_odi_bat_200.getProperty('textContent');
+        const txt_odi_bat_50 = await el_odi_bat_50.getProperty('textContent');
+        const txt_odi_bat_4s = await el_odi_bat_4s.getProperty('textContent');
+        const txt_odi_bat_6s = await el_odi_bat_6s.getProperty('textContent');
+    
+    
+    
+        const txt_t20_matches = await el_t20_matches.getProperty('textContent');
+        const txt_t20_inn_bat = await el_t20_inn_bat.getProperty('textContent');
+        const txt_t20_not_out = await el_t20_not_out.getProperty('textContent');
+        const txt_t20_bat_runs = await el_t20_bat_runs.getProperty('textContent');
+        const txt_t20_bat_high_score = await el_t20_bat_high_score.getProperty('textContent');
+        const txt_t20_bat_avg = await el_t20_bat_avg.getProperty('textContent');
+        const txt_t20_bat_balls_faced = await el_t20_bat_balls_faced.getProperty('textContent');
+        const txt_t20_bat_strike_rate = await el_t20_bat_strike_rate.getProperty('textContent');
+        const txt_t20_bat_100 = await el_t20_bat_100.getProperty('textContent');
+        const txt_t20_bat_200 = await el_t20_bat_200.getProperty('textContent');
+        const txt_t20_bat_50 = await el_t20_bat_50.getProperty('textContent');
+        const txt_t20_bat_4s = await el_t20_bat_4s.getProperty('textContent');
+        const txt_t20_bat_6s = await el_t20_bat_6s.getProperty('textContent');
+    
+    
+    
+    
+    
+    
+        const dob = await txt_dob.jsonValue();
+        const name = await txt_name.jsonValue();
+        const birthPlace = await txt_birth_place.jsonValue();
+        const height = await txt_height.jsonValue();
+        const role = await txt_role.jsonValue();
+        const battingStyle = await txt_batting_style.jsonValue();
+        const bowlingStyle = await txt_bowling_style.jsonValue();
+    
+        const test_matches = await txt_test_matches.jsonValue();
+        const test_inn_bat = await txt_test_inn_bat.jsonValue();
+        const test_not_out = await txt_test_not_out.jsonValue();
+        const test_bat_runs = await txt_test_bat_runs.jsonValue();
+        const test_bat_high_score = await txt_test_bat_high_score.jsonValue();
+        const test_bat_avg = await txt_test_bat_avg.jsonValue();
+        const test_bat_balls_faced = await txt_test_bat_balls_faced.jsonValue();
+        const test_bat_strike_rate = await txt_test_bat_strike_rate.jsonValue();
+        const test_bat_100 = await txt_test_bat_100.jsonValue();
+        const test_bat_200 = await txt_test_bat_200.jsonValue();
+        const test_bat_50 = await txt_test_bat_50.jsonValue();
+        const test_bat_4s = await txt_test_bat_4s.jsonValue();
+        const test_bat_6s = await txt_test_bat_6s.jsonValue();
+    
+    
+    
+    
+        const odi_matches = await txt_odi_matches.jsonValue();
+        const odi_inn_bat = await txt_odi_inn_bat.jsonValue();
+        const odi_not_out = await txt_odi_not_out.jsonValue();
+        const odi_bat_runs = await txt_odi_bat_runs.jsonValue();
+        const odi_bat_high_score = await txt_odi_bat_high_score.jsonValue();
+        const odi_bat_avg = await txt_odi_bat_avg.jsonValue();
+        const odi_bat_balls_faced = await txt_odi_bat_balls_faced.jsonValue();
+        const odi_bat_strike_rate = await txt_odi_bat_strike_rate.jsonValue();
+        const odi_bat_100 = await txt_odi_bat_100.jsonValue();
+        const odi_bat_200 = await txt_odi_bat_200.jsonValue();
+        const odi_bat_50 = await txt_odi_bat_50.jsonValue();
+        const odi_bat_4s = await txt_odi_bat_4s.jsonValue();
+        const odi_bat_6s = await txt_odi_bat_6s.jsonValue();
+    
+    
+    
+    
+        const t20_matches = await txt_t20_matches.jsonValue();
+        const t20_inn_bat = await txt_t20_inn_bat.jsonValue();
+        const t20_not_out = await txt_t20_not_out.jsonValue();
+        const t20_bat_runs = await txt_t20_bat_runs.jsonValue();
+        const t20_bat_high_score = await txt_t20_bat_high_score.jsonValue();
+        const t20_bat_avg = await txt_t20_bat_avg.jsonValue();
+        const t20_bat_balls_faced = await txt_t20_bat_balls_faced.jsonValue();
+        const t20_bat_strike_rate = await txt_t20_bat_strike_rate.jsonValue();
+        const t20_bat_100 = await txt_t20_bat_100.jsonValue();
+        const t20_bat_200 = await txt_t20_bat_200.jsonValue();
+        const t20_bat_50 = await txt_t20_bat_50.jsonValue();
+        const t20_bat_4s = await txt_t20_bat_4s.jsonValue();
+        const t20_bat_6s = await txt_t20_bat_6s.jsonValue();
+    
+    
+        var player = {};
+        player.test = {};
+        player.odi = {};
+        player.t20 = {};
+        player.name = name.trim();
+        player.dob = dob.trim();
+        player.birthPlace = birthPlace.trim();
+        player.height = height.trim();
+        player.role = role.trim();
+        player.battingStyle = battingStyle.trim();
+        player.bowlingStyle = bowlingStyle.trim();
+    
+        player.test.test_matches = test_matches.trim();
+        player.test.test_inn_bat = test_inn_bat.trim();
+        player.test.test_not_out = test_not_out.trim();
+        player.test.test_bat_runs = test_bat_runs.trim();
+        player.test.test_bat_high_score = test_bat_high_score.trim();
+        player.test.test_bat_avg = test_bat_avg.trim();
+        player.test.test_bat_balls_faced = test_bat_balls_faced.trim();
+        player.test.test_bat_strike_rate = test_bat_strike_rate.trim();
+        player.test.test_bat_100 = test_bat_100.trim();
+        player.test.test_bat_200 = test_bat_200.trim();
+        player.test.test_bat_50 = test_bat_50.trim();
+        player.test.test_bat_4s = test_bat_4s.trim();
+        player.test.test_bat_6s = test_bat_6s.trim();
+    
+    
+        player.odi.odi_matches = odi_matches.trim();
+        player.odi.odi_inn_bat = odi_inn_bat.trim();
+        player.odi.odi_not_out = odi_not_out.trim();
+        player.odi.odi_bat_runs = odi_bat_runs.trim();
+        player.odi.odi_bat_high_score = odi_bat_high_score.trim();
+        player.odi.odi_bat_avg = odi_bat_avg.trim();
+        player.odi.odi_bat_balls_faced = odi_bat_balls_faced.trim();
+        player.odi.odi_bat_strike_rate = odi_bat_strike_rate.trim();
+        player.odi.odi_bat_100 = odi_bat_100.trim();
+        player.odi.odi_bat_200 = odi_bat_200.trim();
+        player.odi.odi_bat_50 = odi_bat_50.trim();
+        player.odi.odi_bat_4s = odi_bat_4s.trim();
+        player.odi.odi_bat_6s = odi_bat_6s.trim();
+    
+    
+    
+        player.t20.t20_matches = t20_matches.trim();
+        player.t20.t20_inn_bat = t20_inn_bat.trim();
+        player.t20.t20_not_out = t20_not_out.trim();
+        player.t20.t20_bat_runs = t20_bat_runs.trim();
+        player.t20.t20_bat_high_score = t20_bat_high_score.trim();
+        player.t20.t20_bat_avg = t20_bat_avg.trim();
+        player.t20.t20_bat_balls_faced = t20_bat_balls_faced.trim();
+        player.t20.t20_bat_strike_rate = t20_bat_strike_rate.trim();
+        player.t20.t20_bat_100 = t20_bat_100.trim();
+        player.t20.t20_bat_200 = t20_bat_200.trim();
+        player.t20.t20_bat_50 = t20_bat_50.trim();
+        player.t20.t20_bat_4s = t20_bat_4s.trim();
+        player.t20.t20_bat_6s = t20_bat_6s.trim();
+    
+    
+        console.log(player);
+    
+    
+        MongoClient.connect(mongo_url, {
+            useUnifiedTopology: true
+        }, function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("cricket");
+    
+            dbo.collection("players").insertOne(player, function (err, res) {
+                if (err) throw err;
+                console.log(player.name + " details inserted");
+                db.close();
+            });
+        });
+    
+        await browser.close();
+    })();
+
+            </pre>
+        </section>
+
 
 
 
