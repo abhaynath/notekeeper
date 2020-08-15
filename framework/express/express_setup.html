@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Express Setup</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="express_index.html">Express</a>
+    </nav>
+    <div class="content">
+      <section id="express_01_01">
+        <h4>Express and Typescript Setup</h4>
+        <ol class="steps">
+          <li>
+            Create a new folder. Run following command from the folder.
+            <pre class="shell">
+npm init -y
+tsc --init
+            </pre>
+            This will create package.json and tsconfig.json
+          </li>
+          <li>Create <b>src</b> folder. Add <b>app.ts</b> in src folder.</li>
+          <li>
+            Install following packages
+            <pre class="shell">
+npm install express --verbose
+npm install cors --verbose
+
+npm install @types/express --save-dev
+npm install @types/cors --save-dev
+
+npm install -D typescript ts-node nodemon @types/node --verbose
+
+</pre
+            >
+          </li>
+          <li>
+            In package.json make following changes.
+            <pre class="prettyprint">
+    "scripts": {
+        "start": "node dist/app.js",
+        "dev": "nodemon src/app.ts",
+        "build": "tsc -p ."
+      },
+    
+</pre
+            >
+          </li>
+          <li>
+            In tsconfig.json, make following changes
+            <pre class="prettyprint">
+    {
+        "compilerOptions": {
+          "target": "es5",
+          "module": "commonjs",
+      
+          "outDir": "./dist",
+          "rootDir": "./src",
+      
+          "strict": true,
+      
+          "moduleResolution": "node",
+      
+          "esModuleInterop": true,
+      
+          "skipLibCheck": true,
+          "forceConsistentCasingInFileNames": true
+        }
+      }
+      
+</pre
+            >
+          </li>
+          <li>
+            Add following code in app.ts
+            <pre class="prettyprint">
+    import express from "express";
+    import cors from "cors";
+    const app = express();
+    app.use(express.json());
+    app.use(cors());
+    app.get("/", (req, res) => {
+    res.send("MyService ExpressJs Running....");
+    });
+
+    app.post("/login", (req, res) => {
+    let name = req.body.name;
+    let data = { name: name, city: "Mumbai" };
+    return res.json(data);
+    });
+
+    app.listen(8000, () => {
+    console.log("--server running--");
+    });
+
+            </pre>
+          </li>
+          <li>
+            To run the app locally,
+            <pre class="shell">npm run dev</pre>
+
+            To build the app
+            <pre class="shell">npm run build</pre>
+
+            To start the app
+            <pre class="shell">npm run start</pre>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
