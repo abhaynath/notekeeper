@@ -1,114 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>JavaScript Array Methods</title>
+    <title>NPM Packages</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
     </nav>
     <div class="content">
+      <section id="npm_1_1">
+        <h4>Get list of all installed global packages</h4>
+        <pre class="shell">npm list -g --depth=0</pre>
+      </section>
 
-        <section id="npm_1_1">
-            <h4>Get list of all installed global packages</h4>
-            <pre class="shell">npm list -g --depth=0</pre>
+      <section id="npm_1_2">
+        <h4>Get list of all outdated global packages</h4>
+        <pre class="shell">npm outdated -g --verbose</pre>
+      </section>
 
-        </section>
+      <section id="npm_1_3">
+        <h4>Updated all outdated global packages</h4>
+        <pre class="shell">npm update -g --verbose</pre>
+      </section>
 
-        <section id="npm_1_2">
-            <h4>Installation of required packages</h4>
-            <span>If npm is not installing proper packages, clean npm cache…</span>
-            <pre class="shell">npm cache clean --force</pre>
-            <table>
-                <tr>
-
-                    <th>Package</th>
-                    <th>Command</th>
-
-                </tr>
-                <tr>
-                    <td>NPM</td>
-                    <td>npm install -g npm --verbose</td>
-                </tr>
-                <tr>
-                    <td>VUE.JS</td>
-                    <td>npm install -g @vue/cli --verbose</td>
-                </tr>
-                <tr>
-                    <td>ANGULAR CLI</td>
-                    <td>npm install -g @angular/cli --verbose</td>
-                </tr>
-                <tr>
-                    <td>WEBPACK-CLI</td>
-                    <td>npm install -g webpack-cli --verbose</td>
-                </tr>
-                <tr>
-                    <td>BABEL</td>
-                    <td>npm install -g babel-cli --verbose</td>
-                </tr>
-                <tr>
-                    <td>TypeScript</td>
-                    <td>npm install -g typescript --verbose</td>
-                </tr>
-                <tr>
-                    <td>ESLint</td>
-                    <td>npm install -g eslint --verbose</td>
-                </tr>
-                <tr>
-                    <td>JSDOC</td>
-                    <td>npm install -g jsdoc --verbose</td>
-                </tr>
-                <tr>
-                    <td>JSHint</td>
-                    <td>npm install -g jshint --verbose</td>
-                </tr>
-                <tr>
-                    <td>ts-node</td>
-                    <td>npm install -g ts-node --verbose</td>
-                </tr>
-                <tr>
-                    <td>nodemon</td>
-                    <td>npm install -g nodemon --verbose</td>
-                </tr>
-                <tr>
-                    <td>TypeDoc</td>
-                    <td>npm install -g typedoc --verbose</td>
-                </tr>
-                <tr>
-                    <td>React</td>
-                    <td>npm install -g create-react-app --verbose</td>
-                </tr>
-                <!-- <tr>
+      <section id="npm_1_4">
+        <h4>Installation of required packages</h4>
+        <span>If npm is not installing proper packages, clean npm cache…</span>
+        <pre class="shell">npm cache clean --force</pre>
+        <table>
+          <tr>
+            <th>Package</th>
+            <th>Command</th>
+          </tr>
+          <tr>
+            <td>NPM</td>
+            <td>npm install -g npm --verbose</td>
+          </tr>
+          <tr>
+            <td>VUE.JS</td>
+            <td>npm install -g @vue/cli --verbose</td>
+          </tr>
+          <tr>
+            <td>ANGULAR CLI</td>
+            <td>npm install -g @angular/cli --verbose</td>
+          </tr>
+          <tr>
+            <td>WEBPACK-CLI</td>
+            <td>npm install -g webpack-cli --verbose</td>
+          </tr>
+          <tr>
+            <td>BABEL</td>
+            <td>npm install -g babel-cli --verbose</td>
+          </tr>
+          <tr>
+            <td>TypeScript</td>
+            <td>npm install -g typescript --verbose</td>
+          </tr>
+          <tr>
+            <td>ESLint</td>
+            <td>npm install -g eslint --verbose</td>
+          </tr>
+          <tr>
+            <td>JSDOC</td>
+            <td>npm install -g jsdoc --verbose</td>
+          </tr>
+          <tr>
+            <td>JSHint</td>
+            <td>npm install -g jshint --verbose</td>
+          </tr>
+          <tr>
+            <td>ts-node</td>
+            <td>npm install -g ts-node --verbose</td>
+          </tr>
+          <tr>
+            <td>nodemon</td>
+            <td>npm install -g nodemon --verbose</td>
+          </tr>
+          <tr>
+            <td>TypeDoc</td>
+            <td>npm install -g typedoc --verbose</td>
+          </tr>
+          <tr>
+            <td>React</td>
+            <td>npm install -g create-react-app --verbose</td>
+          </tr>
+          <!-- <tr>
                     <td></td>
                     <td></td>
                 </tr> -->
-            </table>
-
-        </section>
+        </table>
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>
+  <script>
     PR.prettyPrint();
-</script>
-
+  </script>
 </html>
