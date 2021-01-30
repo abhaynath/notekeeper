@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>useeffect</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="react_index.html">React</a>
+    </nav>
+    <div class="content">
+      <h3>useeffect</h3>
+      <div>
+        <p>
+          useeffect hook is used when we have to perform certain action after
+          render function is called.
+        </p>
+
+        <p>
+          useEffect takes 2 parameters. First is function which is to be called
+          and another is list of values
+        </p>
+        <ol class="steps">
+          <li>
+            No array parameter - callback function will be called after EACH
+            render.
+          </li>
+          <li>
+            Empty Array [] : Callback function will be called only ONCE after
+            component is loaded.
+          </li>
+
+          <li>
+            Array with variables - Callback function will be called if any of
+            the variable value is changed.
+          </li>
+        </ol>
+      </div>
+      <section id="rc_03_01">
+        <h4>1. UseEffect called each time after render</h4>
+
+        <pre class="prettyprint">
+
+    import React, { useEffect } from &#x22;react&#x22;;
+
+    const UseEffectEveryRender = () =&#x3E; {
+        useEffect(() =&#x3E; {
+        console.log(&#x22;--inside useeffect--&#x22;);
+        document.title = &#x22;Title change using useeffect()&#x22;;
+        });
+        return (
+        &#x3C;div&#x3E;
+            &#x3C;h3&#x3E;Use effect called on every render&#x3C;/h3&#x3E;
+        &#x3C;/div&#x3E;
+        );
+    };
+    
+    export default UseEffectEveryRender;
+            
+            </pre
+        >
+      </section>
+
+      <section id="rc_03_02">
+        <h4>2. UseEffect called only ONCE after component is loaded.</h4>
+
+        <pre class="prettyprint">
+    import axios from &#x22;axios&#x22;;
+    import React, { useEffect, useState } from &#x22;react&#x22;;
+    
+    const UseEffectOnceOnMounted = () =&#x3E; {
+        const [movies, setMovies] = useState&#x3C;any&#x3E;([]);
+        useEffect(() =&#x3E; {
+        async function fetchCountries() {
+            const url = &#x22;http://www.omdbapi.com/?s=batman&#x26;apikey=fa8dd961&#x22;;
+            const response = await axios.get(url);
+            console.log(&#x22;--response : &#x22;, response.data.Search);
+    
+            setMovies(response.data.Search);
+        }
+    
+        fetchCountries();
+        }, []);
+        return (
+        &#x3C;div&#x3E;
+            &#x3C;h3&#x3E;Use effect called only once after mounted&#x3C;/h3&#x3E;
+            &#x3C;p&#x3E;
+            This is mostyle required when we fetch data from the server and
+            initialize state
+            &#x3C;/p&#x3E;
+            &#x3C;div className=&#x22;list&#x22;&#x3E;
+            {movies &#x26;&#x26;
+                movies.map((item: any) =&#x3E; {
+                return (
+                    &#x3C;div key={item.imdbID}&#x3E;{item.Title + &#x22; (&#x22; + item.Year + &#x22;)&#x22;}&#x3C;/div&#x3E;
+                );
+                })}
+            &#x3C;/div&#x3E;
+        &#x3C;/div&#x3E;
+        );
+    };
+    
+    export default UseEffectOnceOnMounted;
+                </pre
+        >
+      </section>
+      <section id="rc_03_03">
+        <h4>
+          3. Callback function will be called if any of the variable value is
+          changed
+        </h4>
+
+        <pre class="prettyprint">
+    import axios from &#x22;axios&#x22;;
+    import React, { useEffect, useState } from &#x22;react&#x22;;
+    
+    const UseEffectOnDataChange = () =&#x3E; {
+        const [searchText, setSearchText] = useState(&#x22;&#x22;);
+        const [movies, setMovies] = useState&#x3C;any&#x3E;([]);
+    
+        const getDataFromServer = async () =&#x3E; {
+        if (searchText == &#x22;&#x22;) {
+            return;
+        }
+        const url = &#x22;http://www.omdbapi.com/?s=&#x22; + searchText + &#x22;&#x26;apikey=fa8dd961&#x22;;
+        const response = await axios.get(url);
+        console.log(&#x22;--response : &#x22;, response.data.Search);
+    
+        setMovies(response.data.Search);
+        };
+    
+        useEffect(() =&#x3E; {
+        getDataFromServer();
+        }, [searchText]);
+    
+        return (
+        &#x3C;div&#x3E;
+            &#x3C;h3&#x3E;Use effect called when data is changed&#x3C;/h3&#x3E;
+            &#x3C;p&#x3E;
+            This is mostyle required when we fetch data from the server and
+            initialize state
+            &#x3C;/p&#x3E;
+            &#x3C;div&#x3E;
+            &#x3C;input
+                type=&#x22;text&#x22;
+                onChange={(e) =&#x3E; {
+                let text = e.target.value.trim();
+                if (text.length &#x3E;= 3) {
+                    setSearchText(text);
+                }
+                }}
+            &#x3E;&#x3C;/input&#x3E;
+            &#x3C;/div&#x3E;
+            &#x3C;div className=&#x22;list&#x22;&#x3E;
+            {movies &#x26;&#x26;
+                movies.map((item: any) =&#x3E; {
+                return (
+                    &#x3C;div key={item.imdbID}&#x3E;{item.Title + &#x22; (&#x22; + item.Year + &#x22;)&#x22;}&#x3C;/div&#x3E;
+                );
+                })}
+            &#x3C;/div&#x3E;
+        &#x3C;/div&#x3E;
+        );
+    };
+    
+    export default UseEffectOnDataChange;
+                </pre
+        >
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
