@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
     <title>jQuery Selection</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
     </nav>
     <div class="content">
-        <section id="jq_01_01">
-            <h4>document.ready</h4>
-            <pre class="prettyprint">
+      <section id="jq_01_01">
+        <h4>document.ready</h4>
+        <pre class="prettyprint">
 
     // A $( document ).ready() block.
     $( document ).ready(function() {
         console.log( "ready!" );
     });
-            </pre>
-        </section>
+            </pre
+        >
+      </section>
 
-        <section id="jq_01_02">
-            <h3>Data Attributes</h3>
+      <section id="jq_01_02">
+        <h3>Data Attributes</h3>
 
-            <h4>Using jQuery</h4>
-            <pre class="prettyprint">
+        <h4>Using jQuery</h4>
+        <pre class="prettyprint">
     &#x3C;ul&#x3E;
         &#x3C;li data-snake=&#x22;anaconda&#x22;&#x3E;Anaconda&#x3C;/li&#x3E;
         &#x3C;li data-snake=&#x22;cobra&#x22;&#x3E;King Kobra&#x3C;/li&#x3E;
         &#x3C;li data-snake=&#x22;mamba&#x22;&#x3E;Black Mamba&#x3C;/li&#x3E;
     &#x3C;/ul&#x3E;
-                </pre>
-            <pre class="prettyprint">
+                </pre
+        >
+        <pre class="prettyprint">
     $("li").click(function (e) {
         e.stopPropagation();
         
@@ -59,10 +70,11 @@
         console.log(snakeType);
 
     });
-                </pre>
+                </pre
+        >
 
-            <h4>Using JavaScript</h4>
-            <pre class="prettyprint">
+        <h4>Using JavaScript</h4>
+        <pre class="prettyprint">
 
     var links = document.getElementsByTagName("li");
     for (var count = 0; count < links.length; count++) {
@@ -81,22 +93,21 @@
         console.log(snakeType);
 
     }
-                </pre>
-
-
-        </section>
-        <section id="jq_01_03">
-            <h3>Checkbox</h3>
-            <div>
-                To create checkbox,
-                <pre class="prettyprint">
+                </pre
+        >
+      </section>
+      <section id="jq_01_03">
+        <h3>Checkbox</h3>
+        <div>
+          To create checkbox,
+          <pre class="prettyprint">
 
     &#x3C;input type=&#x22;checkbox&#x22; id=&#x22;chkCountry&#x22; checked&#x3E;&#x3C;label for=&#x22;chkCountry&#x22;&#x3E;Indian&#x3C;/label&#x3E;
     &#x3C;div class=&#x22;output&#x22; id=&#x22;chk_output&#x22;&#x3E;&#x3C;/div&#x3E;
-                </pre>
+                </pre
+          >
 
-
-                <pre class="prettyprint">
+          <pre class="prettyprint">
 
     $("#chkCountry").change(function (e) {
         e.stopPropagation();
@@ -109,15 +120,14 @@
 
 
     });
-      </pre>
+      </pre
+          >
+        </div>
 
+        <div>
+          <h4>Get list of all checked checkboxes</h4>
 
-            </div>
-
-            <div>
-                <h4>Get list of all checked checkboxes</h4>
-
-                <pre class="prettyprint">
+          <pre class="prettyprint">
 
     &#x3C;ol id=&#x22;skills&#x22;&#x3E;
         &#x3C;li&#x3E;&#x3C;input type=&#x22;checkbox&#x22; id=&#x22;row_0&#x22; data-skill=&#x22;js&#x22;&#x3E;&#x3C;label for=&#x22;row_0&#x22;&#x3E;JavaScript&#x3C;/label&#x3E;&#x3C;/li&#x3E;
@@ -127,9 +137,10 @@
     &#x3C;/ol&#x3E;
     &#x3C;button id=&#x22;submit&#x22;&#x3E;Submit&#x3C;/button&#x3E;
 
-                </pre>
+                </pre
+          >
 
-                <pre class="prettyprint">
+          <pre class="prettyprint">
 
     $("#submit").click(function (e) {
         e.stopPropagation();
@@ -145,17 +156,17 @@
         console.log(arrSkills);
     });
     
-                </pre>
-            </div>
-        </section>
+                </pre
+          >
+        </div>
+      </section>
 
+      <section id="jq_01_04">
+        <h3>Radio Button Group</h3>
+        <div>
+          To create group of radio buttons,
 
-        <section id="jq_01_04">
-            <h3>Radio Button Group</h3>
-            <div>
-                To create group of radio buttons,
-
-                <pre class="prettyprint">
+          <pre class="prettyprint">
 
     &#x3C;div&#x3E;
         &#x3C;input type=&#x22;radio&#x22; name=&#x22;framework&#x22; value=&#x22;angular&#x22;&#x3E;Angular&#x3C;br&#x3E;
@@ -163,10 +174,11 @@
         &#x3C;input type=&#x22;radio&#x22; name=&#x22;framework&#x22; value=&#x22;vue&#x22;&#x3E;Vue.js&#x3C;br&#x3E;
     &#x3C;/div&#x3E;
 
-                </pre>
-                Event Handler code for radio group,
+                </pre
+          >
+          Event Handler code for radio group,
 
-                <pre class="prettyprint">
+          <pre class="prettyprint">
 
     $("input[type='radio'][name='framework']").change(function (e) {
         e.stopPropagation();
@@ -174,22 +186,14 @@
         console.log("here : " + val);
 
     });
-                </pre>
-
-            </div>
-        </section>
-
-
-
-
+                </pre
+          >
+        </div>
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>
+  <script>
     PR.prettyPrint();
-</script>
-
+  </script>
 </html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>useState</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="react_index.html">React</a>
+    </nav>
+    <div class="content">
+      <h3>useState</h3>
+      <section id="rc_02_01">
+        <h4>1. update state values on the basis of previous state value</h4>
+
+        when we have to update the state based on the previous value of state,
+        instead of direct assignment of state, use function
+        <pre class="prettyprint">
+
+    import React, { useState } from &#x22;react&#x22;;
+
+    const CompUseState = () =&#x3E; {
+        const [count, setCount] = useState(0);
+        return (
+        &#x3C;div&#x3E;
+            &#x3C;h3&#x3E;Count = {count}&#x3C;/h3&#x3E;
+            &#x3C;div&#x3E;
+            &#x3C;button
+                onClick={() =&#x3E; {
+                setCount((prev) =&#x3E; prev + 1);
+                }}
+            &#x3E;
+                Increment by 1
+            &#x3C;/button&#x3E;
+            &#x3C;/div&#x3E;
+            &#x3C;div&#x3E;
+            &#x3C;button
+                onClick={() =&#x3E; {
+                setCount((prev) =&#x3E; prev - 1);
+                }}
+            &#x3E;
+                Decrement by 1
+            &#x3C;/button&#x3E;
+            &#x3C;/div&#x3E;
+        &#x3C;/div&#x3E;
+        );
+    };
+    
+    export default CompUseState;
+            
+            </pre
+        >
+      </section>
+
+      <section id="rc_02_02">
+        <h4>2. useState with array of objects</h4>
+        Following code creates a random object on button click and push it to
+        state array. On click of the object box, it removes from the state
+        array.
+        <pre class="prettyprint">
+    import React, { useState } from &#x22;react&#x22;;
+
+    const CompUseStateWithArray = () =&#x3E; {
+        const [arr, setArray] = useState&#x3C;any&#x3E;([]);
+        return (
+        &#x3C;div className=&#x22;box&#x22;&#x3E;
+            &#x3C;h3&#x3E;useState using Array state&#x3C;/h3&#x3E;
+            &#x3C;p&#x3E;click on the number to remove it from array.&#x3C;/p&#x3E;
+            &#x3C;h3&#x3E;Array of random object&#x3C;/h3&#x3E;
+            &#x3C;div className=&#x22;list&#x22;&#x3E;
+            {arr.map((item: any) =&#x3E; {
+                return (
+                &#x3C;div
+                    key={item}
+                    onClick={() =&#x3E; {
+                    let tempArr = [...arr];
+                    let index = tempArr.findIndex((k: any) =&#x3E; k.id == item.id);
+                    if (index != -1) {
+                        tempArr.splice(index, 1);
+                        setArray(tempArr);
+                    }
+                    }}
+                &#x3E;
+                    {item.name}
+                &#x3C;/div&#x3E;
+                );
+            })}
+            &#x3C;/div&#x3E;
+            &#x3C;div&#x3E;
+            &#x3C;button
+                onClick={() =&#x3E; {
+                let num = Math.floor(Math.random() * 99999999);
+                let obj = { id: num, name: num };
+                setArray((prevState: any) =&#x3E; [...prevState, obj]);
+                }}
+            &#x3E;
+                Add random element
+            &#x3C;/button&#x3E;
+            &#x3C;/div&#x3E;
+        &#x3C;/div&#x3E;
+        );
+    };
+    
+    export default CompUseStateWithArray;
+                </pre
+        >
+      </section>
+      <section id="rc_02_03">
+        <h4>3. useState with object</h4>
+
+        <pre class="prettyprint">
+    import React, { useState } from &#x22;react&#x22;;
+
+    const CompUseStateWithObject = () =&#x3E; {
+    const [userDetails, setUserDetails] = useState({
+        firstName: &#x22;&#x22;,
+        lastName: &#x22;&#x22;,
+    });
+    return (
+        &#x3C;div className=&#x22;box&#x22;&#x3E;
+        &#x3C;h3&#x3E;useState using object state&#x3C;/h3&#x3E;
+        &#x3C;p&#x3E;
+            When we use object as a state, we have to destructure the object
+            properties
+        &#x3C;/p&#x3E;
+        &#x3C;h3&#x3E;User Details&#x3C;/h3&#x3E;
+        &#x3C;div&#x3E;
+            &#x3C;b&#x3E;{userDetails.firstName + &#x22; &#x22; + userDetails.lastName}&#x3C;/b&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;div&#x3E;
+            &#x3C;input
+            type=&#x22;text&#x22;
+            placeholder=&#x22;First Name&#x22;
+            onChange={(e) =&#x3E; {
+                setUserDetails({ ...userDetails, firstName: e.target.value });
+            }}
+            &#x3E;&#x3C;/input&#x3E;
+            &#x3C;input
+            type=&#x22;text&#x22;
+            placeholder=&#x22;Last Name&#x22;
+            onChange={(e) =&#x3E; {
+                setUserDetails({ ...userDetails, lastName: e.target.value });
+            }}
+            &#x3E;&#x3C;/input&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;/div&#x3E;
+    );
+    };
+
+    export default CompUseStateWithObject;
+
+   
+                </pre
+        >
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
