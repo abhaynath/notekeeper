@@ -192,6 +192,68 @@
                 </pre
         >
       </section>
+
+      <section id="rc_03_04">
+        <h4>4. Cleanup the activity once component is unmounted.</h4>
+
+        <pre class="prettyprint">
+          import React, { useEffect, useState } from &#x22;react&#x22;;
+
+          const MouseLocation = () =&#x3E; {
+            const [x, setX] = useState(0);
+            const [y, setY] = useState(0);
+          
+            const showMousePosition = (e: any) =&#x3E; {
+              setX(e.clientX);
+              setY(e.clientY);
+            };
+          
+            useEffect(() =&#x3E; {
+              console.log(&#x22;--attach mouse event--&#x22;);
+              window.addEventListener(&#x22;mousemove&#x22;, showMousePosition);
+              return () =&#x3E; {
+                console.log(&#x22;--detach mouse event--&#x22;);
+                window.removeEventListener(&#x22;mousemove&#x22;, showMousePosition);
+              };
+            }, []);
+            return (
+              &#x3C;div&#x3E;
+                &#x3C;div&#x3E;
+                  X = {x} and Y = {y}
+                &#x3C;/div&#x3E;
+              &#x3C;/div&#x3E;
+            );
+          };
+          
+          export default MouseLocation;
+          
+                </pre
+        >
+        <pre class="prettyprint">
+          import React, { useState } from &#x22;react&#x22;;
+          import MouseLocation from &#x22;./mouse-location&#x22;;
+          
+          const CompUseEffectCleanup = () =&#x3E; {
+            const [isDisplay, setIsDisplay] = useState(true);
+            return (
+              &#x3C;div&#x3E;
+                &#x3C;button
+                  onClick={() =&#x3E; {
+                    setIsDisplay((prevState: boolean) =&#x3E; !prevState);
+                  }}
+                &#x3E;
+                  Toggle display
+                &#x3C;/button&#x3E;
+          
+                {isDisplay &#x26;&#x26; &#x3C;MouseLocation&#x3E;&#x3C;/MouseLocation&#x3E;}
+              &#x3C;/div&#x3E;
+            );
+          };
+          
+          export default CompUseEffectCleanup;
+          
+        </pre>
+      </section>
     </div>
   </body>
 
