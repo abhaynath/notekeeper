@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>UseReducer</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="react_index.html">React</a>
+    </nav>
+    <div class="content">
+      <h3>UseReducer</h3>
+      <section id="rc_05_01">
+        <h4>1. UseReducer example</h4>
+
+        <pre class="prettyprint">
+    import React, { useReducer } from &#x22;react&#x22;;
+
+    const initialState = {
+        count: 0,
+    };
+    
+    enum MY_ACTIONS {
+        ADD = &#x22;add&#x22;,
+        SUBSTRACT = &#x22;substract&#x22;,
+        RESET = &#x22;reset&#x22;,
+    }
+    const reducer = (state: any, action: any) =&#x3E; {
+        switch (action.type) {
+        case MY_ACTIONS.ADD:
+            return { count: state.count + action.value };
+        case MY_ACTIONS.SUBSTRACT:
+            return { count: state.count - action.value };
+        case MY_ACTIONS.RESET:
+            return initialState;
+        default:
+            return state;
+        }
+    };
+    const UseReducer1 = () =&#x3E; {
+        const [count, dispatch] = useReducer(reducer, initialState);
+    
+        return (
+        &#x3C;div&#x3E;
+            &#x3C;div&#x3E;Count : {count.count}&#x3C;/div&#x3E;
+            &#x3C;div&#x3E;
+            &#x3C;button
+                onClick={() =&#x3E; {
+                dispatch({ type: MY_ACTIONS.ADD, value: 1 });
+                }}
+            &#x3E;
+                Add
+            &#x3C;/button&#x3E;
+            &#x3C;button
+                onClick={() =&#x3E; {
+                dispatch({ type: MY_ACTIONS.SUBSTRACT, value: 1 });
+                }}
+            &#x3E;
+                Substract
+            &#x3C;/button&#x3E;
+            &#x3C;button
+                onClick={() =&#x3E; {
+                dispatch({ type: MY_ACTIONS.RESET });
+                }}
+            &#x3E;
+                Reset
+            &#x3C;/button&#x3E;
+            &#x3C;/div&#x3E;
+        &#x3C;/div&#x3E;
+        );
+    };
+    
+    export default UseReducer1;
+            
+</pre
+        >
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
