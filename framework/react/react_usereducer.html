@@ -102,7 +102,7 @@
       </section>
 
       <section id="rc_05_02">
-        <h4>1. UseReducer with Context</h4>
+        <h4>2. UseReducer with Context</h4>
 
         <pre class="prettyprint">
     import React, { useReducer } from &#x22;react&#x22;;
@@ -197,6 +197,66 @@
     
     export default UseReducerWithContextChild;
     
+
+        </pre>
+      </section>
+
+      <section id="rc_05_03">
+        <h4>3. UseReducer API call</h4>
+
+        <pre class="prettyprint">
+  import axios from &#x22;axios&#x22;;
+  import React, { useEffect, useReducer } from &#x22;react&#x22;;
+
+  const initialState = {
+    isLoading: true,
+    data: [],
+    error: &#x22;&#x22;,
+  };
+  export enum Messages {
+    FETCH = &#x22;fetch&#x22;,
+    FETCH_ERROR = &#x22;error&#x22;,
+  }
+  const reducer = (state: any, action: any) =&#x3E; {
+    switch (action.type) {
+      case Messages.FETCH:
+        return {
+          isLoading: false,
+          data: action.payload,
+          error: &#x22;&#x22;,
+        };
+      case Messages.FETCH_ERROR:
+        return {
+          isLoading: false,
+          data: [],
+          error: &#x22;Error occurred&#x22;,
+        };
+
+      default:
+        return state;
+    }
+  };
+  const UseReducerAPI = () =&#x3E; {
+    useEffect(() =&#x3E; {
+      axios
+        .get(&#x22;https://jsonplaceholder.typicode.com/posts/1&#x22;)
+        .then((response: any) =&#x3E; {
+          dispatch({ type: Messages.FETCH, payload: response.data });
+        })
+        .catch((error: any) =&#x3E; {
+          dispatch({ type: Messages.FETCH_ERROR });
+        });
+    }, []);
+    const [state, dispatch] = useReducer(reducer, initialState);
+    return (
+      &#x3C;div&#x3E;
+        {state.isLoading ? &#x22;Loading&#x22; : state.data.title}
+        {state.error ? state.error : null}
+      &#x3C;/div&#x3E;
+    );
+  };
+
+  export default UseReducerAPI;
 
         </pre>
       </section>
