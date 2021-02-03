@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Custom Hooks</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="react_index.html">React</a>
+    </nav>
+    <div class="content">
+      <h3>Custom Hooks</h3>
+      <section id="rc_06_01">
+        <h4>1. Custom Counter Hook</h4>
+
+        <pre class="prettyprint">
+    import { useState } from &#x22;react&#x22;;
+
+    function useCounter(initialValue = 0, value: number) {
+    const [count, setCount] = useState(initialValue);
+    const increment = () =&#x3E; {
+        setCount((prevState: number) =&#x3E; prevState + value);
+    };
+    const decrement = () =&#x3E; {
+        setCount((prevState: number) =&#x3E; prevState - value);
+    };
+    const reset = () =&#x3E; {
+        setCount(initialValue);
+    };
+    return [count, increment, decrement, reset] as const;
+    }
+    export default useCounter;
+
+        </pre>
+        <pre class="prettyprint">
+    import React from &#x22;react&#x22;;
+    import useCounter from &#x22;./useCounter&#x22;;
+
+    const CompCounterCustomHook = () =&#x3E; {
+    const [count, increment, decrement, reset] = useCounter(50, 7);
+    return (
+        &#x3C;div&#x3E;
+        &#x3C;h3&#x3E;{&#x22;Count = &#x22; + count}&#x3C;/h3&#x3E;
+        &#x3C;button onClick={increment}&#x3E;Add&#x3C;/button&#x3E;
+
+        &#x3C;button onClick={decrement}&#x3E;Substract&#x3C;/button&#x3E;
+
+        &#x3C;button onClick={reset}&#x3E;Reset&#x3C;/button&#x3E;
+        &#x3C;/div&#x3E;
+    );
+    };
+
+    export default CompCounterCustomHook;
+
+        </pre>
+      </section>
+
+      <section id="rc_06_02">
+        <h4>2. Custom TextInput Hook</h4>
+
+        <pre class="prettyprint">
+    import { useState } from &#x22;react&#x22;;
+
+    function useInput(initialValue: string) {
+    const [value, setValue] = useState(initialValue);
+    const reset = () =&#x3E; {
+        setValue(initialValue);
+    };
+    const bind = {
+        value: value,
+        onChange: (e: any) =&#x3E; {
+        setValue(e.target.value);
+        },
+    };
+    return [value, bind, reset] as const;
+    }
+    export default useInput;
+
+        </pre>
+        <pre class="prettyprint">
+    import React, { useState } from &#x22;react&#x22;;
+    import useInput from &#x22;./useInput&#x22;;
+
+    const CompCustomInputHook = () =&#x3E; {
+    const [firstName, bindFirstName, resetFirstName] = useInput(&#x22;&#x22;);
+    const [lastName, bindLastName, resetLastName] = useInput(&#x22;&#x22;);
+    return (
+        &#x3C;div&#x3E;
+        &#x3C;h3&#x3E;{firstName + &#x22; &#x22; + lastName}&#x3C;/h3&#x3E;
+        &#x3C;div&#x3E;
+            First Name :&#x3C;input type=&#x22;text&#x22; {...bindFirstName}&#x3E;&#x3C;/input&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;div&#x3E;
+            Last Name :&#x3C;input type=&#x22;text&#x22; {...bindLastName}&#x3E;&#x3C;/input&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;button
+            onClick={() =&#x3E; {
+            resetFirstName();
+            resetLastName();
+            }}
+        &#x3E;
+            Submit
+        &#x3C;/button&#x3E;
+        &#x3C;/div&#x3E;
+    );
+    };
+
+    export default CompCustomInputHook;
+
+        </pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
