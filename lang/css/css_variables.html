@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>CSS Variables</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../css/css_index.html">CSS</a>
+    </nav>
+    <div class="content">
+      <h3>Using CSS Variables</h3>
+      <section id="css_02_01">
+        <h3>Declaring root scope variables</h3>
+        <p>
+          Use -- before the variable name to declare css variable. Variables
+          declared in root scope can be used anywhere in page.
+        </p>
+        <pre class="prettyprint">
+
+    :root 
+    {
+    --main-bg-color: gray;
+    --main-txt-color: white;
+    --header-bg-color: black;
+    }
+        
+        </pre>
+      </section>
+
+      <section id="css_02_02">
+        <h3>Declaring class scope variables</h3>
+        <p>
+          Here we are declaring few class scoped varibles which are available
+          only in .box class.
+        </p>
+        <pre class="prettyprint">
+
+    .box 
+    {
+        --box-bg: #fff;
+        --box-theme-color: rgb(112, 3, 139);
+        --box-padding: 10px;
+    }
+
+    .box 
+    {
+        border: 3px solid var(--box-theme-color);
+        background-color: var(--box-bg);
+        color: var(--box-theme-color);
+        padding: var(--box-padding);
+        box-shadow: 10px 5px 5px var(--box-theme-color);
+    }
+        </pre>
+      </section>
+
+      <section id="css_02_03">
+        <h3>Using JavaScript to get and set css variables</h3>
+        <p>Header div is using background-color from root scope.</p>
+        <pre class="prettyprint">
+    #myheader 
+    {
+        background-color: var(--header-bg-color);
+        color: white;
+        padding: 5px;
+        text-align: center;
+    }
+        </pre>
+        <pre class="prettyprint">
+    &#x3C;div id=&#x22;myheader&#x22;&#x3E;Header with default black background&#x3C;/div&#x3E;
+
+    &#x3C;h1 id=&#x22;txtcolor&#x22;&#x3E;&#x3C;/h1&#x3E;
+        </pre>
+
+        <pre class="prettyprint">
+    const box = document.querySelector(&#x22;.box&#x22;);
+    const boxStyles = getComputedStyle(box);
+    const boxThemeColor = boxStyles.getPropertyValue(&#x22;--box-theme-color&#x22;);
+    document.getElementById(&#x22;txtcolor&#x22;).innerHTML = boxThemeColor;
+
+    const header = document.querySelector(&#x22;#myheader&#x22;);
+    header.style.setProperty(&#x22;--header-bg-color&#x22;, boxThemeColor);
+        </pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
