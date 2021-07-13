@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>SQL Server Table Schema</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="sql_server_index.html">SQL Server</a>
+    </nav>
+    <div class="content">
+      <section>
+        <h4>SQL Server Data Types</h4>
+
+        <table id="ss_00_01">
+          <caption>
+            Numeric
+          </caption>
+          <tr>
+            <th>Data Type</th>
+            <th>Range</th>
+            <th>Storage</th>
+          </tr>
+
+          <tr>
+            <td>bigint</td>
+            <td>-2^63 to 2^63-1</td>
+            <td>8 Bytes</td>
+          </tr>
+          <tr>
+            <td>int</td>
+            <td>-2^31 to 2^31-1</td>
+            <td>4 Bytes</td>
+          </tr>
+          <tr>
+            <td>smallint</td>
+            <td>-2^15 to 2^15-1</td>
+            <td>2 Bytes</td>
+          </tr>
+          <tr>
+            <td>tinyint</td>
+            <td>0 to 255</td>
+            <td>1 Byte</td>
+          </tr>
+          <tr>
+            <td>bit</td>
+            <td>1, 0 or NULL</td>
+            <td>2 Bytes</td>
+          </tr>
+          <tr>
+            <td>float(n)</td>
+            <td>
+              n is the number of bits that are used to store the mantissa of the
+              float number in scientific notation and, therefore, dictates the
+              precision and storage size. If n is specified, it must be a value
+              between 1 and 53. The default value of n is 53
+            </td>
+            <td>8 Bytes</td>
+          </tr>
+          <tr>
+            <td>decimal(p,s)</td>
+            <td>
+              <div>
+                The maximum total number of decimal digits to be stored. This
+                number includes both the left and the right sides of the decimal
+                point. The precision must be a value from 1 through the maximum
+                precision of 38. The default precision is 18.
+              </div>
+              <div>
+                The number of decimal digits that are stored to the right of the
+                decimal point. This number is subtracted from p to determine the
+                maximum number of digits to the left of the decimal point. Scale
+                must be a value from 0 through p, and can only be specified if
+                precision is specified. The default scale is 0 and so 0 <= s <=
+                p. Maximum storage sizes vary, based on the precision.
+              </div>
+            </td>
+            <td>17 Bytes</td>
+          </tr>
+
+          <tr>
+            <td>money</td>
+            <td>-922,337,203,685,477.5808 to 922,337,203,685,477.5807</td>
+            <td>8 bytes</td>
+          </tr>
+          <tr>
+            <td>smallmoney</td>
+            <td>- 214,748.3648 to 214,748.3647</td>
+            <td>4 bytes</td>
+          </tr>
+        </table>
+
+        <table id="ss_00_02">
+          <caption>
+            String
+          </caption>
+          <tr>
+            <th>Data Type</th>
+            <th>Range</th>
+            <th>Storage</th>
+          </tr>
+
+          <tr>
+            <td>
+              <div>char(n)</div>
+              <div>nchar(n)</div>
+            </td>
+            <td>Fixed length string. 1 to 8000 characters</td>
+            <td>n bytes</td>
+          </tr>
+          <tr>
+            <td>
+              <div>varchar(n)</div>
+              <div>nvarchar(n)</div>
+            </td>
+            <td>
+              Variable-length non-Unicode data in the code page of the server
+              and with a maximum string length of 2^31-1 (2,147,483,647). When
+              the server code page uses double-byte characters, the storage is
+              still 2,147,483,647 bytes. Depending on the character string, the
+              storage size may be less than 2,147,483,647 bytes.
+            </td>
+            <td>n+2 Bytes</td>
+          </tr>
+          <tr>
+            <td>
+              <div>text</div>
+              <div>ntext</div>
+            </td>
+            <td>
+              Variable-length non-Unicode data in the code page of the server
+              and with a maximum string length of 2^31-1 (2,147,483,647). When
+              the server code page uses double-byte characters, the storage is
+              still 2,147,483,647 bytes. Depending on the character string, the
+              storage size may be less than 2,147,483,647 bytes.
+            </td>
+            <td></td>
+          </tr>
+        </table>
+
+        <table id="ss_00_03">
+          <caption>
+            Date and Time
+          </caption>
+          <tr>
+            <th>Data Type</th>
+            <th>Range</th>
+            <th>Storage</th>
+          </tr>
+
+          <tr>
+            <td>datetime2</td>
+            <td>
+              Defines a date that is combined with a time of day that is based
+              on 24-hour clock. datetime2 can be considered as an extension of
+              the existing datetime type that has a larger date range, a larger
+              default fractional precision, and optional user-specified
+              precision.
+            </td>
+            <td>8 Bytes</td>
+          </tr>
+          <tr>
+            <td>date</td>
+            <td>Defines a date in SQL Server.</td>
+            <td>3 Bytes</td>
+          </tr>
+          <tr>
+            <td>time</td>
+            <td>
+              Defines a time of a day. The time is without time zone awareness
+              and is based on a 24-hour clock.
+            </td>
+            <td>5 Bytes</td>
+          </tr>
+          <tr>
+            <td>datetimeoffset</td>
+            <td>
+              Defines a date that is combined with a time of a day based on a
+              24-hour clock like datetime2, and adds time zone awareness based
+              on UTC (Universal Time Coordinate or Greenwich Mean Time).
+            </td>
+            <td>10 Bytes</td>
+          </tr>
+        </table>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
