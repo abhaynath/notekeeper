@@ -35,8 +35,114 @@
     </nav>
     <div class="content">
       <section id="ss_01_01">
-        <h4>Create Tables</h4>
-        <pre class="prettyprint"></pre>
+        <h4>MainWindow.xaml</h4>
+        <pre class="prettyprint">
+
+          &#x3C;Window x:Class=&#x22;MultiThreadApp.MainWindow&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+          xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+          xmlns:local=&#x22;clr-namespace:MultiThreadApp&#x22;
+          xmlns:resx=&#x22;clr-namespace:MultiThreadApp.Properties&#x22;
+          mc:Ignorable=&#x22;d&#x22;
+          Title=&#x22;MainWindow&#x22; Height=&#x22;450&#x22; Width=&#x22;800&#x22;&#x3E;
+      &#x3C;StackPanel Margin=&#x22;20&#x22; Width=&#x22;300&#x22;&#x3E;
+          &#x3C;GroupBox Header=&#x22;Timer Background&#x22;&#x3E;
+              &#x3C;StackPanel&#x3E;
+                  &#x3C;TextBlock Name=&#x22;Txt&#x22; Padding=&#x22;10&#x22; Margin=&#x22;10&#x22; Text=&#x22;0&#x22; FontSize=&#x22;40&#x22; HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22; FontWeight=&#x22;Bold&#x22;&#x3E;
+  
+                  &#x3C;/TextBlock&#x3E;
+                  &#x3C;Button Name=&#x22;BtnStart&#x22; Style=&#x22;{StaticResource BtnPrimary}&#x22; Content=&#x22;Start&#x22; Click=&#x22;BtnStart_Click&#x22;&#x3E;&#x3C;/Button&#x3E;
+              &#x3C;/StackPanel&#x3E;
+              
+          &#x3C;/GroupBox&#x3E;
+          
+         &#x3C;/StackPanel&#x3E;
+  &#x3C;/Window&#x3E;
+  
+
+        </pre>
+
+        <h4>MainWindow.cs</h4>
+        <pre class="prettyprint">
+
+          using System;
+          using System.Windows;
+          using System.ComponentModel;
+          
+          namespace MultiThreadApp
+          {
+             public partial class MainWindow : Window
+              {
+                  BackgroundWorker bgWorker;
+                  public MainWindow()
+                  {
+                      InitializeComponent();
+          
+                      bgWorker = new BackgroundWorker();
+                      bgWorker.WorkerSupportsCancellation = true;
+                      bgWorker.WorkerReportsProgress = true;
+                      bgWorker.DoWork += BgWorker_DoWork;
+                      bgWorker.ProgressChanged += BgWorker_ProgressChanged;
+                      bgWorker.RunWorkerCompleted += BgWorker_RunWorkerCompleted;
+                  }
+          
+                  private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+                  {
+                      if (e.Cancelled)
+                      {
+                          Txt.Text = &#x22;Cancelled !&#x22;;
+                          BtnStart.Content = &#x22;Start&#x22;;
+          
+                      }
+                      else
+                      {
+                          Txt.Text = &#x22;Finished !&#x22;;
+                          BtnStart.Content = &#x22;Start&#x22;;
+                      }
+          
+                  }
+          
+                  private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+                  {
+                      Txt.Text = e.ProgressPercentage.ToString();
+                  }
+                  private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
+                  {
+                      for (int i = 0; i &#x3C; 5; i++)
+                      {
+                          Console.WriteLine(i);
+                          bgWorker.ReportProgress(i);
+          
+                          System.Threading.Thread.Sleep(1000);
+                          if (bgWorker.CancellationPending)
+                          {
+                              Console.WriteLine(&#x22;--exiting loop--&#x22;);
+                              e.Cancel = true;
+                              break;
+                          }
+                      }
+                  }
+                  private void BtnStart_Click(object sender, RoutedEventArgs e)
+                  {
+                      if (!bgWorker.IsBusy)
+                      {
+                          bgWorker.RunWorkerAsync();
+                          BtnStart.Content = &#x22;Stop&#x22;;
+                      }
+                      else
+                      {
+                          bgWorker.CancelAsync();
+                          BtnStart.Content = &#x22;Start&#x22;;
+                      }
+          
+                  }
+              }
+          }
+          
+
+        </pre>
       </section>
     </div>
   </body>
