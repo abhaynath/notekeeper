@@ -25,86 +25,55 @@
     ></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>WPF Model</title>
+    <title>SQL Server Table Schema</title>
   </head>
 
   <body>
     <nav class="nav_main">
       <a href="../../index.html"><i class="fa fa-home"></i></a>
-      <a href="wpf_index.html">WPF</a>
+      <a href="sql_server_index.html">SQL Server</a>
     </nav>
     <div class="content">
       <section id="ss_01_01">
-        <h4>Base Model</h4>
+        <h4>Create Tables</h4>
         <pre class="prettyprint">
 
-    using System.ComponentModel;
+    create table player
+    (
+    &#x9;id bigint identity(1,1) not null primary key,
+    &#x9;firstName varchar(50),
+    &#x9;middleName varchar(50),
+    &#x9;lastName varchar(50),
+    &#x9;teamId bigint,
+    &#x9;birthDate date,
+    &#x9;birthPlace varchar(100),
+    &#x9;height int,
+    &#x9;roleId bigint,
+    &#x9;battingStyle bigint,
+    &#x9;bowlingStyle bigint,
+    &#x9;info text
 
-    namespace MVVM1.Model
-    {
-        public class BaseModel : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public void OnPropertyChanged(string propertyName)
-            {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
-    
-            }
-        }
-    }
+    )
+
         </pre>
 
-        <h4>Employee Model</h4>
+        <h4>Create Tables with Foreign Key constraints</h4>
         <pre class="prettyprint">
-
-    namespace MVVM1.Model
-    {
-        public class Employee : BaseModel
-        {
-            private int _id;
+    create table tournament
+    (
+        id bigint identity(1,1) not null primary key,
+        title varchar(150) unique,
+        editionOf bigint,
+        info text,
+        startDate date,
+        endDate date,
+        manOfSeries bigint,
+        constraint fk_man_of_series foreign key (manOfSeries)
+        references player(id)
+        on delete cascade
+        on update cascade
     
-            public int Id
-            {
-                get { return _id; }
-                set
-                {
-                    _id = value;
-                    OnPropertyChanged(nameof(Id));
-                }
-            }
-    
-            private string _name;
-    
-            public string Name
-            {
-                get { return _name; }
-                set
-                {
-                    _name = value;
-                    OnPropertyChanged(nameof(Name));
-                }
-            }
-            private int _age;
-    
-            public int Age
-            {
-                get { return _age; }
-                set
-                {
-                    _age = value;
-                    OnPropertyChanged(nameof(Age));
-                }
-            }
-    
-    
-    
-        }
-    }
-          
-
+    )
         </pre>
       </section>
       <section id="ss_01_02">
