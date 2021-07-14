@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>WPF View</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="wpf_index.html">WPF</a>
+    </nav>
+    <div class="content">
+      <section id="ss_01_01">
+        <h4>Employee View</h4>
+        <pre class="prettyprint">
+&#x3C;UserControl x:Class=&#x22;MVVM1.UserControls.EmployeeView&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+          xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+          xmlns:local=&#x22;clr-namespace:MVVM1.UserControls&#x22;
+          mc:Ignorable=&#x22;d&#x22; 
+          d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;&#x3E;
+ &#x3C;Grid Margin=&#x22;15&#x22;&#x3E;
+     &#x3C;Grid.Resources&#x3E;
+         &#x3C;Style TargetType=&#x22;TextBox&#x22;&#x3E;
+             &#x3C;Setter Property=&#x22;Padding&#x22; Value=&#x22;5&#x22;&#x3E;&#x3C;/Setter&#x3E;
+             &#x3C;Setter Property=&#x22;VerticalAlignment&#x22; Value=&#x22;Center&#x22;&#x3E;&#x3C;/Setter&#x3E;
+
+         &#x3C;/Style&#x3E;
+
+         &#x3C;Style TargetType=&#x22;TextBlock&#x22;&#x3E;
+             &#x3C;Setter Property=&#x22;VerticalAlignment&#x22; Value=&#x22;Center&#x22;&#x3E;&#x3C;/Setter&#x3E;
+         &#x3C;/Style&#x3E;
+     &#x3C;/Grid.Resources&#x3E;
+     &#x3C;Grid.ColumnDefinitions&#x3E;
+         &#x3C;ColumnDefinition Width=&#x22;Auto&#x22;&#x3E;&#x3C;/ColumnDefinition&#x3E;
+         &#x3C;ColumnDefinition Width=&#x22;*&#x22;&#x3E;&#x3C;/ColumnDefinition&#x3E;
+     &#x3C;/Grid.ColumnDefinitions&#x3E;
+     &#x3C;Grid.RowDefinitions&#x3E;
+         &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+         &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+         &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+         &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+         &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+         &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+     &#x3C;/Grid.RowDefinitions&#x3E;
+
+     &#x3C;TextBlock Text=&#x22;Employee Management&#x22; Grid.Row=&#x22;0&#x22; Grid.Column=&#x22;0&#x22; Grid.ColumnSpan=&#x22;2&#x22; FontSize=&#x22;20&#x22; FontWeight=&#x22;Bold&#x22; HorizontalAlignment=&#x22;Center&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+     &#x3C;TextBlock Text=&#x22;Enter Id&#x22; Grid.Row=&#x22;1&#x22; Grid.Column=&#x22;0&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+     &#x3C;TextBlock Text=&#x22;Enter Name&#x22; Grid.Row=&#x22;2&#x22; Grid.Column=&#x22;0&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+     &#x3C;TextBlock Text=&#x22;Enter Age&#x22; Grid.Row=&#x22;3&#x22; Grid.Column=&#x22;0&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+
+     &#x3C;TextBox Name=&#x22;txtId&#x22; Grid.Row=&#x22;1&#x22; Grid.Column=&#x22;1&#x22; Text=&#x22;{Binding Path=CurrentEmployee.Id,Mode=TwoWay}&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+     &#x3C;TextBox Name=&#x22;txtName&#x22; Grid.Row=&#x22;2&#x22; Grid.Column=&#x22;1&#x22; Text=&#x22;{Binding Path=CurrentEmployee.Name,Mode=TwoWay}&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+     &#x3C;TextBox Name=&#x22;txtAge&#x22; Grid.Row=&#x22;3&#x22; Grid.Column=&#x22;1&#x22; Text=&#x22;{Binding Path=CurrentEmployee.Age,Mode=TwoWay}&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+
+     &#x3C;StackPanel HorizontalAlignment=&#x22;Center&#x22; Orientation=&#x22;Horizontal&#x22; Grid.Row=&#x22;4&#x22; Grid.Column=&#x22;1&#x22; Margin=&#x22;10&#x22;&#x3E;
+         &#x3C;StackPanel.Resources&#x3E;
+             &#x3C;Style TargetType=&#x22;Button&#x22;&#x3E;
+                 &#x3C;Setter Property=&#x22;Padding&#x22; Value=&#x22;10&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                 &#x3C;Setter Property=&#x22;Background&#x22; Value=&#x22;Teal&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                 &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;White&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                 &#x3C;Setter Property=&#x22;BorderThickness&#x22; Value=&#x22;0&#x22;&#x3E;&#x3C;/Setter&#x3E;
+
+             &#x3C;/Style&#x3E;
+         &#x3C;/StackPanel.Resources&#x3E;
+         &#x3C;Button Name=&#x22;btnSave&#x22; Content=&#x22;Save&#x22; Command=&#x22;{Binding Path=SaveCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+         &#x3C;Button Name=&#x22;btnUpdate&#x22; Content=&#x22;Update&#x22; Command=&#x22;{Binding Path=UpdateCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+         &#x3C;Button Name=&#x22;btnSearch&#x22; Content=&#x22;Search&#x22; Command=&#x22;{Binding Path=SearchCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+         &#x3C;Button Name=&#x22;btnDelete&#x22; Content=&#x22;Delete&#x22; Command=&#x22;{Binding Path=DeleteCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+         &#x3C;Button Name=&#x22;btnDeleteAll&#x22; Content=&#x22;Delete All&#x22; Command=&#x22;{Binding Path=DeleteAllCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+         &#x3C;TextBlock Name=&#x22;txtBlockName&#x22; Text=&#x22;{Binding Path=Message,Mode=TwoWay}&#x22;  Margin=&#x22;10&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+     &#x3C;/StackPanel&#x3E;
+
+     &#x3C;DataGrid Margin=&#x22;10&#x22; Name=&#x22;dgEmployees&#x22; AutoGenerateColumns=&#x22;False&#x22; Grid.Row=&#x22;6&#x22; Grid.Column=&#x22;1&#x22; ItemsSource=&#x22;{Binding Path=EmployeeList,Mode=TwoWay}&#x22; AlternatingRowBackground=&#x22;LightGray&#x22; IsReadOnly=&#x22;True&#x22; HorizontalAlignment=&#x22;Stretch&#x22; VerticalAlignment=&#x22;Stretch&#x22; ColumnWidth=&#x22;Auto&#x22;&#x3E;
+         &#x3C;DataGrid.Columns&#x3E;
+             &#x3C;DataGridTextColumn Header=&#x22;Id&#x22; Width=&#x22;Auto&#x22; Binding=&#x22;{Binding Path=Id}&#x22;&#x3E;&#x3C;/DataGridTextColumn&#x3E;
+             &#x3C;DataGridTextColumn Header=&#x22;Name&#x22; Width=&#x22;Auto&#x22; Binding=&#x22;{Binding Path=Name}&#x22;&#x3E;&#x3C;/DataGridTextColumn&#x3E;
+             &#x3C;DataGridTextColumn Header=&#x22;Age&#x22; Width=&#x22;Auto&#x22; Binding=&#x22;{Binding Path=Age}&#x22;&#x3E;&#x3C;/DataGridTextColumn&#x3E;
+         &#x3C;/DataGrid.Columns&#x3E;
+
+     &#x3C;/DataGrid&#x3E;
+ &#x3C;/Grid&#x3E;
+&#x3C;/UserControl&#x3E;
+
+   
+          
+        </pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>WPF Employee Service</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="wpf_index.html">WPF</a>
+    </nav>
+    <div class="content">
+      <section id="ss_01_01">
+        <h4>Employee Service</h4>
+        <pre class="prettyprint">
+
+  using System.Collections.Generic;
+  using System.Data;
+  using System.Data.SqlClient;
+  
+  namespace MVVM1.Model
+  {
+      public class EmployeeService
+      {
+  
+          private string _conString = &#x22;Server=localhost;Database=EMSDB;Trusted_Connection=true&#x22;;
+  
+          SqlConnection ObjSqlConnection;
+          SqlCommand ObjSqlCommand;
+  
+          public EmployeeService()
+          {
+              ObjSqlConnection = new SqlConnection(_conString);
+              ObjSqlCommand = new SqlCommand();
+              ObjSqlCommand.Connection = ObjSqlConnection;
+              ObjSqlCommand.CommandType = CommandType.StoredProcedure;
+  
+  
+          }
+          public List&#x3C;Employee&#x3E; GetAll()
+          {
+              List&#x3C;Employee&#x3E; employeeList = new List&#x3C;Employee&#x3E;();
+              try
+              {
+                  ObjSqlCommand.Parameters.Clear();
+                  ObjSqlCommand.CommandText = &#x22;udp_SelectAllEmployees&#x22;;
+                  ObjSqlConnection.Open();
+  
+                  var ObjSqlDataReader = ObjSqlCommand.ExecuteReader();
+                  if (ObjSqlDataReader.HasRows)
+                  {
+                      Employee employee = null;
+                      while (ObjSqlDataReader.Read())
+                      {
+                          employee = new Employee();
+                          employee.Id = ObjSqlDataReader.GetInt32(0);
+                          employee.Name = ObjSqlDataReader.GetString(1);
+                          employee.Age = ObjSqlDataReader.GetInt32(2);
+  
+                          employeeList.Add(employee);
+  
+                      }
+                  }
+                  ObjSqlDataReader.Close();
+  
+  
+  
+              }
+              catch (SqlException ex)
+              {
+  
+                  throw ex;
+              }
+              finally
+              {
+                  ObjSqlConnection.Close();
+              }
+              return employeeList;
+  
+          }
+          public bool Add(Employee obj)
+          {
+              bool IsAdded = false;
+              if (obj.Age &#x3C; 21 || obj.Age &#x3E; 58)
+              {
+                  return false;
+              }
+              try
+              {
+                  ObjSqlCommand.Parameters.Clear();
+                  ObjSqlCommand.CommandText = &#x22;udp_InsertEmployee&#x22;;
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Id&#x22;, obj.Id);
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Name&#x22;, obj.Name);
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Age&#x22;, obj.Age);
+  
+                  ObjSqlConnection.Open();
+                  int rowsCount = ObjSqlCommand.ExecuteNonQuery();
+                  IsAdded = rowsCount &#x3E; 0;
+  
+              }
+              catch (SqlException ex)
+              {
+  
+              }
+              finally
+              {
+                  ObjSqlConnection.Close();
+  
+              }
+  
+              return IsAdded;
+          }
+          public bool Update(Employee obj)
+          {
+              bool IsUpdated = false;
+  
+              try
+              {
+                  ObjSqlCommand.Parameters.Clear();
+                  ObjSqlCommand.CommandText = &#x22;udp_UpdateEmployee&#x22;;
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Id&#x22;, obj.Id);
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Name&#x22;, obj.Name);
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Age&#x22;, obj.Age);
+  
+                  ObjSqlConnection.Open();
+                  int rowsCount = ObjSqlCommand.ExecuteNonQuery();
+                  IsUpdated = rowsCount &#x3E; 0;
+  
+              }
+              catch (SqlException ex)
+              {
+  
+              }
+              finally
+              {
+                  ObjSqlConnection.Close();
+  
+              }
+  
+              return IsUpdated;
+          }
+          public bool Delete(int id)
+          {
+              bool IsDeleted = false;
+  
+              try
+              {
+                  ObjSqlCommand.Parameters.Clear();
+                  ObjSqlCommand.CommandText = &#x22;udp_DeleteEmployee&#x22;;
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Id&#x22;, id);
+  
+  
+                  ObjSqlConnection.Open();
+                  int rowsCount = ObjSqlCommand.ExecuteNonQuery();
+                  IsDeleted = rowsCount &#x3E; 0;
+  
+              }
+              catch (SqlException ex)
+              {
+  
+              }
+              finally
+              {
+                  ObjSqlConnection.Close();
+  
+              }
+  
+              return IsDeleted;
+          }
+          public bool DeleteAll()
+          {
+              bool IsDeletedAll = false;
+              try
+              {
+                  ObjSqlCommand.Parameters.Clear();
+                  ObjSqlCommand.CommandText = &#x22;udp_DeleteAll&#x22;;
+  
+                  ObjSqlConnection.Open();
+                  int rowsCount = ObjSqlCommand.ExecuteNonQuery();
+                  IsDeletedAll = rowsCount &#x3E; 0;
+  
+              }
+              catch (SqlException ex)
+              {
+  
+  
+              }
+              finally
+              {
+                  ObjSqlConnection.Close();
+              }
+              return IsDeletedAll;
+          }
+          public Employee Search(int id)
+          {
+              Employee employee = null;
+  
+              try
+              {
+                  ObjSqlCommand.Parameters.Clear();
+                  ObjSqlCommand.CommandText = &#x22;udp_SelectEmployeeById&#x22;;
+                  ObjSqlCommand.Parameters.AddWithValue(&#x22;@Id&#x22;, id);
+  
+                  ObjSqlConnection.Open();
+                  var objDataReader = ObjSqlCommand.ExecuteReader();
+                  if (objDataReader.HasRows)
+                  {
+                      objDataReader.Read();
+                      employee = new Employee();
+                      employee.Id = objDataReader.GetInt32(0);
+                      employee.Name = objDataReader.GetString(1);
+                      employee.Age = objDataReader.GetInt32(2);
+  
+  
+  
+                  }
+                  objDataReader.Close();
+  
+              }
+              catch (SqlException ex)
+              {
+  
+              }
+              finally
+              {
+                  ObjSqlConnection.Close();
+  
+              }
+              return employee;
+  
+          }
+      }
+  }
+          
+          
+        </pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>

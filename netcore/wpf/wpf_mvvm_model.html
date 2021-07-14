@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>WPF Model</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="wpf_index.html">WPF</a>
+    </nav>
+    <div class="content">
+      <section id="ss_01_01">
+        <h4>Base Model</h4>
+        <pre class="prettyprint">
+
+    using System.ComponentModel;
+
+    namespace MVVM1.Model
+    {
+        public class BaseModel : INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
+            public void OnPropertyChanged(string propertyName)
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
+    
+            }
+        }
+    }
+        </pre>
+
+        <h4>Employee Model</h4>
+        <pre class="prettyprint">
+
+    namespace MVVM1.Model
+    {
+        public class Employee : BaseModel
+        {
+            private int _id;
+    
+            public int Id
+            {
+                get { return _id; }
+                set
+                {
+                    _id = value;
+                    OnPropertyChanged(nameof(Id));
+                }
+            }
+    
+            private string _name;
+    
+            public string Name
+            {
+                get { return _name; }
+                set
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+            private int _age;
+    
+            public int Age
+            {
+                get { return _age; }
+                set
+                {
+                    _age = value;
+                    OnPropertyChanged(nameof(Age));
+                }
+            }
+    
+    
+    
+        }
+    }
+          
+
+        </pre>
+      </section>
+      <section id="ss_01_02">
+        <h4>Add new column</h4>
+        <pre class="prettyprint">
+
+    ALTER TABLE country
+    ADD shortName VARCHAR(10)
+            </pre
+        >
+        <h4>Rename existing column</h4>
+        <pre class="prettyprint">
+
+    exec sp_rename 'team.shortname', 'title','column'
+            </pre
+        >
+
+        <h4>Modify datatype of column</h4>
+        <pre class="prettyprint">
+
+    ALTER TABLE team 
+    MODIFY title bigint
+            </pre
+        >
+
+        <h4>Drop column</h4>
+        <pre class="prettyprint">
+
+    ALTER TABLE team
+    DROP COLUMN title
+            </pre
+        >
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
