@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>CSS Media Queries</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../css/css_index.html">CSS</a>
+    </nav>
+    <div class="content">
+      <section id="css_03_01">
+        <h3>Conditional Loading of CSS on the basis of orientation</h3>
+        <p>
+          Create a folder css. Add new 2 files landscape.css & portrait.css.
+        </p>
+        <pre class="prettyprint">
+
+    &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+    &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+    &#x3C;title&#x3E;Home&#x3C;/title&#x3E;
+    &#x3C;link
+        rel=&#x22;stylesheet&#x22;
+        href=&#x22;css/landscape.css&#x22;
+        media=&#x22;screen and (orientation:landscape)&#x22;
+    /&#x3E;
+    &#x3C;link
+        rel=&#x22;stylesheet&#x22;
+        href=&#x22;css/portrait.css&#x22;
+        media=&#x22;screen and (orientation:potrait)&#x22;
+    /&#x3E;
+    &#x3C;/head&#x3E;
+        
+        </pre>
+      </section>
+
+      <section id="css_03_02">
+        <h3>media queries with orientation</h3>
+        <pre class="prettyprint">
+
+    /* For portrait, we want the tool bar on top */
+
+    @media screen and (orientation: portrait) {
+        #toolbar {
+            width: 100%;
+        }
+    }
+
+    /* For landscape, we want the tool bar stick on the left */
+
+    @media screen and (orientation: landscape) {
+        #toolbar {
+            position: fixed;
+            width: 2.65em;
+            height: 100%;
+        }
+
+        p {
+            margin-left: 2em;
+        }
+
+        li + li {
+            margin-top: .5em;
+        }
+    }
+
+
+        </pre>
+        <h3>Importing css from another css file.</h3>
+        <p>@import rule must be at the top of the document</p>
+        <pre class="prettyprint">
+   
+   @import url(&#x22;portrait.css&#x22;) screen and (orientation: portrait);
+   @import url(&#x22;landscape.css&#x22;) screen and (orientation: landscape);
+        </pre>
+      </section>
+
+      <section id="css_03_03">
+        <h3>Media Queries (landscape/potrait)</h3>
+
+        <pre class="prettyprint">
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) { ... }
+    
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) { ... }
+    
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) { ... }
+    
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) { ... }
+        </pre>
+        <h3>Using max-width</h3>
+        <pre class="prettyprint">
+    @media (max-width: 575.98px) { ... }
+
+    // Small devices (landscape phones, less than 768px)
+    @media (max-width: 767.98px) { ... }
+    
+    // Medium devices (tablets, less than 992px)
+    @media (max-width: 991.98px) { ... }
+    
+    // Large devices (desktops, less than 1200px)
+    @media (max-width: 1199.98px) { ... }
+        </pre>
+
+        <pre class="prettyprint"></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
