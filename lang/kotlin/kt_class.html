@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Class</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="kotlin_index.html">Kotlin</a>
+    </nav>
+    <div class="content">
+      <section id="kt_05_01">
+        <h4>Example 1</h4>
+        <pre class="prettyprint">
+
+    class BankAccount {
+        var accountBalance:Double =0.0
+        var accountNumber:Int  = 0
+        
+            fun displayBalance(){
+            println(&#x22;Balance : ${accountBalance}&#x22;)
+        println(&#x22;Number ${accountNumber}&#x22;)
+            
+        }
+            
+    }
+    fun main(){
+        val abhay = BankAccount()
+        abhay.accountBalance = 34.44
+        abhay.accountNumber = 1
+        abhay.displayBalance()
+        
+        
+    }
+                
+            </pre
+        >
+
+        <h4>Example 2</h4>
+        <pre class="prettyprint">
+
+    class Grade(val letter: String, val points: Double, val credits: Double)
+
+    class Student(val firstName: String, val lastName: String, val grades: MutableList&#x3C;Grade&#x3E; = mutableListOf(), var credits: Double = 0.0) 
+    {
+        fun recordGrade(grade: Grade) {
+            grades.add(grade);
+            credits += grade.credits;
+        }
+
+        fun display() {
+            println(&#x22;$firstName $lastName credits : $credits&#x22;);
+            for (i in grades) {
+                println(&#x22;${i.letter} -- ${i.points}&#x22;)
+            }
+            println(&#x22;---------&#x22;);
+        }
+    }
+
+    val jane = Student(&#x22;Mary&#x22;, &#x22;Jane&#x22;);
+    val history = Grade(&#x22;B&#x22;, 3.4, 2.3);
+    val maths = Grade(&#x22;A&#x22;, 1.1, 6.6);
+
+    fun main() {
+        jane.recordGrade(history);
+        jane.recordGrade(maths);
+        jane.display();
+
+    }
+
+        </pre>
+      </section>
+
+      <section id="kt_05_02">
+        <h4>Data Class</h4>
+        <pre class="prettyprint">
+              
+    data class StudentData(var firstName:String,var lastName:String,var id:Int);
+
+    val abhay = StudentData(&#x22;Abhay&#x22;,&#x22;Nath&#x22;,1);
+    val rohit = StudentData(&#x22;Rohit&#x22;,&#x22;Sharma&#x22;,2);
+    val abhayCopy = abhay.copy();
+
+
+    fun main(){
+        println(abhay.firstName);
+        println(rohit.lastName);
+
+        println(&#x22;abhay==rohit : ${abhay==rohit}&#x22;)
+        println(&#x22;abhay==abhayCopy : ${abhay==abhayCopy}&#x22;)
+        println(&#x22;abhay===abhayCopy : ${abhay===abhayCopy}&#x22;)
+
+        val (firstName,lastName,id) = abhayCopy;
+
+
+        println(&#x22;abhaycopy properties : $firstName $lastName $id&#x22;)
+        abhay.firstName=&#x22;Sachin Tendulkar&#x22;;
+        println(&#x22;abhayCopy =  ${abhayCopy.firstName} ---  abhay =  ${abhay.firstName}&#x22;)
+    }
+          </pre
+        >
+      </section>
+
+      <section id="kt_05_03">
+        <h4>Enum Classes</h4>
+        <pre class="prettyprint">
+
+    import java.util.*
+
+    enum class DayOfWeek(val isWeekend: Boolean = false) {
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday(true),
+        Sunday(true);
+
+        companion object {
+            fun today():DayOfWeek{
+                val calenderDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+                var adjustedDay = calenderDayOfWeek - 2;
+                val days = DayOfWeek.values();
+                if(adjustedDay&#x3C;0){
+                    adjustedDay+=days.count()
+                }
+                val today = days.first(){it.ordinal == adjustedDay}
+                return today;
+            }
+        }
+    }
+
+    fun main() {
+        for(day in DayOfWeek.values()){
+            println(&#x22;${day.ordinal}  ${day.name} ${day.isWeekend}&#x22;);
+        }
+
+        val dayIndex = 3;
+        val dayAtIndex = DayOfWeek.values()[dayIndex]
+        println(&#x22;Day at Index ${dayIndex} = ${dayAtIndex}&#x22;);
+
+        val tuesDay = DayOfWeek.valueOf(&#x22;Tuesday&#x22;);
+        println(&#x22;TuesDay index is ${tuesDay.ordinal}&#x22;)
+
+        val today = DayOfWeek.today();
+        val isWeekend = &#x22;It is ${if(today.isWeekend) &#x22;&#x22; else &#x22; not &#x22;}the weekend&#x22;;
+        println(&#x22;It is ${today}. $isWeekend.&#x22;)
+    }
+
+          </pre
+        >
+      </section>
+
+      <section id="kt_05_04">
+        <h4>using object keyword for singleton object</h4>
+
+        <pre class="prettyprint">
+              
+    data class Student(val firstName: String, val lastName: String) {
+        val fullName = &#x22;$firstName $lastName&#x22;;
+    }
+    
+    val abhay = Student(&#x22;Abhay&#x22;, &#x22;Nath&#x22;);
+    val virat = Student(&#x22;virat&#x22;, &#x22;Kohli&#x22;);
+    
+    object StudentRegister {
+        val allStudents = mutableListOf&#x3C;Student&#x3E;()
+    
+        fun addStudent(student: Student) {
+            allStudents.add(student);
+        }
+    
+        fun removeStudent(student: Student) {
+            allStudents.remove(student);
+        }
+    
+        fun display() {
+            for (student in allStudents) {
+                println(student.fullName);
+            }
+        }
+    
+    }
+    
+    fun main() {
+        StudentRegister.addStudent(abhay);
+        StudentRegister.addStudent(virat);
+        StudentRegister.display();
+        StudentRegister.removeStudent(abhay);
+        StudentRegister.display();
+    }
+          </pre
+        >
+      </section>
+
+      <section id="kt_05_05">
+        <h4>using object for the namespace</h4>
+        <pre class="prettyprint">
+
+    object JsonKeys{
+        const val ID = &#x22;_id&#x22;;
+        const val SESSION_ID=&#x22;session_id&#x22;;
+    }
+    
+    fun main(){
+        println(JsonKeys.ID);
+    }
+
+          </pre
+        >
+      </section>
+
+      <section id="kt_05_06">
+        <h4>factory pattern using companion object</h4>
+        <pre class="prettyprint">
+
+    class Scientist private constructor(val id: Int, val firstName: String, val lastName: String) {
+        companion object {
+            var currentId = 0;
+            fun newScientist(firstName: String, lastName: String): Scientist {
+                currentId += 1;
+                return Scientist(currentId, firstName, lastName);
+            }
+        }
+    
+        var fullName = &#x22;$firstName $lastName&#x22;;
+    }
+    
+    object ScientistRepository {
+        val allScientist = mutableListOf&#x3C;Scientist&#x3E;()
+    
+        fun addScientist(scientist: Scientist) {
+            allScientist.add(scientist)
+        }
+    
+        fun removeScientist(scientist: Scientist) {
+            allScientist.remove(scientist)
+        }
+    
+        fun display() {
+            for (scientist in allScientist) {
+                println(&#x22;${scientist.id} ${scientist.fullName}&#x22;)
+            }
+        }
+    }
+    
+    fun main() {
+        val newton = Scientist.newScientist(&#x22;Issac&#x22;, &#x22;Newton&#x22;);
+        val einstein = Scientist.newScientist(&#x22;Albert&#x22;, &#x22;Einstein&#x22;);
+        ScientistRepository.addScientist(newton)
+        ScientistRepository.addScientist(einstein)
+        ScientistRepository.display()
+    }
+          </pre
+        >
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
