@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>JavaScript API Calls</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="javascript_index.html">JavaScript</a>
+    </nav>
+    <div class="content">
+      <section id="js_04_01">
+        <h4>Fetch API with JWT token</h4>
+        <pre class="prettyprint">
+
+    &#x3C;!DOCTYPE html&#x3E;
+    &#x3C;html lang=&#x22;en&#x22;&#x3E;
+        &#x3C;head&#x3E;
+        &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+        &#x3C;meta http-equiv=&#x22;X-UA-Compatible&#x22; content=&#x22;IE=edge&#x22; /&#x3E;
+        &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+        &#x3C;title&#x3E;Fetch Data&#x3C;/title&#x3E;
+        &#x3C;style&#x3E;
+            textarea {
+            width: 100%;
+            height: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            }
+        &#x3C;/style&#x3E;
+        &#x3C;/head&#x3E;
+        &#x3C;body&#x3E;
+        &#x3C;div&#x3E;&#x3C;button id=&#x22;btnLogin&#x22;&#x3E;Fetch Data&#x3C;/button&#x3E;&#x3C;/div&#x3E;
+        &#x3C;textarea id=&#x22;pId&#x22;&#x3E;&#x3C;/textarea&#x3E;
+        &#x3C;textarea id=&#x22;resp&#x22;&#x3E;&#x3C;/textarea&#x3E;
+        &#x3C;/body&#x3E;
+    
+        &#x3C;script&#x3E;
+        let btn = document.getElementById(&#x22;btnLogin&#x22;);
+        let p = document.getElementById(&#x22;pId&#x22;);
+        let resp = document.getElementById(&#x22;resp&#x22;);
+    
+        let token =
+            &#x22;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2tlciIsInNpZCI6IjEiLCJqdGkiOiI3MTVhYjQ4Mi02ZmI3LTQwZDQtYTZkZS00NGM3ZGRiMDE4YmUiLCJleHAiOjE2MjczOTU4NDQsImlzcyI6ImFiaGF5bmF0aCIsImF1ZCI6ImFiaGF5bmF0aCJ9.tLKDoxlIHU6cJYryDckNqerMy1_CnIA4RoLhxxoHxV0&#x22;;
+        const search_path = &#x22;http://localhost/redditapi/api/v1/user/search_user&#x22;;
+    
+        btn.onclick = function () {
+            let param = { txt: &#x22;abhay&#x22; };
+    
+            postData(search_path, param).then((data) =&#x3E; {
+            resp.innerHTML = JSON.stringify(data);
+            });
+            p.innerHTML = token;
+        };
+    
+        async function postData(url = &#x22;&#x22;, data = {}) {
+            const response = await fetch(url, {
+            method: &#x22;POST&#x22;,
+            mode: &#x22;cors&#x22;,
+            headers: {
+                &#x22;Content-Type&#x22;: &#x22;application/json&#x22;,
+                &#x22;Access-Control-Allow-Origin&#x22;: &#x22;*&#x22;,
+                Authorization: &#x22;Bearer &#x22; + token,
+            },
+    
+            body: JSON.stringify(data),
+            });
+            return response.json();
+        }
+        &#x3C;/script&#x3E;
+    &#x3C;/html&#x3E;
+            
+   
+                </pre
+        >
+      </section>
+      <section id="js_04_02">
+        <h4>Ajax Call with JWT token</h4>
+        <pre class="prettyprint">
+            
+    &#x3C;!DOCTYPE html&#x3E;
+    &#x3C;html lang=&#x22;en&#x22;&#x3E;
+        &#x3C;head&#x3E;
+        &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+        &#x3C;meta http-equiv=&#x22;X-UA-Compatible&#x22; content=&#x22;IE=edge&#x22; /&#x3E;
+        &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+        &#x3C;title&#x3E;Ajax&#x3C;/title&#x3E;
+        &#x3C;script src=&#x22;jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;
+        &#x3C;style&#x3E;
+            textarea {
+            width: 100%;
+            height: 100px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            }
+        &#x3C;/style&#x3E;
+        &#x3C;/head&#x3E;
+        &#x3C;body&#x3E;
+        &#x3C;div&#x3E;&#x3C;button id=&#x22;btnLogin&#x22;&#x3E;Ajax Call&#x3C;/button&#x3E;&#x3C;/div&#x3E;
+        &#x3C;textarea id=&#x22;pId&#x22;&#x3E;&#x3C;/textarea&#x3E;
+        &#x3C;textarea id=&#x22;resp&#x22;&#x3E;&#x3C;/textarea&#x3E;
+        &#x3C;/body&#x3E;
+    
+        &#x3C;script&#x3E;
+        let btn = document.getElementById(&#x22;btnLogin&#x22;);
+        let p = document.getElementById(&#x22;pId&#x22;);
+        let resp = document.getElementById(&#x22;resp&#x22;);
+    
+        let token =
+            &#x22;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2tlciIsInNpZCI6IjEiLCJqdGkiOiI3MTVhYjQ4Mi02ZmI3LTQwZDQtYTZkZS00NGM3ZGRiMDE4YmUiLCJleHAiOjE2MjczOTU4NDQsImlzcyI6ImFiaGF5bmF0aCIsImF1ZCI6ImFiaGF5bmF0aCJ9.tLKDoxlIHU6cJYryDckNqerMy1_CnIA4RoLhxxoHxV0&#x22;;
+        const search_path = &#x22;http://localhost/redditapi/api/v1/user/search_user&#x22;;
+    
+        btn.onclick = function () {
+            console.log(&#x22;--onclick--  final 3&#x22;);
+            let param = { txt: &#x22;abhay&#x22; };
+            p.innerHTML = token;
+            $.ajax({
+            url: search_path,
+            data: JSON.stringify(param),
+            type: &#x22;POST&#x22;,
+            headers: {
+                Authorization: &#x22;Bearer &#x22; + token,
+                &#x22;Content-Type&#x22;: &#x22;application/json&#x22;,
+                &#x22;Access-Control-Allow-Origin&#x22;: &#x22;*&#x22;,
+            },
+            error: function (err) {
+                resp.innerHTML = JSON.stringify(err);
+            },
+            success: function (res) {
+                resp.innerHTML = JSON.stringify(res);
+            },
+            });
+        };
+        &#x3C;/script&#x3E;
+    &#x3C;/html&#x3E;
+            
+
+        </pre>
+      </section>
+
+      <section id="js_04_03">
+        <h4>Find element & element index in an array (find & findIndex)</h4>
+
+        <pre class="prettyprint"></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    PR.prettyPrint();
+  </script>
+</html>
