@@ -19,11 +19,13 @@
       type="text/css"
       href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
     />
-    <script
+    <!-- <script
       type="text/javascript"
       src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
+    ></script> -->
 
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
     <title>Class</title>
   </head>
@@ -36,8 +38,8 @@
     <div class="content">
       <section id="kt_05_01">
         <h4>Example 1</h4>
-        <pre class="prettyprint">
-
+        <pre >
+            <code>
     class BankAccount {
         var accountBalance:Double =0.0
         var accountNumber:Int  = 0
@@ -57,13 +59,10 @@
         
         
     }
-                
-            </pre
-        >
+        </code></pre>
 
         <h4>Example 2</h4>
-        <pre class="prettyprint">
-
+        <pre><code>
     class Grade(val letter: String, val points: Double, val credits: Double)
 
     class Student(val firstName: String, val lastName: String, val grades: MutableList&#x3C;Grade&#x3E; = mutableListOf(), var credits: Double = 0.0) 
@@ -91,15 +90,14 @@
         jane.recordGrade(maths);
         jane.display();
 
-    }
-
-        </pre>
+    } 
+    </code></pre>
       </section>
 
       <section id="kt_05_02">
         <h4>Data Class</h4>
-        <pre class="prettyprint">
-              
+        <pre>
+<code>
     data class StudentData(var firstName:String,var lastName:String,var id:Int);
 
     val abhay = StudentData(&#x22;Abhay&#x22;,&#x22;Nath&#x22;,1);
@@ -122,14 +120,13 @@
         abhay.firstName=&#x22;Sachin Tendulkar&#x22;;
         println(&#x22;abhayCopy =  ${abhayCopy.firstName} ---  abhay =  ${abhay.firstName}&#x22;)
     }
-          </pre
-        >
+</code></pre>
       </section>
 
       <section id="kt_05_03">
         <h4>Enum Classes</h4>
-        <pre class="prettyprint">
-
+        <pre>
+<code>
     import java.util.*
 
     enum class DayOfWeek(val isWeekend: Boolean = false) {
@@ -171,16 +168,14 @@
         val isWeekend = &#x22;It is ${if(today.isWeekend) &#x22;&#x22; else &#x22; not &#x22;}the weekend&#x22;;
         println(&#x22;It is ${today}. $isWeekend.&#x22;)
     }
-
-          </pre
-        >
+</code></pre>
       </section>
 
       <section id="kt_05_04">
         <h4>using object keyword for singleton object</h4>
 
-        <pre class="prettyprint">
-              
+        <pre>
+     <code>
     data class Student(val firstName: String, val lastName: String) {
         val fullName = &#x22;$firstName $lastName&#x22;;
     }
@@ -214,14 +209,13 @@
         StudentRegister.removeStudent(abhay);
         StudentRegister.display();
     }
-          </pre
-        >
+     </code></pre>
       </section>
 
       <section id="kt_05_05">
         <h4>using object for the namespace</h4>
-        <pre class="prettyprint">
-
+        <pre>
+<code>
     object JsonKeys{
         const val ID = &#x22;_id&#x22;;
         const val SESSION_ID=&#x22;session_id&#x22;;
@@ -230,15 +224,13 @@
     fun main(){
         println(JsonKeys.ID);
     }
-
-          </pre
-        >
+</code></pre>
       </section>
 
       <section id="kt_05_06">
         <h4>factory pattern using companion object</h4>
-        <pre class="prettyprint">
-
+        <pre>
+<code>
     class Scientist private constructor(val id: Int, val firstName: String, val lastName: String) {
         companion object {
             var currentId = 0;
@@ -276,13 +268,12 @@
         ScientistRepository.addScientist(einstein)
         ScientistRepository.display()
     }
-          </pre
-        >
+</code></pre>
       </section>
     </div>
   </body>
-
-  <script>
+  <script>hljs.highlightAll();</script>
+  <!-- <script>
     PR.prettyPrint();
-  </script>
+  </script> -->
 </html>
