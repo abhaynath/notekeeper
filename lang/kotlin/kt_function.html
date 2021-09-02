@@ -9,22 +9,24 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
       type="text/css"
       href="../../js/libs/google-code-prettify/prettify.css"
-    />
+    /> -->
     <link
       rel="stylesheet"
       type="text/css"
       href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
     />
-    <script
+    <!-- <script
       type="text/javascript"
       src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
+    ></script> -->
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Functions</title>
   </head>
 
@@ -36,22 +38,22 @@
     <div class="content">
       <section id="kt_04_01">
         <h4>Storing function in variable</h4>
-        <pre class="prettyprint">
-    fun main() 
-    {
-        val f1 = ::printName
-        f1(&#x22;The Undertaker&#x22;)
-    }
-    fun printName(name: String) {
-        println(name)
-    }
-            </pre
-        >
+        <pre>
+          <code>
+  fun main() 
+  {
+      val f1 = ::printName
+      f1(&#x22;The Undertaker&#x22;)
+  }
+  fun printName(name: String) {
+      println(name)
+  }
+          </code></pre>
       </section>
     </div>
   </body>
-
-  <script>
+  <script>hljs.highlightAll();</script>
+  <!-- <script>
     PR.prettyPrint();
-  </script>
+  </script> -->
 </html>
