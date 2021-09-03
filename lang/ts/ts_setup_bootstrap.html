@@ -1,83 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
     <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>TypeScript tutorials</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="../ts/ts_index.html">TypeScript</a>
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../ts/ts_index.html">TypeScript</a>
     </nav>
     <div class="content">
+      <h3>
+        TypeScript Setup (Typescript + jQuery + Bootstrap + Jasmine + Webpack)
+      </h3>
 
-        <h3>TypeScript Setup (Typescript + jQuery + Bootstrap + Jasmine + Webpack)</h3>
+      <a
+        href="https://github.com/abhaynath/TypeScript-jQuery-Bootstrap-Jasmine-Webpack.git"
+        >Project source code</a
+      >
+      <ol class="steps">
+        <li>
+          You will need following npm packages globally installed
 
-        <a href="https://github.com/abhaynath/TypeScript-jQuery-Bootstrap-Jasmine-Webpack.git">Project source code</a>
-        <ol class="steps">
-            <li>You will need following npm packages globally installed
+          <pre class="shell">npm install -g webpack --verbose</pre>
+          <pre class="shell">npm install -g typedoc --verbose</pre>
+        </li>
+        <li>Create an empty directory called 'tsbasic'.</li>
+        <li>
+          Run following command to create 'package.json'.
+          <pre class="shell">D:\tsbasic\npm init -y</pre>
+        </li>
+        <li>
+          Run following command to create 'tsconfig.json'
+          <pre class="shell">D:\tsbasic\tsc --init</pre>
+          To enable source map, uncomment "sourceMap": true," line
+        </li>
+        <li>
+          We need to add 'ts-loader' as develpment dependency.
 
-                <pre class="shell">npm install -g webpack --verbose</pre>
-                <pre class="shell">npm install -g typedoc --verbose</pre>
-            </li>
-            <li>Create an empty directory called 'tsbasic'.</li>
-            <li> Run following command to create 'package.json'.
-                <pre class="shell">D:\tsbasic\npm init -y</pre>
+          <pre class="shell">D:\tsbasic\npm install --save-dev ts-loader</pre>
 
-            </li>
-            <li>Run following command to create 'tsconfig.json'
-                <pre class="shell">D:\tsbasic\tsc --init</pre>
-                To enable source map, uncomment "sourceMap": true," line
-            </li>
-            <li> We need to add 'ts-loader' as develpment dependency.
+          this will add following entry in package.json
 
-                <pre class="shell">D:\tsbasic\npm install --save-dev ts-loader</pre>
-
-                this will add following entry in package.json
-
-                <pre class="code">
+          <pre><code>
     "devDependencies": 
     {
         "ts-loader": "^6.0.4"
-    }
-</pre>
-            </li>
-            <li>Install typescript as development dependency.
-                <pre class="shell">npm install typescript --save-dev</pre>
-            </li>
-            <li>
-                Run following commands from terminal to install the packages.
+    }</code></pre>
+        </li>
+        <li>
+          Install typescript as development dependency.
+          <pre class="shell">npm install typescript --save-dev</pre>
+        </li>
+        <li>
+          Run following commands from terminal to install the packages.
 
-                <pre class="shell">
+          <pre class="shell">
 npm install jquery
 npm install popper.js
 npm install bootstrap
 
 npm install --save-dev @types/jquery
 npm install --save @types/bootstrap
-</pre>
-            </li>
-            <li>Create a directory 'ts-src' in 'sample' folder. This folder will contain all the typescript source
-                files.
-            </li>
-            <li>create 'index.ts' file in ts-src folder. Add following code snippet in the file.
+</pre
+          >
+        </li>
+        <li>
+          Create a directory 'ts-src' in 'sample' folder. This folder will
+          contain all the typescript source files.
+        </li>
+        <li>
+          create 'index.ts' file in ts-src folder. Add following code snippet in
+          the file.
 
-                <pre class="prettyprint">
-
+          <pre><code class="language-typescript">
     /**
     *Class Person model which has name and age
     *
@@ -105,13 +119,13 @@ npm install --save @types/bootstrap
         }
     }
     let abhay = new Person("Abhay", 30);
-    abhay.print();
-            
-    </pre>
-            </li>
-            <li>Create 'webpack.config.js' in 'tsbasic' folder. Add follwing configuration in the file.
+    abhay.print();</code></pre>
+        </li>
+        <li>
+          Create 'webpack.config.js' in 'tsbasic' folder. Add follwing
+          configuration in the file.
 
-                <pre class="prettyprint">
+          <pre><code>
     module.exports = {
         mode: "production",
         //devtool: "inline-source-map",
@@ -132,13 +146,13 @@ npm install --save @types/bootstrap
                 }
             ]
         }
-    };
-            </pre>
-            </li>
-            <li>
-                Create an index.html in 'tsbasic' folder. Add following code inside it.
+    };</code></pre>
+        </li>
+        <li>
+          Create an index.html in 'tsbasic' folder. Add following code inside
+          it.
 
-                <pre class="prettyprint">
+          <pre><code class="language-html">
     &#x3C;!DOCTYPE html&#x3E;
     &#x3C;html lang=&#x22;en&#x22;&#x3E;
     
@@ -171,28 +185,27 @@ npm install --save @types/bootstrap
     &#x3C;script src=&#x22;dist/build/bundle.js&#x22;&#x3E;&#x3C;/script&#x3E;
     
     &#x3C;/html&#x3E;
+                </code></pre>
+        </li>
+        <li>
+          Now you can run 'webpack' command to build the project.
+          <pre class="shell">D:\tsbasic\webpack</pre>
 
-    </pre>
-            </li>
-            <li>Now you can run 'webpack' command to build the project.
-                <pre class="shell">D:\tsbasic\webpack</pre>
+          this will create 'dist' folder in sample directory.
+        </li>
+        <li>
+          To generate documentation from the typescript source code, run
+          following command.
 
+          <pre class="shell">typedoc --out docs ts-src</pre>
+        </li>
 
-                this will create 'dist' folder in sample directory.
-            </li>
-            <li>
-                To generate documentation from the typescript source code, run following command.
+        <li>
+          <h4>Unit Testing</h4>
+          Create new directory 'tests' in root folder Create a new test file
+          called 'Calculator.test.ts'
 
-                <pre class="shell">typedoc --out docs ts-src</pre>
-            </li>
-
-            <li>
-                <h4>Unit Testing</h4>
-                Create new directory 'tests' in root folder
-                Create a new test file called 'Calculator.test.ts'
-
-
-                <pre class="prettyprint">
+          <pre><code class="language-typescript">
     import Calculator from '../src/Calculator';
 
     describe('calculate', function () {
@@ -215,42 +228,36 @@ npm install --save @types/bootstrap
             return c;
         }
     }
+   </code></pre>
 
-        </pre>
-
-                <pre class="shell">
+          <pre class="shell">
     D:\tsbasic\npm i -D jasmine jasmine-ts nyc ts-node typescript
 
     D:\tsbasic\npm i -D @types/jasmine
 
-</pre>
+</pre
+          >
+          In package.json add following configuration
 
-
-
-
-                In package.json add following configuration
-
-                <pre class="prettyprint">
-"scripts": {
-    "test": "jasmine-ts --config=jasmine.json",
-        "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" jasmine-ts --config=jasmine.json && nyc report"
-}
-
-        </pre>
-
-
-                Create a new file 'jasmine.json' which will contain the configuration for jasmine.
-                <pre class="code">
-{
-    "spec_dir": "tests",
-    "spec_files": ["**/*[tT]est.ts"]
-}
+          <pre><code class="language-json">
+    "scripts": {
+        "test": "jasmine-ts --config=jasmine.json",
+            "testWithCoverage": "nyc -r lcov -e .ts -x \"*.test.ts\" jasmine-ts --config=jasmine.json && nyc report"
+    }
     
-</pre>
-            </li>
-            <li>
-                package.json will look similar to this,
-                <pre class="prettyprint">
+ </code></pre>
+          Create a new file 'jasmine.json' which will contain the configuration
+          for jasmine.
+          <pre><code class="language-json">
+    {
+        "spec_dir": "tests",
+        "spec_files": ["**/*[tT]est.ts"]
+    }
+ </code></pre>
+        </li>
+        <li>
+          package.json will look similar to this,
+          <pre><code class="language-json">
 {
     "name": "tsbasic",
     "version": "1.0.0",
@@ -279,29 +286,22 @@ npm install --save @types/bootstrap
         "jquery": "^3.4.1",
         "popper.js": "^1.16.1"
     }
-    }
+}
+                </code>
+
 </pre>
-                To run the tests,
-                <pre class="shell">D:\tsbasic\npm test</pre>
-            </li>
-            <li>
-                Folder structure will look similar to this,
-                <img src="../../images/lang/ts/ts_002.jpg">
-            </li>
-
-
-        </ol>
-
-
-
+          To run the tests,
+          <pre class="shell">D:\tsbasic\npm test</pre>
+        </li>
+        <li>
+          Folder structure will look similar to this,
+          <img src="../../images/lang/ts/ts_002.jpg" />
+        </li>
+      </ol>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>
-    PR.prettyPrint();
-</script>
-
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
