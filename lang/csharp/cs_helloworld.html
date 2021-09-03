@@ -7,11 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
     <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
 </head>
 
 <body>
@@ -25,8 +27,7 @@
 
         <section id="cs_01_01">
             <h3>Hello World !</h3>
-            <pre class="prettyprint">
-
+            <pre><code class="language-csharp">
     using System;
 
     namespace HelloWorld
@@ -38,9 +39,7 @@
                 Console.WriteLine("Hello World!");
             }
         }
-    }
-
-        </pre>
+    }</code></pre>
         </section>
 
 
@@ -142,13 +141,12 @@
             <ol class="steps">
                 <li>
                     <h4>Display value and string (Using Substitution markers)</h4>
-                    <pre class="prettyprint">
+                    <pre><code class="language-csharp">
     string name = "Sachin Tendulkar";
     int score = 200;
 
     Console.WriteLine("Player {0} scored {1} runs.",name,score);
-
-</pre>
+                    </code></pre>
                     This will produce following Output
                     <pre class="shell">
     Player Sachin Tendulkar scored 200 runs.
@@ -158,12 +156,12 @@
 
                 <li>
                     <h4>Display value and string (Using String interpolation)</h4>
-                    <pre class="prettyprint">
+                    <pre><code class="language-csharp">
     string name = "Mahendra singh Dhoni";
     int score = 183;
 
     Console.WriteLine($"Player {name} scored {score} runs.");
-
+</code>
 </pre>
                     This will produce following Output
                     <pre class="shell">
@@ -172,12 +170,12 @@
 
                 <li>
                     <h4>Formatting decimals to specific decimal places</h4>
-                    <pre class="prettyprint">
+                    <pre><code class="language-csharp">
     double myDouble = 12.345678;
 
     Console.WriteLine("{0,-10:F4} -- Fixed Point, Four decimal places",myDouble);
     Console.WriteLine("{0,-10:E3} -- Scientific Notation, 3 decimal places",myDouble);
-                    </pre>
+                  </code>  </pre>
 
                     This will produce following output
                     <pre class="shell">
@@ -190,8 +188,5 @@
 
     </div>
 </body>
-<script>
-    PR.prettyPrint();
-</script>
-
+<script>hljs.highlightAll();</script>
 </html>
