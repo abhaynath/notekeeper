@@ -9,21 +9,6 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <!-- <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script> -->
-
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
@@ -38,8 +23,7 @@
     <div class="content">
       <section id="kt_05_01">
         <h4>Example 1</h4>
-        <pre >
-            <code>
+        <pre><code class="language-kotlin">
     class BankAccount {
         var accountBalance:Double =0.0
         var accountNumber:Int  = 0
@@ -62,7 +46,7 @@
         </code></pre>
 
         <h4>Example 2</h4>
-        <pre><code>
+        <pre><code class="language-kotlin">
     class Grade(val letter: String, val points: Double, val credits: Double)
 
     class Student(val firstName: String, val lastName: String, val grades: MutableList&#x3C;Grade&#x3E; = mutableListOf(), var credits: Double = 0.0) 
@@ -96,8 +80,7 @@
 
       <section id="kt_05_02">
         <h4>Data Class</h4>
-        <pre>
-<code>
+        <pre><code class="language-kotlin">
     data class StudentData(var firstName:String,var lastName:String,var id:Int);
 
     val abhay = StudentData(&#x22;Abhay&#x22;,&#x22;Nath&#x22;,1);
@@ -125,8 +108,7 @@
 
       <section id="kt_05_03">
         <h4>Enum Classes</h4>
-        <pre>
-<code>
+        <pre><code class="language-kotlin">
     import java.util.*
 
     enum class DayOfWeek(val isWeekend: Boolean = false) {
@@ -174,8 +156,7 @@
       <section id="kt_05_04">
         <h4>using object keyword for singleton object</h4>
 
-        <pre>
-     <code>
+        <pre><code class="language-kotlin">
     data class Student(val firstName: String, val lastName: String) {
         val fullName = &#x22;$firstName $lastName&#x22;;
     }
@@ -214,8 +195,7 @@
 
       <section id="kt_05_05">
         <h4>using object for the namespace</h4>
-        <pre>
-<code>
+        <pre><code class="language-kotlin">
     object JsonKeys{
         const val ID = &#x22;_id&#x22;;
         const val SESSION_ID=&#x22;session_id&#x22;;
@@ -229,8 +209,7 @@
 
       <section id="kt_05_06">
         <h4>factory pattern using companion object</h4>
-        <pre>
-<code>
+        <pre><code class="language-kotlin">
     class Scientist private constructor(val id: Int, val firstName: String, val lastName: String) {
         companion object {
             var currentId = 0;
