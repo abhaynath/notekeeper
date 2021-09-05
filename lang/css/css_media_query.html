@@ -9,22 +9,9 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>CSS Media Queries</title>
   </head>
 
@@ -39,8 +26,7 @@
         <p>
           Create a folder css. Add new 2 files landscape.css & portrait.css.
         </p>
-        <pre class="prettyprint">
-
+        <pre><code class="language-html">
     &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
     &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
     &#x3C;title&#x3E;Home&#x3C;/title&#x3E;
@@ -55,55 +41,50 @@
         media=&#x22;screen and (orientation:potrait)&#x22;
     /&#x3E;
     &#x3C;/head&#x3E;
-        
-        </pre>
+        </code></pre>
       </section>
 
       <section id="css_03_02">
         <h3>media queries with orientation</h3>
-        <pre class="prettyprint">
+        <pre><code class="language-css">
+      /* For portrait, we want the tool bar on top */
 
-    /* For portrait, we want the tool bar on top */
-
-    @media screen and (orientation: portrait) {
-        #toolbar {
-            width: 100%;
-        }
-    }
-
-    /* For landscape, we want the tool bar stick on the left */
-
-    @media screen and (orientation: landscape) {
-        #toolbar {
-            position: fixed;
-            width: 2.65em;
-            height: 100%;
-        }
-
-        p {
-            margin-left: 2em;
-        }
-
-        li + li {
-            margin-top: .5em;
-        }
-    }
-
-
-        </pre>
+      @media screen and (orientation: portrait) {
+          #toolbar {
+              width: 100%;
+          }
+      }
+  
+      /* For landscape, we want the tool bar stick on the left */
+  
+      @media screen and (orientation: landscape) {
+          #toolbar {
+              position: fixed;
+              width: 2.65em;
+              height: 100%;
+          }
+  
+          p {
+              margin-left: 2em;
+          }
+  
+          li + li {
+              margin-top: .5em;
+          }
+      }
+        </code></pre>
         <h3>Importing css from another css file.</h3>
         <p>@import rule must be at the top of the document</p>
-        <pre class="prettyprint">
-   
-   @import url(&#x22;portrait.css&#x22;) screen and (orientation: portrait);
-   @import url(&#x22;landscape.css&#x22;) screen and (orientation: landscape);
-        </pre>
+        <pre><code class="language-css">
+    @import url(&#x22;portrait.css&#x22;) screen and (orientation: portrait);
+    @import url(&#x22;landscape.css&#x22;) screen and (orientation: landscape);
+        </code></pre>
       </section>
 
       <section id="css_03_03">
         <h3>Media Queries (landscape/potrait)</h3>
 
-        <pre class="prettyprint">
+        <pre><code class="language-css">
     // Small devices (landscape phones, 576px and up)
     @media (min-width: 576px) { ... }
     
@@ -115,9 +96,9 @@
     
     // Extra large devices (large desktops, 1200px and up)
     @media (min-width: 1200px) { ... }
-        </pre>
+</code></pre>
         <h3>Using max-width</h3>
-        <pre class="prettyprint">
+        <pre><code class="language-css">
     @media (max-width: 575.98px) { ... }
 
     // Small devices (landscape phones, less than 768px)
@@ -128,14 +109,12 @@
     
     // Large devices (desktops, less than 1200px)
     @media (max-width: 1199.98px) { ... }
-        </pre>
+        </code></pre>
 
-        <pre class="prettyprint"></pre>
+        <pre></pre>
       </section>
     </div>
   </body>
 
-  <script>
-    PR.prettyPrint();
-  </script>
+  <script>hljs.highlightAll();</script>
 </html>
