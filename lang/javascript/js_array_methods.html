@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
     <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
 
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
     <title>JavaScript Array Methods</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="javascript_index.html">JavaScript</a>
-
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="javascript_index.html">JavaScript</a>
     </nav>
     <div class="content">
-
-        <section id="js_01_01">
-            <h4>Iterating an Array (forEach)</h4>
-            <pre class="prettyprint">
-
+      <section id="js_01_01">
+        <h4>Iterating an Array (forEach)</h4>
+        <pre><code class="language-javascript">
     const arr = [1, 2, 3, 4, 5, 6];
 
     arr.forEach(item => {
         console.log(item); // output: 1 2 3 4 5 6
-    });
-                </pre>
-        </section>
-        <section id="js_01_02">
-            <h4>Check if array includes a value (includes)</h4>
-            <pre class="prettyprint">
-
+    });</code></pre>
+      </section>
+      <section id="js_01_02">
+        <h4>Check if array includes a value (includes)</h4>
+        <pre><code class="language-javascript">
     const arr = ["rohit", "shikhar", "virat"];
-    
+
     console.log(arr.includes("virat")); //true
     console.log(arr.includes("sachin")); //false
+            </code></pre>
+      </section>
 
-            </pre>
-        </section>
+      <section id="js_01_03">
+        <h4>Find element & element index in an array (find & findIndex)</h4>
+        <p>
+          <b>find(): </b>If element is not found, <code>undefined</code> is
+          returned
+        </p>
+        <p><b>findIndex(): </b>If element is not found, '-1' is returned</p>
 
-        <section id="js_01_03">
-            <h4>Find element & element index in an array (find & findIndex)</h4>
-            <p><b>find(): </b>If element is not found, <code>undefined</code> is returned</p>
-            <p><b>findIndex(): </b>If element is not found, '-1' is returned</p>
-
-            <pre class="prettyprint">
-
+        <pre><code class="language-javascript">
     var arr = [{
         label: "A",
         value: 1
@@ -75,18 +75,14 @@
     
     var index = arr.findIndex(k => k.value == 4);
     console.log(index); // 3
+            </code></pre>
+      </section>
 
-            </pre>
-        </section>
+      <section id="js_01_04">
+        <h4>Get shallow copy of an array from range of indices (slice)</h4>
+        <p></p>
 
-
-        <section id="js_01_04">
-
-            <h4>Get shallow copy of an array from range of indices (slice)</h4>
-            <p></p>
-
-            <pre class="prettyprint">
-
+        <pre><code class="language-javascript">
     var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
 
     console.log(animals.slice(2));
@@ -101,31 +97,28 @@
     //get shallow copy of an entire arrays
 
     var zooAnimals = animals.slice(0);
+            </code></pre>
+      </section>
 
-
-            </pre>
-        </section>
-
-        <section id="js_01_05">
-            <h4>Get all elements having specific property value (filter)</h4>
-            <pre class="prettyprint">
-
+      <section id="js_01_05">
+        <h4>Get all elements having specific property value (filter)</h4>
+        <pre><code class="language-javascript">
     const players = [{
-            name: "Virat Kohli",
-            position: 3
-        },
-        {
-            name: "Rohit Sharma",
-            position: 1
-        },
-        {
-            name: "MS Dhoni",
-            position: 6
-        },
-        {
-            name: "Sachin Tendulkar",
-            position: 1
-        }
+        name: "Virat Kohli",
+        position: 3
+    },
+    {
+        name: "Rohit Sharma",
+        position: 1
+    },
+    {
+        name: "MS Dhoni",
+        position: 6
+    },
+    {
+        name: "Sachin Tendulkar",
+        position: 1
+    }
     ];
     
     function getName(position) {
@@ -135,15 +128,12 @@
     console.log(JSON.stringify(getName(3))); /* [{"name":"Virat Kohli","position":3}] */
     console.log(JSON.stringify(getName(7))); /* [] */
     console.log(JSON.stringify(getName(1))); /* [{"name":"Rohit Sharma","position":1},{"name":"Sachin Tendulkar","position":1}] */
-        
-    
-            </pre>
-        </section>
+    </code></pre>
+      </section>
 
-        <section id="js_01_06">
-            <h4>Apply function to every element and return new array (map)</h4>
-            <pre class="prettyprint">
-
+      <section id="js_01_06">
+        <h4>Apply function to every element and return new array (map)</h4>
+        <pre><code class="language-javascript">
     const arr = [1, 2, 3, 4, 5, 6];
 
     // add one to every element
@@ -168,19 +158,18 @@
     console.log(arr_2); //[10, 30, 59, 3]
 
     console.log(arr_result); //[20, 30, 59, 6]
+            </code></pre>
+      </section>
 
-            </pre>
-        </section>
+      <section id="js_01_07">
+        <h4>Apply function to each element and return one value (reduce)</h4>
+        <p>
+          The reduce() method executes a reducer function (that you provide) on
+          each element of the array, resulting in a single output value.
+        </p>
 
-        <section id="js_01_07">
-            <h4>Apply function to each element and return one value (reduce)</h4>
-            <p>
-                The reduce() method executes a reducer function (that you provide) on each element of the array,
-                resulting in a single output value.
-            </p>
-
-            <pre class="prettyprint">
-
+        <pre>
+                <code class="language-javascript">
     var arr = [1, 2, 3, 4, 5];
     var sum = arr.reduce(function (acc, elem) {
         acc = acc + elem;
@@ -188,36 +177,36 @@
     
     });
     console.log("Sum : " + sum); // Sum : 15
+</code></pre>
+      </section>
 
-
-            </pre>
-        </section>
-
-        <section id="js_01_08">
-            <h4>Checks if at least one element passes the condition (some)</h4>
-            <p>This method check if at least one of array's item passed the condition. If passed, it return 'true'
-                otherwise 'false'.</p>
-            <pre class="prettyprint">
-
+      <section id="js_01_08">
+        <h4>Checks if at least one element passes the condition (some)</h4>
+        <p>
+          This method check if at least one of array's item passed the
+          condition. If passed, it return 'true' otherwise 'false'.
+        </p>
+        <pre>
+            <code class="language-javascript">
     const arr = [1, 2, 3, 4, 5, 6];
 
     // at least one element is greater than 4?
     const largeNum = arr.some(num => num > 4);
     console.log(largeNum); // output: true
-    
+
     // at least one element is less than or equal to 0?
     const smallNum = arr.some(num => num <= 0);
     console.log(smallNum); // output: false
+</code></pre>
+      </section>
 
-            </pre>
-        </section>
-
-        <section id="js_01_09">
-            <h4>Check if every element passes the condition (every)</h4>
-            <p>This method check if all array's item passed the condition. If passed, it return 'true' otherwise
-                'false'.</p>
-            <pre class="prettyprint">
-
+      <section id="js_01_09">
+        <h4>Check if every element passes the condition (every)</h4>
+        <p>
+          This method check if all array's item passed the condition. If passed,
+          it return 'true' otherwise 'false'.
+        </p>
+        <pre><code class="language-javascript">
     const arr = [1, 2, 3, 4, 5, 6];
 
     // all elements are greater than 4
@@ -227,15 +216,13 @@
     // all elements are less than 10
     const lessTen = arr.every(num => num < 10);
     console.log(lessTen); // output: true
+        </code></pre>
+      </section>
 
-            </pre>
-        </section>
-
-        <section id="js_01_10">
-            <h4>Sorting an array (sort)</h4>
-            <p></p>
-            <pre class="prettyprint">
-
+      <section id="js_01_10">
+        <h4>Sorting an array (sort)</h4>
+        <p></p>
+        <pre><code class="language-javascript">
     const arr = [1, 2, 3, 4, 5, 6];
     const alpha = ['e', 'a', 'c', 'u', 'y'];
     
@@ -246,11 +233,9 @@
     // sort in ascending order
     ascOrder = alpha.sort((a, b) => a > b ? 1 : -1);
     console.log(ascOrder); // output: ['a', 'c', 'e', 'u', 'y']
-
-            </pre>
-            Sorting array of objects
-            <pre class="prettyprint">
-
+        </code></pre>
+        Sorting array of objects
+        <pre><code class="language-javascript">
     var players = [{
         name: "Rahul",
         runs: 11000
@@ -275,13 +260,11 @@
     
     console.log(JSON.stringify(players));
     //[{"name":"Sachin","runs":18000},{"name":"Rahul","runs":11000},{"name":"Virat","runs":800},{"name":"Rohit","runs":500}]
-
-            </pre>
-        </section>
-        <section id="js_01_11">
-            <h4>Combining arrays (spread operator)</h4>
-            <pre class="prettyprint">
-
+</code></pre>
+      </section>
+      <section id="js_01_11">
+        <h4>Combining arrays (spread operator)</h4>
+        <pre><code class="language-javascript">
     const players = ["rohit", "shikhar", "virat"];
 
     const arr = ["hardik", "bhuvneshwar", "ravichandran"];
@@ -289,30 +272,21 @@
     players.push(...arr);
     
     console.log(JSON.stringify(players)); /* ["rohit","shikhar","virat","hardik","bhuvneshwar","ravichandran"] */
-    
-                </pre>
-        </section>
+    </code></pre>
+      </section>
 
-
-        <section id="js_01_12">
-            <h4>Combining Arrays at specific position (spread operator)</h4>
-            <pre class="prettyprint">
-
+      <section id="js_01_12">
+        <h4>Combining Arrays at specific position (spread operator)</h4>
+        <pre><code class="language-javascript">
     const players = ["rohit", "shikhar", "virat"];
-
     const arr = ["hardik", ...players, "bhuvneshwar", "ravichandran"];
-    
     console.log(JSON.stringify(arr)); /* ["hardik","rohit","shikhar","virat","bhuvneshwar","ravichandran"] */
+</code></pre>
+      </section>
 
-                    </pre>
-        </section>
-
-
-
-        <section id="js_01_13">
-            <h4>Combining Object properties (spread operator)</h4>
-            <pre class="prettyprint">
-
+      <section id="js_01_13">
+        <h4>Combining Object properties (spread operator)</h4>
+        <pre><code class="language-javascript">
     const players = {
         captain: "Virat Kohli",
         wicketKeeper: "MS Dhoni"
@@ -325,18 +299,12 @@
     };
     
     console.log(JSON.stringify(india)); /* {"spinner":"R. Ashvin","fast":"Bhuvneshwar Kumar","captain":"Virat Kohli","wicketKeeper":"MS Dhoni"} */
-
-                        </pre>
-        </section>
-
+</code></pre>
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>
-    PR.prettyPrint();
-</script>
-
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
