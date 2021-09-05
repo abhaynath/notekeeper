@@ -9,7 +9,7 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
       type="text/css"
       href="../../js/libs/google-code-prettify/prettify.css"
@@ -22,9 +22,14 @@
     <script
       type="text/javascript"
       src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
+    ></script> -->
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link
+    rel="stylesheet"
+    href="../../js/libs/highlight/styles/devibeans.min.css"
+  />
+  <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>SQL Server Table Schema</title>
   </head>
 
@@ -36,29 +41,26 @@
     <div class="content">
       <section id="ss_01_01">
         <h4>Create Tables</h4>
-        <pre class="prettyprint">
+        <pre><code class="language-sql">
+  create table player
+  (
+      &#x9;id bigint identity(1,1) not null primary key,
+      &#x9;firstName varchar(50),
+      &#x9;middleName varchar(50),
+      &#x9;lastName varchar(50),
+      &#x9;teamId bigint,
+      &#x9;birthDate date,
+      &#x9;birthPlace varchar(100),
+      &#x9;height int,
+      &#x9;roleId bigint,
+      &#x9;battingStyle bigint,
+      &#x9;bowlingStyle bigint,
+      &#x9;info text
 
-    create table player
-    (
-    &#x9;id bigint identity(1,1) not null primary key,
-    &#x9;firstName varchar(50),
-    &#x9;middleName varchar(50),
-    &#x9;lastName varchar(50),
-    &#x9;teamId bigint,
-    &#x9;birthDate date,
-    &#x9;birthPlace varchar(100),
-    &#x9;height int,
-    &#x9;roleId bigint,
-    &#x9;battingStyle bigint,
-    &#x9;bowlingStyle bigint,
-    &#x9;info text
-
-    )
-
-        </pre>
+  )</code></pre>
 
         <h4>Create Tables with Foreign Key constraints</h4>
-        <pre class="prettyprint">
+        <pre><code class="language-sql">
     create table tournament
     (
         id bigint identity(1,1) not null primary key,
@@ -73,44 +75,37 @@
         on delete cascade
         on update cascade
     
-    )
-        </pre>
+    )</code></pre>
       </section>
       <section id="ss_01_02">
         <h4>Add new column</h4>
-        <pre class="prettyprint">
-
+        <pre>
+          <code class="language-sql">
     ALTER TABLE country
     ADD shortName VARCHAR(10)
-            </pre
-        >
+          </code></pre>
         <h4>Rename existing column</h4>
-        <pre class="prettyprint">
-
+        <pre> <code class="language-sql">
     exec sp_rename 'team.shortname', 'title','column'
-            </pre
-        >
+        </code></pre>
 
         <h4>Modify datatype of column</h4>
-        <pre class="prettyprint">
-
+        <pre><code class="language-sql">
     ALTER TABLE team 
     MODIFY title bigint
-            </pre
-        >
+        </code></pre>
 
         <h4>Drop column</h4>
-        <pre class="prettyprint">
-
+        <pre>
+          <code class="language-sql">
     ALTER TABLE team
     DROP COLUMN title
-            </pre
-        >
+</code></pre>
       </section>
     </div>
   </body>
-
   <script>
-    PR.prettyPrint();
+    // PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>
