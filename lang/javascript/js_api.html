@@ -9,7 +9,7 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
       type="text/css"
       href="../../js/libs/google-code-prettify/prettify.css"
@@ -22,8 +22,9 @@
     <script
       type="text/javascript"
       src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
+    ></script> -->
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
     <title>JavaScript API Calls</title>
   </head>
@@ -36,8 +37,7 @@
     <div class="content">
       <section id="js_04_01">
         <h4>Fetch API with JWT token</h4>
-        <pre class="prettyprint">
-
+        <pre><code class="language-html">
     &#x3C;!DOCTYPE html&#x3E;
     &#x3C;html lang=&#x22;en&#x22;&#x3E;
         &#x3C;head&#x3E;
@@ -66,7 +66,7 @@
         let resp = document.getElementById(&#x22;resp&#x22;);
     
         let token =
-            &#x22;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2tlciIsInNpZCI6IjEiLCJqdGkiOiI3MTVhYjQ4Mi02ZmI3LTQwZDQtYTZkZS00NGM3ZGRiMDE4YmUiLCJleHAiOjE2MjczOTU4NDQsImlzcyI6ImFiaGF5bmF0aCIsImF1ZCI6ImFiaGF5bmF0aCJ9.tLKDoxlIHU6cJYryDckNqerMy1_CnIA4RoLhxxoHxV0&#x22;;
+            &#x22;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&#x22;;
         const search_path = &#x22;http://localhost/redditapi/api/v1/user/search_user&#x22;;
     
         btn.onclick = function () {
@@ -94,15 +94,11 @@
         }
         &#x3C;/script&#x3E;
     &#x3C;/html&#x3E;
-            
-   
-                </pre
-        >
+        </code></pre>
       </section>
       <section id="js_04_02">
         <h4>Ajax Call with JWT token</h4>
-        <pre class="prettyprint">
-            
+        <pre><code class="language-html">
     &#x3C;!DOCTYPE html&#x3E;
     &#x3C;html lang=&#x22;en&#x22;&#x3E;
         &#x3C;head&#x3E;
@@ -132,7 +128,7 @@
         let resp = document.getElementById(&#x22;resp&#x22;);
     
         let token =
-            &#x22;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2tlciIsInNpZCI6IjEiLCJqdGkiOiI3MTVhYjQ4Mi02ZmI3LTQwZDQtYTZkZS00NGM3ZGRiMDE4YmUiLCJleHAiOjE2MjczOTU4NDQsImlzcyI6ImFiaGF5bmF0aCIsImF1ZCI6ImFiaGF5bmF0aCJ9.tLKDoxlIHU6cJYryDckNqerMy1_CnIA4RoLhxxoHxV0&#x22;;
+            &#x22;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2t&#x22;;
         const search_path = &#x22;http://localhost/redditapi/api/v1/user/search_user&#x22;;
     
         btn.onclick = function () {
@@ -158,20 +154,12 @@
         };
         &#x3C;/script&#x3E;
     &#x3C;/html&#x3E;
-            
-
-        </pre>
+        </code></pre>
       </section>
 
-      <section id="js_04_03">
-        <h4>Find element & element index in an array (find & findIndex)</h4>
-
-        <pre class="prettyprint"></pre>
-      </section>
+    
     </div>
   </body>
 
-  <script>
-    PR.prettyPrint();
-  </script>
+  <script>hljs.highlightAll();</script>
 </html>
