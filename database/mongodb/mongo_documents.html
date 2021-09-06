@@ -7,11 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
     <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Mongo Basics</title>
 
 </head>
@@ -111,7 +113,7 @@
                 <li>
                     <h4>insert()</h4>
                     To insert data into MongoDB collection, you need to use MongoDB's insert() or save() method.
-                    <pre class="shell">db.players.insert({name:"Sachin Tendulkar",runs:18357})</pre>
+                    <pre><code class="language-javascript">db.players.insert({name:"Sachin Tendulkar",runs:18357})</code></pre>
                     <p>Here 'players' is our collection name. If the collection doesn't exist in the database, then
                         MongoDB will create this collection and then insert a document into it.</p>
                     <p>In the inserted document, if we don't specify the _id parameter, then MongoDB assigns a unique
@@ -120,55 +122,49 @@
                         _id is 12 bytes hexadecimal number unique for every document in a collection. 12 bytes are
                         divided
                         as follows −
-                        <pre>_id: ObjectId(4 bytes timestamp, 3 bytes machine id, 2 bytes process id, 3 bytes incrementer)</pre>
+                        <pre class="shell">_id: ObjectId(4 bytes timestamp, 3 bytes machine id, 2 bytes process id, 3 bytes incrementer)</pre>
                     </p>
 
                     <p>
                         You can also pass an array of documents into the insert() method as shown below:.
-                        <pre class="shell">
+                        <pre><code class="language-javascript">
+        db.createCollection("post")
 
-    db.createCollection("post")
-
-                            
-    db.post.insert([
-	{
-		title: "MongoDB Overview",
-		description: "MongoDB is no SQL database",
-		by: "tutorials point",
-		url: "http://www.tutorialspoint.com",
-		tags: ["mongodb", "database", "NoSQL"],
-		likes: 100
-	},
-	{
-	title: "NoSQL Database",
-	description: "NoSQL database doesn't have tables",
-	by: "tutorials point",
-	url: "http://www.tutorialspoint.com",
-	tags: ["mongodb", "database", "NoSQL"],
-	likes: 20,
-	comments: [
-		{
-			user:"user1",
-			message: "My first comment",
-			dateCreated: new Date(2013,11,10,2,35),
-			like: 0
-		}
-	]
-}
-])
-                        </pre>
-                    </p>
-
-
-                </li>
+        
+        db.post.insert([
+        {
+            title: "MongoDB Overview",
+            description: "MongoDB is no SQL database",
+            by: "tutorials point",
+            url: "http://www.tutorialspoint.com",
+            tags: ["mongodb", "database", "NoSQL"],
+            likes: 100
+        },
+        {
+        title: "NoSQL Database",
+        description: "NoSQL database doesn't have tables",
+        by: "tutorials point",
+        url: "http://www.tutorialspoint.com",
+        tags: ["mongodb", "database", "NoSQL"],
+        likes: 20,
+        comments: [
+            {
+                user:"user1",
+                message: "My first comment",
+                dateCreated: new Date(2013,11,10,2,35),
+                like: 0
+            }
+        ]
+    }
+    ])</code></pre></p></li>
 
                 <li>
                     <h4>The insertOne()</h4>
                     If you need to insert only one document into a collection you can use this method.
 
-                    <pre class="shell">
+                    <pre><code class="language-javascript">
     db.players.insertOne({name:"Virat Kohli",runs:12345})
-                    </pre>
+                    </code></pre>
                 </li>
 
                 <li>
@@ -178,33 +174,32 @@
                     <p>Following example inserts three different documents into the empDetails collection using the
                         insertMany() method.</p>
 
-                    <pre class="shell">
-    db.empDetails.insertMany(
-        [
-            {
-                First_Name: "Radhika",
-                Last_Name: "Sharma",
-                Date_Of_Birth: "1995-09-26",
-                e_mail: "radhika_sharma.123@gmail.com",
-                phone: "9000012345"
-            },
-            {
-                First_Name: "Rachel",
-                Last_Name: "Christopher",
-                Date_Of_Birth: "1990-02-16",
-                e_mail: "Rachel_Christopher.123@gmail.com",
-                phone: "9000054321"
-            },
-            {
-                First_Name: "Fathima",
-                Last_Name: "Sheik",
-                Date_Of_Birth: "1990-02-16",
-                e_mail: "Fathima_Sheik.123@gmail.com",
-                phone: "9000054321"
-            }
-        ]
-    )
-                    </pre>
+                    <pre><code class="language-javascript">
+        db.empDetails.insertMany(
+            [
+                {
+                    First_Name: "Radhika",
+                    Last_Name: "Sharma",
+                    Date_Of_Birth: "1995-09-26",
+                    e_mail: "radhika_sharma.123@gmail.com",
+                    phone: "9000012345"
+                },
+                {
+                    First_Name: "Rachel",
+                    Last_Name: "Christopher",
+                    Date_Of_Birth: "1990-02-16",
+                    e_mail: "Rachel_Christopher.123@gmail.com",
+                    phone: "9000054321"
+                },
+                {
+                    First_Name: "Fathima",
+                    Last_Name: "Sheik",
+                    Date_Of_Birth: "1990-02-16",
+                    e_mail: "Fathima_Sheik.123@gmail.com",
+                    phone: "9000054321"
+                }
+            ]
+        )</code></pre>
                 </li>
             </ol>
         </section>
@@ -216,23 +211,23 @@
                 <li>
                     <h4>find()</h4>
                     The basic syntax of find() method is as follows
-                    <pre>db.COLLECTION_NAME.find()</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.find()</code></pre>
                     find() method will display all the documents in a non-structured way.
-                    <pre class="shell">db.players.find()</pre>
+                    <pre><code class="language-javascript">db.players.find()</code></pre>
                 </li>
 
                 <li>
                     <h4>pretty()</h4>
                     To display the results in a formatted way, you can use pretty() method.
-                    <pre>db.COLLECTION_NAME.find().pretty()</pre>
-                    <pre class="shell">db.players.find().pretty()</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.find().pretty()</code></pre>
+                    <pre><code class="language-javascript">db.players.find().pretty()</code></pre>
                 </li>
 
                 <li>
                     <h4>findOne()</h4>
                     Apart from the find() method, there is findOne() method, that returns only one document.
-                    <pre>db.COLLECTIONNAME.findOne()</pre>
-                    <pre class="shell">db.players.findOne({name: "Sachin Tendulkar"})</pre>
+                    <pre><code class="language-javascript">db.COLLECTIONNAME.findOne()</code></pre>
+                    <pre><code class="language-javascript">db.players.findOne({name: "Sachin Tendulkar"})</code></pre>
                 </li>
 
                 <li>
@@ -302,27 +297,35 @@
                     <h4>AND in MongoDB</h4>
                     To query documents based on the AND condition, you need to use $and keyword. Following is the basic
                     syntax of AND −
-                    <pre>db.mycol.find({ $and: [ {<key1>:<value1>}, { <key2>:<value2>} ] })</pre>
+                    <pre>
+                        <code class="language-javascript">
+    db.mycol.find({ $and: [ {<key1>:<value1>}, { <key2>:<value2>} ] })
+                        </code>
+                       </pre>
                     Example
-                    <pre
-                        class="shell">db.mycol.find({$and:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()</pre>
+                    <pre> <code class="language-javascript">
+    db.mycol.find({$and:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()
+                    </code>
+                        </pre>
                 </li>
 
                 <li>
                     <h4>OR in MongoDB</h4>
                     To query documents based on the OR condition, you need to use $or keyword. Following is the basic
                     syntax of OR −
-                    <pre>
+                    <pre><code class="language-javascript">
     db.mycol.find(
     {
         $or: [
             {key1: value1}, {key2:value2}
         ]
-    }
-    ).pretty()</pre>
+    }).pretty()</code>
+   </pre>
                     Example :
-                    <pre class="shell">
-    db.mycol.find({$or:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()</pre>
+                    <pre><code class="language-javascript">
+    db.mycol.find({$or:[{"by":"tutorials point"},{"title": "MongoDB Overview"}]}).pretty()
+                    </code>
+    </pre>
                 </li>
 
                 <li>
@@ -330,24 +333,27 @@
                     The following example will show the documents that have likes greater than 10 and whose title is
                     either 'MongoDB Overview' or by is 'tutorials point'. Equivalent SQL where clause is 'where likes>10
                     AND (by = 'tutorials point' OR title = 'MongoDB Overview')'
-                    <pre class="shell">
-    db.mycol.find({"likes": {$gt:10}, $or: [{"by": "tutorials point"},{"title": "MongoDB Overview"}]}).pretty()</pre>
+                    <pre><code class="language-javascript">
+    db.mycol.find({"likes": {$gt:10}, $or: [{"by": "tutorials point"},{"title": "MongoDB Overview"}]}).pretty()
+                    </code>
+    </pre>
                 </li>
 
                 <li>
                     <h4>NOR in MongoDB</h4>
                     To query documents based on the NOT condition, you need to use $not keyword. Following is the basic
                     syntax of NOT −
-                    <pre>db.COLLECTION_NAME.find(
-                        {
-                            $not: [
-                                {key1: value1}, {key2:value2}
-                            ]
-                        }
-                    )</pre>
-                    Example :
-                    <pre class="shell">
-    db.empDetails.find( { "Age": { $not: { $gt: "25" } } } ) </pre>
+                    <pre><code class="language-javascript">
+    db.COLLECTION_NAME.find(
+    {
+        $not: [
+                {key1: value1}, {key2:value2}
+            ]
+        }
+    )</code></pre>Example :
+                    <pre><code class="language-javascript">
+    db.empDetails.find( { "Age": { $not: { $gt: "25" } } } )
+    </code></pre>
                 </li>
             </ol>
         </section>
@@ -362,56 +368,59 @@
                 <li>
                     <h4>Update()</h4>
                     The update() method updates the values in the existing document.
-                    <pre>db.COLLECTION_NAME.update(SELECTION_CRITERIA, UPDATED_DATA)</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.update(SELECTION_CRITERIA, UPDATED_DATA)</code></pre>
                     Example :
                     Consider the mycol collection has the following data.
-                    <pre>
+                    <pre><code class="language-javascript">
 { "_id" : ObjectId(5983548781331adf45ec5), "title":"MongoDB Overview"}
 { "_id" : ObjectId(5983548781331adf45ec6), "title":"NoSQL Overview"}
 { "_id" : ObjectId(5983548781331adf45ec7), "title":"Tutorials Point Overview"}
-                    </pre>
+                    </code></pre>
 
                     Following example will set the new title 'New MongoDB Tutorial' of the documents whose title is
                     'MongoDB Overview'.
-                    <pre class="shell">
-    db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}})
+                    <pre><code class="language-javascript">
+db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}})
+                    </code>
+    
 </pre>
 
                     By default, MongoDB will update only a single document. To update multiple documents, you need to
                     set a parameter 'multi' to true.
 
-                    <pre class="shell">
-    db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}},{multi:true})
+                    <pre><code class="language-javascript">
+db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}},{multi:true})
+                    </code>
+    
 </pre>
                 </li>
 
                 <li>
                     <h4>Save()</h4>
                     The save() method replaces the existing document with the new document passed in the save() method.
-                    <pre>
+                    <pre><code class="language-javascript">
     db.COLLECTION_NAME.save({_id:ObjectId(),NEW_DATA})
-                    </pre>
+                    </code></pre>
                     Example : Following example will replace the document with the _id '5983548781331adf45ec5'.
-                    <pre class="shell">
-    db.mycol.save(
+                    <pre><code class="language-javascript">
+db.mycol.save(
    {
       "_id" : ObjectId("507f191e810c19729de860ea"), 
 		"title":"Tutorials Point New Topic",
       "by":"Tutorials Point"
    }
-)
-                    </pre>
+)</code></pre>
                 </li>
 
                 <li>
                     <h4>findOneAndUpdate()</h4>
                     The findOneAndUpdate() method updates the values in the existing document.
-                    <pre>db.COLLECTION_NAME.findOneAndUpdate(SELECTIOIN_CRITERIA, UPDATED_DATA)</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.findOneAndUpdate(SELECTIOIN_CRITERIA, UPDATED_DATA)</code></pre>
                     <b> Example :</b> Assume we have created a collection named empDetails and inserted three documents
                     in it as shown below −
-                    <pre class="shell">
+                    <pre><code class="language-javascript">
     db.empDetails.insertMany(
-        [
+    [
             {
                 First_Name: "Radhika",
                 Last_Name: "Sharma",
@@ -434,32 +443,28 @@
                 phone: "9000054321"
             }
         ]
-    )
-    </pre>
+    )</code></pre>
                     Following example updates the age and email values of the document with name 'Radhika'.
-                    <pre class="shell">
+                    <pre><code class="language-javascript">
     db.empDetails.findOneAndUpdate(
         {First_Name: 'Radhika'},
         { $set: { Age: '30',e_mail: 'radhika_newemail@gmail.com'}}
-    )  
-    </pre>
+    )</code></pre>
                 </li>
 
                 <li>
                     <h4>updateOne()</h4>
                     This methods updates a single document which matches the given filter.
-                    <pre>db.COLLECTION_NAME.updateOne(&#x3C;filter&#x3E;, &#x3C;update&#x3E;)</pre>
-                    <pre class="shell">
-    db.empDetails.updateOne({First_Name: 'Radhika'},{ $set: { Age: '30',e_mail: 'radhika_newemail@gmail.com'}})</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.updateOne(&#x3C;filter&#x3E;, &#x3C;update&#x3E;)</code></pre>
+                    <pre><code class="language-javascript">db.empDetails.updateOne({First_Name: 'Radhika'},{ $set: { Age: '30',e_mail: 'radhika_newemail@gmail.com'}})</code></pre>
 
                 </li>
 
                 <li>
                     <h4>updateMany() </h4>
                     The updateMany() method updates all the documents that matches the given filter.
-                    <pre>db.COLLECTION_NAME.update(&#x3C;filter&#x3E;, &#x3C;update&#x3E;)</pre>
-                    <pre class="shell">
-    db.empDetails.updateMany({Age:{ $gt: "25" }},{ $set: { Age: '00'}})</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.update(&#x3C;filter&#x3E;, &#x3C;update&#x3E;)</code></pre>
+                    <pre><code class="language-javascript">db.empDetails.updateMany({Age:{ $gt: "25" }},{ $set: { Age: '00'}})</code></pre>
                 </li>
 
             </ol>
@@ -483,46 +488,37 @@
                         </li>
                     </ul>
                     Basic syntax of remove() method is as follows
-                    <pre>db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)</code></pre>
                     Example : Consider the mycol collection has the following data.
-                    <pre>
+                    <pre><code class="language-javascript">
     {_id : ObjectId("507f191e810c19729de860e1"), title: "MongoDB Overview"},
     {_id : ObjectId("507f191e810c19729de860e2"), title: "NoSQL Overview"},
-    {_id : ObjectId("507f191e810c19729de860e3"), title: "Tutorials Point Overview"}</pre>
+    {_id : ObjectId("507f191e810c19729de860e3"), title: "Tutorials Point Overview"}</code>
+    </pre>Following example will remove all the documents whose title is 'MongoDB Overview'.
 
-                    Following example will remove all the documents whose title is 'MongoDB Overview'.
-
-                    <pre class="shell">
-    db.mycol.remove({'title':'MongoDB Overview'})</pre>
+     <pre><code class="language-javascript">db.mycol.remove({'title':'MongoDB Overview'})</code></pre>
                 </li>
 
                 <li>
                     <h4>Remove Only One</h4>
                     If there are multiple records and you want to delete only the first record, then set justOne
                     parameter in remove() method.
-                    <pre>db.COLLECTION_NAME.remove(DELETION_CRITERIA,1)</pre>
+                    <pre><code class="language-javascript">db.COLLECTION_NAME.remove(DELETION_CRITERIA,1)</code></pre>
                 </li>
                 <li>
                     <h4>Remove all documents</h4>
                     If you don't specify deletion criteria, then MongoDB will delete whole documents from the
                     collection. This is equivalent of SQL's truncate command.
-                    <pre class="shell">db.mycol.remove({})</pre>
+                    <pre><code class="language-javascript">db.mycol.remove({})</code></pre>
                 </li>
             </ol>
 
-        </section>
-
-
-
-
-    </div>
+        </section></div>
 
 
 
 </body>
 
-<script>
-    PR.prettyPrint();
-</script>
+<script>hljs.highlightAll();</script>
 
 </html>
