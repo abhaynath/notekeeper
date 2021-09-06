@@ -177,15 +177,16 @@ git commit --m "initial commit for the project"</pre
               </li>
               <li>Commit all the changes in 'new-homepage' branch.</li>
               <li>Switch to 'master' branch.</li>
-              <li><pre class="shell">git merge new-homepage</pre>
-              This will merge all the changes from 'new-homepage' to 'master' 
+              <li>
+                <pre class="shell">git merge new-homepage</pre>
+                This will merge all the changes from 'new-homepage' to 'master'
               </li>
             </ol>
           </li>
-          <li>Delete a local branch
+          <li>
+            Delete a local branch
             <pre class="shell">git branch -d branch_name</pre>
           </li>
-         
         </ol>
       </section>
 
@@ -193,31 +194,100 @@ git commit --m "initial commit for the project"</pre
         <h3>Remote Repository</h3>
         <ol class="steps">
           <li>To clone the repository on GitHub, copy the path of project</li>
-          <li>Create an empty folder. Run following command from the directory,
+          <li>
+            Create an empty folder. Run following command from the directory,
 
-            <pre class="shell">git clone https://github.com/abhaynath/snake.git</pre>
+            <pre class="shell">
+git clone https://github.com/abhaynath/snake.git</pre
+            >
 
             This will create a repository called 'origin'
 
             <pre class="shell">git push origin master</pre>
           </li>
-         
+          <li>
+            Get list of branches on remote
+            <pre class="shell">git remote show origin</pre>
+          </li>
+          <li>
+            Delete a remote branch
+            <pre class="shell">git push origin --delete branch_name</pre>
+          </li>
         </ol>
       </section>
 
       <section id="git_01_08">
-        <h3>View history</h3>
-        <ol class="steps"></ol>
+        <h3>Stashing</h3>
+        <ol class="steps">
+          <li>
+            If you do not want to commit some unfinished files changes, but you
+            may need them in future, you need to stash those files.
+            <pre class="shell">git stash</pre>
+          </li>
+          <li>
+            To get the list of stash
+            <pre class="shell">git stash list</pre>
+            <pre class="output">
+  Output : 
+  stash@{0}: WIP on style: af6811f merged changed
+  stash@{1}: WIP on style: af6811f merged changed
+  stash@{2}: WIP on style: af6811f merged changed
+    </pre
+            >
+          </li>
+          <li>
+            To apply stash,
+            <pre class="shell">git stash apply stash@{1}</pre>
+          </li>
+        </ol>
       </section>
 
       <section id="git_01_09">
-        <h3>View history</h3>
-        <ol class="steps"></ol>
+        <h3>Commands</h3>
+        <ol class="steps">
+          <li>
+            Get list of changes in file
+
+            <pre class="shell">git diff &#x3C;filename&#x3E;</pre>
+          </li>
+          <li>
+            Get list of Commits
+            <pre class="shell">git reflog &#x3C;filename&#x3E;</pre>
+            <pre class="shell">git reflog</pre>
+          </li>
+          <li>
+            Compare the changes between two files,
+            <pre class="shell">git diff &#x3C;id1&#x3E; &#x3C;id2&#x3E;</pre>
+          </li>
+          <li>
+            Replaced master branch with another branch code completely
+            <pre class="shell">
+  git checkout new_branch
+  git merge -s ours master
+  git checkout master
+  git merge new_branch</pre
+            >
+          </li>
+        
+       
+        </ol>
       </section>
 
       <section id="git_01_10">
-        <h3>View history</h3>
-        <ol class="steps"></ol>
+        <h3>Rollback Changes</h3>
+        <ol class="steps">
+          <li>To revert uncommited changes in local repository</li>
+          <li>
+            Method 1 : For individual files
+            <pre class="shell">git checkout &#x3C;filename&#x3E;</pre>
+            for all files since last commit
+            <pre class="shell">git reset --hard</pre>
+          </li>
+          <li>
+            Method 2 :
+            <pre class="shell">git checkout .</pre>
+          </li>
+        </ol>
       </section>
 
       <section id="git_01_11">
