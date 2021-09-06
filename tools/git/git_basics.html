@@ -38,59 +38,191 @@
       <section id="git_01_01">
         <h3>Setting username and email</h3>
         <ol class="steps">
-          <li>on Command Prompt, use following command</li>
           <li>
+            on Command Prompt, use following command
+
             <pre class="shell">
     git config --global user.name = "Abhay Nath" 
     git config --global user.email = "abhaynath@gmail.com"</pre
             >
           </li>
+
           <li>
             To check if the user name and emailid successfully saved,
             <pre class="shell">
     git config user.name
-    git config user.email</pre>
+    git config user.email</pre
+            >
           </li>
-        
         </ol>
       </section>
 
       <section id="git_01_02">
         <h3>Creating Repository</h3>
         <ol class="steps">
-        <li>Create an empty directory named 'myproject'. 
-            Run following command inside myproject
-        <pre class="shell">git init</pre>
-        </li>
-        <li>Run following command to check the status of the repository
+          <li>
+            Create an empty directory named 'myproject'. Run following command
+            inside myproject
+            <pre class="shell">git init</pre>
+          </li>
+          <li>
+            Run following command to check the status of the repository
 
             <pre class="shell">git status</pre>
-        </li>
-        <li>Add 'index.html' new file in 'myproject' folder. To stage the index.html file, run following command
+          </li>
+          <li>
+            Add 'index.html' new file in 'myproject' folder. To stage the
+            index.html file, run following command
 
             <pre class="shell">git add index.html</pre>
-        </li>
-        <li>To commit changes,  run following command
+            To add all files,
+            <pre class="shell">git add --all</pre>
+          </li>
+          <li>
+            To commit changes, run following command
 
-            <pre class="shell">git commit --message "initial commit for the project"</pre>
+            <pre class="shell">
+git commit --message "initial commit for the project"</pre
+            >
             or
-            <pre class="shell">git commit --m "initial commit for the project"</pre>
-        </li>
-      
+            <pre class="shell">
+git commit --m "initial commit for the project"</pre
+            >
+          </li>
         </ol>
       </section>
       <section id="git_01_03">
         <h3>Delete Files</h3>
         <ol class="steps">
-        
+          <li>
+            Suppose we want to delete any file from the repository
+            <pre class="shell">git rm css/style.css</pre>
+          </li>
+          <li>
+            This will delete the css folder and add a staged snapshot. To commit
+            these changes,
+            <pre class="shell">git commit -m "Removed CSS folder"</pre>
+          </li>
         </ol>
       </section>
 
       <section id="git_01_04">
-        <h3>View history</h3>
+        <h3>Rename files</h3>
         <ol class="steps">
-        
+          <li>
+            If we want to rename style.css to screen.css
+
+            <pre class="shell">git mv css/style.css css/screen.css</pre>
+          </li>
         </ol>
+      </section>
+
+      <section id="git_01_05">
+        <h3>
+          Untrack files already added to git repository based on .gitignore
+        </h3>
+        <ol class="steps">
+          <li>
+            Add the list of files/folder in gitignore files you want git to
+            ignore.
+          </li>
+          <li>Commit the changes</li>
+          <li>
+            Remove everything from the repository.
+
+            <pre class="shell">git rm -r --cached .</pre>
+
+            This command will remove everything from repository cached
+          </li>
+          <li>
+            Re add everything
+
+            <pre class="shell">git add .</pre>
+          </li>
+          <li>
+            Commit
+            <pre class="shell">git commit -m ".gitignore fix"</pre>
+          </li>
+        </ol>
+      </section>
+
+      <section id="git_01_06">
+        <h3>Branching</h3>
+        <ol class="steps">
+          <li>
+            Get list of all branches
+
+            <pre class="shell">git branch</pre>
+          </li>
+          <li>
+            Create new branch
+
+            <pre class="shell">git branch new-homepage</pre>
+          </li>
+          <li>
+            Switch to newly created branch,
+            <pre class="shell">git checkout new-homepage</pre>
+          </li>
+          <li>
+            Check which branch is active currently,
+            <pre class="shell">git branch</pre>
+          </li>
+          <li>
+            Merging Branch
+            <ol class="steps">
+              <li>
+                Suppose we have two branches (master &amp; new-homepage). You
+                have made few changes in 'new-home' branch and you want to merge
+                these changes into master branch.
+              </li>
+              <li>Commit all the changes in 'new-homepage' branch.</li>
+              <li>Switch to 'master' branch.</li>
+              <li><pre class="shell">git merge new-homepage</pre>
+              This will merge all the changes from 'new-homepage' to 'master' 
+              </li>
+            </ol>
+          </li>
+          <li>Delete a local branch
+            <pre class="shell">git branch -d branch_name</pre>
+          </li>
+         
+        </ol>
+      </section>
+
+      <section id="git_01_07">
+        <h3>Remote Repository</h3>
+        <ol class="steps">
+          <li>To clone the repository on GitHub, copy the path of project</li>
+          <li>Create an empty folder. Run following command from the directory,
+
+            <pre class="shell">git clone https://github.com/abhaynath/snake.git</pre>
+
+            This will create a repository called 'origin'
+
+            <pre class="shell">git push origin master</pre>
+          </li>
+         
+        </ol>
+      </section>
+
+      <section id="git_01_08">
+        <h3>View history</h3>
+        <ol class="steps"></ol>
+      </section>
+
+      <section id="git_01_09">
+        <h3>View history</h3>
+        <ol class="steps"></ol>
+      </section>
+
+      <section id="git_01_10">
+        <h3>View history</h3>
+        <ol class="steps"></ol>
+      </section>
+
+      <section id="git_01_11">
+        <h3>View history</h3>
+        <ol class="steps"></ol>
       </section>
     </div>
   </body>
