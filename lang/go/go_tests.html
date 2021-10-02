@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Golang Testing</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="go_index.html">Golang</a>
+    </nav>
+    <div class="content">
+      <section id="go_03_01">
+        <h4>Go Testing</h4>
+        <ol>
+          <li>
+            Write a function which need to be tested. Function name begins with
+            Capital letter so that it is exported and can be used in test file.
+          </li>
+          <li>Create a new test file. Test file name must end with _test.go</li>
+          <li>
+            In test file, add a new function with name must be Test(Function
+            name)
+          </li>
+          <li>
+            Run following command to run test suite
+
+            <pre class="shell">go test -v</pre>
+          </li>
+          <li>
+            calculator.go
+
+            <pre><code class="language-go">
+    package main
+
+    func Divide(x int, y int) int {
+    &#x9;if y == 0 {
+    &#x9;&#x9;return 0
+    &#x9;}
+    &#x9;return x / y
+    }
+                        </code></pre>
+          </li>
+          <li>
+            calculator_test.go
+            <pre><code class="language-go">
+    package main
+
+    import &#x22;testing&#x22;
+
+    func TestDivide(t *testing.T) {
+    &#x9;type args struct {
+    &#x9;&#x9;x int
+    &#x9;&#x9;y int
+    &#x9;}
+    &#x9;tests := []struct {
+    &#x9;&#x9;name string
+    &#x9;&#x9;args args
+    &#x9;&#x9;want int
+    &#x9;}{
+    &#x9;&#x9;{&#x22;divides integer properly&#x22;, args{60, 5}, 512},
+    &#x9;&#x9;{&#x22;divides integer properly&#x22;, args{60, 0}, 0},
+    &#x9;}
+    &#x9;for _, tt := range tests {
+    &#x9;&#x9;t.Run(tt.name, func(t *testing.T) {
+    &#x9;&#x9;&#x9;if got := Divide(tt.args.x, tt.args.y); got != tt.want {
+    &#x9;&#x9;&#x9;&#x9;t.Errorf(&#x22;Divide() = %v, want %v&#x22;, got, tt.want)
+    &#x9;&#x9;&#x9;}
+    &#x9;&#x9;})
+    &#x9;}
+    }
+
+                    </code></pre>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
