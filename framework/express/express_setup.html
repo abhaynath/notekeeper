@@ -9,22 +9,13 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Express Setup</title>
   </head>
 
@@ -41,8 +32,7 @@
             Create a new folder. Run following command from the folder.
             <pre class="shell">
 npm init -y
-tsc --init
-            </pre>
+tsc --init</pre>
             This will create package.json and tsconfig.json
           </li>
           <li>Create <b>src</b> folder. Add <b>app.ts</b> in src folder.</li>
@@ -56,70 +46,60 @@ npm install @types/express --save-dev
 npm install @types/cors --save-dev
 
 npm install -D typescript ts-node nodemon @types/node --verbose
-
-</pre
-            >
+</pre>
           </li>
           <li>
             In package.json make following changes.
-            <pre class="prettyprint">
-    "scripts": {
-        "start": "node dist/app.js",
-        "dev": "nodemon src/app.ts",
-        "build": "tsc -p ."
-      },
-    
-</pre
-            >
+            <pre><code class="language-json">
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts",
+    "build": "tsc -p ."
+  },</code></pre>
           </li>
           <li>
             In tsconfig.json, make following changes
-            <pre class="prettyprint">
-    {
-        "compilerOptions": {
-          "target": "es5",
-          "module": "commonjs",
-      
-          "outDir": "./dist",
-          "rootDir": "./src",
-      
-          "strict": true,
-      
-          "moduleResolution": "node",
-      
-          "esModuleInterop": true,
-      
-          "skipLibCheck": true,
-          "forceConsistentCasingInFileNames": true
-        }
-      }
-      
-</pre
-            >
+            <pre><code class="language-json">
+  {
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+  
+      "outDir": "./dist",
+      "rootDir": "./src",
+  
+      "strict": true,
+  
+      "moduleResolution": "node",
+  
+      "esModuleInterop": true,
+  
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    }
+  } </code></pre>
           </li>
           <li>
             Add following code in app.ts
-            <pre class="prettyprint">
-    import express from "express";
-    import cors from "cors";
-    const app = express();
-    app.use(express.json());
-    app.use(cors());
-    app.get("/", (req, res) => {
-    res.send("MyService ExpressJs Running....");
-    });
+            <pre><code class="language-ts">
+  import express from "express";
+  import cors from "cors";
+  const app = express();
+  app.use(express.json());
+  app.use(cors());
+  app.get("/", (req, res) => {
+  res.send("MyService ExpressJs Running....");
+  });
 
-    app.post("/login", (req, res) => {
-    let name = req.body.name;
-    let data = { name: name, city: "Mumbai" };
-    return res.json(data);
-    });
+  app.post("/login", (req, res) => {
+  let name = req.body.name;
+  let data = { name: name, city: "Mumbai" };
+  return res.json(data);
+  });
 
-    app.listen(8000, () => {
-    console.log("--server running--");
-    });
-
-            </pre>
+  app.listen(8000, () => {
+  console.log("--server running--");
+  });</code></pre>
           </li>
           <li>
             To run the app locally,
@@ -135,8 +115,7 @@ npm install -D typescript ts-node nodemon @types/node --verbose
       </section>
     </div>
   </body>
-
   <script>
-    PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>

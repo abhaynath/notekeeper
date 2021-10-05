@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
-
+   
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+
     <title>Node + Express Basic Setup</title>
 
 </head>
@@ -38,23 +38,23 @@
                 <li>
                     Create 'index.js' file and add following code snippet.
 
-                    <pre class="prettyprint">
-    var http = require('http');
-    var port = 8180;
-    
-    function handleRequest(request, response) {
-        response.writeHead(200, {
-            'Content-Type': 'text/plain'
-        });
-    
-        response.end('Hello World');
-        console.log('requested');
-    
-    }
-    
-    http.createServer(handleRequest).listen(port, '127.0.0.1');
-    console.log('Started Node.js server at http://127.0.0.1:' + port);
-                    </pre>
+                    <pre><code class="language-js">
+var http = require('http');
+var port = 8180;
+
+function handleRequest(request, response) {
+    response.writeHead(200, {
+        'Content-Type': 'text/plain'
+    });
+
+    response.end('Hello World');
+    console.log('requested');
+
+}
+
+http.createServer(handleRequest).listen(port, '127.0.0.1');
+console.log('Started Node.js server at http://127.0.0.1:' + port);
+</code></pre>
                 </li>
                 <li>Run following application, using following command
                     <pre class="shell">node index.js</pre>
@@ -79,7 +79,7 @@
                 <li>
                     Create 'index.js' file and add following code snippet.
 
-                    <pre class="prettyprint">
+                    <pre><code class="language-js">
     var http = require('http');
     var port = 8180;
     
@@ -158,7 +158,7 @@
     
     http.createServer(handleRequest).listen(port, '127.0.0.1');
     console.log("Sever started at http://127.0.0.1/" + port);
-                    </pre>
+</code></pre>
                 </li>
                 <li>Run following application, using following command
                     <pre class="shell">node index.js</pre>
@@ -176,7 +176,7 @@
 </body>
 
 <script>
-    PR.prettyPrint();
-</script>
+    hljs.highlightAll();
+    </script>
 
 </html>
