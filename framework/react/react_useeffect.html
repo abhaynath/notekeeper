@@ -9,22 +9,10 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
+  
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>useeffect</title>
   </head>
 
@@ -64,70 +52,66 @@
       <section id="rc_03_01">
         <h4>1. UseEffect called each time after render</h4>
 
-        <pre class="prettyprint">
+        <pre><code class="language-ts">
+  import React, { useEffect } from &#x22;react&#x22;;
 
-    import React, { useEffect } from &#x22;react&#x22;;
-
-    const UseEffectEveryRender = () =&#x3E; {
-        useEffect(() =&#x3E; {
-        console.log(&#x22;--inside useeffect--&#x22;);
-        document.title = &#x22;Title change using useeffect()&#x22;;
-        });
-        return (
-        &#x3C;div&#x3E;
-            &#x3C;h3&#x3E;Use effect called on every render&#x3C;/h3&#x3E;
-        &#x3C;/div&#x3E;
-        );
-    };
-    
-    export default UseEffectEveryRender;
-            
-            </pre
-        >
+  const UseEffectEveryRender = () =&#x3E; {
+      useEffect(() =&#x3E; {
+      console.log(&#x22;--inside useeffect--&#x22;);
+      document.title = &#x22;Title change using useeffect()&#x22;;
+      });
+      return (
+      &#x3C;div&#x3E;
+          &#x3C;h3&#x3E;Use effect called on every render&#x3C;/h3&#x3E;
+      &#x3C;/div&#x3E;
+      );
+  };
+  
+  export default UseEffectEveryRender;
+        </code></pre>
       </section>
 
       <section id="rc_03_02">
         <h4>2. UseEffect called only ONCE after component is loaded.</h4>
 
-        <pre class="prettyprint">
-    import axios from &#x22;axios&#x22;;
-    import React, { useEffect, useState } from &#x22;react&#x22;;
-    
-    const UseEffectOnceOnMounted = () =&#x3E; {
-        const [movies, setMovies] = useState&#x3C;any&#x3E;([]);
-        useEffect(() =&#x3E; {
-        async function fetchCountries() {
-            const url = &#x22;http://www.omdbapi.com/?s=batman&#x26;apikey=fa8dd961&#x22;;
-            const response = await axios.get(url);
-            console.log(&#x22;--response : &#x22;, response.data.Search);
-    
-            setMovies(response.data.Search);
-        }
-    
-        fetchCountries();
-        }, []);
-        return (
-        &#x3C;div&#x3E;
-            &#x3C;h3&#x3E;Use effect called only once after mounted&#x3C;/h3&#x3E;
-            &#x3C;p&#x3E;
-            This is mostyle required when we fetch data from the server and
-            initialize state
-            &#x3C;/p&#x3E;
-            &#x3C;div className=&#x22;list&#x22;&#x3E;
-            {movies &#x26;&#x26;
-                movies.map((item: any) =&#x3E; {
-                return (
-                    &#x3C;div key={item.imdbID}&#x3E;{item.Title + &#x22; (&#x22; + item.Year + &#x22;)&#x22;}&#x3C;/div&#x3E;
-                );
-                })}
-            &#x3C;/div&#x3E;
-        &#x3C;/div&#x3E;
-        );
-    };
-    
-    export default UseEffectOnceOnMounted;
-                </pre
-        >
+        <pre><code class="language-ts">
+  import axios from &#x22;axios&#x22;;
+  import React, { useEffect, useState } from &#x22;react&#x22;;
+  
+  const UseEffectOnceOnMounted = () =&#x3E; {
+      const [movies, setMovies] = useState&#x3C;any&#x3E;([]);
+      useEffect(() =&#x3E; {
+      async function fetchCountries() {
+          const url = &#x22;http://www.omdbapi.com/?s=batman&#x26;apikey=fa8dd961&#x22;;
+          const response = await axios.get(url);
+          console.log(&#x22;--response : &#x22;, response.data.Search);
+  
+          setMovies(response.data.Search);
+      }
+  
+      fetchCountries();
+      }, []);
+      return (
+      &#x3C;div&#x3E;
+          &#x3C;h3&#x3E;Use effect called only once after mounted&#x3C;/h3&#x3E;
+          &#x3C;p&#x3E;
+          This is mostyle required when we fetch data from the server and
+          initialize state
+          &#x3C;/p&#x3E;
+          &#x3C;div className=&#x22;list&#x22;&#x3E;
+          {movies &#x26;&#x26;
+              movies.map((item: any) =&#x3E; {
+              return (
+                  &#x3C;div key={item.imdbID}&#x3E;{item.Title + &#x22; (&#x22; + item.Year + &#x22;)&#x22;}&#x3C;/div&#x3E;
+              );
+              })}
+          &#x3C;/div&#x3E;
+      &#x3C;/div&#x3E;
+      );
+  };
+  
+  export default UseEffectOnceOnMounted;
+        </code></pre>
       </section>
       <section id="rc_03_03">
         <h4>
@@ -135,129 +119,125 @@
           changed
         </h4>
 
-        <pre class="prettyprint">
-    import axios from &#x22;axios&#x22;;
-    import React, { useEffect, useState } from &#x22;react&#x22;;
-    
-    const UseEffectOnDataChange = () =&#x3E; {
-        const [searchText, setSearchText] = useState(&#x22;&#x22;);
-        const [movies, setMovies] = useState&#x3C;any&#x3E;([]);
-    
-        const getDataFromServer = async () =&#x3E; {
-        if (searchText == &#x22;&#x22;) {
-            return;
-        }
-        const url = &#x22;http://www.omdbapi.com/?s=&#x22; + searchText + &#x22;&#x26;apikey=fa8dd961&#x22;;
-        const response = await axios.get(url);
-        console.log(&#x22;--response : &#x22;, response.data.Search);
-    
-        setMovies(response.data.Search);
-        };
-    
-        useEffect(() =&#x3E; {
-        getDataFromServer();
-        }, [searchText]);
-    
-        return (
-        &#x3C;div&#x3E;
-            &#x3C;h3&#x3E;Use effect called when data is changed&#x3C;/h3&#x3E;
-            &#x3C;p&#x3E;
-            This is mostyle required when we fetch data from the server and
-            initialize state
-            &#x3C;/p&#x3E;
-            &#x3C;div&#x3E;
-            &#x3C;input
-                type=&#x22;text&#x22;
-                onChange={(e) =&#x3E; {
-                let text = e.target.value.trim();
-                if (text.length &#x3E;= 3) {
-                    setSearchText(text);
-                }
-                }}
-            &#x3E;&#x3C;/input&#x3E;
-            &#x3C;/div&#x3E;
-            &#x3C;div className=&#x22;list&#x22;&#x3E;
-            {movies &#x26;&#x26;
-                movies.map((item: any) =&#x3E; {
-                return (
-                    &#x3C;div key={item.imdbID}&#x3E;{item.Title + &#x22; (&#x22; + item.Year + &#x22;)&#x22;}&#x3C;/div&#x3E;
-                );
-                })}
-            &#x3C;/div&#x3E;
-        &#x3C;/div&#x3E;
-        );
-    };
-    
-    export default UseEffectOnDataChange;
-                </pre
-        >
+        <pre><code class="language-ts">
+  import axios from &#x22;axios&#x22;;
+  import React, { useEffect, useState } from &#x22;react&#x22;;
+  
+  const UseEffectOnDataChange = () =&#x3E; {
+      const [searchText, setSearchText] = useState(&#x22;&#x22;);
+      const [movies, setMovies] = useState&#x3C;any&#x3E;([]);
+  
+      const getDataFromServer = async () =&#x3E; {
+      if (searchText == &#x22;&#x22;) {
+          return;
+      }
+      const url = &#x22;http://www.omdbapi.com/?s=&#x22; + searchText + &#x22;&#x26;apikey=fa8dd961&#x22;;
+      const response = await axios.get(url);
+      console.log(&#x22;--response : &#x22;, response.data.Search);
+  
+      setMovies(response.data.Search);
+      };
+  
+      useEffect(() =&#x3E; {
+      getDataFromServer();
+      }, [searchText]);
+  
+      return (
+      &#x3C;div&#x3E;
+          &#x3C;h3&#x3E;Use effect called when data is changed&#x3C;/h3&#x3E;
+          &#x3C;p&#x3E;
+          This is mostyle required when we fetch data from the server and
+          initialize state
+          &#x3C;/p&#x3E;
+          &#x3C;div&#x3E;
+          &#x3C;input
+              type=&#x22;text&#x22;
+              onChange={(e) =&#x3E; {
+              let text = e.target.value.trim();
+              if (text.length &#x3E;= 3) {
+                  setSearchText(text);
+              }
+              }}
+          &#x3E;&#x3C;/input&#x3E;
+          &#x3C;/div&#x3E;
+          &#x3C;div className=&#x22;list&#x22;&#x3E;
+          {movies &#x26;&#x26;
+              movies.map((item: any) =&#x3E; {
+              return (
+                  &#x3C;div key={item.imdbID}&#x3E;{item.Title + &#x22; (&#x22; + item.Year + &#x22;)&#x22;}&#x3C;/div&#x3E;
+              );
+              })}
+          &#x3C;/div&#x3E;
+      &#x3C;/div&#x3E;
+      );
+  };
+  
+  export default UseEffectOnDataChange;
+        </code></pre>
       </section>
 
       <section id="rc_03_04">
         <h4>4. Cleanup the activity once component is unmounted.</h4>
 
-        <pre class="prettyprint">
-          import React, { useEffect, useState } from &#x22;react&#x22;;
+        <pre><code class="language-ts">
+  import React, { useEffect, useState } from &#x22;react&#x22;;
 
-          const MouseLocation = () =&#x3E; {
-            const [x, setX] = useState(0);
-            const [y, setY] = useState(0);
-          
-            const showMousePosition = (e: any) =&#x3E; {
-              setX(e.clientX);
-              setY(e.clientY);
-            };
-          
-            useEffect(() =&#x3E; {
-              console.log(&#x22;--attach mouse event--&#x22;);
-              window.addEventListener(&#x22;mousemove&#x22;, showMousePosition);
-              return () =&#x3E; {
-                console.log(&#x22;--detach mouse event--&#x22;);
-                window.removeEventListener(&#x22;mousemove&#x22;, showMousePosition);
-              };
-            }, []);
-            return (
-              &#x3C;div&#x3E;
-                &#x3C;div&#x3E;
-                  X = {x} and Y = {y}
-                &#x3C;/div&#x3E;
-              &#x3C;/div&#x3E;
-            );
-          };
-          
-          export default MouseLocation;
-          
-                </pre
-        >
-        <pre class="prettyprint">
-          import React, { useState } from &#x22;react&#x22;;
-          import MouseLocation from &#x22;./mouse-location&#x22;;
-          
-          const CompUseEffectCleanup = () =&#x3E; {
-            const [isDisplay, setIsDisplay] = useState(true);
-            return (
-              &#x3C;div&#x3E;
-                &#x3C;button
-                  onClick={() =&#x3E; {
-                    setIsDisplay((prevState: boolean) =&#x3E; !prevState);
-                  }}
-                &#x3E;
-                  Toggle display
-                &#x3C;/button&#x3E;
-          
-                {isDisplay &#x26;&#x26; &#x3C;MouseLocation&#x3E;&#x3C;/MouseLocation&#x3E;}
-              &#x3C;/div&#x3E;
-            );
-          };
-          
-          export default CompUseEffectCleanup;
-          
-        </pre>
+  const MouseLocation = () =&#x3E; {
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
+  
+    const showMousePosition = (e: any) =&#x3E; {
+      setX(e.clientX);
+      setY(e.clientY);
+    };
+  
+    useEffect(() =&#x3E; {
+      console.log(&#x22;--attach mouse event--&#x22;);
+      window.addEventListener(&#x22;mousemove&#x22;, showMousePosition);
+      return () =&#x3E; {
+        console.log(&#x22;--detach mouse event--&#x22;);
+        window.removeEventListener(&#x22;mousemove&#x22;, showMousePosition);
+      };
+    }, []);
+    return (
+      &#x3C;div&#x3E;
+        &#x3C;div&#x3E;
+          X = {x} and Y = {y}
+        &#x3C;/div&#x3E;
+      &#x3C;/div&#x3E;
+    );
+  };
+  
+  export default MouseLocation;
+        </code></pre>
+        <pre><code class="language-ts">
+    import React, { useState } from &#x22;react&#x22;;
+    import MouseLocation from &#x22;./mouse-location&#x22;;
+    
+    const CompUseEffectCleanup = () =&#x3E; {
+      const [isDisplay, setIsDisplay] = useState(true);
+      return (
+        &#x3C;div&#x3E;
+          &#x3C;button
+            onClick={() =&#x3E; {
+              setIsDisplay((prevState: boolean) =&#x3E; !prevState);
+            }}
+          &#x3E;
+            Toggle display
+          &#x3C;/button&#x3E;
+    
+          {isDisplay &#x26;&#x26; &#x3C;MouseLocation&#x3E;&#x3C;/MouseLocation&#x3E;}
+        &#x3C;/div&#x3E;
+      );
+    };
+    
+    export default CompUseEffectCleanup;
+        </code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+  hljs.highlightAll();
   </script>
 </html>
