@@ -9,7 +9,7 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
       type="text/css"
       href="../../js/libs/google-code-prettify/prettify.css"
@@ -22,9 +22,11 @@
     <script
       type="text/javascript"
       src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
+    ></script> -->
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>useState</title>
   </head>
 
@@ -40,8 +42,7 @@
 
         when we have to update the state based on the previous value of state,
         instead of direct assignment of state, use function
-        <pre class="prettyprint">
-
+        <pre><code class="language-ts">
     import React, { useState } from &#x22;react&#x22;;
 
     const CompUseState = () =&#x3E; {
@@ -72,9 +73,7 @@
     };
     
     export default CompUseState;
-            
-            </pre
-        >
+        </code></pre>
       </section>
 
       <section id="rc_02_02">
@@ -82,7 +81,7 @@
         Following code creates a random object on button click and push it to
         state array. On click of the object box, it removes from the state
         array.
-        <pre class="prettyprint">
+        <pre><code class="language-ts">
     import React, { useState } from &#x22;react&#x22;;
 
     const CompUseStateWithArray = () =&#x3E; {
@@ -127,13 +126,12 @@
     };
     
     export default CompUseStateWithArray;
-                </pre
-        >
+        </code></pre>
       </section>
       <section id="rc_02_03">
         <h4>3. useState with object</h4>
 
-        <pre class="prettyprint">
+        <pre><code class="language-ts">
     import React, { useState } from &#x22;react&#x22;;
 
     const CompUseStateWithObject = () =&#x3E; {
@@ -173,15 +171,13 @@
     };
 
     export default CompUseStateWithObject;
-
-   
-                </pre
-        >
+        </code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+    // PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>
