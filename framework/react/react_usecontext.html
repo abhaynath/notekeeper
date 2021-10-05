@@ -9,22 +9,14 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+
     <title>UseContext</title>
   </head>
 
@@ -40,51 +32,48 @@
 
         When we have to pass data to deeply nested component, we can use
         useContext.
-        <pre class="prettyprint">
-    import React from &#x22;react&#x22;;
-    import CompC from &#x22;./compC&#x22;;
+        <pre><code class="language-ts">
+  import React from &#x22;react&#x22;;
+  import CompC from &#x22;./compC&#x22;;
 
-    export const UserContext = React.createContext&#x3C;any&#x3E;(null);
-    const CompUseContext = () =&#x3E; {
-    const userData = { name: &#x22;Sachin Tendulkar&#x22;, city: &#x22;Mumbai&#x22; };
-    return (
-        &#x3C;div&#x3E;
-        &#x3C;UserContext.Provider value={userData}&#x3E;
-            &#x3C;CompC&#x3E;&#x3C;/CompC&#x3E;
-        &#x3C;/UserContext.Provider&#x3E;
-        &#x3C;/div&#x3E;
-    );
-    };
+  export const UserContext = React.createContext&#x3C;any&#x3E;(null);
+  const CompUseContext = () =&#x3E; {
+  const userData = { name: &#x22;Sachin Tendulkar&#x22;, city: &#x22;Mumbai&#x22; };
+  return (
+      &#x3C;div&#x3E;
+      &#x3C;UserContext.Provider value={userData}&#x3E;
+          &#x3C;CompC&#x3E;&#x3C;/CompC&#x3E;
+      &#x3C;/UserContext.Provider&#x3E;
+      &#x3C;/div&#x3E;
+  );
+  };
 
-    export default CompUseContext;
+  export default CompUseContext;
+        </code></pre>
 
-        </pre>
-
-        <pre class="prettyprint">
-    import React, { useContext } from &#x22;react&#x22;;
-    import { UserContext } from &#x22;.&#x22;;
-    
-    const CompC = () =&#x3E; {
-        const userData = useContext(UserContext);
-        console.log(&#x22;--userData--&#x22;, userData);
-        return (
-        &#x3C;div&#x3E;
-            &#x3C;h3&#x3E;Comp C&#x3C;/h3&#x3E;
-            &#x3C;div&#x3E;{userData.name} &#x3C;/div&#x3E;
-            &#x3C;div&#x3E;{userData.city} &#x3C;/div&#x3E;
-        &#x3C;/div&#x3E;
-        );
-    };
-    
-    export default CompC;
-    
-
-        </pre>
+        <pre><code class="language-ts">
+  import React, { useContext } from &#x22;react&#x22;;
+  import { UserContext } from &#x22;.&#x22;;
+  
+  const CompC = () =&#x3E; {
+      const userData = useContext(UserContext);
+      console.log(&#x22;--userData--&#x22;, userData);
+      return (
+      &#x3C;div&#x3E;
+          &#x3C;h3&#x3E;Comp C&#x3C;/h3&#x3E;
+          &#x3C;div&#x3E;{userData.name} &#x3C;/div&#x3E;
+          &#x3C;div&#x3E;{userData.city} &#x3C;/div&#x3E;
+      &#x3C;/div&#x3E;
+      );
+  };
+  
+  export default CompC;
+        </code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>

@@ -9,22 +9,12 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
+   
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+
+
     <title>UseReducer</title>
   </head>
 
@@ -38,7 +28,7 @@
       <section id="rc_05_01">
         <h4>1. UseReducer example</h4>
 
-        <pre class="prettyprint">
+        <pre><code class="language-ts">
     import React, { useReducer } from &#x22;react&#x22;;
 
     const initialState = {
@@ -96,15 +86,13 @@
     };
     
     export default UseReducer1;
-            
-</pre
-        >
+        </code></pre>
       </section>
 
       <section id="rc_05_02">
         <h4>2. UseReducer with Context</h4>
 
-        <pre class="prettyprint">
+        <pre><code class="language-ts">
     import React, { useReducer } from &#x22;react&#x22;;
     import UseReducerWithContextChild from &#x22;./use-reducer-child&#x22;;
     
@@ -154,57 +142,52 @@
     };
     
     export default UseReducerWithContextParent;
-          
-            
-</pre
-        >
+        </code></pre>
 
-        <pre class="prettyprint">
-    import React, { useContext } from &#x22;react&#x22;;
-    import { CounterContext, MyActions } from &#x22;./use-reducer-parent&#x22;;
-    
-    const UseReducerWithContextChild = () =&#x3E; {
-      const counterContext: any = useContext(CounterContext);
-      return (
-        &#x3C;div&#x3E;
-          &#x3C;h3&#x3E;{counterContext.name + &#x22; &#x22; + counterContext.count}&#x3C;/h3&#x3E;
-          &#x3C;button
-            onClick={() =&#x3E; {
-              counterContext.countDispatch({ type: MyActions.ADD, value: 2 });
-            }}
-          &#x3E;
-            Add
-          &#x3C;/button&#x3E;
-    
-          &#x3C;button
-            onClick={() =&#x3E; {
-              counterContext.countDispatch({ type: MyActions.SUBSTRACT, value: 2 });
-            }}
-          &#x3E;
-            Substract
-          &#x3C;/button&#x3E;
-    
-          &#x3C;button
-            onClick={() =&#x3E; {
-              counterContext.countDispatch({ type: MyActions.RESET, value: 0 });
-            }}
-          &#x3E;
-            Reset
-          &#x3C;/button&#x3E;
-        &#x3C;/div&#x3E;
-      );
-    };
-    
-    export default UseReducerWithContextChild;
-    
-
-        </pre>
+        <pre><code class="language-ts">
+  import React, { useContext } from &#x22;react&#x22;;
+  import { CounterContext, MyActions } from &#x22;./use-reducer-parent&#x22;;
+  
+  const UseReducerWithContextChild = () =&#x3E; {
+    const counterContext: any = useContext(CounterContext);
+    return (
+      &#x3C;div&#x3E;
+        &#x3C;h3&#x3E;{counterContext.name + &#x22; &#x22; + counterContext.count}&#x3C;/h3&#x3E;
+        &#x3C;button
+          onClick={() =&#x3E; {
+            counterContext.countDispatch({ type: MyActions.ADD, value: 2 });
+          }}
+        &#x3E;
+          Add
+        &#x3C;/button&#x3E;
+  
+        &#x3C;button
+          onClick={() =&#x3E; {
+            counterContext.countDispatch({ type: MyActions.SUBSTRACT, value: 2 });
+          }}
+        &#x3E;
+          Substract
+        &#x3C;/button&#x3E;
+  
+        &#x3C;button
+          onClick={() =&#x3E; {
+            counterContext.countDispatch({ type: MyActions.RESET, value: 0 });
+          }}
+        &#x3E;
+          Reset
+        &#x3C;/button&#x3E;
+      &#x3C;/div&#x3E;
+    );
+  };
+  
+  export default UseReducerWithContextChild;
+        </code></pre>
       </section>
 
       <section id="rc_05_03">
         <h4>3. UseReducer API call</h4>
 
-        <pre class="prettyprint">
+        <pre><code class="language-ts">
   import axios from &#x22;axios&#x22;;
   import React, { useEffect, useReducer } from &#x22;react&#x22;;
 
@@ -257,13 +240,12 @@
   };
 
   export default UseReducerAPI;
-
-        </pre>
+        </code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
-  </script>
+    hljs.highlightAll();
+    </script>
 </html>
