@@ -9,22 +9,10 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
+  
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Custom Hooks</title>
   </head>
 
@@ -38,7 +26,7 @@
       <section id="rc_06_01">
         <h4>1. Custom Counter Hook</h4>
 
-        <pre class="prettyprint">
+        <pre><code class="language-ts">
     import { useState } from &#x22;react&#x22;;
 
     function useCounter(initialValue = 0, value: number) {
@@ -56,8 +44,8 @@
     }
     export default useCounter;
 
-        </pre>
-        <pre class="prettyprint">
+        </code></pre>
+        <pre><code class="language-ts">
     import React from &#x22;react&#x22;;
     import useCounter from &#x22;./useCounter&#x22;;
 
@@ -76,68 +64,65 @@
     };
 
     export default CompCounterCustomHook;
-
-        </pre>
+        </code></pre>
       </section>
 
       <section id="rc_06_02">
         <h4>2. Custom TextInput Hook</h4>
 
-        <pre class="prettyprint">
-    import { useState } from &#x22;react&#x22;;
+        <pre><code class="language-ts">
+  import { useState } from &#x22;react&#x22;;
 
-    function useInput(initialValue: string) {
-    const [value, setValue] = useState(initialValue);
-    const reset = () =&#x3E; {
-        setValue(initialValue);
-    };
-    const bind = {
-        value: value,
-        onChange: (e: any) =&#x3E; {
-        setValue(e.target.value);
-        },
-    };
-    return [value, bind, reset] as const;
-    }
-    export default useInput;
+  function useInput(initialValue: string) {
+  const [value, setValue] = useState(initialValue);
+  const reset = () =&#x3E; {
+      setValue(initialValue);
+  };
+  const bind = {
+      value: value,
+      onChange: (e: any) =&#x3E; {
+      setValue(e.target.value);
+      },
+  };
+  return [value, bind, reset] as const;
+  }
+  export default useInput;
+        </code></pre>
+        <pre><code class="language-ts">
+  import React, { useState } from &#x22;react&#x22;;
+  import useInput from &#x22;./useInput&#x22;;
 
-        </pre>
-        <pre class="prettyprint">
-    import React, { useState } from &#x22;react&#x22;;
-    import useInput from &#x22;./useInput&#x22;;
+  const CompCustomInputHook = () =&#x3E; {
+  const [firstName, bindFirstName, resetFirstName] = useInput(&#x22;&#x22;);
+  const [lastName, bindLastName, resetLastName] = useInput(&#x22;&#x22;);
+  return (
+      &#x3C;div&#x3E;
+      &#x3C;h3&#x3E;{firstName + &#x22; &#x22; + lastName}&#x3C;/h3&#x3E;
+      &#x3C;div&#x3E;
+          First Name :&#x3C;input type=&#x22;text&#x22; {...bindFirstName}&#x3E;&#x3C;/input&#x3E;
+      &#x3C;/div&#x3E;
+      &#x3C;div&#x3E;
+          Last Name :&#x3C;input type=&#x22;text&#x22; {...bindLastName}&#x3E;&#x3C;/input&#x3E;
+      &#x3C;/div&#x3E;
+      &#x3C;button
+          onClick={() =&#x3E; {
+          resetFirstName();
+          resetLastName();
+          }}
+      &#x3E;
+          Submit
+      &#x3C;/button&#x3E;
+      &#x3C;/div&#x3E;
+  );
+  };
 
-    const CompCustomInputHook = () =&#x3E; {
-    const [firstName, bindFirstName, resetFirstName] = useInput(&#x22;&#x22;);
-    const [lastName, bindLastName, resetLastName] = useInput(&#x22;&#x22;);
-    return (
-        &#x3C;div&#x3E;
-        &#x3C;h3&#x3E;{firstName + &#x22; &#x22; + lastName}&#x3C;/h3&#x3E;
-        &#x3C;div&#x3E;
-            First Name :&#x3C;input type=&#x22;text&#x22; {...bindFirstName}&#x3E;&#x3C;/input&#x3E;
-        &#x3C;/div&#x3E;
-        &#x3C;div&#x3E;
-            Last Name :&#x3C;input type=&#x22;text&#x22; {...bindLastName}&#x3E;&#x3C;/input&#x3E;
-        &#x3C;/div&#x3E;
-        &#x3C;button
-            onClick={() =&#x3E; {
-            resetFirstName();
-            resetLastName();
-            }}
-        &#x3E;
-            Submit
-        &#x3C;/button&#x3E;
-        &#x3C;/div&#x3E;
-    );
-    };
-
-    export default CompCustomInputHook;
-
-        </pre>
+  export default CompCustomInputHook;
+        </code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
-  </script>
+    hljs.highlightAll();
+    </script>
 </html>
