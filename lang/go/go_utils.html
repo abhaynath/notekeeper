@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Common utitlities</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="go_index.html">Golang</a>
+    </nav>
+    <div class="content">
+      <section id="go_05_01">
+        <h4>Reading configuration from json</h4>
+        <ol>
+          <li>Create an new directory 'configtest'</li>
+          <li>
+            Run following command to initialize module
+
+            <pre class="shell">go mod init github.com/abhaynath/helloworld</pre>
+            Install Viper package
+            <pre class="shell">go get github.com/spf13/viper</pre>
+          </li>
+          <li>
+            Create a new config.json file. Add following code in it.
+
+            <pre><code class="language-json">{
+    &#x22;host&#x22;:&#x22;localhost&#x22;,
+    &#x22;database&#x22;:&#x22;REDDIT&#x22;,
+    &#x22;port&#x22;:5432,
+    &#x22;user&#x22;:&#x22;postgres&#x22;,
+    &#x22;password&#x22;:&#x22;abhay123&#x22;
+}</code></pre>
+          </li>
+
+          <li>
+            Create a new go file 'main.go'
+
+            <pre><code class="language-go">
+    package main
+
+    import (
+    &#x9;&#x22;fmt&#x22;
+    
+    &#x9;&#x22;github.com/spf13/viper&#x22;
+    )
+    
+    type Config struct {
+    &#x9;Host         string &#x60;mapstructure:&#x22;host&#x22;&#x60;
+    &#x9;UserName     string &#x60;mapstructure:&#x22;user&#x22;&#x60;
+    &#x9;UserPassword string &#x60;mapstructure:&#x22;password&#x22;&#x60;
+    &#x9;DB_NAME      string &#x60;mapstructure:&#x22;database&#x22;&#x60;
+    &#x9;PORT         int    &#x60;mapstructure:&#x22;port&#x22;&#x60;
+    }
+    
+    func main() {
+    &#x9;config, err := LoadConfig(&#x22;.&#x22;)
+    &#x9;if err != nil {
+    &#x9;&#x9;fmt.Println(err)
+    &#x9;}
+    &#x9;fmt.Printf(&#x22;%+v&#x22;, config)
+    }
+    func LoadConfig(path string) (c Config, err error) {
+    &#x9;viper.AddConfigPath(path)
+    &#x9;viper.SetConfigName(&#x22;config&#x22;)
+    &#x9;viper.SetConfigType(&#x22;json&#x22;)
+    &#x9;viper.AutomaticEnv()
+    &#x9;err = viper.ReadInConfig()
+    &#x9;if err != nil {
+    &#x9;&#x9;fmt.Println(err)
+    &#x9;&#x9;return
+    &#x9;}
+    &#x9;err = viper.Unmarshal(&#x26;c)
+    &#x9;return
+    }
+                        </code></pre>
+          </li>
+        
+        </ol>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
