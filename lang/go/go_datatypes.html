@@ -1,73 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/prettify.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
+    />
+    <script
+      type="text/javascript"
+      src="../../js/libs/google-code-prettify/prettify.js"
+    ></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>Data Types </title>
+    <title>Data Types</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="go_index.html">Golang</a>
-
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="go_index.html">Golang</a>
     </nav>
     <div class="content">
+      <section id="go_02_01">
+        <h4>Data Types</h4>
+        <table>
+          <caption>
+            Numeric
+          </caption>
+          <tr>
+            <th>Data Type</th>
+            <th>Range</th>
+            <th>Storage</th>
+          </tr>
 
-        <section id="go_02_01">
-            <h4>Simple hello world application in Go</h4>
-            <ol>
-                <li>Create an empty directory 'helloworld'</li>
-                <li>Create a new go file 'hello.go'</li>
-                <li>Add following code snippet in 'hello.go'
+          <tr>
+            <td>int</td>
+            <td>Platform dependent</td>
+            <td>Platform dependent</td>
+          </tr>
+          <tr>
+            <td>int8</td>
+            <td>-128 to 127</td>
 
-                    <pre class="prettyprint">
+            <td>8 Bits</td>
+          </tr>
+          <tr>
+            <td>int16</td>
+            <td>-2^15 to 2^15 -1</td>
 
-    package main
+            <td>16 Bits</td>
+          </tr>
+          <tr>
+            <td>int32</td>
+            <td>-2^31 to 2^31 -1</td>
+            <td>32 Bits</td>
+          </tr>
+          <tr>
+            <td>int64</td>
+            <td>-2^63 to 2^63 -1</td>
+            <td>64 Bits</td>
+          </tr>
+        </table>
+        <table>
+          <caption>
+            String
+          </caption>
+          <tr>
+            <th>Data Type</th>
+            <th>Range</th>
+            <th>Storage</th>
+          </tr>
 
-    import "fmt"
-    
-    func main() {
-        fmt.Println("Hello, world !")
-    }
-    
-                                    </pre>
-                </li>
-                <li>To build the project
-                    <pre class="shell">c:\project\helloworld\go build</pre>
-                    This command will create 'helloworld.exe' in the project directory.
-                </li>
-                <li>To run the application,
-                    <pre class="shell">c:\project\helloworld\helloworld</pre>
-                </li>
-                <li>To build and run project in one command,
-                    <pre class="shell">c:\project\helloworld\go run hello.go</pre>
-                </li>
-            </ol>
+          <tr>
+            <td>bigint</td>
+            <td>-2^63 to 2^63-1</td>
+            <td>8 Bytes</td>
+          </tr>
+        </table>
+        <table>
+          <caption>
+            Date
+          </caption>
+          <tr>
+            <th>Data Type</th>
+            <th>Range</th>
+            <th>Storage</th>
+          </tr>
 
-        </section>
-
-
+          <tr>
+            <td>bigint</td>
+            <td>-2^63 to 2^63-1</td>
+            <td>8 Bytes</td>
+          </tr>
+        </table>
+      </section>
+      <section id="go_02_02">
+        <h4>Casting</h4>
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>
+  <script>
     PR.prettyPrint();
-</script>
-
+  </script>
 </html>

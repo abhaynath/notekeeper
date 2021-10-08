@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>File I/O</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="go_index.html">Golang</a>
+    </nav>
+    <div class="content">
+      <section id="go_07_01">
+        <h4>Slice</h4>
+
+        <pre><code class="language-go">
+    package slicedemo
+
+    import (
+    &#x9;&#x22;fmt&#x22;
+    &#x9;&#x22;reflect&#x22;
+    )
+    
+    func SliceDemo() {
+    &#x9;fmt.Println(&#x22;----Slice demo----&#x22;)
+    
+    &#x9;var intSlice []int
+    
+    &#x9;fmt.Println(reflect.ValueOf(intSlice).Kind())
+    &#x9;intSlice = append(intSlice, 10)
+    
+    &#x9;fmt.Printf(&#x22;%v\n&#x22;, intSlice)
+    
+    &#x9;//-----------------------------------
+    
+    &#x9;var intSlice1 = []int{3, 45, 66}
+    &#x9;var strSlice1 = []string{&#x22;Rohit&#x22;, &#x22;Shikhar&#x22;, &#x22;Virat&#x22;, &#x22;Dhoni&#x22;, &#x22;Ajinkya&#x22;, &#x22;Bhuvi&#x22;}
+    &#x9;fmt.Println(len(strSlice1))
+    &#x9;fmt.Println(cap(strSlice1))
+    &#x9;fmt.Printf(&#x22;%v \n&#x22;, intSlice1)
+    
+    &#x9;//-----------------------------------
+    
+    &#x9;var intSlice2 = new([50]int)[0:10]
+    &#x9;fmt.Printf(&#x22;intSlice2 \t len :%v \t cap %v \n&#x22;, len(intSlice2), cap(intSlice2))
+    
+    &#x9;//-----------------------------------
+    
+    &#x9;var intSlice3 = make([]int, 10)    //when length and capacity is same
+    &#x9;var intSlice4 = make([]int, 5, 10) //when length and capacity is different
+    
+    &#x9;fmt.Println(len(intSlice3), &#x22; -- &#x22;, len(intSlice4))
+    
+    &#x9;// strSlice2 := removeIndex(strSlice1, 0)
+    &#x9;// fmt.Println(strSlice2)
+    
+    &#x9;fmt.Println(strSlice1)
+    &#x9;//--------------loop 1---------------------
+    &#x9;fmt.Println(&#x22;--------------loop 1---------------------&#x22;)
+    &#x9;for index, element := range strSlice1 {
+    &#x9;&#x9;fmt.Println(index, &#x22;  &#x22;, element)
+    &#x9;}
+    
+    &#x9;//--------------loop 2---------------------
+    &#x9;fmt.Println(&#x22;--------------loop 2---------------------&#x22;)
+    &#x9;for _, element := range strSlice1 {
+    &#x9;&#x9;fmt.Println(element)
+    &#x9;}
+    &#x9;fmt.Println(&#x22;--------------loop 3---------------------&#x22;)
+    
+    &#x9;j := 0
+    &#x9;for range strSlice1 {
+    &#x9;&#x9;fmt.Println(strSlice1[j])
+    &#x9;&#x9;j++
+    &#x9;}
+    &#x9;strSlice1 = removeIndex(strSlice1, 0)
+    &#x9;fmt.Println(&#x22;---after removing---&#x22;)
+    &#x9;fmt.Println(strSlice1)
+    }
+    func removeIndex(s []string, index int) []string {
+    &#x9;return append(s[:index], s[index+1:]...)
+    
+    }</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
