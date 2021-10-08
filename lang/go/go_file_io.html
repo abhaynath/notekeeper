@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>File I/O</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="go_index.html">Golang</a>
+    </nav>
+    <div class="content">
+      <section id="go_06_01">
+        <h4>File IO</h4>
+
+        <pre><code class="language-go">
+    package iotest
+
+    import (
+    &#x9;&#x22;bufio&#x22;
+    &#x9;&#x22;fmt&#x22;
+    &#x9;&#x22;io&#x22;
+    &#x9;&#x22;io/ioutil&#x22;
+    &#x9;&#x22;log&#x22;
+    &#x9;&#x22;os&#x22;
+    &#x9;&#x22;strings&#x22;
+    )
+    
+    func createFolder() {
+    &#x9;_, err := os.Stat(&#x22;test&#x22;)
+    
+    &#x9;if os.IsNotExist(err) {
+    &#x9;&#x9;errDir := os.MkdirAll(&#x22;test&#x22;, 0755)
+    &#x9;&#x9;if errDir != nil {
+    &#x9;&#x9;&#x9;log.Fatal(err)
+    &#x9;&#x9;}
+    
+    &#x9;}
+    }
+    func createEmptyFile() {
+    &#x9;emptyFile, err := os.Create(&#x22;data/empty.txt&#x22;)
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    &#x9;log.Println(emptyFile)
+    &#x9;emptyFile.Close()
+    }
+    func renameFile() {
+    &#x9;oldName := &#x22;data/empty.txt&#x22;
+    &#x9;newName := &#x22;data/testing2.txt&#x22;
+    &#x9;err := os.Rename(oldName, newName)
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    }
+    func copyFileToLocation() {
+    &#x9;sourceFile, err := os.Open(&#x22;data/testing.txt&#x22;)
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    &#x9;defer sourceFile.Close()
+    
+    &#x9;// Create new file
+    &#x9;newFile, err := os.Create(&#x22;data/testing_new_copy.txt&#x22;)
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    &#x9;defer newFile.Close()
+    
+    &#x9;bytesCopied, err := io.Copy(newFile, sourceFile)
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    &#x9;log.Printf(&#x22;Copied %d bytes.&#x22;, bytesCopied)
+    
+    }
+    func moveFile() {
+    &#x9;oldLocation := &#x22;data/testing.txt&#x22;
+    &#x9;newLocation := &#x22;data/moved.txt&#x22;
+    &#x9;err := os.Rename(oldLocation, newLocation)
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    }
+    func fileMetaData() {
+    &#x9;fmt.Println(&#x22;----------File Metadata-------&#x22;)
+    &#x9;fileStat, err := os.Stat(&#x22;data/empty.txt&#x22;)
+    
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    
+    &#x9;fmt.Println(&#x22;File Name:&#x22;, fileStat.Name())        // Base name of the file
+    &#x9;fmt.Println(&#x22;Size:&#x22;, fileStat.Size())             // Length in bytes for regular files
+    &#x9;fmt.Println(&#x22;Permissions:&#x22;, fileStat.Mode())      // File mode bits
+    &#x9;fmt.Println(&#x22;Last Modified:&#x22;, fileStat.ModTime()) // Last modification time
+    &#x9;fmt.Println(&#x22;Is Directory: &#x22;, fileStat.IsDir())   // Abbreviation for Mode().IsDir()
+    }
+    func deleteFile() {
+    &#x9;err := os.Remove(&#x22;data/testing2.txt&#x22;)
+    &#x9;if err != nil {
+    &#x9;&#x9;log.Fatal(err)
+    &#x9;}
+    }
+    func readFile() {
+    &#x9;filename := &#x22;main.go&#x22;
+    
+    &#x9;filebuffer, err := ioutil.ReadFile(filename)
+    &#x9;if err != nil {
+    &#x9;&#x9;fmt.Println(err)
+    &#x9;&#x9;os.Exit(1)
+    &#x9;}
+    &#x9;inputdata := string(filebuffer)
+    &#x9;data := bufio.NewScanner(strings.NewReader(inputdata))
+    &#x9;data.Split(bufio.ScanRunes)
+    
+    &#x9;for data.Scan() {
+    &#x9;&#x9;fmt.Print(data.Text())
+    &#x9;}
+    }
+    func appendContent(message string) {
+    &#x9;filename := &#x22;test/moved.txt&#x22;
+    
+    &#x9;f, err := os.OpenFile(filename, os.O_RDWR|os.O_APPEND|os.O_CREATE, 0660)
+    
+    &#x9;if err != nil {
+    &#x9;&#x9;fmt.Println(err)
+    &#x9;&#x9;os.Exit(-1)
+    &#x9;}
+    &#x9;defer f.Close()
+    
+    &#x9;fmt.Fprintf(f, &#x22;%s\n&#x22;, message)
+    
+    }
+    func FileIoDemo() {
+    &#x9;createEmptyFile()
+    &#x9;fileMetaData()
+    &#x9;createFolder()
+    &#x9;renameFile()
+    &#x9;copyFileToLocation()
+    &#x9;moveFile()
+    &#x9;deleteFile()
+    &#x9;readFile()
+    &#x9;appendContent(&#x22;this will be appended to end of file.&#x22;)
+    }</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
