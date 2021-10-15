@@ -9,22 +9,13 @@
       rel="stylesheet"
       href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
+   
     <script src="../../../js/libs/jquery.min.js"></script>
+    <link
+    rel="stylesheet"
+    href="../../../js/libs/highlight/styles/devibeans.min.css"
+  />
+  <script src="../../../js/libs/highlight/highlight.min.js"></script>
     <title>WPF View</title>
   </head>
 
@@ -36,7 +27,7 @@
     <div class="content">
       <section id="ss_01_01">
         <h4>Employee View</h4>
-        <pre class="prettyprint">
+        <pre><code class="language-xml">
 &#x3C;UserControl x:Class=&#x22;MVVM1.UserControls.EmployeeView&#x22;
           xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
           xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
@@ -107,15 +98,12 @@
      &#x3C;/DataGrid&#x3E;
  &#x3C;/Grid&#x3E;
 &#x3C;/UserControl&#x3E;
-
-   
-          
-        </pre>
+</code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+      hljs.highlightAll();
   </script>
 </html>
