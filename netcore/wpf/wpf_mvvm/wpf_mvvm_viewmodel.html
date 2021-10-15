@@ -9,22 +9,14 @@
       rel="stylesheet"
       href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../../js/libs/google-code-prettify/prettify.js"
-    ></script>
+   
 
     <script src="../../../js/libs/jquery.min.js"></script>
+    <link
+    rel="stylesheet"
+    href="../../../js/libs/highlight/styles/devibeans.min.css"
+  />
+  <script src="../../../js/libs/highlight/highlight.min.js"></script>
     <title>WPF ViewModel</title>
   </head>
 
@@ -36,7 +28,7 @@
     <div class="content">
       <section id="ss_01_01">
         <h4>EmployeeViewModel</h4>
-        <pre class="prettyprint">
+        <pre><code class="language-csharp">
   using MVVM1.Command;
   using MVVM1.Model;
   using System;
@@ -67,7 +59,7 @@
           public ObservableCollection&#x3C;Employee&#x3E; EmployeeList
           {
               get { return _employeeList; }
-              set { _employeeList = value;OnPropertyChanged(&#x22;EmployeeList&#x22;); }
+              set { _employeeList = value;OnPropertyChanged(nameof(EmployeeList)); }
           }
           private void LoadData()
           {
@@ -82,7 +74,7 @@
           public Employee CurrentEmployee
           {
               get { return _currentEmployee; }
-              set { _currentEmployee = value; OnPropertyChanged(&#x22;CurrentEmployee&#x22;); }
+              set { _currentEmployee = value; OnPropertyChanged(nameof(CurrentEmployee)); }
           }
           private RelayCommand _saveCommand;
   
@@ -96,7 +88,7 @@
           public string Message
           {
               get { return _message; }
-              set { _message = value; OnPropertyChanged(&#x22;Message&#x22;); }
+              set { _message = value; OnPropertyChanged(nameof(Message)); }
           }
   
           public void Save()
@@ -263,16 +255,12 @@
   
           #endregion
       }
-  }
-          
-   
-
-        </pre>
+  }</code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+     hljs.highlightAll();
   </script>
 </html>
