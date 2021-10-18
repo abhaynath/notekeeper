@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
+  
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Svelte Login Component</title>
+
+</head>
+
+<body>
+
+    <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="svelte_index.html">Svelte</a>
+
+
+    </nav>
+    <div class="content">
+
+        <section id="sv_02_01">
+
+        </section>
+        <section id="sv_02_02">
+         <ol>
+             <li>Create parent component 'App.svelte'
+    <pre><code class="language-html">
+        &#x3C;script&#x3E;
+        import Login from &#x22;./Login.svelte&#x22;;
+        let name = &#x22;&#x22;,
+            password = &#x22;&#x22;,
+            email = &#x22;&#x22;;
+        function onLogin(event) {
+            name = event.detail.userName;
+            password = event.detail.userPassword;
+        }
+        function onForgotPassword(event) {
+            email = event.detail.emailId;
+        }
+        &#x3C;/script&#x3E;
+        
+        &#x3C;div class=&#x22;main&#x22;&#x3E;
+        &#x3C;h3&#x3E;
+            Parent component {name}
+            {password}
+            {email}
+        &#x3C;/h3&#x3E;
+        &#x3C;Login on:login={onLogin} on:forgotPassword={onForgotPassword} /&#x3E;
+        &#x3C;/div&#x3E;
+        
+        &#x3C;style&#x3E;
+        .main {
+            border: 1px solid gray;
+            padding: 10px;
+        }
+        &#x3C;/style&#x3E;
+    </code></pre></li>
+
+    <li>Create child component 'Login.svelte' in same folder.
+        <pre>
+            <code class="language-html">
+    &#x3C;script&#x3E;
+    import { createEventDispatcher } from &#x22;svelte&#x22;;
+    
+    const dispatch = createEventDispatcher();
+    let isForgotPassword = false;
+    let userName = &#x22;&#x22;;
+    let userPassword = &#x22;&#x22;;
+    let userEmail = &#x22;&#x22;;
+    
+    const loginClick = () =&#x3E; {
+        let user = { userName: userName, userPassword: userPassword };
+        dispatch(&#x22;login&#x22;, user);
+    };
+    const forgotPasswordClick = () =&#x3E; {
+        userEmail = userEmail.trim();
+        if (userEmail.length &#x3E; 0) {
+        dispatch(&#x22;forgotPassword&#x22;, { emailId: userEmail });
+        }
+    };
+    &#x3C;/script&#x3E;
+    
+    {#if isForgotPassword}
+    &#x3C;div class=&#x22;divForgotPassword&#x22;&#x3E;
+        &#x3C;div&#x3E;
+        &#x3C;input
+            type=&#x22;email&#x22;
+            placeholder=&#x22;Your email address&#x22;
+            bind:value={userEmail}
+        /&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;div&#x3E;
+        &#x3C;button on:click={forgotPasswordClick}&#x3E;Forgot Password&#x3C;/button&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;div&#x3E;
+        {userEmail}
+        &#x3C;/div&#x3E;
+    &#x3C;/div&#x3E;
+    {:else}
+    &#x3C;div&#x3E;
+        &#x3C;h3&#x3E;Login&#x3C;/h3&#x3E;
+        &#x3C;div&#x3E;
+        &#x3C;input type=&#x22;text&#x22; bind:value={userName} /&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;div&#x3E;
+        &#x3C;input type=&#x22;password&#x22; bind:value={userPassword} /&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;div&#x3E;
+        &#x3C;button on:click={loginClick}&#x3E;Login&#x3C;/button&#x3E;
+        &#x3C;/div&#x3E;
+        &#x3C;div&#x3E;
+        {userName}
+        {userPassword}
+        &#x3C;/div&#x3E;
+    &#x3C;/div&#x3E;
+    {/if}
+    
+    &#x3C;div&#x3E;
+    &#x3C;input type=&#x22;checkbox&#x22; bind:checked={isForgotPassword} /&#x3E; Forgot Password
+    &#x3C;/div&#x3E;                
+            </code>
+        </pre>
+    </li>
+            
+                
+             
+         </ol>
+
+        </section>
+
+
+    </div>
+
+
+
+</body>
+
+<script>hljs.highlightAll();</script>
+
+</html>
