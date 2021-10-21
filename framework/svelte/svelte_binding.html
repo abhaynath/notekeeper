@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Svelte Binding</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
+    </nav>
+    <div class="content">
+      <section id="sv_05_01">
+        <h4>Combobox Binding (Single)</h4>
+
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+let players = [
+{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },
+{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },
+{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; },
+];
+
+let selectedPlayer = players[0];
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  {selectedPlayer.name}
+&#x3C;/div&#x3E;
+&#x3C;select bind:value={selectedPlayer}&#x3E;
+  {#each players as player}
+    &#x3C;option value={player}&#x3E;{player.name}&#x3C;/option&#x3E;
+  {/each}
+&#x3C;/select&#x3E;
+
+</code></pre>
+</section>
+
+<section id="sv_05_02">
+    <h4>Combobox Binding (Multiple)</h4>
+
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+let players = [
+    { id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },
+    { id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },
+    { id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; },
+    { id: &#x22;id_3&#x22;, name: &#x22;MS Dhoni&#x22; },
+    { id: &#x22;id_3&#x22;, name: &#x22;Jaspreet Bumrah&#x22; },
+];
+let selectedPlayers = [];
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+&#x3C;select multiple bind:value={selectedPlayers}&#x3E;
+    {#each players as player}
+    &#x3C;option value={player}&#x3E;{player.name}&#x3C;/option&#x3E;
+    {/each}
+&#x3C;/select&#x3E;
+&#x3C;/div&#x3E;
+&#x3C;div&#x3E;
+{JSON.stringify(selectedPlayers)}
+&#x3C;/div&#x3E;
+     </code></pre>
+
+</section>
+
+<section id="sv_05_03">
+    <h4>Checkbox Group</h4>
+
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+let players = [
+    { id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },
+    { id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },
+    { id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; },
+];
+let selectedPlayers = [];
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+{#each players as player (player.id)}
+    &#x3C;label
+    &#x3E;&#x3C;input
+        type=&#x22;checkbox&#x22;
+        bind:group={selectedPlayers}
+        value={player.id}
+    /&#x3E;{player.name}&#x3C;/label
+    &#x3E;
+{/each}
+&#x3C;/div&#x3E;
+{JSON.stringify(selectedPlayers)}
+</code></pre>
+
+</section>
+<section id="sv_05_04">
+    <h4>Radio Button Group</h4>
+    <pre>
+        <code class="language-html">
+&#x3C;script&#x3E;
+let arr = [
+    { id: &#x22;id_1&#x22;, name: &#x22;India&#x22; },
+    { id: &#x22;id_2&#x22;, name: &#x22;Australia&#x22; },
+    { id: &#x22;id_3&#x22;, name: &#x22;England&#x22; },
+];
+
+let selectedTeam = arr[0].id;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+{#each arr as team (team.id)}
+    &#x3C;label
+    &#x3E;&#x3C;input
+        type=&#x22;radio&#x22;
+        bind:group={selectedTeam}
+        value={team.id}
+    /&#x3E;{team.name}&#x3C;/label
+    &#x3E;
+{/each}
+
+&#x3C;div&#x3E;Selected : {selectedTeam}&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+
+</section>
+
+<section id="sv_05_05">
+    <h4>Todo App example</h4>
+    <pre><code class="language-html">
+&#x3C;script&#x3E;
+let list = [
+    { id: &#x22;id1&#x22;, name: &#x22;Blender&#x22;, done: false },
+    { id: &#x22;id2&#x22;, name: &#x22;Maya&#x22;, done: true },
+    { id: &#x22;id3&#x22;, name: &#x22;C#&#x22;, done: false },
+];
+
+const addTodo = () =&#x3E; {
+    let id = &#x22;id&#x22; + Math.floor(Math.random() * 10000);
+    list = list.concat({ id: id, name: &#x22;&#x22;, done: false });
+};
+const clearFinished = () =&#x3E; {
+    list = list.filter((t) =&#x3E; !t.done);
+};
+$: remaining = list.filter((t) =&#x3E; !t.done).length;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+&#x3C;div&#x3E;
+    &#x3C;button on:click={addTodo}&#x3E;Add Todo&#x3C;/button&#x3E;
+    &#x3C;button on:click={clearFinished}&#x3E;Clear Finished&#x3C;/button&#x3E;
+&#x3C;/div&#x3E;
+&#x3C;div&#x3E;Remaining : {remaining}&#x3C;/div&#x3E;
+&#x3C;div&#x3E;
+    {#each list as task (task.id)}
+    &#x3C;div&#x3E;
+        &#x3C;input type=&#x22;checkbox&#x22; bind:checked={task.done} /&#x3E;
+        &#x3C;input type=&#x22;text&#x22; bind:value={task.name} disabled={task.done} /&#x3E;
+    &#x3C;/div&#x3E;
+    {/each}
+&#x3C;/div&#x3E;
+&#x3C;div&#x3E;
+    &#x3C;ul&#x3E;
+    {#each list as task (task.id)}
+        &#x3C;li&#x3E;{task.name} --- {task.done}&#x3C;/li&#x3E;
+    {/each}
+    &#x3C;/ul&#x3E;
+&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+            
+    </code></pre>
+
+</section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
