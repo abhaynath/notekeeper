@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
+  
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Store Examples</title>
+
+</head>
+
+<body>
+
+    <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="svelte_index.html">Svelte</a>
+
+
+    </nav>
+    <div class="content">
+
+        <section id="sv_04_01">
+            <h3>Basic Store</h3>
+            <img src="../../images/frameworks/svelte/svelte_basic_store.jpg"/>
+            <h4>MyApp.svelte</h4>
+<pre><code class="language-html">&#x3C;script&#x3E;
+import Bowling from &#x22;./components/Bowling.svelte&#x22;;
+import Batting from &#x22;./components/Batting.svelte&#x22;;
+import Scorecard from &#x22;./components/Scorecard.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;store-demo&#x22;&#x3E;
+  &#x3C;Scorecard /&#x3E;
+  &#x3C;Batting /&#x3E;
+  &#x3C;Bowling /&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .store-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+&#x3C;/style&#x3E;
+
+</code></pre>
+<h4>store.js</h4>
+<pre><code class="language-js">
+import { writable } from &#x22;svelte/store&#x22;;
+export const teamScore = writable({
+    teamName: &#x22;India&#x22;,
+    balls: 0,
+    runs: 0,
+    wicket: 0,
+});
+    </code></pre>
+    <h4>Batting.svelte</h4>
+    <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { teamScore } from &#x22;../stores/store.js&#x22;;
+
+let arr = [
+{ id: &#x22;id1&#x22;, name: &#x22;Dot&#x22;, run: 0 },
+{ id: &#x22;id2&#x22;, name: &#x22;1&#x22;, run: 1 },
+{ id: &#x22;id3&#x22;, name: &#x22;2&#x22;, run: 2 },
+{ id: &#x22;id4&#x22;, name: &#x22;3&#x22;, run: 3 },
+{ id: &#x22;id5&#x22;, name: &#x22;4&#x22;, run: 4 },
+{ id: &#x22;id6&#x22;, name: &#x22;6&#x22;, run: 6 },
+];
+
+const ballClick = (val) =&#x3E; {
+console.log(teamScore);
+teamScore.update((obj) =&#x3E; {
+    obj.runs = obj.runs + val.run;
+    obj.balls = obj.balls + 1;
+    return obj;
+});
+};
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;batting&#x22;&#x3E;
+{#each arr as ball (ball.id)}
+&#x3C;div
+    class=&#x22;ball&#x22;
+    on:click={() =&#x3E; {
+    ballClick(ball);
+    }}
+&#x3E;
+    {ball.run}
+&#x3C;/div&#x3E;
+{/each}
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.batting {
+display: flex;
+flex-wrap: wrap;
+padding: 5px;
+}
+.batting .ball {
+background: rgb(250, 0, 0);
+background: radial-gradient(
+    circle,
+    rgba(250, 0, 0, 1) 0%,
+    rgba(124, 18, 0, 1) 43%,
+    rgba(36, 0, 0, 1) 100%
+);
+color: white;
+padding: 5px;
+border-radius: 20px;
+width: 30px;
+height: 30px;
+text-align: center;
+line-height: 30px;
+margin-right: 5px;
+cursor: pointer;
+}
+&#x3C;/style&#x3E;
+
+    </code></pre>
+<h4>Bowling.svelte</h4>
+<pre><code class="language-html">
+&#x3C;script&#x3E;
+import { teamScore } from &#x22;../stores/store.js&#x22;;
+
+const addWicket = () =&#x3E; {
+teamScore.update((obj) =&#x3E; {
+    obj.wicket++;
+    obj.balls++;
+    return obj;
+});
+};
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;wicket&#x22; on:click={addWicket}&#x3E;Wicket!&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .wicket {
+    background: green;
+    color: yellow;
+    padding: 10px;
+    display: inline-block;
+    cursor: pointer;
+  }
+&#x3C;/style&#x3E;</code></pre>
+
+<h4>Scorecard.svelte</h4>
+<pre><code class="language-html">
+&#x3C;script&#x3E;
+import { teamScore } from &#x22;../stores/store.js&#x22;;
+&#x3C;/script&#x3E;
+  
+  &#x3C;div class=&#x22;scorecard&#x22;&#x3E;
+    &#x3C;div&#x3E;
+      {$teamScore.teamName}
+    &#x3C;/div&#x3E;
+    &#x3C;div&#x3E;
+      {$teamScore.runs}/{$teamScore.wicket}
+    &#x3C;/div&#x3E;
+    &#x3C;div class=&#x22;score&#x22;&#x3E;
+      {Math.floor($teamScore.balls / 6) + &#x22;.&#x22; + ($teamScore.balls % 6)}
+    &#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+  
+  &#x3C;style&#x3E;
+    .scorecard {
+      background: navy;
+      color: white;
+      padding: 5px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .score {
+      font-size: 12px;
+      font-weight: normal;
+    }
+  &#x3C;/style&#x3E;
+     
+</code></pre>
+           
+        </section>
+
+
+    </div>
+
+
+
+</body>
+
+<script>hljs.highlightAll();</script>
+
+</html>
