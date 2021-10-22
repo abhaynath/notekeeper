@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Custom Store</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
+    </nav>
+    <div class="content">
+      <section id="sv_06_01">
+        <h3>Custom Store</h3>
+
+        <h4>App.svelte</h4>
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+import Batting from &#x22;./Batting.svelte&#x22;;
+import Scoreboard from &#x22;./Scoreboard.svelte&#x22;;
+import Bowling from &#x22;./Bowling.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;Scoreboard /&#x3E;
+  &#x3C;Batting /&#x3E;
+  &#x3C;Bowling /&#x3E;
+&#x3C;/div&#x3E;
+
+</code></pre>
+        <h4>store.js</h4>
+        <pre><code class="language-js">
+    import { writable } from &#x22;svelte/store&#x22;;
+
+    function createScorecard() {
+      let initObj = {
+        team: &#x22;IND&#x22;,
+        runs: 0,
+        wickets: 0,
+        balls: 0,
+        overs: &#x22;0.0&#x22;,
+      };
+      let { subscribe, update, set } = writable(initObj);
+    
+      const addWicket = () =&#x3E; {
+        update((val) =&#x3E; {
+          val.wickets++;
+          val.balls++;
+          val.overs = Math.floor(val.balls / 6) + &#x22;.&#x22; + (val.balls % 6);
+          return val;
+        });
+      };
+    
+      const addRuns = (num) =&#x3E; {
+        update((val) =&#x3E; {
+          val.runs = val.runs + num;
+          val.balls++;
+          val.overs = Math.floor(val.balls / 6) + &#x22;.&#x22; + (val.balls % 6);
+          return val;
+        });
+      };
+      return {
+        subscribe,
+        addWicket: addWicket,
+        addRuns: addRuns,
+      };
+    }
+    export const scorecard = createScorecard();
+    
+    </code></pre>
+        <h4>Batting.svelte</h4>
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { scorecard } from &#x22;./store.js&#x22;;
+
+const arrBalls = [
+    { run: 0, name: &#x22;dot&#x22; },
+    { run: 1, name: &#x22;1&#x22; },
+    { run: 2, name: &#x22;2&#x22; },
+    { run: 3, name: &#x22;3&#x22; },
+    { run: 4, name: &#x22;4&#x22; },
+    { run: 6, name: &#x22;6&#x22; },
+];
+
+let selectedBall = arrBalls[0];
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+&#x3C;div&#x3E;
+    {#each arrBalls as ball}
+    &#x3C;div class=&#x22;ball&#x22;&#x3E;
+        &#x3C;label&#x3E;
+        &#x3C;input
+            type=&#x22;radio&#x22;
+            bind:group={selectedBall}
+            value={ball}
+            on:change={() =&#x3E; {
+            scorecard.addRuns(selectedBall.run);
+            }}
+        /&#x3E;{ball.name}
+        &#x3C;/label&#x3E;
+    &#x3C;/div&#x3E;
+    {/each}
+&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.ball {
+    display: inline-block;
+    padding: 5px;
+}
+&#x3C;/style&#x3E;</code></pre>
+        <h4>Bowling.svelte</h4>
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { scorecard } from &#x22;./store.js&#x22;;
+&#x3C;/script&#x3E;
+  
+  &#x3C;div&#x3E;
+    &#x3C;div&#x3E;
+      &#x3C;button
+        on:click={() =&#x3E; {
+          scorecard.addWicket();
+        }}&#x3E;Wicket&#x3C;/button
+      &#x3E;
+    &#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+  
+</code></pre>
+
+        <h4>Scorecard.svelte</h4>
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { scorecard } from &#x22;./store.js&#x22;;
+&#x3C;/script&#x3E;
+  
+&#x3C;div class=&#x22;scoreboard&#x22;&#x3E;
+&#x3C;div class=&#x22;score&#x22;&#x3E;
+    {$scorecard.team}
+    {$scorecard.runs}/{$scorecard.wickets}
+&#x3C;/div&#x3E;
+&#x3C;div class=&#x22;overs&#x22;&#x3E;OVER {$scorecard.overs}&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.scoreboard {
+    padding: 10px;
+    background: rgb(81, 0, 167);
+    background: linear-gradient(
+    180deg,
+    rgba(81, 0, 167, 1) 0%,
+    rgba(8, 0, 40, 1) 100%
+    );
+    border-radius: 10px;
+}
+.score {
+    color: white;
+}
+.overs {
+    color: #b772ff;
+    font-size: 10px;
+}
+&#x3C;/style&#x3E;
+</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
