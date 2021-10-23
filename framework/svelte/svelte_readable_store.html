@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Readable Store</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
+    </nav>
+    <div class="content">
+      <section id="sv_07_01">
+        <h3>Readable store</h3>
+
+        <h4>TodoTest.svelte</h4>
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { todos } from &#x22;./../stores/store.js&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  {#each $todos as todo (todo.id)}
+    &#x3C;div class=&#x22;todo&#x22;&#x3E;
+      &#x3C;span&#x3E;&#x3C;label&#x3E;&#x3C;input type=&#x22;checkbox&#x22; checked={todo.completed} disabled /&#x3E;{todo.title}&#x3C;/label
+        &#x3E;&#x3C;/span&#x3E;&#x3C;/div&#x3E;
+  {/each}
+&#x3C;/div&#x3E;
+&#x3C;style&#x3E;
+  .todo{
+    border:1px solid gray;
+    padding:5px;
+  }
+&#x3C;/style&#x3E;
+</code></pre>
+        <h4>store.js</h4>
+        <pre><code class="language-js">
+import { readable } from &#x27;svelte/store&#x27;;
+
+const apiURL = &#x22;https://jsonplaceholder.typicode.com/todos&#x22;;
+
+const getData = async () =&#x3E; {
+    const res = await fetch(apiURL);
+    if (!res.ok) throw new Error(&#x27;Bad response&#x27;);
+    const items = await res.json();
+    return items.slice(0, 5);
+}
+
+export const todos = readable([], set =&#x3E; {
+    
+    getData()
+        .then(set)
+        .catch(err =&#x3E; {
+            console.error(&#x27;Failed to fetch&#x27;, err)
+        })
+    return () =&#x3E; {
+        // you can do cleanup here if needed
+    };
+});
+    </code></pre>
+     
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
