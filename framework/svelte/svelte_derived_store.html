@@ -77,6 +77,69 @@ export let double = derived([count], ([$count]) =&#x3E; {
     </code></pre>
      
       </section>
+
+      <section id="sv_08_02">
+          <h3>Autocomplete Search</h3>
+<h4>Players.svelte</h4>
+          <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { players, searchText, list } from &#x22;./store.js&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;players&#x22;&#x3E;
+&#x3C;div&#x3E;
+    &#x3C;input type=&#x22;text&#x22; bind:value={$searchText} /&#x3E;
+&#x3C;/div&#x3E;
+&#x3C;div class=&#x22;list&#x22;&#x3E;
+    &#x3C;ol&#x3E;
+    {#each $players as player (player.id)}
+        &#x3C;li&#x3E;{player.name}&#x3C;/li&#x3E;
+    {/each}
+    &#x3C;/ol&#x3E;
+    &#x3C;ul&#x3E;
+    {#each $list as p (p.id)}
+        &#x3C;li&#x3E;{p.name}&#x3C;/li&#x3E;
+    {/each}
+    &#x3C;/ul&#x3E;
+&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.players {
+    border: 1px solid gray;
+}
+.list {
+    display: flex;
+}
+&#x3C;/style&#x3E;
+          
+          </code></pre>
+          <h4>store.js</h4>
+          <pre><code class="language-js">
+import { writable, derived } from &#x22;svelte/store&#x22;;
+const arrPlayers = [
+    { id: 1, name: &#x22;Rohit Sharma&#x22; },
+    { id: 2, name: &#x22;Shikhar Dhawan&#x22; },
+    { id: 3, name: &#x22;Virat Kohli&#x22; },
+    { id: 4, name: &#x22;Robin Uthappa&#x22; },
+    { id: 5, name: &#x22;Ishant Sharma&#x22; },
+];
+export const players = writable(arrPlayers);
+export const searchText = writable(&#x22;&#x22;);
+
+export const list = derived(
+    [players, searchText],
+    ([$players, $searchText]) =&#x3E; {
+    let search = $searchText.toLowerCase();
+    let arr = $players.filter((val) =&#x3E; {
+        return val.name.toLowerCase().includes(search);
+    });
+    return arr;
+    }
+);
+</code></pre>
+
+      </section>
     </div>
   </body>
 
