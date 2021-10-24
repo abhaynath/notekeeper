@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
+  
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Transition </title>
+
+</head>
+
+<body>
+
+    <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="svelte_index.html">Svelte</a>
+
+
+    </nav>
+    <div class="content">
+        <section id="sv_09_01">
+            <h4>Fade/Fly Transition</h4>
+            <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { fade, fly } from &#x22;svelte/transition&#x22;;
+
+let visible = true;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;trans&#x22;&#x3E;
+  &#x3C;label&#x3E;
+    &#x3C;input type=&#x22;checkbox&#x22; bind:checked={visible} /&#x3E;
+    visible
+  &#x3C;/label&#x3E;
+
+  {#if visible}
+    &#x3C;p transition:fly={{ y: 200, duration: 2000 }}&#x3E;Flies in and out&#x3C;/p&#x3E;
+    &#x3C;p transition:fade&#x3E;This will fade out&#x3C;/p&#x3E;
+  {/if}
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .trans {
+    padding: 10px;
+    border: 1px solid gray;
+  }
+&#x3C;/style&#x3E;</code></pre>
+      </section>
+
+      <section id="sv_09_02">
+        <h4>Slide Transition</h4>
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+import { slide } from &#x22;svelte/transition&#x22;;
+let arr = [&#x22;Rohit&#x22;, &#x22;Shikhar&#x22;, &#x22;Virat&#x22;, &#x22;Shreyas&#x22;, &#x22;Hardik&#x22;, &#x22;Jaspreet&#x22;];
+let count = 0;
+let isVisible = true;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;input type=&#x22;range&#x22; bind:value={count} max={arr.length} /&#x3E;{count}
+  &#x3C;label&#x3E;&#x3C;input type=&#x22;checkbox&#x22; bind:checked={isVisible} /&#x3E; Show Players&#x3C;/label&#x3E;
+  {#if isVisible}
+    {#each arr.slice(0, count) as player}
+      &#x3C;div class=&#x22;player&#x22; transition:slide&#x3E;{player}&#x3C;/div&#x3E;
+    {/each}
+  {/if}
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .player {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 5px;
+  }
+&#x3C;/style&#x3E;
+
+</code></pre>
+
+      </section>
+      <section id="sv_09_03">
+        <h4>Tweening</h4>
+        <pre><code class="language-html">
+&#x3C;script&#x3E;
+  import { cubicOut } from &#x22;svelte/easing&#x22;;
+  import { tweened } from &#x22;svelte/motion&#x22;;
+  const t = tweened(0, {
+    duration: 400,
+    easing: cubicOut,
+  });
+&#x3C;/script&#x3E;
+
+&#x3C;progress value={$t} /&#x3E;
+&#x3C;div class=&#x22;btn&#x22;&#x3E;
+  &#x3C;button on:click={() =&#x3E; t.set(0)}&#x3E;0&#x3C;/button&#x3E;
+  &#x3C;button on:click={() =&#x3E; t.set(0.25)}&#x3E;25&#x3C;/button&#x3E;
+  &#x3C;button on:click={() =&#x3E; t.set(0.5)}&#x3E;50&#x3C;/button&#x3E;
+  &#x3C;button on:click={() =&#x3E; t.set(0.75)}&#x3E;75&#x3C;/button&#x3E;
+  &#x3C;button on:click={() =&#x3E; t.set(1)}&#x3E;100&#x3C;/button&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  progress {
+    width: 100%;
+  }
+  .btn {
+    display: flex;
+    justify-content: center;
+  }
+&#x3C;/style&#x3E;</code></pre>
+
+      </section>
+
+
+    </div>
+
+
+
+</body>
+
+<script>hljs.highlightAll();</script>
+
+</html>
