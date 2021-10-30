@@ -63,6 +63,73 @@
             </ol>
 
         </section>
+        <section>
+            <h3>Using Props</h3>
+
+            <h4>App.svelte</h4>
+            <pre><code class="language-html">
+&#x3C;script&#x3E;
+import TestFile from &#x22;./components/TestFile.svelte&#x22;;
+
+let players = [];
+function playerAdded(val) {
+val = val.trim();
+if (val.length &#x3C; 1) {
+    return;
+}
+players.push(val);
+players = players;
+}
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;main&#x22;&#x3E;
+  &#x3C;TestFile title=&#x22;My Test App&#x22; {playerAdded} /&#x3E;
+  &#x3C;h3&#x3E;Parent&#x3C;/h3&#x3E;
+  &#x3C;ol&#x3E;
+    {#each players as player (player)}
+      &#x3C;li&#x3E;{player}&#x3C;/li&#x3E;
+    {/each}
+  &#x3C;/ol&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .main {
+    padding: 10px;
+  }
+&#x3C;/style&#x3E;</code></pre>
+
+<h4>TestFile.svelte</h4>
+<pre><code class="language-html">
+&#x3C;script&#x3E;
+export let title = &#x22;&#x22;;
+
+export let playerAdded;
+
+let playerName = &#x22;&#x22;;
+
+const clickHandler = () =&#x3E; {
+playerAdded(playerName);
+playerName = &#x22;&#x22;;
+};
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;div class=&#x22;tl&#x22;&#x3E;{title}&#x3C;/div&#x3E;
+  &#x3C;input type=&#x22;text&#x22; bind:value={playerName} /&#x3E;
+  &#x3C;button
+    on:click={() =&#x3E; {
+      clickHandler();
+    }}&#x3E;Send to Parent&#x3C;/button
+  &#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .tl {
+    font-weight: bold;
+    font-size: 18px;
+  }
+&#x3C;/style&#x3E;</code></pre>
+        </section>
 
 
     </div>
