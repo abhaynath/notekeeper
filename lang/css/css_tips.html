@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>CSS Tips</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../css/css_index.html">CSS</a>
+    </nav>
+    <div class="content">
+      <section id="css_05_01">
+        <h3>CSS Transition</h3>
+        <pre><code class="language-css">
+.mydiv
+{
+    padding: 10px;
+    background: green;
+    transition: all 500ms;
+}
+.mydiv:hover 
+{
+    background: yellowgreen;
+    cursor: pointer;
+}
+  </code></pre>
+      </section>
+
+      <section id="css_05_02">
+        <h3>n-th child</h3>
+        <pre><code class="language-css">
+.boxes
+{
+    display: flex;
+    justify-content: center;
+}
+.box
+{
+    flex-grow: 1;
+    height: 30px;
+    border: 1px solid black;
+}
+.box:nth-child(odd)
+{
+    background: chartreuse;
+}
+.box:nth-child(even) 
+{
+    background: yellow;
+}
+.box:first-child
+{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.box:last-child 
+{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+  </code></pre>
+      </section>
+
+      <section id="css_05_03">
+        <h3>text-shadow and box-shadow</h3>
+
+        <pre><code class="language-css">
+.mytext 
+{
+    padding: 10px;
+    font-size: 40px;
+    color: red;
+    text-shadow: 1px 1px 3px black;
+    box-shadow: 10px 10px 5px grey;
+    background-color: aqua;
+}
+ </code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
