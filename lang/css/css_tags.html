@@ -42,18 +42,137 @@
       </section>
 
       <section id="css_07_02">
-        <h3>n-th child</h3>
-        <pre><code class="language-css">
+        <h3>details</h3>
+        <pre><code class="language-html">
+&#x3C;details&#x3E;
+    &#x3C;summary&#x3E;cricket&#x3C;/summary&#x3E;
+    &#x3C;p&#x3E;Its is very popular game in india&#x3C;/p&#x3E;
+&#x3C;/details&#x3E;
 
+&#x3C;details open&#x3E;
+    &#x3C;summary&#x3E;tennis&#x3C;/summary&#x3E;
+    &#x3C;p&#x3E;Its is very popular game in US&#x3C;/p&#x3E;
+&#x3C;/details&#x3E;
+
+&#x3C;details&#x3E;
+    &#x3C;summary&#x3E;football&#x3C;/summary&#x3E;
+    &#x3C;p&#x3E;Its is very popular game in brazil&#x3C;/p&#x3E;
+&#x3C;/details&#x3E;
   </code></pre>
       </section>
 
       <section id="css_07_03">
-        <h3>text-shadow and box-shadow</h3>
+        <h3>dialog</h3>
 
-        <pre><code class="language-css">
+        <pre><code class="language-html">
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang=&#x22;en&#x22;&#x3E;
+  &#x3C;head&#x3E;
+    &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+    &#x3C;meta http-equiv=&#x22;X-UA-Compatible&#x22; content=&#x22;IE=edge&#x22; /&#x3E;
+    &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+    &#x3C;title&#x3E;CSS Test&#x3C;/title&#x3E;
+    &#x3C;style&#x3E;&#x3C;/style&#x3E;
+  &#x3C;/head&#x3E;
+  &#x3C;body&#x3E;
+    &#x3C;dialog id=&#x22;favDialog&#x22;&#x3E;
+      &#x3C;form method=&#x22;dialog&#x22;&#x3E;
+        &#x3C;p&#x3E;
+          &#x3C;label
+            &#x3E;Favorite animal:
+            &#x3C;select&#x3E;
+              &#x3C;option&#x3E;&#x3C;/option&#x3E;
+              &#x3C;option&#x3E;Brine shrimp&#x3C;/option&#x3E;
+              &#x3C;option&#x3E;Red panda&#x3C;/option&#x3E;
+              &#x3C;option&#x3E;Spider monkey&#x3C;/option&#x3E;
+            &#x3C;/select&#x3E;
+          &#x3C;/label&#x3E;
+        &#x3C;/p&#x3E;
+        &#x3C;menu&#x3E;
+          &#x3C;button value=&#x22;cancel&#x22;&#x3E;Cancel&#x3C;/button&#x3E;
+          &#x3C;button id=&#x22;confirmBtn&#x22; value=&#x22;default&#x22;&#x3E;Confirm&#x3C;/button&#x3E;
+        &#x3C;/menu&#x3E;
+      &#x3C;/form&#x3E;
+    &#x3C;/dialog&#x3E;
 
- </code></pre>
+    &#x3C;menu&#x3E;
+      &#x3C;button id=&#x22;updateDetails&#x22;&#x3E;Update details&#x3C;/button&#x3E;
+    &#x3C;/menu&#x3E;
+
+    &#x3C;output aria-live=&#x22;polite&#x22;&#x3E;&#x3C;/output&#x3E;
+  &#x3C;/body&#x3E;
+  &#x3C;script&#x3E;
+    var updateButton = document.getElementById(&#x22;updateDetails&#x22;);
+    var favDialog = document.getElementById(&#x22;favDialog&#x22;);
+    var outputBox = document.querySelector(&#x22;output&#x22;);
+    var selectEl = document.querySelector(&#x22;select&#x22;);
+    var confirmBtn = document.getElementById(&#x22;confirmBtn&#x22;);
+
+    // &#x22;Update details&#x22; button opens the &#x3C;dialog&#x3E; modally
+    updateButton.addEventListener(&#x22;click&#x22;, function onOpen() {
+      if (typeof favDialog.showModal === &#x22;function&#x22;) {
+        favDialog.showModal();
+      } else {
+        alert(&#x22;The &#x3C;dialog&#x3E; API is not supported by this browser&#x22;);
+      }
+    });
+    // &#x22;Favorite animal&#x22; input sets the value of the submit button
+    selectEl.addEventListener(&#x22;change&#x22;, function onSelect(e) {
+      confirmBtn.value = selectEl.value;
+    });
+    // &#x22;Confirm&#x22; button of form triggers &#x22;close&#x22; on dialog because of [method=&#x22;dialog&#x22;]
+    favDialog.addEventListener(&#x22;close&#x22;, function onClose() {
+      outputBox.value =
+        favDialog.returnValue + &#x22; button clicked - &#x22; + new Date().toString();
+    });
+  &#x3C;/script&#x3E;
+&#x3C;/html&#x3E;</code></pre>
+      </section>
+
+      <section id="css_07_04">
+        <h3>Description List</h3>
+        <pre><code class="language-html">
+&#x3C;dl&#x3E;
+    &#x3C;dt&#x3E;Beast of Bodmin&#x3C;/dt&#x3E;
+    &#x3C;dd&#x3E;A large feline inhabiting Bodmin Moor.&#x3C;/dd&#x3E;
+
+    &#x3C;dt&#x3E;Morgawr&#x3C;/dt&#x3E;
+    &#x3C;dd&#x3E;A sea serpent.&#x3C;/dd&#x3E;
+
+    &#x3C;dt&#x3E;Owlman&#x3C;/dt&#x3E;
+    &#x3C;dd&#x3E;A giant owl-like creature.&#x3C;/dd&#x3E;
+&#x3C;/dl&#x3E;
+          </code></pre>
+      </section>
+      <section id="css_07_05">
+        <h3>progress</h3>
+<pre><code class="language-html">&#x3C;progress max=&#x22;100&#x22; value=&#x22;35&#x22;&#x3E;35&#x3C;/progress&#x3E;</code></pre>
+      </section>
+      <section id="css_07_06">
+        <h3>meter</h3>
+        <pre><code class="language-html">
+&#x3C;body&#x3E;
+    &#x3C;meter
+        id=&#x22;fuel&#x22;
+        min=&#x22;0&#x22;
+        max=&#x22;100&#x22;
+        low=&#x22;33&#x22;
+        high=&#x22;66&#x22;
+        optimum=&#x22;80&#x22;
+        value=&#x22;30&#x22;
+    &#x3E;
+        at 50/100
+    &#x3C;/meter&#x3E;
+&#x3C;/body&#x3E;
+        
+&#x3C;script&#x3E;
+    let m = document.getElementById(&#x22;fuel&#x22;);
+    setInterval(()=&#x3E;{
+        let num = Math.floor(Math.random()*80);
+        m.value = num;
+
+    },500);
+&#x3C;/script&#x3E;</code></pre>
       </section>
     </div>
   </body>
