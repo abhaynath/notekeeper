@@ -9,22 +9,12 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
-    <script src="../../js/libs/jquery.min.js"></script>
+     <script src="../../js/libs/jquery.min.js"></script>
+     <link
+     rel="stylesheet"
+     href="../../js/libs/highlight/styles/devibeans.min.css"
+   />
+   <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>CSS Grid Layout</title>
   </head>
 
@@ -37,51 +27,50 @@
       <h3>Flex Layout</h3>
       <section id="css_04_01">
         <h3>Basic HTML code</h3>
-        <pre class="code">
-    &#x3C;!DOCTYPE html&#x3E;
-    &#x3C;html lang=&#x22;en&#x22;&#x3E;
-        &#x3C;head&#x3E;
-        &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
-        &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
-        &#x3C;title&#x3E;Home&#x3C;/title&#x3E;
-        &#x3C;style&#x3E;
-            body,
-            html {
-            margin: 0;
-            padding: 0;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            height: 100%;
-            }
-            .container {
-            background-color: #6aa06a;
+        <pre><code class="language-html">
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang=&#x22;en&#x22;&#x3E;
+    &#x3C;head&#x3E;
+    &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+    &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+    &#x3C;title&#x3E;Home&#x3C;/title&#x3E;
+    &#x3C;style&#x3E;
+        body,
+        html {
+          margin: 0;
+          padding: 0;
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          height: 100%;
+        }
+        .container {
+          background-color: #6aa06a;
+          display: flex;
+          flex-wrap: wrap;
+          height: 100px;
+        }
+
+        .block {
+          background: #a3eaa3;
+          padding: 10px;
+          text-align: center;
+          flex-grow: 1;
+        }
     
-            display: flex;
-            flex-wrap: wrap;
-            height: 100px;
-            }
+    &#x3C;/style&#x3E;
+    &#x3C;/head&#x3E;
+
+    &#x3C;body&#x3E;
+    &#x3C;div class=&#x22;container&#x22;&#x3E;
+        &#x3C;div class=&#x22;block b1&#x22;&#x3E;Item 1&#x3C;/div&#x3E;
+        &#x3C;div class=&#x22;block&#x22;&#x3E;Item 2&#x3C;/div&#x3E;
+        &#x3C;div class=&#x22;block b3&#x22;&#x3E;Item 3&#x3C;/div&#x3E;
+        &#x3C;div class=&#x22;block b2&#x22;&#x3E;Item 4&#x3C;/div&#x3E;
+        &#x3C;div class=&#x22;block&#x22;&#x3E;Item 5&#x3C;/div&#x3E;
+    &#x3C;/div&#x3E;
+    &#x3C;/body&#x3E;
+&#x3C;/html&#x3E;
     
-            .block {
-            background: #a3eaa3;
-            padding: 10px;
-            text-align: center;
-            flex-grow: 1;
-            }
-        
-        &#x3C;/style&#x3E;
-        &#x3C;/head&#x3E;
-    
-        &#x3C;body&#x3E;
-        &#x3C;div class=&#x22;container&#x22;&#x3E;
-            &#x3C;div class=&#x22;block b1&#x22;&#x3E;Item 1&#x3C;/div&#x3E;
-            &#x3C;div class=&#x22;block&#x22;&#x3E;Item 2&#x3C;/div&#x3E;
-            &#x3C;div class=&#x22;block b3&#x22;&#x3E;Item 3&#x3C;/div&#x3E;
-            &#x3C;div class=&#x22;block b2&#x22;&#x3E;Item 4&#x3C;/div&#x3E;
-            &#x3C;div class=&#x22;block&#x22;&#x3E;Item 5&#x3C;/div&#x3E;
-        &#x3C;/div&#x3E;
-        &#x3C;/body&#x3E;
-    &#x3C;/html&#x3E;
-    
-    
+  </code>
 </pre
         >
       </section>
@@ -210,7 +199,7 @@
 
       <section id="css_04_03">
         <h3>Align Div in the center of document</h3>
-        <pre class="code">
+        <pre><code class="language-css">
     html,body 
     {
         margin: 0;
@@ -227,7 +216,7 @@
         justify-content: center;
         align-items: center;
     }
-           
+  </code>
           </pre
         >
       </section>
@@ -235,6 +224,6 @@
   </body>
 
   <script>
-    PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>
