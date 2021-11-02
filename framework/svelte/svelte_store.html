@@ -187,6 +187,134 @@ import { teamScore } from &#x22;../stores/store.js&#x22;;
            
         </section>
 
+        <section id="sv_04_02">
+          <h3>Store CRUD Component</h3>
+          <img src="../../images/frameworks/svelte/svelte_store_crud.jpg"/>
+          <h4>store.js</h4>
+          <pre><code class="language-js">
+import { writable } from &#x22;svelte/store&#x22;;
+const uid = function () {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
+const createTeamStore = () =&#x3E; {
+  let { subscribe, update, set } = writable([]);
+  const addPlayer = (name) =&#x3E; {
+    update((val) =&#x3E; {
+      let obj = {};
+      obj.id = uid();
+      obj.name = name;
+      val = [...val, obj];
+      return val;
+    });
+  };
+
+  const deletePlayer = (id) =&#x3E; {
+    update((val) =&#x3E; {
+      let d = val.slice(0);
+      let index = d.findIndex((obj) =&#x3E; obj.id == id);
+      d.splice(index, 1);
+      val = d;
+      return val;
+    });
+  };
+
+  const updatePlayer = (obj) =&#x3E; {
+    update((val) =&#x3E; {
+      let d = val.slice(0);
+      let index = d.findIndex((j) =&#x3E; j.id == obj.id);
+      d[index] = obj;
+      val = d;
+      return val;
+    });
+  };
+
+  return {
+    subscribe,
+    addPlayer,
+    deletePlayer,
+    updatePlayer,
+  };
+};
+
+export const team = createTeamStore();
+
+          </code></pre>
+          <h4>App.svelte</h4>
+          <pre><code class="language-html">
+&#x3C;script&#x3E;
+  import { team } from &#x22;./store.js&#x22;;
+  let name = &#x22;&#x22;;
+  let players = [];
+  team.subscribe((val) =&#x3E; {
+    players = val;
+  });
+
+  const addPlayer = () =&#x3E; {
+    team.addPlayer(name);
+    name = &#x22;&#x22;;
+  };
+  const removePlayer = (id) =&#x3E; {
+    team.deletePlayer(id);
+  };
+  const updatePlayer = (obj) =&#x3E; {
+    team.updatePlayer(obj);
+  };
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;crud&#x22;&#x3E;
+  &#x3C;div class=&#x22;create&#x22;&#x3E;
+    &#x3C;input type=&#x22;text&#x22; placeholder=&#x22;Player Name&#x22; bind:value={name} /&#x3E;
+    &#x3C;button on:click={addPlayer}&#x3E; Add Player &#x3C;/button&#x3E;
+  &#x3C;/div&#x3E;
+  &#x3C;table&#x3E;
+    {#each players as player (player.id)}
+      &#x3C;tr&#x3E;
+        &#x3C;td&#x3E;{player.name}&#x3C;/td&#x3E;
+        &#x3C;td&#x3E;{player.id}&#x3C;/td&#x3E;
+
+        &#x3C;td&#x3E;&#x3C;input type=&#x22;text&#x22; bind:value={player.name} /&#x3E;&#x3C;/td&#x3E;
+        &#x3C;td&#x3E;&#x3C;button on:click={updatePlayer(player)}&#x3E;Update&#x3C;/button&#x3E;&#x3C;/td&#x3E;
+        &#x3C;td&#x3E;&#x3C;button on:click={removePlayer(player.id)}&#x3E;X&#x3C;/button&#x3E;&#x3C;/td&#x3E;
+      &#x3C;/tr&#x3E;
+    {/each}
+  &#x3C;/table&#x3E;
+  &#x3C;div&#x3E;
+    &#x3C;ol&#x3E;
+      {#each $team as player (player.id)}
+        &#x3C;li&#x3E;{player.name} ({player.id})&#x3C;/li&#x3E;
+      {/each}
+    &#x3C;/ol&#x3E;
+  &#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .crud {
+    padding: 10px;
+    border: 1px solid gray;
+  }
+  .create {
+    display: flex;
+  }
+  .create input {
+    flex-grow: 1;
+  }
+  table {
+    width: 100%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+  }
+  td {
+    border: 1px solid gray;
+    text-align: center;
+  }
+  table input,
+  table button {
+    width: 100%;
+  }
+&#x3C;/style&#x3E;</code></pre>
+
+        </section>
+
 
     </div>
 
