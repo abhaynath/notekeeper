@@ -86,13 +86,26 @@ loginScreen.forgotPassword(&#x22;abhaynath@gmail.com&#x22;);
 </code></pre>
       </section>
       <section id="ts_05_03">
-        <h4>Construct Signatures</h4>
-
-        <pre><code class="language-ts">
-</code></pre>
-
         <h4>Generic Functions</h4>
+
         <pre><code class="language-ts">
+  function firstElement&#x3C;Type&#x3E;(arr: Type[]): Type {
+    return arr[0];
+  }
+  let v1 = firstElement&#x3C;number&#x3E;([2, 52, 47]);
+  let v2 = firstElement&#x3C;string&#x3E;([&#x22;abhay&#x22;, &#x22;sachin&#x22;]);
+
+</code></pre>
+        <p>Using multiple generic types</p>
+        <pre><code class="language-ts">
+function map&#x3C;Input, Output&#x3E;(arr: Input[],fn: (arg: Input) =&#x3E; Output): Output[] {
+  return arr.map(fn);
+}
+
+const parsed = map([2, 5, 7], (n) =&#x3E; {
+  return n * 2;
+});
+console.log(parsed);
 
 </code></pre>
 
