@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Basic Types</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../ts/ts_index.html">TypeScript</a>
+    </nav>
+    <div class="content">
+      <section>
+        <h4 id="ts_03_01">Primitive Types</h4>
+        <pre><code class="language-ts">
+let myName: string = &#x22;Abhay&#x22;;
+let age: number = 32;
+let isWorking: boolean = true;
+let address: object = {
+  city: &#x22;Mumbai&#x22;,
+  state: &#x22;Maharashtra&#x22;,
+};
+let dob = new Date();
+
+console.log(&#x60;myName = ${myName}  type = ${typeof myName}&#x60;);
+console.log(&#x60;age = ${age}  type = ${typeof age}&#x60;);
+console.log(&#x60;isWorking = ${isWorking}  type = ${typeof isWorking}&#x60;);
+console.log(&#x60;address = ${JSON.stringify(address)}  type = ${typeof address}&#x60;);
+console.log(&#x60;dob = ${dob}  type = ${typeof dob}&#x60;);</code></pre>
+
+        <h4 id="ts_03_02">Function arguments and return types</h4>
+        <pre><code class="language-ts">
+function greeting(name: string): string {
+    const str = &#x60;Hello, ${name} !&#x60;;
+    return str;
+}
+console.log(greeting(&#x22;Abhay&#x22;));</code></pre>
+
+        <h4 id="ts_03_03">Object Types as function arguments and return type</h4>
+        <pre><code class="language-ts">
+let person = { name: &#x22;Abhay&#x22;, city: &#x22;Mumbai&#x22; };
+
+function displayInfo(obj: { name: string; city: string }): {
+  name: string;
+  city: string;
+} {
+  obj.name = &#x22;Mr.&#x22; + obj.name;
+  return obj;
+}
+let obj = displayInfo(person);
+console.log(obj.name);</code></pre>
+
+<h4 id="ts_03_04">Optional properties in object</h4>
+<pre><code class="language-ts">
+let person = { name: &#x22;Abhay&#x22; };
+
+function displayInfo(obj: { name: string; city?: string }): {
+  name: string;
+  city?: string;
+} {
+  obj.name = &#x22;Mr.&#x22; + obj.name;
+  return obj;
+}
+let obj = displayInfo(person);
+console.log(obj.name);</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

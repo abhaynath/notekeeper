@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Function Types</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../ts/ts_index.html">TypeScript</a>
+    </nav>
+    <div class="content">
+      <section id="ts_05_01">
+        <h4>Function Type Expressions</h4>
+        <pre><code class="language-ts">
+function greeting(name: string, fn: (n: string) =&#x3E; void) {
+    fn(name);
+}
+
+function sayHi(n: string) {
+    console.log(&#x22;Hi, &#x22; + n + &#x22;!&#x22;);
+}
+function sayHello(n: string) {
+    console.log(&#x22;Hello, &#x22; + n + &#x22;!&#x22;);
+}
+
+greeting(&#x22;Abhay&#x22;, sayHi);
+greeting(&#x22;Abhay&#x22;,sayHello);
+</code></pre>
+        <h4>Function Type Signatures</h4>
+        <p>We can use type aliases to declare function signature.</p>
+        <pre><code class="language-ts">
+type GreetFunction = (n: string) =&#x3E; void;
+
+function greeting(name: string, fn: GreetFunction) {
+  fn(name);
+}
+
+function sayHi(n: string) {
+  console.log(&#x22;Hi, &#x22; + n + &#x22;!&#x22;);
+}
+function sayHello(n: string) {
+  console.log(&#x22;Hello, &#x22; + n + &#x22;!&#x22;);
+}
+
+greeting(&#x22;Abhay&#x22;, sayHi);
+greeting(&#x22;Abhay&#x22;, sayHello);</code></pre>
+      </section>
+      <section id="ts_05_02">
+        <h4>Call Signatures</h4>
+        <pre><code class="language-ts">
+type UserLogin = {
+    userName: string;
+    password: string;
+    onLogin: (name: string, password: string) =&#x3E; void;
+    forgotPassword: (emailId: string) =&#x3E; void;
+};
+
+let loginScreen: UserLogin = {
+    userName: &#x22;abhay&#x22;,
+    password: &#x22;abhay123&#x22;,
+    onLogin: (n: string, p: string) =&#x3E; {
+        console.log(n, p);
+    },
+    forgotPassword: (email: string) =&#x3E; {
+        console.log(&#x22;email : &#x22;, email);
+    },
+};
+loginScreen.onLogin(&#x22;abc&#x22;, &#x22;abc123&#x22;);
+loginScreen.forgotPassword(&#x22;abhaynath@gmail.com&#x22;);
+</code></pre>
+      </section>
+      <section id="ts_05_03">
+        <h4>Construct Signatures</h4>
+
+        <pre><code class="language-ts">
+</code></pre>
+
+        <h4>Generic Functions</h4>
+        <pre><code class="language-ts">
+
+</code></pre>
+
+        <h4>Types Union with values</h4>
+        <pre><code class="language-ts">
+
+</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

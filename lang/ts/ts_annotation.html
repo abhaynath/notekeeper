@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Annotation</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../ts/ts_index.html">TypeScript</a>
+    </nav>
+    <div class="content">
+      <section id="ts_04_01">
+        <h4>Union Types</h4>
+        <pre><code class="language-ts">
+function printId(Id: number | string) {
+    console.log(Id);
+}
+printId(121);
+printId(&#x22;121&#x22;);
+</code></pre>
+
+        <h4>Narrowing Union Types</h4>
+        <pre><code class="language-ts">
+function welcomePeople(x: string[] | string) {
+    if (Array.isArray(x)) {
+        console.log(&#x22;Hello, &#x22; + x.join(&#x22; and &#x22;));
+    } else {
+        console.log(&#x22;Hello, lone traveler &#x22;, x);
+    }
+}
+
+welcomePeople(&#x22;Abhay&#x22;);
+welcomePeople([&#x22;Sachin&#x22;, &#x22;Rohit&#x22;]);
+
+</code></pre>
+      </section>
+
+      <section id="ts_04_02">
+        <h4>Type Aliases</h4>
+        <p>
+          We&#x27;ve been using object types and union types by writing them
+          directly in type annotations. This is convenient, but it&#x27;s common
+          to want to use the same type more than once and refer to it by a
+          single name.
+        </p>
+
+        <pre><code class="language-ts">
+type Point = {
+    x: number;
+    y: number;
+};
+
+function printPoint(pt: Point) {
+    console.log(&#x60;Point = ${pt.x} , ${pt.y}&#x60;);
+}
+let p1: Point = { x: 10, y: 35 };
+printPoint(p1);</code></pre>
+
+<h4>Types with Unions</h4>
+<pre><code class="language-ts">
+type Id = string | number;
+
+function printId(userId: Id) {
+  console.log(userId);
+}
+
+printId(&#x22;abc1&#x22;);
+printId(101);
+</code></pre>
+
+<h4>Types Union with values</h4>
+<pre><code class="language-ts">
+type ChartType = &#x27;barchart&#x27;|&#x27;piechart&#x27;|&#x27;treechart&#x27;;
+
+function PrintChart(Id:ChartType){
+    console.log(Id)
+}
+
+PrintChart(&#x22;barchart&#x22;);
+PrintChart(&#x22;abhay&#x22;); //error !
+</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

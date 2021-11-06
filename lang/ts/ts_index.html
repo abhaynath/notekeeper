@@ -1,388 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
     <title>TypeScript tutorials</title>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+      </nav>
 
-        <nav class="nav_main">
-            <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <ol class="toc">
+        <li>
+          <a href="ts_setup.html">Setup</a>
+          <ol>
+            <li>
+              <a href="ts_setup.html">Setup (Typescript + jQuery + Webpack)</a>
+            </li>
+            <li>
+              <a href="ts_setup_bootstrap.html"
+                >Setup (Typescript + jQuery + Bootstrap + Jasmine + Webpack)</a
+              >
+            </li>
+          </ol>
+        </li>
+        <li>
+          <a href="ts_basic_types.html">Type Annotation</a>
+          <ol>
+            <li><a href="ts_basic_types.html#ts_03_01">Basic JavaScript Types</a>
+                <ol>
+                    <li><a href="ts_basic_types.html#ts_03_01">Primitive Types</a></li>
+                    <li><a href="ts_basic_types.html#ts_03_02">Function arguments and return types</a></li>
+                    <li><a href="ts_basic_types.html#ts_03_03">Object Types as function arguments and return type</a></li>
+                    <li><a href="ts_basic_types.html#ts_03_04">Optional properties in object</a></li>
+                   
+                  </ol>
+            </li>
+            <li><a href="ts_functions.html">Function Types</a>
+                <ol>
+                    <li><a href="ts_functions.html#ts_05_01">Function Type Expressions</a></li>
+                    <li><a href="ts_functions.html#ts_05_02">Call Signatures</a></li>
+                    <li><a href="ts_functions.html#ts_05_03">Construct Signatures</a></li>
+                    <li><a href="ts_functions.html#ts_05_04">Generic Functions</a></li>
+                   
+                  </ol>
+            </li>
 
-        </nav>
-
-        <ol class="toc">
-            <li><a href="ts_setup.html">Setup</a>
+            <li><a href="ts_annotation.html">Annotation</a>
                 <ol>
-                    <li><a href="ts_setup.html">Setup (Typescript + jQuery + Webpack)</a></li>
-                    <li><a href="ts_setup_bootstrap.html">Setup (Typescript + jQuery + Bootstrap + Jasmine +
-                            Webpack)</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a>
-                        <ol>
-                            <li><a href="ts_setup.html">Setup</a></li>
-                            <li><a href="ts_setup.html">Data Types</a></li>
-                            <li><a href="ts_setup.html">Arrays</a></li>
-                            <li><a href="ts_setup.html">Generics</a></li>
-                            <li><a href="ts_setup.html">Runtime</a></li>
-                            <li><a href="ts_setup.html">Data Structures</a></li>
-                            <li><a href="ts_setup.html">Design Patterns</a></li>
-                            <li><a href="ts_setup.html">Classes & Objects</a></li>
-                            <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                            <li><a href="ts_setup.html">Modules Object Oriented ProgrammingObject Oriented
-                                    ProgrammingObject
-                                    Oriented ProgrammingObject Oriented ProgrammingObject Oriented ProgrammingObject
-                                    Oriented
-                                    ProgrammingObject Oriented ProgrammingObject Oriented Programming</a></li>
-                        </ol>
-                    </li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules Object Oriented ProgrammingObject Oriented ProgrammingObject
-                            Oriented ProgrammingObject Oriented ProgrammingObject Oriented ProgrammingObject Oriented
-                            ProgrammingObject Oriented ProgrammingObject Oriented Programming</a></li>
-                </ol>
+                    <li><a href="ts_annotation.html#ts_04_01">Union Types</a></li>
+                    <li><a href="ts_annotation.html#ts_04_02">Type Aliases</a></li>
+                    <li><a href="ts_annotation.html#ts_04_03">Object Types as function arguments and return type</a></li>
+                    <li><a href="ts_annotation.html#ts_04_04">Optional properties in object</a></li>
+                   
+                  </ol>
             </li>
-            <li><a href="ts_setup.html">Data Types Object Oriented ProgrammingObject Oriented ProgrammingObject Oriented
-                    ProgrammingObject Oriented ProgrammingObject Oriented ProgrammingObject Oriented ProgrammingObject
-                    Oriented ProgrammingObject Oriented Programming</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Arrays</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Generics</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Runtime</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Data Structures</a></li>
-            <li><a href="ts_setup.html">Design Patterns</a></li>
-            <li><a href="ts_setup.html">Classes & Objects</a></li>
-            <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-            <li><a href="ts_setup.html">Modules</a></li>
-
-            <li><a href="ts_setup.html">Setup</a></li>
-            <li><a href="ts_setup.html">Data Types</a></li>
-            <li><a href="ts_setup.html">Arrays</a></li>
-            <li><a href="ts_setup.html">Generics</a></li>
-            <li><a href="ts_setup.html">Setup</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Data Types</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Arrays</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Generics</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Runtime</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Data Structures</a></li>
-            <li><a href="ts_setup.html">Design Patterns</a></li>
-            <li><a href="ts_setup.html">Classes & Objects</a></li>
-            <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-            <li><a href="ts_setup.html">Modules</a></li>
-
-            <li><a href="ts_setup.html">Setup</a></li>
-            <li><a href="ts_setup.html">Data Types</a></li>
-            <li><a href="ts_setup.html">Arrays</a></li>
-            <li><a href="ts_setup.html">Generics</a></li>
-            <li><a href="ts_setup.html">Runtime</a></li>
-            <li><a href="ts_setup.html">Data Structures</a></li>
-            <li><a href="ts_setup.html">Design Patterns</a></li>
-            <li><a href="ts_setup.html">Classes & Objects</a></li>
-            <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-            <li><a href="ts_setup.html">Modules</a></li>
-
-            <li><a href="ts_setup.html">Setup</a></li>
-            <li><a href="ts_setup.html">Data Types</a></li>
-            <li><a href="ts_setup.html">Arrays</a></li>
-            <li><a href="ts_setup.html">Setup</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Data Types</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Arrays</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Generics</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Runtime</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Runtime</a></li>
-            <li><a href="ts_setup.html">Data Structures</a></li>
-            <li><a href="ts_setup.html">Design Patterns</a></li>
-            <li><a href="ts_setup.html">Classes & Objects</a></li>
-            <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-            <li><a href="ts_setup.html">Modules</a></li>
-
-            <li><a href="ts_setup.html">Setup</a></li>
-            <li><a href="ts_setup.html">Data Types</a></li>
-            <li><a href="ts_setup.html">Arrays</a></li>
-            <li><a href="ts_setup.html">Setup</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Data Types</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Arrays</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Generics</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-            </li>
-            <li><a href="ts_setup.html">Runtime</a>
-                <ol>
-                    <li><a href="ts_setup.html">Setup</a></li>
-                    <li><a href="ts_setup.html">Data Types</a></li>
-                    <li><a href="ts_setup.html">Arrays</a></li>
-                    <li><a href="ts_setup.html">Generics</a></li>
-                    <li><a href="ts_setup.html">Runtime</a></li>
-                    <li><a href="ts_setup.html">Data Structures</a></li>
-                    <li><a href="ts_setup.html">Design Patterns</a></li>
-                    <li><a href="ts_setup.html">Classes & Objects</a></li>
-                    <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-                    <li><a href="ts_setup.html">Modules</a></li>
-                </ol>
-
-            </li>
-            <li><a href="ts_setup.html">Runtime</a></li>
-            <li><a href="ts_setup.html">Data Structures</a></li>
-            <li><a href="ts_setup.html">Design Patterns</a></li>
-            <li><a href="ts_setup.html">Classes & Objects</a></li>
-            <li><a href="ts_setup.html">Object Oriented Programming</a></li>
-            <li><a href="ts_setup.html">Modules</a></li>
-        </ol>
-
-
+          </ol>
+        
+          
+        </li>
+        <li>
+            <a href="ts_annotation.html">Type Annotation</a>
+            <ol>
+              <li><a href="ts_setup.html">Setup</a></li>
+              <li><a href="ts_setup.html">Data Types</a></li>
+              <li><a href="ts_setup.html">Arrays</a></li>
+              <li><a href="ts_setup.html">Generics</a></li>
+              <li><a href="ts_setup.html">Runtime</a></li>
+              <li><a href="ts_setup.html">Data Structures</a></li>
+              <li><a href="ts_setup.html">Design Patterns</a></li>
+              <li><a href="ts_setup.html">Classes & Objects</a></li>
+              <li><a href="ts_setup.html">Object Oriented Programming</a></li>
+              <li><a href="ts_setup.html">Modules</a></li>
+            </ol>
+          </li>
+      </ol>
     </div>
-
-</body>
-
-
+  </body>
 </html>
