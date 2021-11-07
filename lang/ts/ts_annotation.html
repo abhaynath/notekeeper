@@ -182,8 +182,84 @@ const bear:Bear = {name:&#x22;Baloo&#x22;,honey:true,height:6};
       </section>
 
       <section id="ts_04_06">
-        <h4>Literal Types</h4>
-        <pre><code class="language-ts"></code></pre>
+        <h4>Enum</h4>
+        <p>
+          Enums allow a developer to define a set of named constants. Using
+          enums can make it easier to document intent, or create a set of
+          distinct cases. TypeScript provides both numeric and string-based
+          enums
+        </p>
+        <h5>Numeric Enum</h5>
+        <p>
+          We have a numeric enum where Up is initialized with 1. All of the
+          following members are auto-incremented from that point on. In other
+          words, Direction.Up has the value 1, Down has 2, Left has 3, and Right
+          has 4.
+        </p>
+        <pre><code class="language-ts">enum Direction {
+  Up = 1,
+  Down,
+  Left,
+  Right,
+};
+
+console.log(Direction.Down);</code></pre>
+
+        <h5>String Enum</h5>
+        <pre><code class="language-ts">enum Direction {
+    Up = &#x22;up&#x22;,
+    Down = &#x22;down&#x22;,
+    Left = &#x22;left&#x22;,
+    Right = &#x22;right&#x22;,
+  }
+
+  console.log(Direction.Down);
+</code></pre>
+
+        <h5>Enum and Interfaces</h5>
+        <pre><code class="language-ts">enum ShapeKind {
+  Circle,
+  Square,
+}
+
+interface Circle {
+  kind: ShapeKind.Circle;
+  radius: number;
+}
+interface Square {
+  kind: ShapeKind.Square;
+  sideLength: number;
+}
+</code></pre>
+
+        <h5>Reverse Mapping</h5>
+        <p>
+          In addition to creating an object with property names for members,
+          numeric enums members also get a reverse mapping from enum values to
+          enum names. For example, in this example:
+        </p>
+        <pre><code class="language-ts">enum Shapes {
+  Circle,
+  Square,
+}
+
+let a = Shapes.Circle;
+let nameOfA = Shapes[a];
+
+console.log(a);             //0
+console.log(nameOfA);       //Circle
+</code></pre>
+
+<h5>Objects as Enum</h5>
+<p>In modern TypeScript, you may not need an enum when an object with as const could suffice</p>
+<pre><code class="language-ts">const DIRECTION = {
+  UP: 0,
+  DOWN: 1,
+  RIGHT: 3,
+  LEFT: 4,
+} as const;
+
+console.log(DIRECTION.DOWN);</code></pre>
       </section>
 
       <section id="ts_04_07">
