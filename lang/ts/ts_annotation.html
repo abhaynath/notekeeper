@@ -72,8 +72,8 @@ function printPoint(pt: Point) {
 let p1: Point = { x: 10, y: 35 };
 printPoint(p1);</code></pre>
 
-<h4>Types with Unions</h4>
-<pre><code class="language-ts">
+        <h4>Types with Unions</h4>
+        <pre><code class="language-ts">
 type Id = string | number;
 
 function printId(userId: Id) {
@@ -84,8 +84,8 @@ printId(&#x22;abc1&#x22;);
 printId(101);
 </code></pre>
 
-<h4>Types Union with values</h4>
-<pre><code class="language-ts">
+        <h4>Types Union with values</h4>
+        <pre><code class="language-ts">
 type ChartType = &#x27;barchart&#x27;|&#x27;piechart&#x27;|&#x27;treechart&#x27;;
 
 function PrintChart(Id:ChartType){
@@ -95,6 +95,100 @@ function PrintChart(Id:ChartType){
 PrintChart(&#x22;barchart&#x22;);
 PrintChart(&#x22;abhay&#x22;); //error !
 </code></pre>
+      </section>
+      <section id="ts_04_03">
+        <h4>Interface</h4>
+        <p>
+          Just like when we used a type alias above, the example works just as
+          if we had used an anonymous object type. TypeScript is only concerned
+          with the structure of the value we passed to printCoord - it only
+          cares that it has the expected properties. Being concerned only with
+          the structure and capabilities of types is why we call TypeScript a
+          structurally typed type system.
+        </p>
+        <pre><code class="language-ts">
+interface Point {
+  x: number;
+  y: number;
+}
+const p1: Point = { x: 100, y: 200 };
+</code></pre>
+      </section>
+
+      <section id="ts_04_04">
+        <h4>Differences Between Type Aliases and Interfaces</h4>
+        <p>
+          Type aliases and interfaces are very similar, and in many cases you
+          can choose between them freely. Almost all features of an interface
+          are available in type, the key distinction is that a type cannot be
+          re-opened to add new properties vs an interface which is always
+          extendable.
+        </p>
+        <div class="space_between">
+          <div>
+            <h4>Interface</h4>
+            <p>New fields can be added in interfaces</p>
+            <pre><code class="language-ts">
+interface Animal {
+  name: string;
+}
+interface Bear extends Animal {
+  honey: boolean;
+}
+interface Bear {
+  height: number;
+}
+const bear: Bear = { name: &#x22;Baloo&#x22;, honey: true, height: 6 };
+</code></pre>
+          </div>
+          <div>
+            <h4>Type Aliases</h4>
+            <p>A type cannot be changed after being created</p>
+            <pre><code class="language-ts">type Animal = {
+  name: string;
+};
+type Bear = Animal &#x26; {
+  honey: boolean;
+};
+type Bear = { //Duplicate identifier &#x27;Bear&#x27;
+  height: number;
+};
+const bear:Bear = {name:&#x22;Baloo&#x22;,honey:true,height:6};
+            </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="ts_04_05">
+        <h4>Type Assertions</h4>
+        <p>
+          Sometimes you will have information about the type of a value that
+          TypeScript can’t know about.
+        </p>
+        <p>
+          For example, if you’re using
+          <span class="keyword">document.getElementById</span>, TypeScript only
+          knows that this will return some kind of
+          <span class="keyword">HTMLElement</span>, but you might know that your
+          page will always have an
+          <span class="keyword">HTMLCanvasElement</span> with a given ID.
+        </p>
+        <pre><code class="language-ts">const myCanvas = document.getElementById("graphCanvas") as HTMLCanvasElement;</code></pre>
+        <p>
+          Like a type annotation, type assertions are removed by the compiler
+          and won’t affect the runtime behavior of your code.
+        </p>
+        <pre><code class="language-ts">const myCanvas = &#x3C;HTMLCanvasElement&#x3E;document.getElementById(&#x22;graphCanvas&#x22;);</code></pre>
+      </section>
+
+      <section id="ts_04_06">
+        <h4>Literal Types</h4>
+        <pre><code class="language-ts"></code></pre>
+      </section>
+
+      <section id="ts_04_07">
+        <h4></h4>
+        <pre><code class="language-ts"></code></pre>
       </section>
     </div>
   </body>
