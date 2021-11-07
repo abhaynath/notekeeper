@@ -250,9 +250,12 @@ console.log(a);             //0
 console.log(nameOfA);       //Circle
 </code></pre>
 
-<h5>Objects as Enum</h5>
-<p>In modern TypeScript, you may not need an enum when an object with as const could suffice</p>
-<pre><code class="language-ts">const DIRECTION = {
+        <h5>Objects as Enum</h5>
+        <p>
+          In modern TypeScript, you may not need an enum when an object with as
+          const could suffice
+        </p>
+        <pre><code class="language-ts">const DIRECTION = {
   UP: 0,
   DOWN: 1,
   RIGHT: 3,
@@ -260,11 +263,6 @@ console.log(nameOfA);       //Circle
 } as const;
 
 console.log(DIRECTION.DOWN);</code></pre>
-      </section>
-
-      <section id="ts_04_07">
-        <h4></h4>
-        <pre><code class="language-ts"></code></pre>
       </section>
     </div>
   </body>
