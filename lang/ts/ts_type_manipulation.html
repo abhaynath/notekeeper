@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Type Manipulation</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../ts/ts_index.html">TypeScript</a>
+    </nav>
+    <div class="content">
+      <h3>Type Manipulation</h3>
+      <section id="ts_06_01">
+        <h4><span class="keyword">keyof</span> Type Operator</h4>
+        <p>
+          The keyof operator takes an object type and produces a string or
+          numeric literal union of its keys. The following type P is the same
+          type as &#x201C;x&#x201D; | &#x201C;y&#x201D;:
+        </p>
+        <pre><code class="language-ts">type Point = { x: 5; y: 8 };
+type P = keyof Point;
+
+let p: P = &#x22;x&#x22;;</code></pre>
+      </section>
+
+      <section id="ts_06_02">
+        <h4>typeof Operator</h4>
+        <p>
+          TypeScript adds a typeof operator you can use in a type context to
+          refer to the type of a variable or property:
+        </p>
+        <pre><code class="language-ts">let original = &#x22;abhay&#x22;;
+let derived: typeof original;
+
+derived = &#x22;javascript&#x22;;</code></pre>
+      </section>
+      <section id="ts_06_03">
+        <h4>ReturnType Operator</h4>
+        <p>
+          Combined with other type operators, you can use typeof to conveniently
+          express many patterns. For an example, let&#x2019;s start by looking
+          at the predefined type ReturnType&#x3C;T&#x3E;. It takes a function
+          type and produces its return type
+        </p>
+        <pre><code class="language-ts">type Point = {
+    x: number;
+    y: number;
+  };
+function f(): Point {
+  const p: Point = { x: 10, y: 35 };
+  return p;
+}
+
+type P = ReturnType&#x3C;typeof f&#x3E;;
+
+let p1: P = { x: 5, y: 5 };
+</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
