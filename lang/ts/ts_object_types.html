@@ -193,11 +193,16 @@ console.log(b1);</code></pre>
       </section>
 
       <section id="ts_05_07">
-        <h4></h4>
-        <p></p>
+        <h4>Array Types</h4>
+        <pre><code class="language-ts">let players: string[] = [&#x22;abhay&#x22;, &#x22;sachin&#x22;];
 
-        <pre><code class="language-ts">
-</code></pre>
+function printArray(list: Array&#x3C;string&#x3E;) {
+  list.forEach((element) =&#x3E; {
+    console.log(element);
+  });
+}
+
+printArray(players);</code></pre>
       </section>
 
       <section id="ts_05_08">
