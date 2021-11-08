@@ -43,7 +43,7 @@ let d: PaintOptions = { shape: &#x22;circle&#x22; };
 </code></pre>
       </section>
 
-      <section>
+      <section id="ts_05_02">
         <h4>Readonly properties</h4>
         <p>
           Properties can also be marked as readonly for TypeScript. While it
@@ -60,7 +60,7 @@ let c1: Circle = { radius: 6, name: &#x22;c1&#x22; };
 c1.radius = 3;
           </code></pre>
       </section>
-      <section>
+      <section id="ts_05_03">
         <h4>Index Signatures</h4>
         <p>
           Sometimes you don’t know all the names of a type’s properties ahead of
@@ -76,8 +76,8 @@ c1.radius = 3;
 }
           
 interface Player {
-name: string;
-runs: number;
+  name: string;
+  runs: number;
 }
 
 let India: Team = [];
@@ -85,6 +85,127 @@ India[0] = { name: &#x22;Sachin&#x22;, runs: 35 };
 
 console.log(India);
           </code></pre>
+      </section>
+
+      <section id="ts_05_04">
+        <h4>Extending Types</h4>
+        <p>
+          The <span class="keyword">extends</span> keyword on an
+          <span class="keyword">interface</span> allows us to effectively copy
+          members from other named types, and add whatever new members we want.
+          This can be useful for cutting down the amount of type declaration
+          boilerplate we have to write, and for signaling intent that several
+          different declarations of the same property might be related. For
+          example, AddressWithUnit didn’t need to repeat the street property,
+          and because street originates from BasicAddress, a reader will know
+          that those two types are related in some way.
+        </p>
+
+        <pre><code class="language-ts">interface BasicAddress {
+  name?: string;
+  street?: string;
+  city: string;
+  country: string;
+  postalCode: string;
+}
+interface AddressWithUnit extends BasicAddress {
+  unit: string;
+}
+
+let address: AddressWithUnit = {
+  city: &#x22;Mumbai&#x22;,
+  country: &#x22;India&#x22;,
+  postalCode: &#x22;1254&#x22;,
+  unit: &#x22;45854&#x22;,
+};
+
+console.log(address);</code></pre>
+
+        <p>Interfaces can be extended from multiple types</p>
+        <pre><code class="language-ts">interface Colorful {
+  color: string;
+}
+interface Circle {
+  radius: number;
+}
+interface ColorfulCircle extends Colorful, Circle {}
+
+interface AnotherCircle extends Colorful, Circle {
+  diameter: number;
+}
+
+let c1: ColorfulCircle = { color: &#x22;red&#x22;, radius: 5 };
+let c2: AnotherCircle = { color: &#x22;blue&#x22;, radius: 10, diameter: 20 };
+</code></pre>
+      </section>
+
+      <section id="ts_05_05">
+        <h4>Intersection Types</h4>
+        <p>
+          interfaces allowed us to build up new types from other types by
+          extending them. TypeScript provides another construct called
+          intersection types that is mainly used to combine existing object
+          types.
+        </p>
+
+        <pre><code class="language-ts">interface Colorful {
+  color: string;
+}
+interface Circle {
+  radius: number;
+}
+type ColorfulCircle = Colorful &#x26; Circle;
+
+let c1: ColorfulCircle = { color: &#x22;red&#x22;, radius: 5 };
+</code></pre>
+
+        <h4>Interfaces vs. Intersections</h4>
+        <p>
+          We just looked at two ways to combine types which are similar, but are
+          actually subtly different. With interfaces, we could use an <span class="keyword">extends</span>
+          clause to extend from other types, and we were able to do something
+          similar with intersections and name the result with a type alias. The
+          principle difference between the two is how conflicts are handled, and
+          that difference is typically one of the main reasons why you’d pick
+          one over the other between an interface and a type alias of an
+          intersection type.
+        </p>
+      </section>
+
+      <section id="ts_05_06">
+        <h4>Generics with interface</h4>
+        <p></p>
+
+        <pre><code class="language-ts">interface Box&#x3C;Type&#x3E; {
+  contents: Type;
+}
+
+let b1: Box&#x3C;string&#x3E; = { contents: &#x22;Hello !&#x22; };
+
+console.log(b1);
+
+function setContents&#x3C;Type&#x3E;(box: Box&#x3C;Type&#x3E;, newContents: Type) {
+  box.contents = newContents;
+}
+setContents(b1, &#x22;Again Hello !!&#x22;);
+
+console.log(b1);</code></pre>
+      </section>
+
+      <section id="ts_05_07">
+        <h4></h4>
+        <p></p>
+
+        <pre><code class="language-ts">
+</code></pre>
+      </section>
+
+      <section id="ts_05_08">
+        <h4></h4>
+        <p></p>
+
+        <pre><code class="language-ts">
+</code></pre>
       </section>
     </div>
   </body>
