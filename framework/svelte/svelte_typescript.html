@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Svelte with TypeScript</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
+    </nav>
+    <div class="content">
+      <section id="sv_11_01">
+        <h4>PlayerModel.svelte</h4>
+        <pre><code class="language-ts">
+export interface Player 
+{
+    id: string;
+    name: string;
+}</code></pre>
+
+<h4>common.ts</h4>
+<pre><code class="language-ts">export const getId = () =&#x3E; {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  };
+  </code></pre>
+
+<h4>store.ts</h4>
+<pre><code class="language-ts">
+import { writable } from &#x22;svelte/store&#x22;;
+import { getId } from &#x22;../helpers/common&#x22;;
+import type { Player } from &#x22;../models/PlayerStore/PlayerStore&#x22;;
+
+const createPlayerStore = () =&#x3E; {
+  let india: Player[] = [
+    { id: getId(), name: &#x22;Abhay&#x22; },
+    { id: getId(), name: &#x22;Sachin&#x22; },
+  ];
+  let { update, subscribe } = writable&#x3C;Player[]&#x3E;(india);
+
+  const addPlayer = (player: Player) =&#x3E; {
+    player.id = getId();
+
+    update((val: Player[]) =&#x3E; {
+      let index = val.findIndex((p: Player) =&#x3E; player.name == p.name);
+      if (index == -1) {
+        val.push(player);
+        val = val;
+      }
+      return val;
+    });
+  };
+  const deletePlayer = (id: string) =&#x3E; {
+    update((val: Player[]) =&#x3E; {
+      let d = val.slice(0);
+      let index = d.findIndex((p: Player) =&#x3E; p.id == id);
+      if (index != -1) {
+        d.splice(index, 1);
+        val = d;
+      }
+      return val;
+    });
+  };
+
+  const updatePlayer = (player: Player) =&#x3E; {
+    update((val: Player[]) =&#x3E; {
+      let index = val.findIndex((p: Player) =&#x3E; p.id == player.id);
+
+      if (index != -1) {
+        val[index] = player;
+        val = val;
+      }
+      return val;
+    });
+  };
+
+  return {
+    subscribe,
+    addPlayer,
+    deletePlayer,
+    updatePlayer,
+  };
+};
+export const playerStore = createPlayerStore();
+</code></pre>
+
+        <h4>PlayerList.svelte</h4>
+        <pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+    import type { Player } from &#x22;../models/PlayerStore/PlayerStore&#x22;;
+    import { playerStore } from &#x22;../stores/playersStore&#x22;;
+
+    let india: Player[] = [];
+    let txtName = &#x22;&#x22;;
+    playerStore.subscribe((val: Player[]) =&#x3E; {
+        india = val;
+    });
+    const addPlayer = () =&#x3E; {
+        let name = txtName.trim();
+        if (name.length &#x3C; 1) {
+        return;
+        }
+        let p: Player = { id: &#x22;&#x22;, name: name };
+        playerStore.addPlayer(p);
+        txtName = &#x22;&#x22;;
+    };
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;pl&#x22;&#x3E;
+    &#x3C;div&#x3E;
+        &#x3C;input type=&#x22;text&#x22; bind:value={txtName} /&#x3E;
+        &#x3C;button on:click={addPlayer}&#x3E;Add&#x3C;/button&#x3E;
+    &#x3C;/div&#x3E;
+    &#x3C;span&#x3E;{txtName}&#x3C;/span&#x3E;
+    &#x3C;div class=&#x22;player&#x22;&#x3E;
+        {#each india as player (player.id)}
+        &#x3C;div&#x3E;
+            &#x3C;span class=&#x22;pid&#x22;&#x3E;{player.id}&#x3C;/span&#x3E;
+            &#x3C;input type=&#x22;text&#x22; bind:value={player.name} /&#x3E;
+            &#x3C;button
+            on:click={() =&#x3E; {
+                playerStore.updatePlayer(player);
+            }}&#x3E;Update&#x3C;/button
+            &#x3E;
+            &#x3C;button
+            on:click={() =&#x3E; {
+                playerStore.deletePlayer(player.id);
+            }}&#x3E;Delete&#x3C;/button
+            &#x3E;
+        &#x3C;/div&#x3E;
+        {/each}
+    &#x3C;/div&#x3E;
+    &#x3C;ol&#x3E;
+        {#each $playerStore as player (player.id)}
+        &#x3C;li&#x3E;&#x3C;span&#x3E;{player.name}&#x3C;/span&#x3E;&#x3C;/li&#x3E;
+        {/each}
+    &#x3C;/ol&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.pl {
+    background-color: #ffffd1;
+    padding: 10px;
+    border: 1px solid grey;
+}
+
+.pid {
+    background-color: white;
+}
+&#x3C;/style&#x3E;
+
+</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
