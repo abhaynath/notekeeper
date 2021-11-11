@@ -9,108 +9,77 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>SQL Server Table Schema</title>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>WPF Data Binding</title>
   </head>
 
   <body>
     <nav class="nav_main">
       <a href="../../index.html"><i class="fa fa-home"></i></a>
-      <a href="sql_server_index.html">SQL Server</a>
+      <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-      <section id="ss_01_01">
-        <h4>Create Tables</h4>
-        <pre class="prettyprint">
+      <section id="wpf_01_01">
+        <h4>Design Time Data</h4>
+        <p>
+          Some layouts are hard to visualize without data. In this document,
+          we&#x27;ll be reviewing one of the approaches developers working on
+          desktop projects can use to mock data in the XAML designer. This
+          approach is done using the existing Ignorable &#x201C;d:&#x201D;
+          namespace. With this approach you can quickly add design-time data to
+          your pages or controls without the need to create a full mock
+          ViewModel, or just test how a property change might affect your
+          application without worrying that these changes will impact your
+          release builds. All d: data is used only by the XAML Designer and no
+          ignorable namespace values are compiled into the application.
+        </p>
+        <p>
+          Design-time data is mock data you set to make your controls easier to
+          visualize in the XAML Designer. To get started, add the following
+          lines of code to the header of your XAML document if they aren&#x27;t
+          already present:
+        </p>
+        <pre class="shell">
+xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+mc:Ignorable=&#x22;d&#x22;</pre
+        >
+        <h5>Design Time Component</h5>
+        <pre><code class="language-html">&#x3C;d:Button d:Background=&#x22;Aqua&#x22;&#x3E;Abhay&#x3C;/d:Button&#x3E;</code></pre>
+        <h5>Data and attribute</h5>
+        <pre><code class="language-html">&#x3C;TextBlock d:Text=&#x22;Abhay&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
 
-    create table player
-    (
-    &#x9;id bigint identity(1,1) not null primary key,
-    &#x9;firstName varchar(50),
-    &#x9;middleName varchar(50),
-    &#x9;lastName varchar(50),
-    &#x9;teamId bigint,
-    &#x9;birthDate date,
-    &#x9;birthPlace varchar(100),
-    &#x9;height int,
-    &#x9;roleId bigint,
-    &#x9;battingStyle bigint,
-    &#x9;bowlingStyle bigint,
-    &#x9;info text
-
-    )
-
-        </pre>
-
-        <h4>Create Tables with Foreign Key constraints</h4>
-        <pre class="prettyprint">
-    create table tournament
-    (
-        id bigint identity(1,1) not null primary key,
-        title varchar(150) unique,
-        editionOf bigint,
-        info text,
-        startDate date,
-        endDate date,
-        manOfSeries bigint,
-        constraint fk_man_of_series foreign key (manOfSeries)
-        references player(id)
-        on delete cascade
-        on update cascade
-    
-    )
-        </pre>
+&#x3C;TextBlock d:Text=&#x22;Abhay&#x22; Background=&#x22;Red&#x22; d:Foreground=&#x22;White&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
       </section>
-      <section id="ss_01_02">
-        <h4>Add new column</h4>
-        <pre class="prettyprint">
+      <section id="wpf_01_02">
+        <h4>TextBlock</h4>
+        <p>
+          A binding has many other properties though, one of them being the
+          <span class="keyword">ElementName</span> which we use in our example.
+          This allows us to connect directly to another UI element as the
+          source. Each property that we set in the binding is separated by a
+          comma:
+        </p>
+        <pre><code class="language-html">&#x3C;TextBox Name=&#x22;UserName&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+&#x3C;TextBlock Text=&#x22;{Binding Path=Text,ElementName=UserName}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
 
-    ALTER TABLE country
-    ADD shortName VARCHAR(10)
-            </pre
-        >
-        <h4>Rename existing column</h4>
-        <pre class="prettyprint">
-
-    exec sp_rename 'team.shortname', 'title','column'
-            </pre
-        >
-
-        <h4>Modify datatype of column</h4>
-        <pre class="prettyprint">
-
-    ALTER TABLE team 
-    MODIFY title bigint
-            </pre
-        >
-
-        <h4>Drop column</h4>
-        <pre class="prettyprint">
-
-    ALTER TABLE team
-    DROP COLUMN title
-            </pre
-        >
+        <h5>Binding with Code</h5>
+        <pre><code class="language-csharp">private void BindUserPassword()
+{
+  Binding binding = new Binding(&#x22;Text&#x22;);
+  binding.Source = UserPassword;
+  lblPassword.SetBinding(TextBlock.TextProperty, binding);
+}</code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>
