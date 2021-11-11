@@ -162,7 +162,8 @@ let c1: ColorfulCircle = { color: &#x22;red&#x22;, radius: 5 };
         <h4>Interfaces vs. Intersections</h4>
         <p>
           We just looked at two ways to combine types which are similar, but are
-          actually subtly different. With interfaces, we could use an <span class="keyword">extends</span>
+          actually subtly different. With interfaces, we could use an
+          <span class="keyword">extends</span>
           clause to extend from other types, and we were able to do something
           similar with intersections and name the result with a type alias. The
           principle difference between the two is how conflicts are handled, and
@@ -190,6 +191,56 @@ function setContents&#x3C;Type&#x3E;(box: Box&#x3C;Type&#x3E;, newContents: Type
 setContents(b1, &#x22;Again Hello !!&#x22;);
 
 console.log(b1);</code></pre>
+
+        <h4>Generics with Class</h4>
+        <pre><code class="language-ts">interface LoginResponse {
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  type: string;
+}
+
+interface SearchResponse {
+  scrip: string;
+  ltp: number;
+  high: number;
+  low: number;
+}
+class ResponseModel&#x3C;T&#x3E; {
+  success: boolean = false;
+  message: string = &#x22;&#x22;;
+  data: T | undefined;
+  constructor(data?: T) {
+    if (data) {
+      this.data = data;
+      this.success = true;
+      this.message = &#x22;&#x22;;
+    }
+  }
+}
+let lresp: LoginResponse = {
+  firstName: &#x22;Abhay&#x22;,
+  lastName: &#x22;Nath&#x22;,
+  mobile: &#x22;458787&#x22;,
+  type: &#x22;admin&#x22;,
+};
+
+let searchRes: SearchResponse = {
+  scrip: &#x22;MRF&#x22;,
+  ltp: 87000,
+  low: 78000,
+  high: 90000,
+};
+let resp1: ResponseModel&#x3C;LoginResponse&#x3E; = new ResponseModel&#x3C;LoginResponse&#x3E;(
+  lresp
+);
+
+let resp2: ResponseModel&#x3C;SearchResponse&#x3E; = new ResponseModel&#x3C;SearchResponse&#x3E;(
+  searchRes
+);
+console.log(resp1.data);
+console.log(resp2.data?.high);
+</code></pre>
       </section>
 
       <section id="ts_05_07">
@@ -204,8 +255,6 @@ function printArray(list: Array&#x3C;string&#x3E;) {
 
 printArray(players);</code></pre>
       </section>
-
-     
     </div>
   </body>
 
