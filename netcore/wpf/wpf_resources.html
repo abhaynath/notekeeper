@@ -9,22 +9,12 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
     <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>WPF Resources</title>
   </head>
 
@@ -34,14 +24,30 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-      <section id="ss_01_01">
-        <h4>Create Tables</h4>
-        <pre class="prettyprint"></pre>
+      <h3>Static Resources</h3>
+      <section id="wpf_02_01">
+        <h4>App.xaml</h4>
+        <pre><code class="language-html">&#x3C;Application x:Class=&#x22;WPF_Scratchpad.App&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          xmlns:local=&#x22;clr-namespace:WPF_Scratchpad&#x22;
+          xmlns:app=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+          StartupUri=&#x22;MainWindow.xaml&#x22;&#x3E;
+ &#x3C;Application.Resources&#x3E;
+     &#x3C;app:String x:Key=&#x22;appVersion&#x22;&#x3E;1.1&#x3C;/app:String&#x3E;
+     &#x3C;SolidColorBrush Color=&#x22;Yellow&#x22; x:Key=&#x22;btnColor2&#x22;&#x3E;&#x3C;/SolidColorBrush&#x3E;
+ &#x3C;/Application.Resources&#x3E;
+&#x3C;/Application&#x3E;</code></pre>
+        <p>
+          We can use this <span class="keyword">appVersion</span> in any window
+          or user control.
+        </p>
+        <pre><code class="language-html"> &#x3C;TextBlock Text=&#x22;{StaticResource appVersion}&#x22; Background=&#x22;{StaticResource btnColor2}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
       </section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>
