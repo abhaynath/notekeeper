@@ -27,6 +27,9 @@
       <h3>Static Resources</h3>
       <section id="wpf_02_01">
         <h4>App.xaml</h4>
+
+        <p>To use clr namespace, add following namespace</p>
+        <pre><code class="language-csharp">xmlns:clr=&#x22;clr-namespace:System;assembly=netstandard&#x22;</code></pre>
         <pre><code class="language-html">&#x3C;Application x:Class=&#x22;WPF_Scratchpad.App&#x22;
           xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
           xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
@@ -43,6 +46,51 @@
           or user control.
         </p>
         <pre><code class="language-html"> &#x3C;TextBlock Text=&#x22;{StaticResource appVersion}&#x22; Background=&#x22;{StaticResource btnColor2}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
+     
+     <h4>Window Resources</h4>
+     <p>We can use resources on Windows scope</p>
+     <pre><code class="language-html">&#x3C;Window.Resources&#x3E;
+      &#x3C;clr:String x:Key=&#x22;AppName&#x22;&#x3E;Abhay&#x3C;/clr:String&#x3E;
+&#x3C;/Window.Resources&#x3E;</code></pre>
+
+<h4>User Control Resources</h4>
+<p>We can use styles and resource on the userControls.</p>
+<h5>ResourceDemoControl.xaml</h5>
+<pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.ResourceDemoControl&#x22;
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+  xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:local=&#x22;clr-namespace:WPF_Scratchpad.UserControls&#x22;
+  xmlns:clr=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+  mc:Ignorable=&#x22;d&#x22; 
+  Padding=&#x22;10&#x22;
+  d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;&#x3E;
+    &#x3C;UserControl.Resources&#x3E;
+        &#x3C;clr:String x:Key=&#x22;strHelloWorld&#x22;&#x3E;Hello World&#x3C;/clr:String&#x3E;
+        &#x3C;clr:String x:Key=&#x22;strComboTitle&#x22;&#x3E;Players&#x3C;/clr:String&#x3E;
+        &#x3C;x:Array x:Key=&#x22;PlayerList&#x22; Type=&#x22;clr:String&#x22;&#x3E;
+            &#x3C;clr:String&#x3E;Shikhar Dhawan&#x3C;/clr:String&#x3E;
+            &#x3C;clr:String&#x3E;Rohit Sharma&#x3C;/clr:String&#x3E;
+            &#x3C;clr:String&#x3E;Virat Kohli&#x3C;/clr:String&#x3E;
+        &#x3C;/x:Array&#x3E;
+
+        &#x3C;LinearGradientBrush x:Key=&#x22;MyGradient&#x22;&#x3E;
+            &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;Yellow&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+            &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;Aqua&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+        &#x3C;/LinearGradientBrush&#x3E;
+    &#x3C;/UserControl.Resources&#x3E;
+
+    &#x3C;StackPanel Background=&#x22;{DynamicResource MyGradient}&#x22;&#x3E;
+      &#x3C;TextBlock Text=&#x22;{StaticResource appVersion}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;TextBlock Name=&#x22;TxtAppVersion&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+
+      &#x3C;TextBlock Text=&#x22;{StaticResource strHelloWorld}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;ComboBox ItemsSource=&#x22;{StaticResource PlayerList}&#x22; SelectedIndex=&#x22;0&#x22;&#x3E;&#x3C;/ComboBox&#x3E;
+    &#x3C;/StackPanel&#x3E;
+&#x3C;/UserControl&#x3E;
+</code></pre>
+     
       </section>
     </div>
   </body>
