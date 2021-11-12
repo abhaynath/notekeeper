@@ -24,6 +24,25 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
+      <p>Resources are stored temporarily somewhere so that we can reuse them when we need them.</p>
+      <h4>Advantages</h4>
+      <ol>
+        <li>Re-usability, just define it once in a common file and use it in multiple XAMLs.</li>
+        <li>Store data locally, i.e. in the same window, if usage scope is the same window or in some common file is usage scope is global i.e. entire application.</li>
+        <li>Or you can define it inside a panel such as Grid, Stack panel, etc.</li>
+      </ol>
+
+      <p>There are 2 types of Resources : <span class="keyword">StaticResource</span> and <span class="keyword">DynamicResource</span>.</p>
+      <ul>
+        <details>
+          <summary>StaticResource</summary>
+          <p>A <span class="keyword">StaticResource</span> will be resolved and assigned to the property during the loading of the XAML which occurs before the application is actually run. It will only be assigned once and any changes to resource dictionary ignored.</p>
+        </details>
+        <details>
+          <summary>DynamicResource</summary>
+          <p>A <span class="keyword">DynamicResource</span> assigns an Expression object to the property during loading but does not actually lookup the resource until runtime when the Expression object is asked for the value. This defers looking up the resource until it is needed at runtime. A good example would be a forward reference to a resource defined later on in the XAML. Another example is a resource that will not even exist until runtime. It will update the target if the source resource dictionary is changed.</p>
+        </details>
+      </ul>
       <h3>Static Resources</h3>
       <section id="wpf_02_01">
         <h4>App.xaml</h4>
@@ -91,6 +110,10 @@
 &#x3C;/UserControl&#x3E;
 </code></pre>
      
+      </section>
+      <h3>Dynamic Resources</h3>
+      <section id="wpf_02_02">
+
       </section>
     </div>
   </body>
