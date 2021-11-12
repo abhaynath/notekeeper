@@ -76,6 +76,78 @@ mc:Ignorable=&#x22;d&#x22;</pre
   lblPassword.SetBinding(TextBlock.TextProperty, binding);
 }</code></pre>
       </section>
+      <section id="wpf_02_3">
+        <h4>ComboBox (XAML Only)</h4>
+        <p>ComboBox is bound to TexBlock use static resouce.</p>
+        <pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.BindingDemoControl&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+          xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+          xmlns:local=&#x22;clr-namespace:WPF_Scratchpad.UserControls&#x22;
+          xmlns:clr=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+          mc:Ignorable=&#x22;d&#x22; 
+          d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;&#x3E;
+ &#x3C;UserControl.Resources&#x3E;
+     &#x3C;Thickness x:Key=&#x22;Margin&#x22;&#x3E;15&#x3C;/Thickness&#x3E;
+     &#x3C;x:Array x:Key=&#x22;Playerlist&#x22; Type=&#x22;clr:String&#x22;&#x3E;
+         &#x3C;clr:String&#x3E;Sachin&#x3C;/clr:String&#x3E;
+         &#x3C;clr:String&#x3E;Virender&#x3C;/clr:String&#x3E;
+         &#x3C;clr:String&#x3E;Rahul&#x3C;/clr:String&#x3E;
+         &#x3C;clr:String&#x3E;Dhoni&#x3C;/clr:String&#x3E;
+     &#x3C;/x:Array&#x3E;
+ &#x3C;/UserControl.Resources&#x3E;
+ &#x3C;StackPanel Margin=&#x22;{StaticResource Margin}&#x22;&#x3E;
+     &#x3C;TextBlock Text=&#x22;{Binding ElementName=comboPlayers,Path=SelectedItem,UpdateSourceTrigger=PropertyChanged}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+     &#x3C;ComboBox Name=&#x22;comboPlayers&#x22; ItemsSource=&#x22;{StaticResource Playerlist}&#x22; SelectedIndex=&#x22;0&#x22;&#x3E;&#x3C;/ComboBox&#x3E;
+ &#x3C;/StackPanel&#x3E;
+&#x3C;/UserControl&#x3E;
+</code></pre>
+
+<h4>ComboBox (Using Code Behind)</h4>
+<pre><code class="language-csharp">using System.Collections.ObjectModel;
+using System.Windows.Controls;
+
+namespace WPF_Scratchpad.UserControls
+{
+      public class Player
+      {
+          public int Id { get; set; }
+          public string Name { get; set; }
+      }
+      public partial class BindingDemoControl : UserControl
+      {
+          public BindingDemoControl()
+          {
+              InitializeComponent();
+              ObservableCollection&#x3C;Player&#x3E; India = new ObservableCollection&#x3C;Player&#x3E;();
+              India.Add(new Player { Id = 1, Name = &#x22;Sachin&#x22; });
+              India.Add(new Player { Id = 2, Name = &#x22;Virender&#x22; });
+              India.Add(new Player { Id = 3, Name = &#x22;Rahul&#x22; });
+              IndiaCombo.ItemsSource = India;
+          }
+      }
+  }
+  </code></pre>
+  <pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.BindingDemoControl&#x22;
+    xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+    xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+    xmlns:local=&#x22;clr-namespace:WPF_Scratchpad.UserControls&#x22;
+    xmlns:clr=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+    mc:Ignorable=&#x22;d&#x22; 
+    d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;&#x3E;
+    &#x3C;UserControl.Resources&#x3E;
+      &#x3C;Thickness x:Key=&#x22;Margin&#x22;&#x3E;15&#x3C;/Thickness&#x3E;
+    &#x3C;/UserControl.Resources&#x3E;
+    &#x3C;StackPanel Margin=&#x22;{StaticResource Margin}&#x22;&#x3E;
+      &#x3C;TextBlock Text=&#x22;{Binding ElementName=IndiaCombo,Path=SelectedItem.Id}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;ComboBox Name=&#x22;IndiaCombo&#x22; DisplayMemberPath=&#x22;Name&#x22; SelectedValuePath=&#x22;Id&#x22; SelectedIndex=&#x22;0&#x22;&#x3E;&#x3C;/ComboBox&#x3E;
+    &#x3C;/StackPanel&#x3E;
+&#x3C;/UserControl&#x3E;
+</code></pre>
+      </section>
     </div>
   </body>
 
