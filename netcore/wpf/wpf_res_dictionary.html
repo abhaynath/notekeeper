@@ -24,7 +24,53 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-    
+    <section id="wpf_03_01">
+      <h4>Resource Dictionary</h4>
+      <p>Right-click on a project and add a resource dictionary and ResourceDictionaryMargin.xaml</p>
+      <pre><code class="language-html">&#x3C;ResourceDictionary xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; xmlns:clr=&#x22;clr-namespace:System;assembly=netstandard&#x22;&#x3E;
+  &#x3C;clr:String x:Key=&#x22;authorName&#x22;&#x3E;Abhay&#x3C;/clr:String&#x3E;
+  &#x3C;SolidColorBrush x:Key=&#x22;AppBG&#x22; Color=&#x22;Aqua&#x22;&#x3E;&#x3C;/SolidColorBrush&#x3E;
+&#x3C;/ResourceDictionary&#x3E;</code></pre>
+<p>Once you are finished with defining a ResourceDictionary, you can add it inside a App.xaml if you wanted to use it across the application.</p>
+<h4>App.xaml</h4>
+<pre><code class="language-html">&#x3C;Application x:Class=&#x22;WPF_Scratchpad.App&#x22;
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+  xmlns:local=&#x22;clr-namespace:WPF_Scratchpad&#x22;
+  xmlns:clr=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+  StartupUri=&#x22;MainWindow.xaml&#x22;&#x3E;
+&#x3C;Application.Resources&#x3E;
+  &#x3C;ResourceDictionary&#x3E;
+  &#x3C;ResourceDictionary.MergedDictionaries&#x3E;
+      &#x3C;ResourceDictionary Source=&#x22;ResourceDictionaryMargin.xaml&#x22;&#x3E;&#x3C;/ResourceDictionary&#x3E;
+  &#x3C;/ResourceDictionary.MergedDictionaries&#x3E;
+  &#x3C;/ResourceDictionary&#x3E;
+&#x3C;/Application.Resources&#x3E;
+&#x3C;/Application&#x3E;
+</code></pre>
+<p>To use this values in XAML,</p>
+<pre><code class="language-html"> &#x3C;StackPanel&#x3E;
+  &#x3C;TextBlock Text=&#x22;{StaticResource authorName}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+  &#x3C;TextBlock Name=&#x22;TxtAuthorName&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+&#x3C;/StackPanel&#x3E;</code></pre>
+<p>To access properties via code,</p>
+<pre><code class="language-csharp">using System.Windows;
+using System.Windows.Controls;
+
+namespace WPF_Scratchpad.UserControls
+{
+    public partial class LoginControl : UserControl
+    {
+        public LoginControl()
+        {
+            InitializeComponent();
+            TxtAuthorName.Text = Application.Current.FindResource(&#x22;AppBG&#x22;).ToString();
+        }
+
+    }
+}</code></pre>
+    </section>
     </div>
   </body>
 
