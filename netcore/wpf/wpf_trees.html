@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>WPF Elements Tree</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="wpf_index.html">WPF</a>
+    </nav>
+    <div class="content">
+      <section id="wpf_03_01">
+        <h4>Elements Tree</h4>
+        <p>
+          There are many technologies where the elements and components are
+          ordered in a tree structure so that the programmers can easily handle
+          the object and change the behavior of an application. Windows
+          Presentation Foundation (WPF) has a comprehensive tree structure in
+          the form of objects. In WPF, there are two ways that a complete object
+          tree is conceptualized &#x2212;
+        </p>
+
+        <ul>
+          <li>Logical Tree Structures</li>
+          <li>Visual Tree Structures</li>
+        </ul>
+        <p>
+          With the help of these tree structures, you can easily create and
+          identify the relationship between UI elements. Mostly, WPF developers
+          and designers either use procedural language to create an application
+          or design the UI part of the application in XAML keeping in mind the
+          object tree structure
+        </p>
+        <p></p>
+      </section>
+      <section id="wpf_03_02">
+        <h4>Logical Tree Structure</h4>
+        <p>
+          In WPF applications, the structure of the UI elements in XAML
+          represents the logical tree structure. In XAML, the basic elements of
+          UI are declared by the developer. The logical tree in WPF defines the
+          following &#x2212;
+        </p>
+        <ul>
+          <li>Dependency Properties</li>
+          <li>Static and Dynamic resources</li>
+          <li>Binding the elements on its name etc</li>
+        </ul>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFElementsTree.MainWindow&#x22; 
+xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+&#x3C;StackPanel&#x3E; 
+    &#x3C;Button x:Name = &#x22;button&#x22; Height = &#x22;30&#x22; Width = &#x22;70&#x22; Content = &#x22;OK&#x22; Margin = &#x22;20&#x22; /&#x3E; 
+&#x9;&#x9;
+    &#x3C;ListBox x:Name = &#x22;listBox&#x22; Height = &#x22;100&#x22; Width = &#x22;100&#x22; Margin = &#x22;20&#x22;&#x3E; 
+        &#x3C;ListBoxItem Content = &#x22;Item 1&#x22; /&#x3E; 
+        &#x3C;ListBoxItem Content = &#x22;Item 2&#x22; /&#x3E; 
+        &#x3C;ListBoxItem Content = &#x22;Item 3&#x22; /&#x3E; 
+    &#x3C;/ListBox&#x3E; 
+&#x9;&#x9;
+&#x3C;/StackPanel&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+        <p>
+          If you look at the XAML code, you will observe a tree structure, i.e.
+          the root node is the Window and inside the root node, there is only
+          one child, that is StackPanel. But StackPanel contains two child
+          elements, button and list box. List box has three more child list box
+          items.
+        </p>
+      </section>
+
+      <section id="wpf_03_03">
+        <h4>Visual Tree Structure</h4>
+        <p>
+          In WPF, the concept of the visual tree describes the structure of
+          visual objects, as represented by the Visual Base Class. It signifies
+          all the UI elements which are rendered to the output screen.
+        </p>
+        <p>
+          When a programmer wants to create a template for a particular control,
+          he is actually rendering the visual tree of that control. The visual
+          tree is also very useful for those who want to draw lower level
+          controls for performance and optimization reasons.
+        </p>
+        <p>In WPF applications, visual tree is used for &#x2212;</p>
+        <ul>
+          <li>Rendering the visual objects</li>
+          <li>Rendering the layouts.</li>
+          <li>
+            The routed events mostly travel along the visual tree, not the
+            logical tree
+          </li>
+        </ul>
+        <p>
+          The visual tree is typically a superset of the logical tree. You can
+          see here that all the logical elements are also present in the visual
+          tree. So these two trees are really just two different views of the
+          same set of objects that make up the UI.
+        </p>
+        <ul>
+          <li>
+            The logical tree leaves out a lot of detail enabling you to focus on
+            the core structure of the user interface and to ignore the details
+            of exactly how it has been presented.
+          </li>
+          <li>
+            The logical tree is what you use to create the basic structure of
+            the user interface
+          </li>
+          <li>
+            The visual tree will be of interest if you're focusing on the
+            presentation. For example, if you wish to customize the appearance
+            of any UI element, you will need to use the visual tree.
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

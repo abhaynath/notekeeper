@@ -9,23 +9,13 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>WPF Resources</title>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Dependency Properties</title>
   </head>
 
   <body>
@@ -34,14 +24,74 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-      <section id="ss_01_01">
-        <h4>Create Tables</h4>
-        <pre class="prettyprint"></pre>
+      <section id="wpf_04_01">
+        <p>
+          In WPF applications, dependency property is a specific type of
+          property which extends the CLR property. It takes the advantage of
+          specific functionalities available in the WPF property system.
+        </p>
+        <p>
+          A class which defines a dependency property must be inherited from the
+          <span class="keyword">DependencyObject</span> class. Many of the UI
+          controls class which are used in XAML are derived from the
+          <span class="keyword">DependencyObject</span> class and they support
+          dependency properties, e.g. Button class supports the IsMouseOver
+          dependency property.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFDependencyProperty.MainWindow&#x22; 
+    xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+    xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+    xmlns:local = &#x22;clr-namespace:WPFDependencyProperty&#x22;
+    Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+  &#x9;
+    &#x3C;Grid&#x3E; 
+        &#x3C;Button  Height = &#x22;40&#x22; Width = &#x22;175&#x22; Margin = &#x22;10&#x22; Content = &#x22;Dependency Property&#x22;&#x3E; 
+          &#x3C;Button.Style&#x3E; 
+              &#x3C;Style TargetType = &#x22;{x:Type Button}&#x22;&#x3E; 
+                &#x3C;Style.Triggers&#x3E; 
+  &#x9;&#x9;&#x9;&#x9;&#x9;
+                    &#x3C;Trigger Property = &#x22;IsMouseOver&#x22; Value = &#x22;True&#x22;&#x3E; 
+                      &#x3C;Setter Property = &#x22;Foreground&#x22; Value = &#x22;Red&#x22; /&#x3E; 
+                    &#x3C;/Trigger&#x3E;
+  &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                &#x3C;/Style.Triggers&#x3E;
+              &#x3C;/Style&#x3E; 
+          &#x3C;/Button.Style&#x3E; 
+        &#x3C;/Button&#x3E; 
+    &#x3C;/Grid&#x3E; 
+  &#x9;
+  &#x3C;/Window&#x3E; </code></pre>
+        <p>
+          The <span class="keyword">x:Type</span> markup extension in XAML has a similar functionality like
+          <span class="keyword">typeof()</span> in C#. It is used when attributes are specified which take
+          the type of the object such as <span class="keyword">&#x3C;Style TargetType = &#x22;{x:Type
+            Button}&#x22;&#x3E;</span>
+        </p>
+        <p>
+          When the above code is compiled and executed, you would get the
+          following MainWindow. When the mouse is over the button, it will
+          change the foreground color of a button. When the mouse leaves the
+          button, it changes back to its original color.
+        </p>
       </section>
+      <section id="wpf_04_02">
+        <h4>Why We Need Dependency Properties ?</h4>
+        <p>Dependency property gives you all kinds of benefits when you use it in your application. Dependency Property can used over a CLR property in the following scenarios &#x2212;</p>
+        <ul>
+          <li>If you want to set the style</li>
+          <li>If you want data binding</li>
+          <li>If you want to set with a resource (a static or a dynamic resource)</li>
+          <li>If you want to support animation</li>
+         
+        </ul>
+        <p>Basically, Dependency Properties offer a lot of functionalities that you won&#x2019;t get by using a CLR property.</p>
+      </section>
+
+      <section id="wpf_04_03"></section>
     </div>
   </body>
 
   <script>
-    PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>
