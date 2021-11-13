@@ -76,41 +76,48 @@ body {
 .nav_main a i {
   font-size: 1.6em;
 }
+.list{
 
-.list {
 }
+.list summary:hover{
+  cursor: pointer;
 
-.list h3 {
-  background: rgb(70, 70, 70);
-  padding: 10px;
 }
-
-.list ul {
+.list details ul{
   margin: 0;
   padding: 0;
   list-style: none;
 }
-
-.list li {
+.list details li{
   display: inline-block;
   padding: 10px;
   margin: 5px;
   max-width: 50px;
   text-align: center;
-}
 
-.list li:hover {
+}
+.list details li:hover {
   text-decoration: underline;
 }
-
-.list li a {
+.list details li a {
   text-decoration: none;
   color: white;
 }
-
-.list li a img {
+.list details li a img {
   width: 36px;
   height: 36px;
+}
+.list summary{display: inline-block;}
+.list summary div{
+  display: flex;
+  justify-content: space-between;
+}
+.list summary img {
+  width: 16px;
+  height: 16px;
+}
+.list summary .lbl{
+  padding-left: 10px;
 }
 
 ol.steps {
