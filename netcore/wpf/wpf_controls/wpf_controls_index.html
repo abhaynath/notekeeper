@@ -9,67 +9,24 @@
       rel="stylesheet"
       href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../../js/libs/google-code-prettify/prettify.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../../js/libs/google-code-prettify/skins/sons-of-obsidian.css"
-    />
-    <script
-      type="text/javascript"
-      src="../../../js/libs/google-code-prettify/prettify.js"
-    ></script>
-
     <script src="../../../js/libs/jquery.min.js"></script>
-    <title>WPF Command</title>
+    <link
+      rel="stylesheet"
+      href="../../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../../js/libs/highlight/highlight.min.js"></script>
+    <title>WPF Controls</title>
   </head>
 
   <body>
     <nav class="nav_main">
-      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="../../../index.html"><i class="fa fa-home"></i></a>
       <a href="../wpf_index.html">WPF</a>
     </nav>
-    <div class="content">
-      <section id="ss_01_01">
-        <h4>Relay Command</h4>
-        <pre class="prettyprint">
-
-    using System;
-    using System.Windows.Input;
-    
-    namespace MVVM1.Command
-    {
-        public class RelayCommand : ICommand
-        {
-            public event EventHandler CanExecuteChanged;
-            private Action DoWork;
-    
-            public RelayCommand(Action work)
-            {
-                DoWork = work;
-            }
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-    
-            public void Execute(object parameter)
-            {
-                DoWork();
-            }
-        }
-    }
-          
-        </pre>
-      </section>
-    </div>
+    <div class="content"></div>
   </body>
 
   <script>
-    PR.prettyPrint();
+    hljs.highlightAll();
   </script>
 </html>
