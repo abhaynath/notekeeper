@@ -286,3 +286,13 @@ section h4 {
 pre code{
   font-family: var(--font-firacode);
 }
+
+.content section a{
+  color:orange;
+
+}
+.content section a::before{
+  font-family: 'FontAwesome';
+    content: " \f08e";
+    padding-right: 5px;
+}

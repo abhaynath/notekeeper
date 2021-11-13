@@ -24,11 +24,292 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-    
+      <section id="wpf_07_01">
+        <h4>StackPanel</h4>
+
+        <p>
+          Stack panel is a simple and useful layout panel in XAML. In stack
+          panel, child elements can be arranged in a single line, either
+          horizontally or vertically, based on the orientation property. It is
+          often used whenever any kind of list is to be created.
+        </p>
+        <pre><code class="langauge-html">&#x3C;Window x:Class = &#x22;WPFStackPanel.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFStackPanel&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E;
+&#x9;
+  &#x3C;Grid&#x3E; 
+      &#x3C;StackPanel Orientation = &#x22;Horizontal&#x22;&#x3E; 
+        &#x3C;Button x:Name = &#x22;button&#x22; Content = &#x22;Button&#x22; Margin = &#x22;10&#x22; Width = &#x22;120&#x22; Height = &#x22;30&#x22; /&#x3E; 
+        &#x3C;Button x:Name = &#x22;button1&#x22; Content = &#x22;Button&#x22; Margin = &#x22;10&#x22; Width = &#x22;120&#x22; Height = &#x22;30&#x22; /&#x3E; 
+        &#x3C;Button x:Name = &#x22;button2&#x22; Content = &#x22;Button&#x22; Margin = &#x22;10&#x22; Width = &#x22;120&#x22; Height = &#x22;30&#x22; /&#x3E; 
+        &#x3C;Button x:Name = &#x22;button3&#x22; Content = &#x22;Button&#x22; Margin = &#x22;10&#x22; Width = &#x22;120&#x22; Height = &#x22;30&#x22; /&#x3E; 
+      &#x3C;/StackPanel&#x3E;  
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+
+        <a
+          target="_blank"
+          href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.stackpanel?view=windowsdesktop-5.0"
+          >StackPanel Properties</a
+        >
+      </section>
+      <section id="wpf_07_02">
+        <h4>Wrap Panel</h4>
+        <p>
+          In WrapPanel, child elements are positioned in sequential order, from
+          left to right or from top to bottom based on the orientation property.
+          The only difference between StackPanel and WrapPanel is that it
+          doesn’t stack all the child elements in a single line; it wraps the
+          remaining elements to another line if there is no space left.
+          WrapPanel is mostly used for tabs or menu items.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFWrapPanel.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFWrapPanel&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+     &#x3C;WrapPanel Orientation = &#x22;Vertical&#x22;&#x3E; 
+        &#x3C;TextBlock Text = &#x22;Fist Name&#x22; Width = &#x22;60&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22; /&#x3E; 
+        &#x3C;TextBox  Width = &#x22;200&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22; /&#x3E; 
+        &#x3C;TextBlock Text = &#x22;Last Name&#x22; Width = &#x22;60&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22; /&#x3E; 
+        &#x3C;TextBox  Width = &#x22;200&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22;/&#x3E; 
+        &#x3C;TextBlock Text = &#x22;Age&#x22; Width = &#x22;60&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22; /&#x3E; 
+        &#x3C;TextBox  Width = &#x22;60&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22; /&#x3E; 
+        &#x3C;TextBlock Text = &#x22;Title&#x22; Width = &#x22;60&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22; /&#x3E; 
+        &#x3C;TextBox  Width = &#x22;200&#x22; Height = &#x22;20&#x22; Margin = &#x22;5&#x22; /&#x3E; 
+     &#x3C;/WrapPanel&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+        <a
+          target="_blank"
+          href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.wrappanel?view=windowsdesktop-5.0"
+          >WrapPanel Properties</a
+        >
+      </section>
+
+      <section id="wpf_07_03">
+        <h4>DockPanel Properties</h4>
+        <p>
+          DockPanel defines an area to arrange child elements relative to each
+          other, either horizontally or vertically. With DockPanel you can
+          easily dock child elements to top, bottom, right, left and center
+          using the Dock property.
+        </p>
+        <p>
+          With LastChildFill property, the last child element fill the remaining
+          space regardless of any other dock value when set for that element.
+          The hierarchical inheritance of DockPanel class is as follows
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFDockPanel.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFDockPanel&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E;
+&#x9;
+  &#x3C;Grid&#x3E; 
+      &#x3C;DockPanel LastChildFill = &#x22;True&#x22;&#x3E; 
+        &#x3C;Button Content = &#x22;Top&#x22; DockPanel.Dock = &#x22;Top&#x22; Click = &#x22;Click_Me&#x22; /&#x3E; 
+        &#x3C;Button Content = &#x22;Bottom&#x22; DockPanel.Dock = &#x22;Bottom&#x22; Click = &#x22;Click_Me&#x22; /&#x3E;
+        &#x3C;Button Content = &#x22;Left&#x22; Click = &#x22;Click_Me&#x22; /&#x3E; 
+        &#x3C;Button Content = &#x22;Right&#x22; DockPanel.Dock = &#x22;Right&#x22; Click = &#x22;Click_Me&#x22; /&#x3E; 
+        &#x3C;Button Content = &#x22;Center&#x22; Click = &#x22;Click_Me&#x22; /&#x3E; 
+      &#x3C;/DockPanel&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+        <a
+          target="_blank"
+          href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.dockpanel?view=windowsdesktop-5.0"
+          >DockPanel Properties</a
+        >
+      </section>
+      <section id="wpf_07_04">
+        <h4>CanvasPanel</h4>
+        <p>
+          Canvas panel is the basic layout Panel in which the child elements can
+          be positioned explicitly using coordinates that are relative to the
+          Canvas any side such as left, right, top and bottom
+        </p>
+        <p>
+          Typically, a Canvas is used for 2D graphic elements (such as Ellipse,
+          Rectangle etc.), but not for UI elements because specifying absolute
+          coordinates create trouble while resizing, localizing or scaling your
+          XAML application.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFConvas.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFConvas&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;400&#x22; Width = &#x22;604&#x22;&#x3E;
+&#x9;
+  &#x3C;Grid&#x3E; 
+      &#x3C;Canvas Width = &#x22;580&#x22; Height = &#x22;360&#x22; &#x3E; 
+        &#x3C;Ellipse Canvas.Left = &#x22;30&#x22; Canvas.Top = &#x22;30&#x22;  
+            Fill = &#x22;Gray&#x22; Width = &#x22;200&#x22; Height = &#x22;120&#x22; /&#x3E; 
+        &#x3C;Ellipse Canvas.Right = &#x22;30&#x22; Canvas.Top = &#x22;30&#x22;  
+            Fill = &#x22;Aqua&#x22; Width = &#x22;200&#x22; Height = &#x22;120&#x22; /&#x3E; 
+        &#x3C;Ellipse Canvas.Left = &#x22;30&#x22; Canvas.Bottom = &#x22;30&#x22;  
+            Fill = &#x22;Gainsboro&#x22; Width = &#x22;200&#x22; Height = &#x22;120&#x22; /&#x3E; 
+        &#x3C;Ellipse Canvas.Right = &#x22;30&#x22; Canvas.Bottom = &#x22;30&#x22;  
+            Fill = &#x22;LightCyan&#x22; Width = &#x22;200&#x22; Height = &#x22;120&#x22; /&#x3E; 
+      &#x3C;/Canvas&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+        <a
+          target="_blank"
+          href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.canvas?view=windowsdesktop-5.0"
+          >Canvas</a
+        >
+      </section>
+      <section id="wpf_07_05">
+        <h4>Grid</h4>
+        <p>
+          A Grid Panel provides a flexible area which consists of rows and
+          columns. In a Grid, child elements can be arranged in tabular form.
+          Elements can be added to any specific row and column by using Grid.Row
+          and Grid.Column properties
+        </p>
+        <p>
+          By default, a Grid panel is created with one row and one column.
+          Multiple rows and columns are created by RowDefinitions and
+          ColumnDefinitions properties. The height of rows and the width of
+          columns can be defined in the following three ways
+        </p>
+        <ul>
+          <li>
+            <b>Fixed Value</b> To assign a fixed size of logical units (1/96
+            inch)
+          </li>
+          <li>
+            <b>Auto</b> It will take space which are required for the controls
+            in that specific row/column.
+          </li>
+          <li>
+            <b>Star (*)</b> It will take the remaining space when Auto and fixed
+            sized are filled
+          </li>
+        </ul>
+
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFGrid.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFGrid&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Grid x:Name = &#x22;FormLayoutGrid&#x22; Background = &#x22;AliceBlue&#x22;&#x3E; 
+      &#x3C;Grid.ColumnDefinitions&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;ColumnDefinition /&#x3E;
+      &#x3C;/Grid.ColumnDefinitions&#x3E; 
+&#x9;&#x9;
+      &#x3C;Grid.RowDefinitions&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+      &#x3C;/Grid.RowDefinitions&#x3E; 
+&#x9;&#x9;
+      &#x3C;TextBlock Grid.Row = &#x22;0&#x22; Grid.Column = &#x22;0&#x22; Text = &#x22;Name&#x22; Margin = &#x22;10&#x22;  
+        HorizontalAlignment = &#x22;Left&#x22; VerticalAlignment = &#x22;Center&#x22; Width = &#x22;100&#x22; /&#x3E; 
+      &#x3C;TextBox Grid.Row = &#x22;0&#x22; Grid.Column = &#x22;1&#x22; Margin = &#x22;10&#x22; /&#x3E; 
+      &#x3C;TextBlock Grid.Row = &#x22;1&#x22; Grid.Column = &#x22;0&#x22; Text = &#x22;ID&#x22; Margin = &#x22;10&#x22;  
+        HorizontalAlignment = &#x22;Left&#x22; VerticalAlignment = &#x22;Center&#x22; Width = &#x22;100&#x22; /&#x3E; 
+      &#x3C;TextBox Grid.Row = &#x22;1&#x22; Grid.Column = &#x22;1&#x22; Margin = &#x22;10&#x22; /&#x3E; 
+      &#x3C;TextBlock Grid.Row = &#x22;2&#x22; Grid.Column = &#x22;0&#x22; Text = &#x22;Age&#x22; Margin = &#x22;10&#x22;  
+        HorizontalAlignment = &#x22;Left&#x22; VerticalAlignment = &#x22;Center&#x22; Width = &#x22;100&#x22; /&#x3E; 
+      &#x3C;TextBox Grid.Row = &#x22;2&#x22; Grid.Column = &#x22;1&#x22; Margin = &#x22;10&#x22; /&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+
+        <h5>Employee CRUD UI using Grid</h5>
+        <pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;MVVM1.UserControls.EmployeeView&#x22; 
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:local=&#x22;clr-namespace:MVVM1.UserControls&#x22; 
+  mc:Ignorable=&#x22;d&#x22; 
+  d:DesignHeight=&#x22;450&#x22; 
+  d:DesignWidth=&#x22;800&#x22;&#x3E;
+  &#x3C;Grid Margin=&#x22;15&#x22;&#x3E;
+      &#x3C;Grid.ColumnDefinitions&#x3E;
+          &#x3C;ColumnDefinition Width=&#x22;Auto&#x22;&#x3E;&#x3C;/ColumnDefinition&#x3E;
+          &#x3C;ColumnDefinition Width=&#x22;*&#x22;&#x3E;&#x3C;/ColumnDefinition&#x3E;
+      &#x3C;/Grid.ColumnDefinitions&#x3E;
+      &#x3C;Grid.RowDefinitions&#x3E;
+          &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+          &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+          &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+          &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+          &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+          &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;&#x3C;/RowDefinition&#x3E;
+      &#x3C;/Grid.RowDefinitions&#x3E;
+
+      &#x3C;TextBlock Text=&#x22;Employee Management&#x22; Grid.Row=&#x22;0&#x22; Grid.Column=&#x22;0&#x22; Grid.ColumnSpan=&#x22;2&#x22; 
+      FontSize=&#x22;20&#x22; FontWeight=&#x22;Bold&#x22; HorizontalAlignment=&#x22;Center&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;TextBlock Text=&#x22;Enter Id&#x22; Grid.Row=&#x22;1&#x22; Grid.Column=&#x22;0&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;TextBlock Text=&#x22;Enter Name&#x22; Grid.Row=&#x22;2&#x22; Grid.Column=&#x22;0&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;TextBlock Text=&#x22;Enter Age&#x22; Grid.Row=&#x22;3&#x22; Grid.Column=&#x22;0&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+
+      &#x3C;TextBox Name=&#x22;txtId&#x22; Grid.Row=&#x22;1&#x22; Grid.Column=&#x22;1&#x22; Text=&#x22;{Binding Path=CurrentEmployee.Id,Mode=TwoWay}&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+      &#x3C;TextBox Name=&#x22;txtName&#x22; Grid.Row=&#x22;2&#x22; Grid.Column=&#x22;1&#x22; Text=&#x22;{Binding Path=CurrentEmployee.Name,Mode=TwoWay}&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+      &#x3C;TextBox Name=&#x22;txtAge&#x22; Grid.Row=&#x22;3&#x22; Grid.Column=&#x22;1&#x22; Text=&#x22;{Binding Path=CurrentEmployee.Age,Mode=TwoWay}&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+
+      &#x3C;StackPanel HorizontalAlignment=&#x22;Center&#x22; Orientation=&#x22;Horizontal&#x22; Grid.Row=&#x22;4&#x22; Grid.Column=&#x22;1&#x22; Margin=&#x22;10&#x22;&#x3E;
+          &#x3C;StackPanel.Resources&#x3E;
+              &#x3C;Style TargetType=&#x22;Button&#x22;&#x3E;
+                  &#x3C;Setter Property=&#x22;Padding&#x22; Value=&#x22;10&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                  &#x3C;Setter Property=&#x22;Background&#x22; Value=&#x22;Teal&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                  &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;White&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                  &#x3C;Setter Property=&#x22;BorderThickness&#x22; Value=&#x22;0&#x22;&#x3E;&#x3C;/Setter&#x3E;
+              &#x3C;/Style&#x3E;
+          &#x3C;/StackPanel.Resources&#x3E;
+          &#x3C;Button Name=&#x22;btnSave&#x22; Content=&#x22;Save&#x22; Command=&#x22;{Binding Path=SaveCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+          &#x3C;Button Name=&#x22;btnUpdate&#x22; Content=&#x22;Update&#x22; Command=&#x22;{Binding Path=UpdateCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+          &#x3C;Button Name=&#x22;btnSearch&#x22; Content=&#x22;Search&#x22; Command=&#x22;{Binding Path=SearchCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+          &#x3C;Button Name=&#x22;btnDelete&#x22; Content=&#x22;Delete&#x22; Command=&#x22;{Binding Path=DeleteCommand}&#x22;&#x3E;&#x3C;/Button&#x3E;
+          &#x3C;TextBlock Name=&#x22;txtBlockName&#x22; Text=&#x22;{Binding Path=Message,Mode=TwoWay}&#x22; Margin=&#x22;10&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;/StackPanel&#x3E;
+
+      &#x3C;DataGrid Margin=&#x22;10&#x22; Name=&#x22;dgEmployees&#x22; AutoGenerateColumns=&#x22;False&#x22; Grid.Row=&#x22;6&#x22; Grid.Column=&#x22;1&#x22; ItemsSource=&#x22;{Binding Path=EmployeeList,Mode=TwoWay}&#x22;&#x3E;
+          &#x3C;DataGrid.Columns&#x3E;
+              &#x3C;DataGridTextColumn Header=&#x22;Id&#x22; Width=&#x22;Auto&#x22; Binding=&#x22;{Binding Path=Id}&#x22;&#x3E;&#x3C;/DataGridTextColumn&#x3E;
+              &#x3C;DataGridTextColumn Header=&#x22;Name&#x22; Width=&#x22;Auto&#x22; Binding=&#x22;{Binding Path=Name}&#x22;&#x3E;&#x3C;/DataGridTextColumn&#x3E;
+              &#x3C;DataGridTextColumn Header=&#x22;Age&#x22; Width=&#x22;Auto&#x22; Binding=&#x22;{Binding Path=Age}&#x22;&#x3E;&#x3C;/DataGridTextColumn&#x3E;
+          &#x3C;/DataGrid.Columns&#x3E;
+
+      &#x3C;/DataGrid&#x3E;
+  &#x3C;/Grid&#x3E;
+&#x3C;/UserControl&#x3E;
+</code></pre>
+
+        <a
+          target="_blank"
+          href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.controls.grid?view=windowsdesktop-5.0"
+          >Grid</a
+        >
+      </section>
     </div>
   </body>
 
   <script>
-     hljs.highlightAll();
+    hljs.highlightAll();
   </script>
 </html>
