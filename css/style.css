@@ -41,7 +41,7 @@
   --font-firacode: "firacode-regular";
   --font-roboto-bold: "robotobold";
   --font-opensans-bold: "OpenSans-Bold";
-  --fontSize: 14px;
+  --fontSize: 13px;
 
   --h4Color: #b9e3ff;
 
@@ -274,4 +274,7 @@ section h4 {
   /* background-color: rgba(255, 255, 255, 0.05); */
 
   padding: 5px;
+}
+pre code{
+  font-family: var(--font-firacode);
 }
