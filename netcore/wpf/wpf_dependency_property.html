@@ -103,8 +103,8 @@
         <ul>
           <li>
             CLR properties can directly read/write from the private member of a
-            class by using <b>getter</b> and <b>setter</b>. In contrast, dependency properties
-            are not stored in local object.
+            class by using <b>getter</b> and <b>setter</b>. In contrast,
+            dependency properties are not stored in local object.
           </li>
           <li>
             Dependency properties are stored in a dictionary of key/value pairs
@@ -115,7 +115,76 @@
         </ul>
       </section>
 
-      <section id="wpf_04_03"></section>
+      <section id="wpf_04_03">
+        <h4>Custom Dependency Properties</h4>
+        <p>
+          In .NET framework, custom dependency properties can also be defined.
+          Follow the steps given below to define custom dependency property in
+          C#.
+        </p>
+        <ul>
+          <li>
+            Declare and register your <b>dependency property</b> with system call
+            register.
+          </li>
+          <li>Provide the <b>setter</b> and <b>getter</b> for the property.</li>
+          <li>
+            Define a <b>static handler</b> which will handle any changes that occur
+            globally
+          </li>
+          <li>
+            Define an <b>instance handler</b> which will handle any changes that occur
+            to that particular instance
+          </li>
+        </ul>
+        <p>
+          The following C# code defines a dependency property to set the SetText
+          property of the user control.
+        </p>
+        <pre><code class="language-csharp">using System; 
+namespace WpfApplication3 { 
+ 
+&#x9;
+public partial class UserControl1 : UserControl { 
+&#x9;
+      public UserControl1() { 
+          InitializeComponent(); 
+      }
+&#x9;&#x9;
+      public static readonly DependencyProperty SetTextProperty = 
+          DependencyProperty.Register(&#x22;SetText&#x22;, typeof(string), typeof(UserControl1), new 
+            PropertyMetadata(&#x22;&#x22;, new PropertyChangedCallback(OnSetTextChanged))); 
+&#x9;&#x9;&#x9;&#x9;
+      public string SetText { 
+          get { return (string)GetValue(SetTextProperty); } 
+          set { SetValue(SetTextProperty, value); } 
+      } 
+&#x9;&#x9;
+      private static void OnSetTextChanged(DependencyObject d,
+          DependencyPropertyChangedEventArgs e) { 
+          UserControl1 UserControl1Control = d as UserControl1; 
+          UserControl1Control.OnSetTextChanged(e); 
+      } 
+&#x9;&#x9;
+      private void OnSetTextChanged(DependencyPropertyChangedEventArgs e) { 
+          tbTest.Text = e.NewValue.ToString(); 
+      }  
+    } 
+}</code></pre>
+<p>Here is the XAML file in which the TextBlock is defined as a user control and the Text property will be assigned to it by the SetText dependency property.</p>
+<p>The following XAML code creates a user control and initializes its SetText dependency property.</p>
+<pre><code class="language-html">&#x3C;Window x:Class = &#x22;WpfApplication3.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:views = &#x22;clr-namespace:WpfApplication3&#x22;
+  Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+     &#x3C;views:UserControl1 SetText = &#x22;Hellow World&#x22;/&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+      </section>
     </div>
   </body>
 
