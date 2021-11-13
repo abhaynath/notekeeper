@@ -24,129 +24,176 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-      <section id="wpf_02_01">
-        <h4>Design Time Data</h4>
+      <section id="wpf_08_01">
+        <h4>Basics of Data Binding</h4>
         <p>
-          Some layouts are hard to visualize without data. In this document,
-          we&#x27;ll be reviewing one of the approaches developers working on
-          desktop projects can use to mock data in the XAML designer. This
-          approach is done using the existing Ignorable &#x201C;d:&#x201D;
-          namespace. With this approach you can quickly add design-time data to
-          your pages or controls without the need to create a full mock
-          ViewModel, or just test how a property change might affect your
-          application without worrying that these changes will impact your
-          release builds. All d: data is used only by the XAML Designer and no
-          ignorable namespace values are compiled into the application.
+          Data binding is a mechanism in WPF applications that provides a simple
+          and easy way for Windows Runtime apps to display and interact with
+          data. In this mechanism, the management of data is entirely separated
+          from the way data.
         </p>
         <p>
-          Design-time data is mock data you set to make your controls easier to
-          visualize in the XAML Designer. To get started, add the following
-          lines of code to the header of your XAML document if they aren&#x27;t
-          already present:
+          Data binding allows the flow of data between UI elements and data
+          object on user interface. When a binding is established and the data
+          or your business model changes, then it reflects the updates
+          automatically to the UI elements and vice versa. It is also possible
+          to bind, not to a standard data source, but to another element on the
+          page.
         </p>
-        <pre class="shell">
-xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
-xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
-mc:Ignorable=&#x22;d&#x22;</pre
-        >
-        <h5>Design Time Component</h5>
-        <pre><code class="language-html">&#x3C;d:Button d:Background=&#x22;Aqua&#x22;&#x3E;Abhay&#x3C;/d:Button&#x3E;</code></pre>
-        <h5>Data and attribute</h5>
-        <pre><code class="language-html">&#x3C;TextBlock d:Text=&#x22;Abhay&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
-
-&#x3C;TextBlock d:Text=&#x22;Abhay&#x22; Background=&#x22;Red&#x22; d:Foreground=&#x22;White&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
+        <p>
+          Data binding is of two types &#x2212; <b>One-way data binding</b> and
+          <b>Two-way data binding</b>
+        </p>
       </section>
-      <section id="wpf_02_02">
-        <h4>TextBlock</h4>
+      <section id="wpf_08_02">
+        <h4>OneWay Data Binding</h4>
         <p>
-          A binding has many other properties though, one of them being the
-          <span class="keyword">ElementName</span> which we use in our example.
-          This allows us to connect directly to another UI element as the
-          source. Each property that we set in the binding is separated by a
-          comma:
+          In one-way binding, data is bound from its source (that is the object
+          that holds the data) to its target (that is the object that displays
+          the data)
         </p>
-        <pre><code class="language-html">&#x3C;TextBox Name=&#x22;UserName&#x22;&#x3E;&#x3C;/TextBox&#x3E;
-&#x3C;TextBlock Text=&#x22;{Binding Path=Text,ElementName=UserName}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFDataBinding.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFDataBinding&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+&#x9;
+      &#x3C;Grid.RowDefinitions&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+      &#x3C;/Grid.RowDefinitions&#x3E; 
+&#x9;&#x9;
+      &#x3C;Grid.ColumnDefinitions&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;200&#x22; /&#x3E; 
+      &#x3C;/Grid.ColumnDefinitions&#x3E;
+&#x9;&#x9;
+      &#x3C;Label Name = &#x22;nameLabel&#x22; Margin = &#x22;2&#x22;&#x3E;_Name:&#x3C;/Label&#x3E; 
+&#x9;&#x9;
+      &#x3C;TextBox Name = &#x22;nameText&#x22; Grid.Column = &#x22;1&#x22; Margin = &#x22;2&#x22; 
+        Text = &#x22;{Binding Name, Mode = OneWay}&#x22;/&#x3E;  
+&#x9;&#x9;&#x9;
+      &#x3C;Label Name = &#x22;ageLabel&#x22; Margin = &#x22;2&#x22; Grid.Row = &#x22;1&#x22;&#x3E;_Age:&#x3C;/Label&#x3E; 
+&#x9;&#x9;
+      &#x3C;TextBox Name = &#x22;ageText&#x22; Grid.Column = &#x22;1&#x22; Grid.Row = &#x22;1&#x22; Margin = &#x22;2&#x22; 
+        Text = &#x22;{Binding Age, Mode = OneWay}&#x22;/&#x3E;  
+&#x9;&#x9;&#x9;
+      &#x3C;StackPanel Grid.Row = &#x22;2&#x22; Grid.ColumnSpan = &#x22;2&#x22;&#x3E; 
+        &#x3C;Button Content = &#x22;_Show...&#x22; Click=&#x22;Button_Click&#x22; /&#x3E; 
+      &#x3C;/StackPanel&#x3E; 
+&#x9;&#x9;
+  &#x3C;/Grid&#x3E; 
+&#x3C;/Window&#x3E; </code></pre>
+        <ul>
+          <li>
+            The text properties of both the textboxes bind to
+            &#x201C;Name&#x201D; and &#x201C;Age&#x201D; which are class
+            variables of Person class which is shown below.
+          </li>
+          <li>
+            In Person class, we have just two variables Name and Age, and its
+            object is initialized in MainWindow class.
+          </li>
+          <li>
+            In XAML code, we are binding to a property Name and Age, but we have
+            not selected what object that property belongs to.
+          </li>
+          <li>
+            The easier way is to assign an object to DataContext whose
+            properties we are binding in the following C# code in
+            MainWindowconstructor.
+          </li>
+        </ul>
+        <pre><code class="language-csharp">using System.Windows;  
+namespace WPFDataBinding { 
 
-        <h5>Binding with Code</h5>
-        <pre><code class="language-csharp">private void BindUserPassword()
-{
-  Binding binding = new Binding(&#x22;Text&#x22;);
-  binding.Source = UserPassword;
-  lblPassword.SetBinding(TextBlock.TextProperty, binding);
-}</code></pre>
+    public partial class MainWindow : Window {
+&#x9;
+      Person person = new Person { Name = &#x22;Abhay&#x22;, Age = 26 };
+&#x9;&#x9;
+      public MainWindow() { 
+          InitializeComponent(); 
+          this.DataContext = person; 
+      } 
+&#x9;&#x9;
+      private void Button_Click(object sender, RoutedEventArgs e) { 
+          string message = person.Name + &#x22; is &#x22; + person.Age; 
+          MessageBox.Show(message); 
+      } 
+    } 
+&#x9;
+    public class Person { 
+&#x9;
+      private string nameValue;
+&#x9;&#x9;
+      public string Name { 
+          get { return nameValue; } 
+          set { nameValue = value; } 
+      } 
+&#x9;&#x9;
+      private double ageValue; 
+&#x9;&#x9;
+      public double Age { 
+          get { return ageValue; } 
+&#x9;&#x9;&#x9;&#x9;
+          set { 
+            if (value != ageValue) { 
+                ageValue = value; 
+            } 
+          } 
+      }
+&#x9;&#x9;
+    } 
+} </code></pre>
       </section>
-      <section id="wpf_02_03">
-        <h4>ComboBox (XAML Only)</h4>
-        <p>ComboBox is bound to TexBlock use static resouce.</p>
-        <pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.BindingDemoControl&#x22;
-          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
-          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
-          xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
-          xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
-          xmlns:local=&#x22;clr-namespace:WPF_Scratchpad.UserControls&#x22;
-          xmlns:clr=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
-          mc:Ignorable=&#x22;d&#x22; 
-          d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;&#x3E;
- &#x3C;UserControl.Resources&#x3E;
-     &#x3C;Thickness x:Key=&#x22;Margin&#x22;&#x3E;15&#x3C;/Thickness&#x3E;
-     &#x3C;x:Array x:Key=&#x22;Playerlist&#x22; Type=&#x22;clr:String&#x22;&#x3E;
-         &#x3C;clr:String&#x3E;Sachin&#x3C;/clr:String&#x3E;
-         &#x3C;clr:String&#x3E;Virender&#x3C;/clr:String&#x3E;
-         &#x3C;clr:String&#x3E;Rahul&#x3C;/clr:String&#x3E;
-         &#x3C;clr:String&#x3E;Dhoni&#x3C;/clr:String&#x3E;
-     &#x3C;/x:Array&#x3E;
- &#x3C;/UserControl.Resources&#x3E;
- &#x3C;StackPanel Margin=&#x22;{StaticResource Margin}&#x22;&#x3E;
-     &#x3C;TextBlock Text=&#x22;{Binding ElementName=comboPlayers,Path=SelectedItem,UpdateSourceTrigger=PropertyChanged}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
-     &#x3C;ComboBox Name=&#x22;comboPlayers&#x22; ItemsSource=&#x22;{StaticResource Playerlist}&#x22; SelectedIndex=&#x22;0&#x22;&#x3E;&#x3C;/ComboBox&#x3E;
- &#x3C;/StackPanel&#x3E;
-&#x3C;/UserControl&#x3E;
-</code></pre>
-
-        <h4>ComboBox (Using Code Behind)</h4>
-        <pre><code class="language-csharp">using System.Collections.ObjectModel;
-using System.Windows.Controls;
-
-namespace WPF_Scratchpad.UserControls
-{
-      public class Player
-      {
-          public int Id { get; set; }
-          public string Name { get; set; }
-      }
-      public partial class BindingDemoControl : UserControl
-      {
-          public BindingDemoControl()
-          {
-              InitializeComponent();
-              ObservableCollection&#x3C;Player&#x3E; India = new ObservableCollection&#x3C;Player&#x3E;();
-              India.Add(new Player { Id = 1, Name = &#x22;Sachin&#x22; });
-              India.Add(new Player { Id = 2, Name = &#x22;Virender&#x22; });
-              India.Add(new Player { Id = 3, Name = &#x22;Rahul&#x22; });
-              IndiaCombo.ItemsSource = India;
-          }
-      }
-  }
-  </code></pre>
-        <pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.BindingDemoControl&#x22;
-    xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
-    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
-    xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
-    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
-    xmlns:local=&#x22;clr-namespace:WPF_Scratchpad.UserControls&#x22;
-    xmlns:clr=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
-    mc:Ignorable=&#x22;d&#x22; 
-    d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;&#x3E;
-    &#x3C;UserControl.Resources&#x3E;
-      &#x3C;Thickness x:Key=&#x22;Margin&#x22;&#x3E;15&#x3C;/Thickness&#x3E;
-    &#x3C;/UserControl.Resources&#x3E;
-    &#x3C;StackPanel Margin=&#x22;{StaticResource Margin}&#x22;&#x3E;
-      &#x3C;TextBlock Text=&#x22;{Binding ElementName=IndiaCombo,Path=SelectedItem.Id}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
-      &#x3C;ComboBox Name=&#x22;IndiaCombo&#x22; DisplayMemberPath=&#x22;Name&#x22; SelectedValuePath=&#x22;Id&#x22; SelectedIndex=&#x22;0&#x22;&#x3E;&#x3C;/ComboBox&#x3E;
-    &#x3C;/StackPanel&#x3E;
-&#x3C;/UserControl&#x3E;
-</code></pre>
+      <section id="wpf_08_03">
+        <h4>TwoWay Data Binding</h4>
+        <p>
+          In two-way binding, the user can modify the data through the user
+          interface and have that data updated in the source. If the source
+          changes while the user is looking at the view, you want the view to be
+          updated
+        </p>
+        <pre><code class="langauge-html">&#x3C;Window x:Class = &#x22;WPFDataBinding.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFDataBinding&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+&#x9;
+     &#x3C;Grid.RowDefinitions&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+     &#x3C;/Grid.RowDefinitions&#x3E; 
+&#x9;&#x9;
+     &#x3C;Grid.ColumnDefinitions&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;200&#x22; /&#x3E; 
+     &#x3C;/Grid.ColumnDefinitions&#x3E; 
+&#x9;&#x9;
+     &#x3C;Label Name = &#x22;nameLabel&#x22; Margin = &#x22;2&#x22;&#x3E;_Name:&#x3C;/Label&#x3E; 
+     &#x3C;TextBox Name = &#x22;nameText&#x22; Grid.Column = &#x22;1&#x22; Margin = &#x22;2&#x22; 
+        Text = &#x22;{Binding Name, Mode = TwoWay}&#x22;/&#x3E;  
+     &#x3C;Label Name = &#x22;ageLabel&#x22; Margin = &#x22;2&#x22; Grid.Row = &#x22;1&#x22;&#x3E;_Age:&#x3C;/Label&#x3E; 
+     &#x3C;TextBox Name = &#x22;ageText&#x22; Grid.Column = &#x22;1&#x22; Grid.Row = &#x22;1&#x22; Margin = &#x22;2&#x22; 
+        Text = &#x22;{Binding Age, Mode = TwoWay}&#x22;/&#x3E; 
+&#x9;&#x9;&#x9;
+     &#x3C;StackPanel Grid.Row = &#x22;2&#x22; Grid.ColumnSpan = &#x22;2&#x22;&#x3E; 
+        &#x3C;Button Content = &#x22;_Show...&#x22; Click = &#x22;Button_Click&#x22; /&#x3E; 
+     &#x3C;/StackPanel&#x3E;
+&#x9;&#x9;
+  &#x3C;/Grid&#x3E;
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
       </section>
     </div>
   </body>
