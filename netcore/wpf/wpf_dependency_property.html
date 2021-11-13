@@ -62,10 +62,13 @@
   &#x9;
   &#x3C;/Window&#x3E; </code></pre>
         <p>
-          The <span class="keyword">x:Type</span> markup extension in XAML has a similar functionality like
-          <span class="keyword">typeof()</span> in C#. It is used when attributes are specified which take
-          the type of the object such as <span class="keyword">&#x3C;Style TargetType = &#x22;{x:Type
-            Button}&#x22;&#x3E;</span>
+          The <span class="keyword">x:Type</span> markup extension in XAML has a
+          similar functionality like <span class="keyword">typeof()</span> in
+          C#. It is used when attributes are specified which take the type of
+          the object such as
+          <span class="keyword"
+            >&#x3C;Style TargetType = &#x22;{x:Type Button}&#x22;&#x3E;</span
+          >
         </p>
         <p>
           When the above code is compiled and executed, you would get the
@@ -76,15 +79,40 @@
       </section>
       <section id="wpf_04_02">
         <h4>Why We Need Dependency Properties ?</h4>
-        <p>Dependency property gives you all kinds of benefits when you use it in your application. Dependency Property can used over a CLR property in the following scenarios &#x2212;</p>
+        <p>
+          Dependency property gives you all kinds of benefits when you use it in
+          your application. Dependency Property can used over a CLR property in
+          the following scenarios &#x2212;
+        </p>
         <ul>
           <li>If you want to set the style</li>
           <li>If you want data binding</li>
-          <li>If you want to set with a resource (a static or a dynamic resource)</li>
+          <li>
+            If you want to set with a resource (a static or a dynamic resource)
+          </li>
           <li>If you want to support animation</li>
-         
         </ul>
-        <p>Basically, Dependency Properties offer a lot of functionalities that you won&#x2019;t get by using a CLR property.</p>
+        <p>
+          Basically, Dependency Properties offer a lot of functionalities that
+          you won&#x2019;t get by using a CLR property.
+        </p>
+        <p>
+          The main difference between dependency properties and other CLR
+          properties are listed below &#x2212;
+        </p>
+        <ul>
+          <li>
+            CLR properties can directly read/write from the private member of a
+            class by using <b>getter</b> and <b>setter</b>. In contrast, dependency properties
+            are not stored in local object.
+          </li>
+          <li>
+            Dependency properties are stored in a dictionary of key/value pairs
+            which is provided by the DependencyObject class. It also saves a lot
+            of memory because it stores the property when changed. It can be
+            bound in XAML as well.
+          </li>
+        </ul>
       </section>
 
       <section id="wpf_04_03"></section>

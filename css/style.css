@@ -1,3 +1,54 @@
+@font-face {
+  font-family: "OpenSans-Regular";
+  src: url("./fonts/opensans/opensans-regular/OpenSans-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "OpenSans-Bold";
+  src: url("./fonts/opensans/opensans-bold/OpenSans-Bold.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "robotoregular";
+  src: url("./fonts/roboto/roboto-regular/Roboto-Regular-webfont.woff")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "robotobold";
+  src: url("./fonts/roboto/roboto-bold/Roboto-Bold-webfont.woff")
+    format("woff2");
+
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "firacode-regular";
+  src: url("./fonts/firacode/firacode-regular/FiraCode-Regular.woff2")
+    format("woff");
+
+  font-weight: normal;
+  font-style: normal;
+}
+:root {
+  --font-roboto: "robotoregular";
+  --font-opensans: "OpenSans-Regular";
+  --font-firacode: "firacode-regular";
+  --font-roboto-bold: "robotobold";
+  --font-opensans-bold: "OpenSans-Bold";
+  --fontSize: 14px;
+
+  --h4Color: #b9e3ff;
+
+  --shellBg: black;
+  --shellTextColor: #03b903;
+  --shellPadding:10px;
+}
 html,
 body {
   margin: 0;
@@ -7,9 +58,8 @@ body {
 }
 
 body {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 13px;
+  font-family: var(--font-opensans);
+  font-size: var(--fontSize);
 }
 
 .content {
@@ -77,11 +127,9 @@ ol.steps li img {
 }
 
 pre.shell {
-  background: black;
-  color: rgb(55, 235, 0);
-  background: black;
-
-  padding: 10px;
+  background: var(--shellBg);
+  color: var(--shellTextColor);
+  padding: var(--shellPadding);
 }
 
 pre.code {
@@ -124,7 +172,7 @@ ol.toc li ol li a {
 }
 
 .content table {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  /* font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
   border-collapse: collapse;
   display: inline;
   margin: 10px;
@@ -199,22 +247,31 @@ body::-webkit-scrollbar-thumb {
   padding-left: 5px;
   padding-right: 5px;
   color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
 }
 .space_between {
   display: flex;
   justify-content: space-between;
 }
-.space_between >div{
-    flex-grow: 1;
-    /* border:1px solid gray; */
-    padding:5px;
+.space_between > div {
+  flex-grow: 1;
+  /* border:1px solid gray; */
+  padding: 5px;
 }
-.space_between h4.space_between p{
-    text-align: center;
+.space_between h4.space_between p {
+  text-align: center;
 }
-.keyword{
-   font-family: 'Courier New', Courier, monospace;
-    color:yellowgreen;
-    /* font-style: italic; */
+.keyword {
+  font-family: "Courier New", Courier, monospace;
+  color: yellowgreen;
+  /* font-style: italic; */
+}
+b {
+  color: rgb(255, 153, 0);
+}
+section h4 {
+  color: var(--h4Color);
+  /* background-color: rgba(255, 255, 255, 0.05); */
+
+  padding: 5px;
 }
