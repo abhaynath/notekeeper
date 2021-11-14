@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Value Converter</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="wpf_index.html">WPF</a>
+    </nav>
+    <div class="content">
+      <section id="wpf_01_01">
+        <h4>Value Conversion</h4>
+        <p>
+          Value converters are very frequently used with data bindings. Here are
+          some basic examples:
+        </p>
+        <ul>
+          <li>
+            You have a numeric value but you want to show zero values in one way
+            and positive numbers in another way
+          </li>
+          <li>
+            You want to check a CheckBox based on a value, but the value is a
+            string like &#x22;yes&#x22; or &#x22;no&#x22; instead of a Boolean
+            value
+          </li>
+          <li>
+            You have a file size in bytes but you wish to show it as bytes,
+            kilobytes, megabytes or gigabytes based on how big it is
+          </li>
+        </ul>
+        <p>
+          These are some of the simple cases, but there are many more. For
+          instance, you may want to check a checkbox based on a Boolean value,
+          but you want it reversed, so that the CheckBox is checked if the value
+          is false and not checked if the value is true. You can even use a
+          converter to generate an image for an ImageSource, based on the value,
+          like a green sign for true or a red sign for false - the possibilities
+          are pretty much endless!
+        </p>
+        <p>
+          For cases like this, you can use a value converter. These small
+          classes, which implement the IValueConverter interface, will act like
+          middlemen and translate a value between the source and the
+          destination. So, in any situation where you need to transform a value
+          before it reaches its destination or back to its source again, you
+          likely need a converter.
+        </p>
+      </section>
+      <section id="wpf_01_02">
+        <h4>Implementing a simple value converter</h4>
+        <p>
+          As mentioned, a WPF value converter needs to implement the
+          IValueConverter interface, or alternatively, the IMultiValueConverter
+          interface (more about that one later). Both interfaces just requires
+          you to implement two methods: Convert() and ConvertBack(). As the name
+          implies, these methods will be used to convert the value to the
+          destination format and then back again.
+        </p>
+        <p>
+          Let&#x27;s implement a simple converter which takes a string as input
+          and then returns a Boolean value, as well as the other way around. If
+          you&#x27;re new to WPF, and you likely are since you&#x27;re reading
+          this tutorial, then you might not know all of the concepts used in the
+          example, but don&#x27;t worry, they will all be explained after the
+          code listings:
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.ConverterSample&#x22;
+xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+&#x9;&#x9;xmlns:local=&#x22;clr-namespace:WpfTutorialSamples.DataBinding&#x22;
+Title=&#x22;ConverterSample&#x22; Height=&#x22;140&#x22; Width=&#x22;250&#x22;&#x3E;
+&#x9;&#x3C;Window.Resources&#x3E;
+&#x9;&#x9;&#x3C;local:YesNoToBooleanConverter x:Key=&#x22;YesNoToBooleanConverter&#x22; /&#x3E;
+&#x9;&#x3C;/Window.Resources&#x3E;
+&#x9;&#x3C;StackPanel Margin=&#x22;10&#x22;&#x3E;
+&#x9;&#x9;&#x3C;TextBox Name=&#x22;txtValue&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;WrapPanel Margin=&#x22;0,10&#x22;&#x3E;
+&#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22;Current value is: &#x22; /&#x3E;
+&#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding ElementName=txtValue, Path=Text, Converter={StaticResource YesNoToBooleanConverter}}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+&#x9;&#x9;&#x3C;/WrapPanel&#x3E;
+&#x9;&#x9;&#x3C;CheckBox IsChecked=&#x22;{Binding ElementName=txtValue, Path=Text, Converter={StaticResource YesNoToBooleanConverter}}&#x22; Content=&#x22;Yes&#x22; /&#x3E;
+&#x9;&#x3C;/StackPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+
+        <pre><code class="language-csharp">using System;
+using System.Windows;
+using System.Windows.Data;
+
+namespace WpfTutorialSamples.DataBinding
+{
+&#x9;public partial class ConverterSample : Window
+&#x9;{
+&#x9;&#x9;public ConverterSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+&#x9;&#x9;}
+&#x9;}
+
+&#x9;public class YesNoToBooleanConverter : IValueConverter
+&#x9;{
+&#x9;&#x9;public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;switch(value.ToString().ToLower())
+&#x9;&#x9;&#x9;{
+&#x9;&#x9;&#x9;&#x9;case &#x22;yes&#x22;:
+&#x9;&#x9;&#x9;&#x9;case &#x22;oui&#x22;:
+&#x9;&#x9;&#x9;&#x9;&#x9;return true;
+&#x9;&#x9;&#x9;&#x9;case &#x22;no&#x22;:
+&#x9;&#x9;&#x9;&#x9;case &#x22;non&#x22;:
+&#x9;&#x9;&#x9;&#x9;&#x9;return false;
+&#x9;&#x9;&#x9;}
+&#x9;&#x9;&#x9;return false;
+&#x9;&#x9;}
+
+&#x9;&#x9;public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;if(value is bool)
+&#x9;&#x9;&#x9;{
+&#x9;&#x9;&#x9;&#x9;if((bool)value == true)
+&#x9;&#x9;&#x9;&#x9;&#x9;return &#x22;yes&#x22;;
+&#x9;&#x9;&#x9;&#x9;else
+&#x9;&#x9;&#x9;&#x9;&#x9;return &#x22;no&#x22;;
+&#x9;&#x9;&#x9;}
+&#x9;&#x9;&#x9;return &#x22;no&#x22;;
+&#x9;&#x9;}
+&#x9;}
+}</code></pre>
+        <p>
+          So, let&#x27;s start from the back and then work our way through the
+          example. We have implemented a converter in the Code-behind file
+          called YesNoToBooleanConverter. As advertised, it just implements the
+          two required methods, called Convert() and ConvertBack(). The
+          Convert() methods assumes that it receives a string as the input (the
+          value parameter) and then converts it to a Boolean true or false
+          value, with a fallback value of false. For fun, I added the
+          possibility to do this conversion from French words as well.
+        </p>
+        <p>
+          The ConvertBack() method obviously does the opposite: It assumes an
+          input value with a Boolean type and then returns the English word
+          &#x22;yes&#x22; or &#x22;no&#x22; in return, with a fallback value of
+          &#x22;no&#x22;.
+        </p>
+        <p>
+          You may wonder about the additional parameters that these two methods
+          take, but they&#x27;re not needed in this example. We&#x27;ll use them
+          in one of the next chapters, where they will be explained.
+        </p>
+        <p>
+          In the XAML part of the program, we start off by declaring an instance
+          of our converter as a resource for the window. We then have a TextBox,
+          a couple of TextBlocks and a CheckBox control and this is where the
+          interesting things are happening: We bind the value of the TextBox to
+          the TextBlock and the CheckBox control and using the Converter
+          property and our own converter reference, we juggle the values back
+          and forth between a string and a Boolean value, depending on
+          what&#x27;s needed.
+        </p>
+        <a
+          href="https://stackoverflow.com/questions/505397/built-in-wpf-ivalueconverters"
+          target="_blank"
+          >Inbuilt Value Converters</a
+        >
+      </section>
+      <section id="wpf_01_03">
+        <h4>The StringFormat property</h4>
+        <p>
+          As we saw in the previous chapters, the way to manipulate the output
+          of a binding before it is shown is typically through the use of a
+          converter. The cool thing about the converters is that they allow you
+          to convert any data type into a completely different data type.
+          However, for more simple usage scenarios, where you just want to
+          change the way a certain value is shown and not necessarily convert it
+          into a different type, the StringFormat property might very well be
+          enough.
+        </p>
+        <p>
+          Using the StringFormat property of a binding, you lose some of the
+          flexibility you get when using a converter, but in return, it&#x27;s
+          much simpler to use and doesn&#x27;t involve the creation of a new
+          class in a new file.
+        </p>
+        <p>
+          The StringFormat property does exactly what the name implies: It
+          formats the output string, simply by calling the String.Format method.
+          Sometimes an example says more than a thousand words, so before I hit
+          that word count, let&#x27;s jump straight into an example:
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.StringFormatSample&#x22;
+        xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+&#x9;&#x9;xmlns:system=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+        Title=&#x22;StringFormatSample&#x22; Height=&#x22;150&#x22; Width=&#x22;250&#x22;
+&#x9;&#x9;Name=&#x22;wnd&#x22;&#x3E;
+&#x9;&#x3C;StackPanel Margin=&#x22;10&#x22;&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding ElementName=wnd, Path=ActualWidth, StringFormat=Window width: {0:#,#.0}}&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding ElementName=wnd, Path=ActualHeight, StringFormat=Window height: {0:C}}&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding Source={x:Static system:DateTime.Now}, StringFormat=Date: {0:dddd, MMMM dd}}&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding Source={x:Static system:DateTime.Now}, StringFormat=Time: {0:HH:mm}}&#x22; /&#x3E;
+&#x9;&#x3C;/StackPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+      </section>
+      <section id="wpf_01_04">
+        <h4>Formatting without extra text</h4>
+        <p>
+          Please be aware that if you specify a format string that doesn&#x27;t
+          include any custom text, which all of the examples above does, then
+          you need to add an extra set of curly braces, when defining it in
+          XAML. The reason is that WPF may otherwise confuse the syntax with the
+          one used for Markup Extensions. Here&#x27;s an example:
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.StringFormatSample&#x22;
+    xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+&#x9;&#x9;xmlns:system=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+    Title=&#x22;StringFormatSample&#x22; Height=&#x22;150&#x22; Width=&#x22;250&#x22;
+&#x9;&#x9;Name=&#x22;wnd&#x22;&#x3E;
+&#x9;&#x3C;WrapPanel Margin=&#x22;10&#x22;&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;Width: &#x22; /&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding ElementName=wnd, Path=ActualWidth, StringFormat={}{0:#,#.0}}&#x22; /&#x3E;
+&#x9;&#x3C;/WrapPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+      </section>
+      <section id="wpf_01_05">
+        <h4>Using a specific Culture</h4>
+        <p>
+          If you need to output a bound value in accordance with a specific
+          culture, that&#x27;s no problem. The Binding will use the language
+          specified for the parent element, or you can specify it directly for
+          the binding, using the ConverterCulture property. Here&#x27;s an
+          example:
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.StringFormatCultureSample&#x22;
+    xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+&#x9;&#x9;xmlns:system=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+    Title=&#x22;StringFormatCultureSample&#x22; Height=&#x22;120&#x22; Width=&#x22;300&#x22;&#x3E;
+&#x9;&#x3C;StackPanel Margin=&#x22;10&#x22;&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding Source={x:Static system:DateTime.Now}, ConverterCulture=&#x27;de-DE&#x27;, StringFormat=German date: {0:D}}&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding Source={x:Static system:DateTime.Now}, ConverterCulture=&#x27;en-US&#x27;, StringFormat=American date: {0:D}}&#x22; /&#x3E;
+&#x9;&#x9;&#x3C;TextBlock Text=&#x22;{Binding Source={x:Static system:DateTime.Now}, ConverterCulture=&#x27;ja-JP&#x27;, StringFormat=Japanese date: {0:D}}&#x22; /&#x3E;
+&#x9;&#x3C;/StackPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
