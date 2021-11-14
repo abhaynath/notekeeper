@@ -25,14 +25,252 @@
     </nav>
     <div class="content">
       <section id="wpf_11_01">
-        <h4>Template</h4>
+        <h4>DataContext</h4>
+        <p>
+          The DataContext property is the default source of your bindings,
+          unless you specifically declare another source, like we did in the
+          previous chapter with the <b>ElementName</b> property. It&#x27;s
+          defined on the <b>FrameworkElement</b> class, which most UI controls,
+          including the WPF Window, inherits from. Simply put, it allows you to
+          specify a basis for your bindings
+        </p>
+        <p>
+          There&#x27;s no default source for the DataContext property (it&#x27;s
+          simply null from the start), but since a DataContext is inherited down
+          through the control hierarchy, you can set a DataContext for the
+          Window itself and then use it throughout all of the child controls.
+          Let&#x27;s try illustrating that with a simple example
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.DataContextSample&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          Title=&#x22;DataContextSample&#x22; Height=&#x22;130&#x22; Width=&#x22;280&#x22;&#x3E;
+  &#x9;&#x3C;StackPanel Margin=&#x22;15&#x22;&#x3E;
+  &#x9;&#x9;&#x3C;WrapPanel&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22;Window title:  &#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBox Text=&#x22;{Binding Title, UpdateSourceTrigger=PropertyChanged}&#x22; Width=&#x22;150&#x22; /&#x3E;
+  &#x9;&#x9;&#x3C;/WrapPanel&#x3E;
+  &#x9;&#x9;&#x3C;WrapPanel Margin=&#x22;0,10,0,0&#x22;&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22;Window dimensions: &#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBox Text=&#x22;{Binding Width}&#x22; Width=&#x22;50&#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22; x &#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBox Text=&#x22;{Binding Height}&#x22; Width=&#x22;50&#x22; /&#x3E;
+  &#x9;&#x9;&#x3C;/WrapPanel&#x3E;
+  &#x9;&#x3C;/StackPanel&#x3E;
+  &#x3C;/Window&#x3E;</code></pre>
+
+        <pre><code class="language-csharp">using System;
+using System.Windows;
+
+namespace WpfTutorialSamples.DataBinding
+{
+&#x9;public partial class DataContextSample : Window
+&#x9;{
+&#x9;&#x9;public DataContextSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+&#x9;&#x9;&#x9;this.DataContext = this;
+&#x9;&#x9;}
+&#x9;}
+}</code></pre>
+        <p>
+          <b
+            >Using the DataContext property is like setting the basis of all
+            bindings down through the hierarchy of controls.</b
+          >
+          This saves you the hassle of manually defining a source for each
+          binding, and once you really start using data bindings, you will
+          definitely appreciate the time and typing saved.
+        </p>
+        <p>
+          However, this doesn&#x27;t mean that you have to use the same
+          DataContext for all controls within a Window.
+          <b
+            >Since each control has its own DataContext property, you can easily
+            break the chain of inheritance and override the DataContext with a
+            new value. This allows you to do stuff like having a global
+            DataContext on the window and then a more local and specific
+            DataContext on e.g. a panel holding a separate form or something
+            along those lines.</b
+          >
+        </p>
       </section>
       <section id="wpf_11_02">
-       <h4>ControlTemplate</h4>
-     </section>
-     <section id="wpf_11_03">
-       <h4>DataTemplate</h4>
-     </section>
+        <h4>UpdateSourceTrigger Property</h4>
+        <p>
+          In the previous article we saw how changes in a TextBox was not
+          immediately sent back to the source. Instead, the source was updated
+          only after focus was lost on the TextBox. This behavior is controlled
+          by a property on the binding called <b>UpdateSourceTrigger</b>. It
+          defaults to the value &#x22;Default&#x22;, which basically means that
+          the source is updated based on the property that you bind to. As of
+          writing, all properties except for the Text property, is updated as
+          soon as the property changes (PropertyChanged), while the Text
+          property is updated when focus on the destination element is lost
+          (LostFocus).
+        </p>
+        <p>
+          Default is, obviously, the default value of the UpdateSourceTrigger.
+          The other options are <b>PropertyChanged, LostFocus</b> and
+          <b>Explicit</b>. The first two has already been described, while the
+          last one simply means that the update has to be pushed manually
+          through to occur, using a call to UpdateSource on the Binding.
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.DataContextSample&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          Title=&#x22;DataContextSample&#x22; Height=&#x22;130&#x22; Width=&#x22;310&#x22;&#x3E;
+  &#x9;&#x3C;StackPanel Margin=&#x22;15&#x22;&#x3E;
+  &#x9;&#x9;&#x3C;WrapPanel&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22;Window title:  &#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBox Name=&#x22;txtWindowTitle&#x22; Text=&#x22;{Binding Title, UpdateSourceTrigger=Explicit}&#x22; Width=&#x22;150&#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;Button Name=&#x22;btnUpdateSource&#x22; Click=&#x22;btnUpdateSource_Click&#x22; Margin=&#x22;5,0&#x22; Padding=&#x22;5,0&#x22;&#x3E;*&#x3C;/Button&#x3E;
+  &#x9;&#x9;&#x3C;/WrapPanel&#x3E;
+  &#x9;&#x9;&#x3C;WrapPanel Margin=&#x22;0,10,0,0&#x22;&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22;Window dimensions: &#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBox Text=&#x22;{Binding Width, UpdateSourceTrigger=LostFocus}&#x22; Width=&#x22;50&#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBlock Text=&#x22; x &#x22; /&#x3E;
+  &#x9;&#x9;&#x9;&#x3C;TextBox Text=&#x22;{Binding Height, UpdateSourceTrigger=PropertyChanged}&#x22; Width=&#x22;50&#x22; /&#x3E;
+  &#x9;&#x9;&#x3C;/WrapPanel&#x3E;
+  &#x9;&#x3C;/StackPanel&#x3E;
+  &#x3C;/Window&#x3E;</code></pre>
+        <pre><code class="language-csharp">using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+
+namespace WpfTutorialSamples.DataBinding
+{
+&#x9;public partial class DataContextSample : Window
+&#x9;{
+&#x9;&#x9;public DataContextSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+&#x9;&#x9;&#x9;this.DataContext = this;
+&#x9;&#x9;}
+
+&#x9;&#x9;private void btnUpdateSource_Click(object sender, RoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;BindingExpression binding = txtWindowTitle.GetBindingExpression(TextBox.TextProperty);
+&#x9;&#x9;&#x9;binding.UpdateSource();
+&#x9;&#x9;}
+&#x9;}
+}</code></pre>
+        <p>
+          The UpdateSourceTrigger property of a binding controls how and when a
+          changed value is sent back to the source. However, since WPF is pretty
+          good at controlling this for you, the default value should suffice for
+          most cases, where you will get the best mix of a constantly updated UI
+          and good performance.
+        </p>
+        <p>
+          For those situations where you need more control of the process, this
+          property will definitely help though. Just make sure that you
+          don&#x27;t update the source value more often than you actually need
+          to. If you want the full control, you can use the Explicit value and
+          then do the updates manually, but this does take a bit of the fun out
+          of working with data bindings.
+        </p>
+      </section>
+      <section id="wpf_11_03">
+        <h4>Responding to changes</h4>
+        <p>
+          So far in this tutorial, we have mostly created bindings between UI
+          elements and existing classes, but in real life applications, you will
+          obviously be binding to your own data objects. This is just as easy,
+          but once you start doing it, you might discover something that
+          disappoints you: Changes are not automatically reflected, like they
+          were in previous examples. As you will learn in this article, you need
+          just a bit of extra work for this to happen, but fortunately, WPF
+          makes this pretty easy.
+        </p>
+        <p>
+          There are two different scenarios that you may or may not want to
+          handle when dealing with data source changes: Changes to the list of
+          items and changes in the bound properties in each of the data objects.
+          How to handle them may vary, depending on what you&#x27;re doing and
+          what you&#x27;re looking to accomplish, but WPF comes with two very
+          easy solutions that you can use: The <span class="keyword">ObservableCollection</span> and the
+          <span class="keyword">INotifyPropertyChanged</span> interface.
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.ChangeNotificationSample&#x22;
+      xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+      xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+      Title=&#x22;ChangeNotificationSample&#x22; Height=&#x22;135&#x22; Width=&#x22;300&#x22;&#x3E;
+&#x9;&#x3C;DockPanel Margin=&#x22;10&#x22;&#x3E;
+&#x9;&#x9;&#x3C;StackPanel DockPanel.Dock=&#x22;Right&#x22; Margin=&#x22;10,0,0,0&#x22;&#x3E;
+&#x9;&#x9;&#x9;&#x3C;Button Name=&#x22;btnAddUser&#x22; Click=&#x22;btnAddUser_Click&#x22;&#x3E;Add user&#x3C;/Button&#x3E;
+&#x9;&#x9;&#x9;&#x3C;Button Name=&#x22;btnChangeUser&#x22; Click=&#x22;btnChangeUser_Click&#x22; Margin=&#x22;0,5&#x22;&#x3E;Change user&#x3C;/Button&#x3E;
+&#x9;&#x9;&#x9;&#x3C;Button Name=&#x22;btnDeleteUser&#x22; Click=&#x22;btnDeleteUser_Click&#x22;&#x3E;Delete user&#x3C;/Button&#x3E;
+&#x9;&#x9;&#x3C;/StackPanel&#x3E;
+&#x9;&#x9;&#x3C;ListBox Name=&#x22;lbUsers&#x22; DisplayMemberPath=&#x22;Name&#x22;&#x3E;&#x3C;/ListBox&#x3E;
+&#x9;&#x3C;/DockPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+<pre><code class="language-csharp">using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+
+namespace WpfTutorialSamples.DataBinding
+{
+&#x9;public partial class ChangeNotificationSample : Window
+&#x9;{
+&#x9;&#x9;private ObservableCollection&#x3C;User&#x3E; users = new ObservableCollection&#x3C;User&#x3E;();
+
+&#x9;&#x9;public ChangeNotificationSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+
+&#x9;&#x9;&#x9;users.Add(new User() { Name = &#x22;John Doe&#x22; });
+&#x9;&#x9;&#x9;users.Add(new User() { Name = &#x22;Jane Doe&#x22; });
+
+&#x9;&#x9;&#x9;lbUsers.ItemsSource = users;
+&#x9;&#x9;}
+
+&#x9;&#x9;private void btnAddUser_Click(object sender, RoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;users.Add(new User() { Name = &#x22;New user&#x22; });
+&#x9;&#x9;}
+
+&#x9;&#x9;private void btnChangeUser_Click(object sender, RoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;if(lbUsers.SelectedItem != null)
+&#x9;&#x9;&#x9;&#x9;(lbUsers.SelectedItem as User).Name = &#x22;Random Name&#x22;;
+&#x9;&#x9;}
+
+&#x9;&#x9;private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;if(lbUsers.SelectedItem != null)
+&#x9;&#x9;&#x9;&#x9;users.Remove(lbUsers.SelectedItem as User);
+&#x9;&#x9;}
+&#x9;}
+
+&#x9;public class User : INotifyPropertyChanged
+&#x9;{
+&#x9;&#x9;private string name;
+&#x9;&#x9;public string Name {
+&#x9;&#x9;&#x9;get { return this.name; }
+&#x9;&#x9;&#x9;set
+&#x9;&#x9;&#x9;{
+&#x9;&#x9;&#x9;&#x9;if(this.name != value)
+&#x9;&#x9;&#x9;&#x9;{
+&#x9;&#x9;&#x9;&#x9;&#x9;this.name = value;
+&#x9;&#x9;&#x9;&#x9;&#x9;this.NotifyPropertyChanged(&#x22;Name&#x22;);
+&#x9;&#x9;&#x9;&#x9;}
+&#x9;&#x9;&#x9;}
+&#x9;&#x9;}
+
+&#x9;&#x9;public event PropertyChangedEventHandler PropertyChanged;
+
+&#x9;&#x9;public void NotifyPropertyChanged(string propName)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;if(this.PropertyChanged != null)
+&#x9;&#x9;&#x9;&#x9;this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+&#x9;&#x9;}
+&#x9;}
+}</code></pre>
+      </section>
     </div>
   </body>
 
