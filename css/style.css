@@ -47,7 +47,7 @@
 
   --shellBg: black;
   --shellTextColor: #03b903;
-  --shellPadding:10px;
+  --shellPadding: 10px;
 }
 html,
 body {
@@ -76,25 +76,22 @@ body {
 .nav_main a i {
   font-size: 1.6em;
 }
-.list{
-
+.list {
 }
-.list summary:hover{
+.list summary:hover {
   cursor: pointer;
-
 }
-.list details ul{
+.list details ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.list details li{
+.list details li {
   display: inline-block;
   padding: 10px;
   margin: 5px;
   max-width: 50px;
   text-align: center;
-
 }
 .list details li:hover {
   text-decoration: underline;
@@ -107,8 +104,10 @@ body {
   width: 36px;
   height: 36px;
 }
-.list summary{display: inline-block;}
-.list summary div{
+.list summary {
+  display: inline-block;
+}
+.list summary div {
   display: flex;
   justify-content: space-between;
 }
@@ -116,7 +115,7 @@ body {
   width: 16px;
   height: 16px;
 }
-.list summary .lbl{
+.list summary .lbl {
   padding-left: 10px;
 }
 
@@ -271,28 +270,27 @@ body::-webkit-scrollbar-thumb {
 .keyword {
   font-family: "Courier New", Courier, monospace;
   color: yellowgreen;
-  /* font-style: italic; */
+  text-shadow: 0px 2px 1px black;
 }
 b {
   color: rgb(255, 153, 0);
+  font-weight: normal;
+  text-shadow: 0px 2px 1px black;
 }
 section h4 {
   color: var(--h4Color);
-  /* background-color: rgba(255, 255, 255, 0.05); */
-
+  text-shadow: 0px 2px 1px black;
   padding: 5px;
-  /* font-weight: normal; */
 }
-pre code{
+pre code {
   font-family: var(--font-firacode);
 }
 
-.content section a{
-  color:orange;
-
+.content section a {
+  color: orange;
 }
-.content section a::before{
-  font-family: 'FontAwesome';
-    content: " \f08e";
-    padding-right: 5px;
+.content section a::before {
+  font-family: "FontAwesome";
+  content: " \f08e";
+  padding-right: 5px;
 }
