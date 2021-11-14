@@ -300,3 +300,6 @@ pre code {
   content: " \f08e";
   padding-right: 5px;
 }
+details summary{
+  cursor: pointer;
+}
