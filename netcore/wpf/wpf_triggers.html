@@ -24,15 +24,144 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-     <section id="wpf_10_01">
-       <h4>Template</h4>
-     </section>
-     <section id="wpf_10_02">
-      <h4>ControlTemplate</h4>
-    </section>
-    <section id="wpf_10_03">
-      <h4>DataTemplate</h4>
-    </section>
+      <section id="wpf_12_01">
+        <h4>Triggers</h4>
+        <p>
+          A trigger basically enables you to change property values or take
+          actions based on the value of a property. So, it allows you to
+          dynamically change the appearance and/or behavior of your control
+          without having to create a new one.
+        </p>
+        <p>
+          Triggers are used to change the value of any given property, when
+          certain conditions are satisfied. Triggers are usually defined in a
+          style or in the root of a document which are applied to that specific
+          control. There are three types of triggers &#x2212;
+        </p>
+      </section>
+      <section id="wpf_12_02">
+        <h4>Property Triggers</h4>
+        <p>
+          In property triggers, when a change occurs in one property, it will
+          bring either an immediate or an animated change in another property.
+          For example, you can use a property trigger to change the appearance
+          of a button when the mouse hovers over the button.
+        </p>
+        <p>
+          The following example code shows how to change the foreground color of
+          a button when mouse hovers over the button.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFPropertyTriggers.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Window.Resources&#x3E; 
+      &#x3C;Style x:Key = &#x22;TriggerStyle&#x22; TargetType = &#x22;Button&#x22;&#x3E; 
+        &#x3C;Setter Property = &#x22;Foreground&#x22; Value = &#x22;Blue&#x22; /&#x3E; 
+        &#x3C;Style.Triggers&#x3E; 
+            &#x3C;Trigger Property = &#x22;IsMouseOver&#x22; Value = &#x22;True&#x22;&#x3E; 
+              &#x3C;Setter Property = &#x22;Foreground&#x22; Value = &#x22;Green&#x22; /&#x3E; 
+            &#x3C;/Trigger&#x3E; 
+        &#x3C;/Style.Triggers&#x3E; 
+      &#x3C;/Style&#x3E; 
+  &#x3C;/Window.Resources&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+      &#x3C;Button Width = &#x22;100&#x22; Height = &#x22;70&#x22;
+        Style = &#x22;{StaticResource TriggerStyle}&#x22; Content = &#x22;Trigger&#x22;/&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+      </section>
+      <section id="wpf_12_03">
+        <h4>Data Triggers</h4>
+        <p>
+          A data trigger performs some actions when the bound data satisfies
+          some conditions. Let&#x2019;s have a look at the following XAML code
+          in which a checkbox and a text block are created with some properties.
+          When the checkbox is checked, it will change its foreground color to
+          red.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFDataTrigger.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  Title = &#x22;Data Trigger&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E;
+&#x9;
+  &#x3C;StackPanel HorizontalAlignment = &#x22;Center&#x22;&#x3E; 
+      &#x3C;CheckBox x:Name = &#x22;redColorCheckBox&#x22; 
+        Content = &#x22;Set red as foreground color&#x22; Margin = &#x22;20&#x22;/&#x3E; 
+&#x9;&#x9;&#x9;
+      &#x3C;TextBlock Name = &#x22;txtblock&#x22; VerticalAlignment = &#x22;Center&#x22; 
+        Text = &#x22;Event Trigger&#x22; FontSize = &#x22;24&#x22; Margin = &#x22;20&#x22;&#x3E; 
+        &#x3C;TextBlock.Style&#x3E; 
+            &#x3C;Style&#x3E; 
+              &#x3C;Style.Triggers&#x3E; 
+                  &#x3C;DataTrigger Binding = &#x22;{Binding ElementName = redColorCheckBox, Path = IsChecked}&#x22; 
+                    Value = &#x22;true&#x22;&#x3E; 
+                    &#x3C;Setter Property = &#x22;TextBlock.Foreground&#x22; Value = &#x22;Red&#x22;/&#x3E; 
+                    &#x3C;Setter Property = &#x22;TextBlock.Cursor&#x22; Value = &#x22;Hand&#x22; /&#x3E; 
+                  &#x3C;/DataTrigger&#x3E; 
+              &#x3C;/Style.Triggers&#x3E; 
+            &#x3C;/Style&#x3E; 
+        &#x3C;/TextBlock.Style&#x3E; 
+      &#x3C;/TextBlock&#x3E; 
+&#x9;&#x9;
+  &#x3C;/StackPanel&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+      </section>
+
+      <section id="wpf_12_04">
+        <h4>Event Triggers</h4>
+        <p>
+          An event trigger performs some actions when a specific event is fired.
+          It is usually used to accomplish some animation on control such
+          DoubleAnumatio, ColorAnimation, etc. In the following example, we will
+          create a simple button. When the click event is fired, it will expand
+          the button width and height.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFEventTrigger.MainWindow&#x22;
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+      &#x3C;Button Content = &#x22;Click Me&#x22; Width = &#x22;60&#x22; Height = &#x22;30&#x22;&#x3E;
+&#x9;&#x9;
+        &#x3C;Button.Triggers&#x3E; 
+            &#x3C;EventTrigger RoutedEvent = &#x22;Button.Click&#x22;&#x3E; 
+              &#x3C;EventTrigger.Actions&#x3E; 
+                  &#x3C;BeginStoryboard&#x3E; 
+                    &#x3C;Storyboard&#x3E; 
+&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        &#x3C;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty = 
+                          &#x22;Width&#x22; Duration = &#x22;0:0:4&#x22;&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;60&#x22; KeyTime = &#x22;0:0:0&#x22;/&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;120&#x22; KeyTime = &#x22;0:0:1&#x22;/&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;200&#x22; KeyTime = &#x22;0:0:2&#x22;/&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;300&#x22; KeyTime = &#x22;0:0:3&#x22;/&#x3E; 
+                        &#x3C;/DoubleAnimationUsingKeyFrames&#x3E;
+&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                        &#x3C;DoubleAnimationUsingKeyFrames Storyboard.TargetProperty = &#x22;Height&#x22; 
+                          Duration = &#x22;0:0:4&#x22;&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;30&#x22; KeyTime = &#x22;0:0:0&#x22;/&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;40&#x22; KeyTime = &#x22;0:0:1&#x22;/&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;80&#x22; KeyTime = &#x22;0:0:2&#x22;/&#x3E; 
+                          &#x3C;LinearDoubleKeyFrame Value = &#x22;150&#x22; KeyTime = &#x22;0:0:3&#x22;/&#x3E; 
+                        &#x3C;/DoubleAnimationUsingKeyFrames&#x3E;
+&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
+                    &#x3C;/Storyboard&#x3E; 
+                  &#x3C;/BeginStoryboard&#x3E; 
+              &#x3C;/EventTrigger.Actions&#x3E; 
+            &#x3C;/EventTrigger&#x3E; 
+        &#x3C;/Button.Triggers&#x3E; 
+&#x9;&#x9;&#x9;
+      &#x3C;/Button&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+      </section>
     </div>
   </body>
 
