@@ -24,15 +24,209 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-     <section id="wpf_10_01">
-       <h4>Template</h4>
-     </section>
-     <section id="wpf_10_02">
-      <h4>ControlTemplate</h4>
-    </section>
-    <section id="wpf_10_03">
-      <h4>DataTemplate</h4>
-    </section>
+      <section id="wpf_10_01">
+        <h4>Template</h4>
+        <p>
+          A template describes the overall look and visual appearance of a
+          control. For each control, there is a default template associated with
+          it which gives the control its appearance. In WPF applications, you
+          can easily create your own templates when you want to customize the
+          visual behavior and visual appearance of a control.
+        </p>
+        <p>
+          Connectivity between the logic and the template can be achieved by
+          data binding. The main difference between <b>styles</b> and
+          <b>templates</b> are listed below &#x2212;
+        </p>
+        <ul>
+          <li>
+            Styles can only change the appearance of your control with default
+            properties of that control.
+          </li>
+          <li>
+            With templates, you can access more parts of a control than in
+            styles. You can also specify both existing and new behavior of a
+            control.
+          </li>
+        </ul>
+      </section>
+      <section id="wpf_10_02">
+        <h4>ControlTemplate</h4>
+        <p>
+          The Control Template defines the visual appearance of a control. All
+          of the UI elements have some kind of appearance as well as behavior,
+          e.g., Button has an appearance and behavior. Click event or mouse
+          hover event are the behaviors which are fired in response to a click
+          and hover and there is also a default appearance of button which can
+          be changed by the Control template.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;TemplateDemo.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Window.Resources&#x3E; 
+      &#x3C;ControlTemplate x:Key = &#x22;ButtonTemplate&#x22; TargetType = &#x22;Button&#x22;&#x3E;
+&#x9;&#x9;
+        &#x3C;Grid&#x3E; 
+            &#x3C;Ellipse x:Name = &#x22;ButtonEllipse&#x22; Height = &#x22;100&#x22; Width = &#x22;150&#x22; &#x3E; 
+              &#x3C;Ellipse.Fill&#x3E; 
+                  &#x3C;LinearGradientBrush StartPoint = &#x22;0,0.2&#x22; EndPoint = &#x22;0.2,1.4&#x22;&#x3E; 
+                    &#x3C;GradientStop Offset = &#x22;0&#x22; Color = &#x22;Red&#x22; /&#x3E; 
+                    &#x3C;GradientStop Offset = &#x22;1&#x22; Color = &#x22;Orange&#x22; /&#x3E; 
+                  &#x3C;/LinearGradientBrush&#x3E; 
+              &#x3C;/Ellipse.Fill&#x3E; 
+            &#x3C;/Ellipse&#x3E; 
+&#x9;&#x9;&#x9;&#x9;
+            &#x3C;ContentPresenter Content = &#x22;{TemplateBinding Content}&#x22; 
+              HorizontalAlignment = &#x22;Center&#x22; VerticalAlignment = &#x22;Center&#x22; /&#x3E; 
+        &#x3C;/Grid&#x3E; 
+&#x9;&#x9;&#x9;
+        &#x3C;ControlTemplate.Triggers&#x3E; 
+&#x9;&#x9;&#x9;
+            &#x3C;Trigger Property = &#x22;IsMouseOver&#x22; Value = &#x22;True&#x22;&#x3E; 
+              &#x3C;Setter TargetName = &#x22;ButtonEllipse&#x22; Property = &#x22;Fill&#x22; &#x3E; 
+                  &#x3C;Setter.Value&#x3E; 
+                    &#x3C;LinearGradientBrush StartPoint = &#x22;0,0.2&#x22; EndPoint = &#x22;0.2,1.4&#x22;&#x3E; 
+                        &#x3C;GradientStop Offset = &#x22;0&#x22; Color = &#x22;YellowGreen&#x22; /&#x3E; 
+                        &#x3C;GradientStop Offset = &#x22;1&#x22; Color = &#x22;Gold&#x22; /&#x3E; 
+                    &#x3C;/LinearGradientBrush&#x3E; 
+                  &#x3C;/Setter.Value&#x3E; 
+              &#x3C;/Setter&#x3E; 
+            &#x3C;/Trigger&#x3E; 
+&#x9;&#x9;&#x9;&#x9;
+            &#x3C;Trigger Property = &#x22;IsPressed&#x22; Value = &#x22;True&#x22;&#x3E; 
+              &#x3C;Setter Property = &#x22;RenderTransform&#x22;&#x3E; 
+                  &#x3C;Setter.Value&#x3E; 
+                    &#x3C;ScaleTransform ScaleX = &#x22;0.8&#x22; ScaleY = &#x22;0.8&#x22; 
+                        CenterX = &#x22;0&#x22; CenterY = &#x22;0&#x22;  /&#x3E; 
+                  &#x3C;/Setter.Value&#x3E; 
+              &#x3C;/Setter&#x3E; 
+              &#x3C;Setter Property = &#x22;RenderTransformOrigin&#x22; Value = &#x22;0.5,0.5&#x22; /&#x3E; 
+            &#x3C;/Trigger&#x3E; 
+&#x9;&#x9;&#x9;&#x9;
+        &#x3C;/ControlTemplate.Triggers&#x3E; 
+&#x9;&#x9;&#x9;
+      &#x3C;/ControlTemplate&#x3E; 
+  &#x3C;/Window.Resources&#x3E; 
+&#x9;
+  &#x3C;StackPanel&#x3E; 
+      &#x3C;Button Content = &#x22;Round Button!&#x22;
+        Template = &#x22;{StaticResource ButtonTemplate}&#x22; 
+        Width = &#x22;150&#x22; Margin = &#x22;50&#x22; /&#x3E; 
+      &#x3C;Button Content = &#x22;Default Button!&#x22; Height = &#x22;40&#x22; 
+        Width = &#x22;150&#x22; Margin = &#x22;5&#x22; /&#x3E;
+  &#x3C;/StackPanel&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+      </section>
+      <section id="wpf_10_03">
+        <h4>DataTemplate</h4>
+        <p>
+          A Data Template defines and specifies the appearance and structure of
+          a collection of data. It provides the flexibility to format and define
+          the presentation of the data on any UI element. It is mostly used on
+          data related Item controls such as ComboBox, ListBox, etc.
+        </p>
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;WPFDataTemplates.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
+  xmlns:local = &#x22;clr-namespace:WPFDataTemplates&#x22; 
+  xmlns:loc = &#x22;clr-namespace:WPFDataTemplates&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;525&#x22;&#x3E; 
+&#x9;
+&#x3C;Window.Resources&#x3E; 
+      &#x3C;DataTemplate DataType = &#x22;{x:Type loc:Person}&#x22;&#x3E; 
+&#x9;&#x9;
+        &#x3C;Grid&#x3E; 
+            &#x3C;Grid.RowDefinitions&#x3E; 
+              &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+              &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+            &#x3C;/Grid.RowDefinitions&#x3E; 
+&#x9;&#x9;&#x9;&#x9;
+            &#x3C;Grid.ColumnDefinitions&#x3E; 
+              &#x3C;ColumnDefinition Width = &#x22;Auto&#x22; /&#x3E; 
+              &#x3C;ColumnDefinition Width = &#x22;200&#x22; /&#x3E; 
+            &#x3C;/Grid.ColumnDefinitions&#x3E;
+&#x9;&#x9;&#x9;&#x9;
+            &#x3C;Label Name = &#x22;nameLabel&#x22; Margin = &#x22;10&#x22;/&#x3E; 
+            &#x3C;TextBox Name = &#x22;nameText&#x22; Grid.Column = &#x22;1&#x22; Margin = &#x22;10&#x22; 
+              Text = &#x22;{Binding Name}&#x22;/&#x3E;  
+            &#x3C;Label Name = &#x22;ageLabel&#x22; Margin = &#x22;10&#x22; Grid.Row = &#x22;1&#x22;/&#x3E; 
+            &#x3C;TextBox Name = &#x22;ageText&#x22; Grid.Column = &#x22;1&#x22; Grid.Row = &#x22;1&#x22; Margin = &#x22;10&#x22; 
+              Text = &#x22;{Binding Age}&#x22;/&#x3E; 
+        &#x3C;/Grid&#x3E; 
+&#x9;&#x9;&#x9;
+      &#x3C;/DataTemplate&#x3E; 
+  &#x3C;/Window.Resources&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+      &#x3C;Grid.RowDefinitions&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+      &#x3C;/Grid.RowDefinitions&#x3E; 
+&#x9;&#x9;
+      &#x3C;ListBox ItemsSource = &#x22;{Binding}&#x22; /&#x3E;  
+      &#x3C;StackPanel Grid.Row = &#x22;1&#x22; &#x3E; 
+        &#x3C;Button Content = &#x22;_Show...&#x22; Click = &#x22;Button_Click&#x22; Width = &#x22;80&#x22; HorizontalAlignment = &#x22;Left&#x22; Margin = &#x22;10&#x22;/&#x3E; 
+      &#x3C;/StackPanel&#x3E; 
+&#x9;&#x9;
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+        <p>
+          Here is implementation in C# in which a list of Person objects are
+          assigned to DataContext, implementation of Person class and button
+          click event.
+        </p>
+        <pre><code class="language-csharp">using System.Collections.Generic; 
+using System.Windows;
+    
+namespace WPFDataTemplates { 
+  
+  public partial class MainWindow : Window { 
+  &#x9;
+        Person src = new Person { Name = &#x22;Ali&#x22;, Age = 27 }; 
+        List&#x3C;Person&#x3E; people = new List&#x3C;Person&#x3E;(); 
+  &#x9;&#x9;
+        public MainWindow() { 
+           InitializeComponent(); 
+           people.Add(src); 
+           people.Add(new Person { Name = &#x22;Mike&#x22;, Age = 62 }); 
+           people.Add(new Person { Name = &#x22;Brian&#x22;, Age = 12 });  
+           this.DataContext = people; 
+        } 
+  &#x9;&#x9;
+        private void Button_Click(object sender, RoutedEventArgs e) { 
+           string message = src.Name + &#x22; is &#x22; + src.Age; 
+           MessageBox.Show(message); 
+        } 
+     } 
+  &#x9;
+     public class Person { 
+        private string nameValue; 
+  &#x9;&#x9;
+        public string Name { 
+           get { return nameValue; } 
+           set { nameValue = value; } 
+        }  
+  &#x9;&#x9;
+        private double ageValue; 
+  &#x9;&#x9;
+        public double Age { 
+           get { return ageValue; } 
+           set { 
+              if (value != ageValue) { 
+              ageValue = value; 
+              } 
+           } 
+        } 
+     } 
+  &#x9;
+  }</code></pre>
+      </section>
     </div>
   </body>
 
