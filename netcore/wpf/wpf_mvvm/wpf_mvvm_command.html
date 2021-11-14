@@ -9,14 +9,13 @@
       rel="stylesheet"
       href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-   
 
     <script src="../../../js/libs/jquery.min.js"></script>
     <link
-    rel="stylesheet"
-    href="../../../js/libs/highlight/styles/devibeans.min.css"
-  />
-  <script src="../../../js/libs/highlight/highlight.min.js"></script>
+      rel="stylesheet"
+      href="../../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../../js/libs/highlight/highlight.min.js"></script>
     <title>WPF Command</title>
   </head>
 
@@ -26,7 +25,370 @@
       <a href="../wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-      <section id="ss_01_01">
+      <section id="wpf_01_01">
+        <h4>Command</h4>
+        <p>
+          Command allows you to define actions in one place and then refer to
+          them from all your user interface controls like menu items, toolbar
+          buttons and so on. WPF will also listen for keyboard shortcuts and
+          pass them along to the proper command, if any, making it the ideal way
+          to offer keyboard shortcuts in an application.
+        </p>
+        <p>
+          Commands also solve another hassle when dealing with multiple
+          entrances to the same function. In a WinForms application, you would
+          be responsible for writing code that could disable user interface
+          elements when the action was not available. For instance, if your
+          application was able to use a clipboard command like Cut, but only
+          when text was selected, you would have to manually enable and disable
+          the main menu item, the toolbar button and the context menu item each
+          time text selection changed.
+        </p>
+        <p>
+          With WPF commands, this is centralized. With one method you decide
+          whether or not a given command can be executed, and then WPF toggles
+          all the subscribing interface elements on or off automatically. This
+          makes it so much easier to create a responsive and dynamic
+          application!
+        </p>
+        <h4>Command Bindings</h4>
+        <p>
+          Commands don&#x27;t actually do anything by them self. At the root,
+          they consist of the <span class="keyword">ICommand</span> interface,
+          which only defines an event and two methods:
+          <span class="keyword">Execute()</span> and
+          <span class="keyword">CanExecute()</span>. The first one is for
+          performing the actual action, while the second one is for determining
+          whether the action is currently available. To perform the actual
+          action of the command, you need a link between the command and your
+          code and this is where the CommandBinding comes into play.
+        </p>
+        <p>
+          A CommandBinding is usually defined on a Window or a UserControl, and
+          holds a references to the Command that it handles, as well as the
+          actual event handlers for dealing with the
+          <span class="keyword">Execute()</span> and
+          <span class="keyword">CanExecute()</span>
+          events of the Command.
+        </p>
+      </section>
+      <section id="wpf_01_02">
+        <h4>Using WPF Command</h4>
+        <p>
+          In the previous article, we discussed a lot of theory about what
+          commands are and how they work. In this chapter, we&#x27;ll look into
+          how you actually use commands, by assigning them to user interface
+          elements and creating command bindings that links it all together.
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.Commands.UsingCommandsSample&#x22;
+      xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+      xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+      Title=&#x22;UsingCommandsSample&#x22; Height=&#x22;100&#x22; Width=&#x22;200&#x22;&#x3E;
+  &#x3C;Window.CommandBindings&#x3E;
+      &#x3C;CommandBinding Command=&#x22;ApplicationCommands.New&#x22; Executed=&#x22;NewCommand_Executed&#x22; CanExecute=&#x22;NewCommand_CanExecute&#x22; /&#x3E;
+  &#x3C;/Window.CommandBindings&#x3E;
+
+  &#x3C;StackPanel HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;
+      &#x3C;Button Command=&#x22;ApplicationCommands.New&#x22;&#x3E;New&#x3C;/Button&#x3E;
+  &#x3C;/StackPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+        <pre><code>using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
+
+namespace WpfTutorialSamples.Commands
+{
+&#x9;public partial class UsingCommandsSample : Window
+&#x9;{
+&#x9;&#x9;public UsingCommandsSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+&#x9;&#x9;}
+
+&#x9;&#x9;private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;e.CanExecute = true;
+&#x9;&#x9;}
+
+&#x9;&#x9;private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;MessageBox.Show(&#x22;The New command was invoked&#x22;);
+&#x9;&#x9;}
+&#x9;}
+}</code></pre>
+
+        <p>
+          We define a command binding on the Window, by adding it to its
+          CommandBindings collection. We specify that Command that we wish to
+          use (the New command from the ApplicationCommands), as well as two
+          event handlers. The visual interface consists of a single button,
+          which we attach the command to using the Command property.
+        </p>
+        <p>
+          In Code-behind, we handle the two events. The CanExecute handler,
+          which WPF will call when the application is idle to see if the
+          specific command is currently available, is very simple for this
+          example, as we want this particular command to be available all the
+          time. This is done by setting the CanExecute property of the event
+          arguments to true.
+        </p>
+        <p>
+          The Executed handler simply shows a message box when the command is
+          invoked. If you run the sample and press the button, you will see this
+          message. A thing to notice is that this command has a default keyboard
+          shortcut defined, which you get as an added bonus. Instead of clicking
+          the button, you can try to press Ctrl+N on your keyboard - the result
+          is the same.
+        </p>
+      </section>
+      <section id="wpf_01_03">
+        <h4>Using CanExecute method</h4>
+        <p>
+          In the first example, we implemented a CanExecute event that simply
+          returned true, so that the button would be available all the time.
+          However, this is of course not true for all buttons - in many cases,
+          you want the button to be enabled or disabled depending on some sort
+          of state in your application.
+        </p>
+        <p>
+          A very common example of this is the toggling of buttons for using the
+          Windows Clipboard, where you want the Cut and Copy buttons to be
+          enabled only when text is selected, and the Paste button to only be
+          enabled when text is present in the clipboard. This is exactly what
+          we&#x27;ll accomplish in this example:
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.Commands.CommandCanExecuteSample&#x22;
+        xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+        Title=&#x22;CommandCanExecuteSample&#x22; Height=&#x22;200&#x22; Width=&#x22;250&#x22;&#x3E;
+    &#x3C;Window.CommandBindings&#x3E;
+        &#x3C;CommandBinding Command=&#x22;ApplicationCommands.Cut&#x22; CanExecute=&#x22;CutCommand_CanExecute&#x22; Executed=&#x22;CutCommand_Executed&#x22; /&#x3E;
+        &#x3C;CommandBinding Command=&#x22;ApplicationCommands.Paste&#x22; CanExecute=&#x22;PasteCommand_CanExecute&#x22; Executed=&#x22;PasteCommand_Executed&#x22; /&#x3E;
+    &#x3C;/Window.CommandBindings&#x3E;
+    &#x3C;DockPanel&#x3E;
+        &#x3C;WrapPanel DockPanel.Dock=&#x22;Top&#x22; Margin=&#x22;3&#x22;&#x3E;
+            &#x3C;Button Command=&#x22;ApplicationCommands.Cut&#x22; Width=&#x22;60&#x22;&#x3E;_Cut&#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;ApplicationCommands.Paste&#x22; Width=&#x22;60&#x22; Margin=&#x22;3,0&#x22;&#x3E;_Paste&#x3C;/Button&#x3E;
+        &#x3C;/WrapPanel&#x3E;
+        &#x3C;TextBox AcceptsReturn=&#x22;True&#x22; Name=&#x22;txtEditor&#x22; /&#x3E;
+    &#x3C;/DockPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+        <pre><code class="language-csharp">using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
+
+namespace WpfTutorialSamples.Commands
+{
+&#x9;public partial class CommandCanExecuteSample : Window
+&#x9;{
+&#x9;&#x9;public CommandCanExecuteSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+&#x9;&#x9;}
+
+&#x9;&#x9;private void CutCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;e.CanExecute = (txtEditor != null) &#x26;&#x26; (txtEditor.SelectionLength &#x3E; 0);
+&#x9;&#x9;}
+
+&#x9;&#x9;private void CutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;txtEditor.Cut();
+&#x9;&#x9;}
+
+&#x9;&#x9;private void PasteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;e.CanExecute = Clipboard.ContainsText();
+&#x9;&#x9;}
+
+&#x9;&#x9;private void PasteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;txtEditor.Paste();
+&#x9;&#x9;}
+&#x9;}
+}</code></pre>
+        <p>
+          So, we have this very simple interface with a couple of buttons and a
+          TextBox control. The first button will cut to the clipboard and the
+          second one will paste from it.
+        </p>
+        <p>
+          In Code-behind, we have two events for each button: One that performs
+          the actual action, which name ends with _Executed, and then the
+          CanExecute events. In each of them, you will see that I apply some
+          logic to decide whether or not the action can be executed and then
+          assign it to the return value CanExecute on the EventArgs.
+        </p>
+        <p>
+          The cool thing about this is that you don&#x27;t have to call these
+          methods to have your buttons updated - WPF does it automatically when
+          the application has an idle moment, making sure that you interface
+          remains updated all the time.
+        </p>
+      </section>
+      <section id="wpf_01_04">
+        <h4>Default command behavior and CommandTarget</h4>
+        <p>
+          As we saw in the previous example, handling a set of commands can lead
+          to quite a bit of code, with a lot of being method declarations and
+          very standard logic. That&#x27;s probably why the WPF team decided to
+          handle some it for you. In fact, we could have avoided all of the
+          Code-behind in the previous example, because a WPF TextBox can
+          automatically handle common commands like Cut, Copy, Paste, Undo and
+          Redo.
+        </p>
+        <p>
+          WPF does this by handling the Executed and CanExecute events for you,
+          when a text input control like the TextBox has focus. You are free to
+          override these events, which is basically what we did in the previous
+          example, but if you just want the basic behavior, you can let WPF
+          connect the commands and the TextBox control and do the work for you.
+          Just see how much simpler this example is:
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.Commands.CommandsWithCommandTargetSample&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          Title=&#x22;CommandsWithCommandTargetSample&#x22; Height=&#x22;200&#x22; Width=&#x22;250&#x22;&#x3E;
+      &#x3C;DockPanel&#x3E;
+          &#x3C;WrapPanel DockPanel.Dock=&#x22;Top&#x22; Margin=&#x22;3&#x22;&#x3E;
+              &#x3C;Button Command=&#x22;ApplicationCommands.Cut&#x22; CommandTarget=&#x22;{Binding ElementName=txtEditor}&#x22; Width=&#x22;60&#x22;&#x3E;_Cut&#x3C;/Button&#x3E;
+              &#x3C;Button Command=&#x22;ApplicationCommands.Paste&#x22; CommandTarget=&#x22;{Binding ElementName=txtEditor}&#x22; Width=&#x22;60&#x22; Margin=&#x22;3,0&#x22;&#x3E;_Paste&#x3C;/Button&#x3E;
+          &#x3C;/WrapPanel&#x3E;
+          &#x3C;TextBox AcceptsReturn=&#x22;True&#x22; Name=&#x22;txtEditor&#x22; /&#x3E;
+      &#x3C;/DockPanel&#x3E;
+  &#x3C;/Window&#x3E;</code></pre>
+
+        <p>
+          No Code-behind code needed for this example - WPF deals with all of it
+          for us, but only because we want to use these specific commands for
+          this specific control. The TextBox does the work for us.
+        </p>
+        <p>
+          Notice how I use the CommandTarget properties on the buttons, to bind
+          the commands to our TextBox control. This is required in this
+          particular example, because the WrapPanel doesn't handle focus the
+          same way e.g. a Toolbar or a Menu would, but it also makes pretty good
+          sense to give the commands a target.
+        </p>
+      </section>
+
+      <section id="wpf_01_05">
+        <h4>Implementing a custom command</h4>
+        <p>
+          In the previous chapter, we looked at various ways of using commands
+          already defined in WPF, but of course, you can implement your own
+          commands as well. It&#x27;s pretty simple, and once you&#x27;ve done
+          it, you can use your own commands just like the ones defined in WPF.
+        </p>
+        <p>
+          The easiest way to start implementing your own commands is to have a
+          static class that will contain them. Each command is then added to
+          this class as static fields, allowing you to use them in your
+          application. Since WPF, for some strange reason, doesn&#x27;t
+          implement an Exit/Quit command, I decided to implement one for our
+          custom commands example. It looks like this:
+        </p>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.Commands.CustomCommandSample&#x22;
+        xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+        xmlns:self=&#x22;clr-namespace:WpfTutorialSamples.Commands&#x22;
+        Title=&#x22;CustomCommandSample&#x22; Height=&#x22;150&#x22; Width=&#x22;200&#x22;&#x3E;
+    &#x3C;Window.CommandBindings&#x3E;
+        &#x3C;CommandBinding Command=&#x22;self:CustomCommands.Exit&#x22; CanExecute=&#x22;ExitCommand_CanExecute&#x22; Executed=&#x22;ExitCommand_Executed&#x22; /&#x3E;
+    &#x3C;/Window.CommandBindings&#x3E;
+    &#x3C;Grid&#x3E;
+        &#x3C;Grid.RowDefinitions&#x3E;
+            &#x3C;RowDefinition Height=&#x22;Auto&#x22; /&#x3E;
+            &#x3C;RowDefinition Height=&#x22;*&#x22; /&#x3E;
+        &#x3C;/Grid.RowDefinitions&#x3E;
+        &#x3C;Menu&#x3E;
+            &#x3C;MenuItem Header=&#x22;File&#x22;&#x3E;
+                &#x3C;MenuItem Command=&#x22;self:CustomCommands.Exit&#x22; /&#x3E;
+            &#x3C;/MenuItem&#x3E;
+        &#x3C;/Menu&#x3E;
+        &#x3C;StackPanel Grid.Row=&#x22;1&#x22; HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;
+            &#x3C;Button Command=&#x22;self:CustomCommands.Exit&#x22;&#x3E;Exit&#x3C;/Button&#x3E;
+        &#x3C;/StackPanel&#x3E;
+    &#x3C;/Grid&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+
+        <pre><code class="language-csharp">using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
+
+namespace WpfTutorialSamples.Commands
+{
+&#x9;public partial class CustomCommandSample : Window
+&#x9;{
+&#x9;&#x9;public CustomCommandSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+&#x9;&#x9;}
+
+&#x9;&#x9;private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;e.CanExecute = true;
+&#x9;&#x9;}
+
+&#x9;&#x9;private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;Application.Current.Shutdown();
+&#x9;&#x9;}
+&#x9;}
+
+&#x9;public static class CustomCommands
+&#x9;{
+&#x9;&#x9;public static readonly RoutedUICommand Exit = new RoutedUICommand
+&#x9;&#x9;&#x9;(
+&#x9;&#x9;&#x9;&#x9;&#x22;Exit&#x22;,
+&#x9;&#x9;&#x9;&#x9;&#x22;Exit&#x22;,
+&#x9;&#x9;&#x9;&#x9;typeof(CustomCommands),
+&#x9;&#x9;&#x9;&#x9;new InputGestureCollection()
+&#x9;&#x9;&#x9;&#x9;{
+&#x9;&#x9;&#x9;&#x9;&#x9;new KeyGesture(Key.F4, ModifierKeys.Alt)
+&#x9;&#x9;&#x9;&#x9;}
+&#x9;&#x9;&#x9;);
+
+&#x9;&#x9;//Define more commands here, just like the one above
+&#x9;}
+}</code></pre>
+        <p>
+          In the markup, I&#x27;ve defined a very simple interface with a menu
+          and a button, both of them using our new, custom Exit command. This
+          command is defined in Code-behind, in our own CustomCommands class,
+          and then referenced in the CommandBindings collection of the window,
+          where we assign the events that it should use to execute/check if
+          it&#x27;s allowed to execute.
+        </p>
+        <p>
+          All of this is just like the examples in the previous chapter, except
+          for the fact that we&#x27;re referencing the command from our own code
+          (using the &#x22;self&#x22; namespace defined in the top) instead of a
+          built-in command.
+        </p>
+        <p>
+          In Code-behind, we respond to the two events for our command: One
+          event just allows the command to execute all the time, since
+          that&#x27;s usually true for an exit/quit command, and the other one
+          calls the Shutdown method that will terminate our application. All
+          very simple.
+        </p>
+        <p>
+          As already explained, we implement our Exit command as a field on a
+          static CustomCommands class. There are several ways of defining and
+          assigning properties on the commands, but I&#x27;ve chosen the more
+          compact approach (it would be even more compact if placed on the same
+          line, but I&#x27;ve added line breaks here for readability) where I
+          assign all of it through the constructor. The parameters are the
+          text/label of the command, the name of the command, the owner type and
+          then an InputGestureCollection, allowing me to define a default
+          shortcut for the command (Alt+F4).
+        </p>
+      </section>
+      <section id="wpf_01_06">
         <h4>Relay Command</h4>
         <pre><code class="language-csharp">
 
@@ -60,6 +422,6 @@
   </body>
 
   <script>
-      hljs.highlightAll();
+    hljs.highlightAll();
   </script>
 </html>
