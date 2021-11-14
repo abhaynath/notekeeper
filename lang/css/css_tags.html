@@ -27,6 +27,19 @@
     <div class="content">
       <section id="css_07_01">
         <h3>datalist</h3>
+
+        <div>
+          <label for="myBrowser">Choose a browser from this list:</label>
+          <input list="browsers" id="myBrowser" name="myBrowser" />
+          <datalist id="browsers">
+            <option value="Chrome">Google Chrome</option>
+            <option value="Firefox">Firefox Browser</option>
+            <option value="Internet Explorer">IE 11</option>
+            <option value="Opera">iOS Opera</option>
+            <option value="Safari">MacIntosh</option>
+            <option value="Microsoft Edge">Edge</option>
+          </datalist>
+        </div>
         <pre><code class="language-html">
 &#x3C;label for=&#x22;myBrowser&#x22;&#x3E;Choose a browser from this list:&#x3C;/label&#x3E;
 &#x3C;input list=&#x22;browsers&#x22; id=&#x22;myBrowser&#x22; name=&#x22;myBrowser&#x22; /&#x3E;
@@ -43,6 +56,22 @@
 
       <section id="css_07_02">
         <h3>details</h3>
+        <div>
+          <details>
+            <summary>cricket</summary>
+            <p>Its is very popular game in india</p>
+          </details>
+
+          <details open>
+            <summary>tennis</summary>
+            <p>Its is very popular game in US</p>
+          </details>
+
+          <details>
+            <summary>football</summary>
+            <p>Its is very popular game in brazil</p>
+          </details>
+        </div>
         <pre><code class="language-html">
 &#x3C;details&#x3E;
     &#x3C;summary&#x3E;cricket&#x3C;/summary&#x3E;
@@ -131,6 +160,16 @@
 
       <section id="css_07_04">
         <h3>Description List</h3>
+        <div><dl>
+          <dt>Beast of Bodmin</dt>
+          <dd>A large feline inhabiting Bodmin Moor.</dd>
+      
+          <dt>Morgawr</dt>
+          <dd>A sea serpent.</dd>
+      
+          <dt>Owlman</dt>
+          <dd>A giant owl-like creature.</dd>
+      </dl></div>
         <pre><code class="language-html">
 &#x3C;dl&#x3E;
     &#x3C;dt&#x3E;Beast of Bodmin&#x3C;/dt&#x3E;
@@ -146,19 +185,27 @@
       </section>
       <section id="css_07_05">
         <h3>progress</h3>
-<pre><code class="language-html">&#x3C;progress max=&#x22;100&#x22; value=&#x22;35&#x22;&#x3E;35&#x3C;/progress&#x3E;</code></pre>
+        <div><progress max="100" value="35">35</progress></div>
+        <pre><code class="language-html">&#x3C;progress max=&#x22;100&#x22; value=&#x22;35&#x22;&#x3E;35&#x3C;/progress&#x3E;</code></pre>
       </section>
       <section id="css_07_06">
         <h3>meter</h3>
+        <div>
+          <meter
+          id="fuel"
+          min="0"
+          max="100"
+          low="33"
+          high="66"
+          optimum="80"
+          value="30"
+      >
+          at 50/100
+      </meter>
+        </div>
         <pre><code class="language-html">
 &#x3C;body&#x3E;
-    &#x3C;meter
-        id=&#x22;fuel&#x22;
-        min=&#x22;0&#x22;
-        max=&#x22;100&#x22;
-        low=&#x22;33&#x22;
-        high=&#x22;66&#x22;
-        optimum=&#x22;80&#x22;
+    &#x3C;meter id=&#x22;fuel&#x22; min=&#x22;0&#x22; max=&#x22;100&#x22; low=&#x22;33&#x22; high=&#x22;66&#x22; optimum=&#x22;80&#x22;
         value=&#x22;30&#x22;
     &#x3E;
         at 50/100
@@ -179,5 +226,11 @@
 
   <script>
     hljs.highlightAll();
+    let m = document.getElementById("fuel");
+    setInterval(()=>{
+        let num = Math.floor(Math.random()*80);
+        m.value = num;
+
+    },500);
   </script>
 </html>
