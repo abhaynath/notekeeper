@@ -24,23 +24,53 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-      <p>Resources are stored temporarily somewhere so that we can reuse them when we need them.</p>
+      <p>
+        Resources are stored temporarily somewhere so that we can reuse them
+        when we need them.
+      </p>
       <h4>Advantages</h4>
       <ol>
-        <li>Re-usability, just define it once in a common file and use it in multiple XAMLs.</li>
-        <li>Store data locally, i.e. in the same window, if usage scope is the same window or in some common file is usage scope is global i.e. entire application.</li>
-        <li>Or you can define it inside a panel such as Grid, Stack panel, etc.</li>
+        <li>
+          Re-usability, just define it once in a common file and use it in
+          multiple XAMLs.
+        </li>
+        <li>
+          Store data locally, i.e. in the same window, if usage scope is the
+          same window or in some common file is usage scope is global i.e.
+          entire application.
+        </li>
+        <li>
+          Or you can define it inside a panel such as Grid, Stack panel, etc.
+        </li>
       </ol>
 
-      <p>There are 2 types of Resources : <span class="keyword">StaticResource</span> and <span class="keyword">DynamicResource</span>.</p>
+      <p>
+        There are 2 types of Resources :
+        <span class="keyword">StaticResource</span> and
+        <span class="keyword">DynamicResource</span>.
+      </p>
       <ul>
         <details>
           <summary>StaticResource</summary>
-          <p>A <span class="keyword">StaticResource</span> will be resolved and assigned to the property during the loading of the XAML which occurs before the application is actually run. It will only be assigned once and any changes to resource dictionary ignored.</p>
+          <p>
+            A <span class="keyword">StaticResource</span> will be resolved and
+            assigned to the property during the loading of the XAML which occurs
+            before the application is actually run. It will only be assigned
+            once and any changes to resource dictionary ignored.
+          </p>
         </details>
         <details>
           <summary>DynamicResource</summary>
-          <p>A <span class="keyword">DynamicResource</span> assigns an Expression object to the property during loading but does not actually lookup the resource until runtime when the Expression object is asked for the value. This defers looking up the resource until it is needed at runtime. A good example would be a forward reference to a resource defined later on in the XAML. Another example is a resource that will not even exist until runtime. It will update the target if the source resource dictionary is changed.</p>
+          <p>
+            A <span class="keyword">DynamicResource</span> assigns an Expression
+            object to the property during loading but does not actually lookup
+            the resource until runtime when the Expression object is asked for
+            the value. This defers looking up the resource until it is needed at
+            runtime. A good example would be a forward reference to a resource
+            defined later on in the XAML. Another example is a resource that
+            will not even exist until runtime. It will update the target if the
+            source resource dictionary is changed.
+          </p>
         </details>
       </ul>
       <h3>Static Resources</h3>
@@ -65,17 +95,17 @@
           or user control.
         </p>
         <pre><code class="language-html"> &#x3C;TextBlock Text=&#x22;{StaticResource appVersion}&#x22; Background=&#x22;{StaticResource btnColor2}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
-     
-     <h4>Window Resources</h4>
-     <p>We can use resources on Windows scope</p>
-     <pre><code class="language-html">&#x3C;Window.Resources&#x3E;
+
+        <h4>Window Resources</h4>
+        <p>We can use resources on Windows scope</p>
+        <pre><code class="language-html">&#x3C;Window.Resources&#x3E;
       &#x3C;clr:String x:Key=&#x22;AppName&#x22;&#x3E;Abhay&#x3C;/clr:String&#x3E;
 &#x3C;/Window.Resources&#x3E;</code></pre>
 
-<h4>User Control Resources</h4>
-<p>We can use styles and resource on the userControls.</p>
-<h5>ResourceDemoControl.xaml</h5>
-<pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.ResourceDemoControl&#x22;
+        <h4>User Control Resources</h4>
+        <p>We can use styles and resource on the userControls.</p>
+        <h5>ResourceDemoControl.xaml</h5>
+        <pre><code class="language-html">&#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.ResourceDemoControl&#x22;
   xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
   xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
   xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22; 
@@ -109,11 +139,94 @@
     &#x3C;/StackPanel&#x3E;
 &#x3C;/UserControl&#x3E;
 </code></pre>
-     
       </section>
       <h3>Dynamic Resources</h3>
-      <section id="wpf_02_02">
+      <section id="wpf_02_02"></section>
+      <section id="wpf_02_03">
+        <h4>Resources from code-behind</h4>
+        <p>
+          So far, we&#x27;ve accessed all of our resources directly from XAML,
+          using a markup extension. However, you can of course access your
+          resources from Code-behind as well, which can be useful in several
+          situations. In the previous example, we saw how we could store
+          resources in several different places, so in this example, we&#x27;ll
+          be accessing three different resources from Code-behind, each stored
+          in a different scope:
+        </p>
+        <h5>App.xaml</h5>
+        <pre><code class="language-xml">&#x3C;Application x:Class=&#x22;WpfTutorialSamples.App&#x22;
+          xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+          xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+          xmlns:sys=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+          StartupUri=&#x22;WPF application/ResourcesFromCodeBehindSample.xaml&#x22;&#x3E;
+ &#x3C;Application.Resources&#x3E;
+     &#x3C;sys:String x:Key=&#x22;strApp&#x22;&#x3E;Hello, Application world!&#x3C;/sys:String&#x3E;
+ &#x3C;/Application.Resources&#x3E;
+&#x3C;/Application&#x3E;</code></pre>
+        <h5>Window.xaml</h5>
+        <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.WPF_Application.ResourcesFromCodeBehindSample&#x22;
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+  xmlns:sys=&#x22;clr-namespace:System;assembly=mscorlib&#x22;
+  Title=&#x22;ResourcesFromCodeBehindSample&#x22; Height=&#x22;175&#x22; Width=&#x22;250&#x22;&#x3E;
+&#x3C;Window.Resources&#x3E;
+  &#x3C;sys:String x:Key=&#x22;strWindow&#x22;&#x3E;Hello, Window world!&#x3C;/sys:String&#x3E;
+&#x3C;/Window.Resources&#x3E;
+&#x3C;DockPanel Margin=&#x22;10&#x22; Name=&#x22;pnlMain&#x22;&#x3E;
+  &#x3C;DockPanel.Resources&#x3E;
+      &#x3C;sys:String x:Key=&#x22;strPanel&#x22;&#x3E;Hello, Panel world!&#x3C;/sys:String&#x3E;
+  &#x3C;/DockPanel.Resources&#x3E;
 
+  &#x3C;WrapPanel DockPanel.Dock=&#x22;Top&#x22; HorizontalAlignment=&#x22;Center&#x22; Margin=&#x22;10&#x22;&#x3E;
+      &#x3C;Button Name=&#x22;btnClickMe&#x22; Click=&#x22;btnClickMe_Click&#x22;&#x3E;Click me!&#x3C;/Button&#x3E;
+  &#x3C;/WrapPanel&#x3E;
+
+  &#x3C;ListBox Name=&#x22;lbResult&#x22; /&#x3E;
+&#x3C;/DockPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+        <pre><code class="language-csharp">using System;
+using System.Windows;
+
+namespace WpfTutorialSamples.WPF_Application
+{
+&#x9;public partial class ResourcesFromCodeBehindSample : Window
+&#x9;{
+&#x9;&#x9;public ResourcesFromCodeBehindSample()
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;InitializeComponent();
+&#x9;&#x9;}
+
+&#x9;&#x9;private void btnClickMe_Click(object sender, RoutedEventArgs e)
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;lbResult.Items.Add(pnlMain.FindResource(&#x22;strPanel&#x22;).ToString());
+&#x9;&#x9;&#x9;lbResult.Items.Add(this.FindResource(&#x22;strWindow&#x22;).ToString());
+&#x9;&#x9;&#x9;lbResult.Items.Add(Application.Current.FindResource(&#x22;strApp&#x22;).ToString());
+&#x9;&#x9;}
+&#x9;}
+}</code></pre>
+        <p>
+          In Code-behind, we handle the click event of the button, in which we
+          add each of the text strings to the ListBox, as seen on the
+          screenshot. We use the <b>FindResource()</b> method, which will return
+          the resource as an object (if found), and then we turn it into the
+          string that we know it is by using the ToString() method.
+        </p>
+        <p>
+          Notice how we use the <b>FindResource()</b> method on different scopes
+          - first on the panel, then on the window and then on the current
+          Application object. It makes sense to look for the resource where we
+          know it is, but as already mentioned, if a resource is not found, the
+          search progresses up the hierarchy, so in principal, we could have
+          used the <b>FindResource()</b> method on the panel in all three cases,
+          since it would have continued up to the window and later on up to the
+          application level, if not found.
+        </p>
+        <p>
+          The same is not true the other way around - the search doesn&#x27;t
+          navigate down the tree, so you can&#x27;t start looking for a resource
+          on the application level, if it has been defined locally for the
+          control or for the window.
+        </p>
       </section>
     </div>
   </body>
