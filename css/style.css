@@ -284,7 +284,8 @@ section h4 {
   padding-bottom: 0;
 }
 section p {
-  padding: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin: 0;
 }
 pre code {

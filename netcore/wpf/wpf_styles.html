@@ -24,15 +24,288 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-     <section id="wpf_10_01">
-       <h4>Template</h4>
-     </section>
-     <section id="wpf_10_02">
-      <h4>ControlTemplate</h4>
-    </section>
-    <section id="wpf_10_03">
-      <h4>DataTemplate</h4>
-    </section>
+      <section id="wpf_13_01">
+        <h4>Styling</h4>
+        <p>
+          The .NET framework provides several strategies to personalize and
+          customize the appearance of an application. Styles provide us the
+          flexibility to set some properties of an object and reuse these
+          specific settings across multiple objects for a consistent look.
+        </p>
+        <ul>
+          <li>
+            In styles, you can set only the existing properties of an object
+            such as Height, Width, Font size, etc
+          </li>
+          <li>Only default behavior of a control can be specified</li>
+          <li>Multiple properties can be added into a single style.</li>
+        </ul>
+        <p>
+          Styles are used to give a uniform look or appearance to a set of
+          controls. Implicit styles are used to apply an appearance to all the
+          controls of a given type and simplify the application. Imagine three
+          buttons, all of them have to look the same, same width and height,
+          same font size, same foreground color, etc. We can set all those
+          properties on the button elements themselves and that&#x27;s still
+          quite okay for all of the buttons
+        </p>
+
+        <p>
+          But in a real-life applications, you&#x27;ll typically have a lot more
+          of these that need to look exactly the same. And not only buttons of
+          course, you&#x27;ll typically want your text blocks, text boxes, and
+          combo boxes etc. to look the same across your application. Surely,
+          there must be a better way to achieve this and it is known as styling.
+          You can think of a style as a convenient way to apply a set of
+          property values to more than one element. Take a look at the following
+          diagram.
+        </p>
+      </section>
+      <section id="wpf_13_02">
+        <h4>Using Styles</h4>
+        <p>
+          Styles are defined in the resource dictionary and each style has a
+          unique key identifier and a target type. Inside &#x3C;style&#x3E; you
+          can see that multiple setter tags are defined for each property which
+          will be included in the style.
+        </p>
+        <p>
+          In the above example, all of the common properties of each button are
+          now defined in style and then the style are assigned to each button
+          with a unique key by setting the style property through the
+          StaticResource markup extension
+        </p>
+
+        <pre><code class="language-html">&#x3C;Window x:Class = &#x22;XAMLStyle.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  xmlns:d = &#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+  xmlns:mc = &#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+  xmlns:local = &#x22;clr-namespace:XAMLStyle&#x22; 
+  mc:Ignorable = &#x22;d&#x22; Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E;
+&#x9;
+  &#x3C;Window.Resources&#x3E; 
+      &#x3C;Style x:Key = &#x22;myButtonStyle&#x22; TargetType = &#x22;Button&#x22;&#x3E; 
+        &#x3C;Setter Property = &#x22;Height&#x22; Value = &#x22;30&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Width&#x22; Value = &#x22;80&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Foreground&#x22; Value = &#x22;Blue&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;FontSize&#x22; Value = &#x22;12&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Margin&#x22; Value = &#x22;10&#x22; /&#x3E; 
+      &#x3C;/Style&#x3E; 
+  &#x3C;/Window.Resources&#x3E; 
+&#x9;
+  &#x3C;StackPanel&#x3E; 
+      &#x3C;Button Content = &#x22;Button1&#x22; Style = &#x22;{StaticResource myButtonStyle}&#x22; /&#x3E; 
+      &#x3C;Button Content = &#x22;Button2&#x22; Style = &#x22;{StaticResource myButtonStyle}&#x22; /&#x3E; 
+      &#x3C;Button Content = &#x22;Button3&#x22; Style=&#x22;{StaticResource myButtonStyle}&#x22; /&#x3E; 
+  &#x3C;/StackPanel&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+        <p>
+          The advantage of doing it like this is immediately obvious, we can
+          reuse that style anywhere in its scope; and if we need to change it,
+          we simply change it once in the style definition instead of on each
+          element.
+        </p>
+      </section>
+      <section id="wpf_13_03">
+        <h4>Control Level of Styles</h4>
+        <p>
+          In what level a style is defined instantaneously limits the scope of
+          that style. So the scope, i.e. where you can use the style, depends on
+          where you&#x27;ve defined it. Styles can be defined on the following
+          levels &#x2212;
+        </p>
+        <details>
+          <summary>Control Level</summary>
+          <div>
+            <p>
+              Defining a style on control level can only be applied to that
+              particular control. Given below is an example of a control level
+              where the button and TextBlock have their own style.
+            </p>
+            <pre><code class="language-html">&#x3C;Window x:Class = &#x22;XAMLControlLevelStyle.MainWindow&#x22; 
+xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+Title = &#x22;Control Level Styles&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+&#x3C;StackPanel Margin = &#x22;10&#x22; VerticalAlignment = &#x22;Top&#x22;&#x3E; 
+&#x9;
+  &#x3C;TextBlock Text = &#x22;TextBlock&#x22;&#x3E; 
+    &#x3C;TextBlock.Style&#x3E; 
+        &#x3C;Style&#x3E; 
+          &#x3C;Setter Property = &#x22;TextBlock.FontSize&#x22; Value = &#x22;24&#x22; /&#x3E;
+          &#x3C;Setter Property = &#x22;TextBlock.Width&#x22; Value = &#x22;400&#x22; /&#x3E; 
+          &#x3C;Setter Property = &#x22;TextBlock.Height&#x22; Value = &#x22;40&#x22; /&#x3E; 
+          &#x3C;Setter Property = &#x22;TextBlock.Background&#x22; Value = &#x22;Gray&#x22; /&#x3E; 
+          &#x3C;Setter Property = &#x22;TextBlock.Margin&#x22; Value = &#x22;50&#x22; /&#x3E; 
+        &#x3C;/Style&#x3E; 
+    &#x3C;/TextBlock.Style&#x3E; 
+  &#x3C;/TextBlock&#x3E;
+&#x9;&#x9;
+  &#x3C;Button Content = &#x22;Button&#x22;&#x3E; 
+    &#x3C;Button.Style&#x3E; 
+        &#x3C;Style&#x3E; 
+          &#x3C;Setter Property = &#x22;TextBlock.Width&#x22; Value = &#x22;100&#x22; /&#x3E; 
+          &#x3C;Setter Property = &#x22;TextBlock.Height&#x22; Value = &#x22;40&#x22; /&#x3E; 
+          &#x3C;Setter Property = &#x22;TextBlock.Margin&#x22; Value = &#x22;50&#x22; /&#x3E; 
+        &#x3C;/Style&#x3E; 
+    &#x3C;/Button.Style&#x3E; 
+  &#x3C;/Button&#x3E; 
+&#x9;&#x9;
+&#x3C;/StackPanel&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+          </div>
+        </details>
+        <details>
+          <summary>Layout Level</summary>
+          <div>
+            <p>
+              Defining a style on any layout level will make it accessible by
+              that layout and its child elements only. Given below is an example
+              of layout level where all the three buttons have common style.
+            </p>
+            <pre><code class="language-html">&#x3C;Window x:Class = &#x22;XAMLLayoutLevelStyle.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E;
+&#x9;
+  &#x3C;StackPanel Margin = &#x22;10&#x22;&#x3E; 
+      &#x3C;StackPanel.Resources&#x3E; 
+        &#x3C;Style TargetType = &#x22;Button&#x22;&#x3E; 
+            &#x3C;Setter Property = &#x22;Foreground&#x22; Value = &#x22;Blue&#x22; /&#x3E; 
+            &#x3C;Setter Property = &#x22;FontStyle&#x22; Value = &#x22;Italic&#x22; /&#x3E; 
+            &#x3C;Setter Property = &#x22;Width&#x22; Value = &#x22;100&#x22; /&#x3E; 
+            &#x3C;Setter Property = &#x22;Height&#x22; Value = &#x22;40&#x22; /&#x3E; 
+            &#x3C;Setter Property = &#x22;Margin&#x22; Value = &#x22;10&#x22; /&#x3E; 
+        &#x3C;/Style&#x3E; 
+      &#x3C;/StackPanel.Resources&#x3E;
+&#x9;&#x9;
+      &#x3C;Button&#x3E;Button 1&#x3C;/Button&#x3E; 
+      &#x3C;Button&#x3E;Button 2&#x3C;/Button&#x3E; 
+      &#x3C;Button Foreground = &#x22;Blue&#x22;&#x3E;Button 3&#x3C;/Button&#x3E; 
+  &#x3C;/StackPanel&#x3E;
+&#x9;
+&#x3C;/Window&#x3E; </code></pre>
+          </div>
+        </details>
+        <details>
+          <summary>Window Level</summary>
+          <div>
+            <p>
+              Defining a style on a window level can make it accessible by all
+              the elements on that window. Given below is an example of window
+              level where all the three text blocks have a common style
+            </p>
+            <pre><code class="language-html">&#x3C;Window x:Class = &#x22;Styles.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E; 
+&#x9;
+  &#x3C;Window.Resources&#x3E; 
+      &#x3C;Style TargetType = &#x22;TextBlock&#x22;&#x3E; 
+        &#x3C;Setter Property = &#x22;FontSize&#x22; Value = &#x22;24&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Margin&#x22; Value = &#x22;5&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;FontWeight&#x22; Value = &#x22;Bold&#x22; /&#x3E; 
+      &#x3C;/Style&#x3E; 
+&#x9;&#x9;
+      &#x3C;Style TargetType = &#x22;TextBox&#x22;&#x3E; 
+        &#x3C;Setter Property = &#x22;HorizontalAlignment&#x22; Value = &#x22;Left&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;FontSize&#x22; Value = &#x22;24&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Margin&#x22; Value = &#x22;5&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Width&#x22; Value = &#x22;200&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Height&#x22; Value = &#x22;40&#x22; /&#x3E; 
+      &#x3C;/Style&#x3E; 
+  &#x3C;/Window.Resources&#x3E; 
+&#x9;
+  &#x3C;Grid&#x3E; 
+      &#x3C;Grid.RowDefinitions&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+      &#x3C;/Grid.RowDefinitions&#x3E;
+&#x9;&#x9;
+      &#x3C;Grid.ColumnDefinitions&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;*&#x22; /&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;2*&#x22; /&#x3E; 
+      &#x3C;/Grid.ColumnDefinitions&#x3E; 
+&#x9;&#x9;
+      &#x3C;TextBlock Text = &#x22;First Name: &#x22;/&#x3E;  
+      &#x3C;TextBox Name = &#x22;FirstName&#x22; Grid.Column = &#x22;1&#x22; /&#x3E; 
+      &#x3C;TextBlock Text = &#x22;Last Name: &#x22; Grid.Row = &#x22;1&#x22; /&#x3E;
+      &#x3C;TextBox Name = &#x22;LastName&#x22; Grid.Column = &#x22;1&#x22; Grid.Row = &#x22;1&#x22; /&#x3E; 
+      &#x3C;TextBlock Text = &#x22;Email: &#x22; Grid.Row = &#x22;2&#x22; /&#x3E; 
+      &#x3C;TextBox Name = &#x22;Email&#x22; Grid.Column = &#x22;1&#x22; Grid.Row = &#x22;2&#x22;/&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+          </div>
+        </details>
+        <details>
+          <summary>Application Level</summary>
+          <div>
+            <p>
+              Defining a style on app level can make it accessible throughout
+              the entire application. Let&#x2019;s take the same example, but
+              here, we will put the styles in app.xaml file to make it
+              accessible throughout application. Here is the XAML code in
+              app.xaml.
+            </p>
+            <pre><code class="language-xml">&#x3C;Application x:Class = &#x22;Styles.App&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  StartupUri = &#x22;MainWindow.xaml&#x22;&#x3E; 
+&#x9;
+  &#x3C;Application.Resources&#x3E; 
+      &#x3C;Style TargetType = &#x22;TextBlock&#x22;&#x3E; 
+        &#x3C;Setter Property = &#x22;FontSize&#x22; Value = &#x22;24&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Margin&#x22; Value = &#x22;5&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;FontWeight&#x22; Value = &#x22;Bold&#x22; /&#x3E; 
+      &#x3C;/Style&#x3E; 
+&#x9;&#x9;
+      &#x3C;Style TargetType = &#x22;TextBox&#x22;&#x3E;
+        &#x3C;Setter Property = &#x22;HorizontalAlignment&#x22; Value = &#x22;Left&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;FontSize&#x22; Value = &#x22;24&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Margin&#x22; Value = &#x22;5&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Width&#x22; Value = &#x22;200&#x22; /&#x3E; 
+        &#x3C;Setter Property = &#x22;Height&#x22; Value=&#x22;40&#x22; /&#x3E; 
+      &#x3C;/Style&#x3E; 
+&#x9;&#x9;
+  &#x3C;/Application.Resources&#x3E;
+&#x9;
+&#x3C;/Application&#x3E;</code></pre>
+            <pre><code class="language-html">&#x3C;Window x:Class = &#x22;Styles.MainWindow&#x22; 
+  xmlns = &#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22; 
+  xmlns:x = &#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22; 
+  Title = &#x22;MainWindow&#x22; Height = &#x22;350&#x22; Width = &#x22;604&#x22;&#x3E;
+&#x9;
+  &#x3C;Grid&#x3E; 
+     &#x3C;Grid.RowDefinitions&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;Auto&#x22; /&#x3E; 
+        &#x3C;RowDefinition Height = &#x22;*&#x22; /&#x3E; 
+     &#x3C;/Grid.RowDefinitions&#x3E; 
+&#x9;&#x9;
+     &#x3C;Grid.ColumnDefinitions&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;*&#x22; /&#x3E; 
+        &#x3C;ColumnDefinition Width = &#x22;2*&#x22; /&#x3E; 
+     &#x3C;/Grid.ColumnDefinitions&#x3E; 
+&#x9;&#x9;
+     &#x3C;TextBlock Text = &#x22;First Name: &#x22;/&#x3E;  
+     &#x3C;TextBox Name = &#x22;FirstName&#x22; Grid.Column = &#x22;1&#x22; /&#x3E; 
+     &#x3C;TextBlock Text = &#x22;Last Name: &#x22; Grid.Row = &#x22;1&#x22; /&#x3E; 
+     &#x3C;TextBox Name = &#x22;LastName&#x22; Grid.Column = &#x22;1&#x22; Grid.Row = &#x22;1&#x22; /&#x3E; 
+     &#x3C;TextBlock Text = &#x22;Email: &#x22; Grid.Row = &#x22;2&#x22; /&#x3E; 
+     &#x3C;TextBox Name = &#x22;Email&#x22; Grid.Column = &#x22;1&#x22; Grid.Row = &#x22;2&#x22;/&#x3E; 
+  &#x3C;/Grid&#x3E; 
+&#x9;
+&#x3C;/Window&#x3E;</code></pre>
+          </div>
+        </details>
+      </section>
     </div>
   </body>
 
