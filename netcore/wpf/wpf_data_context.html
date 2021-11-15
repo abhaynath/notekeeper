@@ -190,7 +190,8 @@ namespace WpfTutorialSamples.DataBinding
           items and changes in the bound properties in each of the data objects.
           How to handle them may vary, depending on what you&#x27;re doing and
           what you&#x27;re looking to accomplish, but WPF comes with two very
-          easy solutions that you can use: The <span class="keyword">ObservableCollection</span> and the
+          easy solutions that you can use: The
+          <span class="keyword">ObservableCollection</span> and the
           <span class="keyword">INotifyPropertyChanged</span> interface.
         </p>
         <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WpfTutorialSamples.DataBinding.ChangeNotificationSample&#x22;
@@ -206,7 +207,7 @@ namespace WpfTutorialSamples.DataBinding
 &#x9;&#x9;&#x3C;ListBox Name=&#x22;lbUsers&#x22; DisplayMemberPath=&#x22;Name&#x22;&#x3E;&#x3C;/ListBox&#x3E;
 &#x9;&#x3C;/DockPanel&#x3E;
 &#x3C;/Window&#x3E;</code></pre>
-<pre><code class="language-csharp">using System;
+        <pre><code class="language-csharp">using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.ComponentModel;
@@ -271,6 +272,326 @@ namespace WpfTutorialSamples.DataBinding
 &#x9;}
 }</code></pre>
       </section>
+      <section id="wpf_11_04">
+        <h4>DataContext AutoWire in WPF</h4>
+
+        <div class="space_between">
+          <img src="../../images/netcore/wpf/wpf_datacontext_1.png" />
+          <div>
+            <p>
+              DataContext is the head of everything. It makes sure that your
+              View is hooked up with ViewModel.
+            </p>
+            <ul>
+              <li>Within XAML</li>
+              <li>Code-Behind</li>
+              <li>ViewModelLocator</li>
+            </ul>
+            <p>
+              We need 2 folders, one each for View &#x26; ViewModel.Then I have
+              created two UserControls, LoginView and RegisterView with their
+              respective ViewModels 1. LoginViewModel &#x26; 2.
+              RegisterViewModel.
+            </p>
+          </div>
+        </div>
+
+        <ol class="steps">
+          <li>
+            Add namespace of LoginViewModel to LoginVIew.xaml.
+            <pre><code class="language-csharp">xmlns:local=&#x22;clr-namespace:WPF_DataContext.VIewModel&#x22;</code></pre>
+          </li>
+          <li>
+            Use UserControl&#x27;s DataContext property to assign ViewModel
+            <pre><code class="language-xml">&#x3C;UserControl.DataContext&#x3E;  
+              &#x3C;local:LoginViewModel/&#x3E;  
+&#x3C;/UserControl.DataContext&#x3E;    </code></pre>
+            <p>
+              That&#x27;s all. Now to confirm if View is hooked-up with
+              ViewModel or not we can add TextBlock in LoginView.xaml. Once
+              you&#x27;ve done that your final LoginView.xaml will look like
+              this.
+            </p>
+            <pre><code class="language-xml">
+&#x3C;UserControl x:Class=&#x22;WPF_DataContext.View.LoginView&#x22;    
+    xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;    
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;    
+    xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;     
+    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;     
+    xmlns:local=&#x22;clr-namespace:WPF_DataContext.VIewModel&#x22;    
+    xmlns:ViewModelWire =&#x22;clr-namespace:WPF_DataContext&#x22;    
+    mc:Ignorable=&#x22;d&#x22;     
+    d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;    
+    Height=&#x22;40&#x22; Width=&#x22;200&#x22;&#x3E;    
+    &#x3C;UserControl.DataContext&#x3E;    
+        &#x3C;local:LoginViewModel/&#x3E;    
+    &#x3C;/UserControl.DataContext&#x3E;    
+    &#x3C;Grid&#x3E;    
+        &#x3C;TextBlock Text=&#x22;{Binding Message}&#x22; HorizontalAlignment=&#x22;Center&#x22;/&#x3E;    
+    &#x3C;/Grid&#x3E;    
+&#x3C;/UserControl&#x3E;  
+            </code></pre>
+            <p>
+              Note that TextBlock is bound with property name Message, and for
+              that we need to create this string type property in
+              LoginVIewModel. Let&#x27;s assign some value to Message in a
+              constructor.
+            </p>
+            <p>
+              <b>Tips </b>
+              It is a bad practice to assign values or call APIs in constuctor,
+              you should always use methods with multi-threading for calling or
+              updating data. But since this is a small example we are going to
+              assign values directly in the constructor.
+            </p>
+            <pre><code class="language-csharp">namespace WPF_DataContext.VIewModel  
+{  
+    public class LoginViewModel  
+    {  
+        private string _message;  
+  
+        public string Message  
+        {  
+            get { return _message; }  
+            set { _message = value; }  
+        }  
+  
+        public LoginViewModel()  
+        {  
+            _message = &#x22;Login View Model is Connected..&#x22;;  
+        }  
+    }  
+} </code></pre>
+            <p>
+              Finally, just call LoginView UserControl in MainWindow.xaml, as
+              follows.
+            </p>
+            <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WPF_DataContext.MainWindow&#x22;    
+        xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;    
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;    
+        xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;    
+        xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;    
+        xmlns:local=&#x22;clr-namespace:WPF_DataContext&#x22;     
+        xmlns:localView=&#x22;clr-namespace:WPF_DataContext.View&#x22;    
+        mc:Ignorable=&#x22;d&#x22;    
+        Title=&#x22;MainWindow&#x22; Height=&#x22;450&#x22; Width=&#x22;800&#x22;&#x3E;    
+    &#x3C;Grid&#x3E;    
+        &#x3C;localView:LoginView/&#x3E;    
+    &#x3C;/Grid&#x3E;    
+&#x3C;/Window&#x3E;</code></pre>
+          </li>
+        </ol>
+      </section>
+      <section id="wpf_11_05">
+        <h4>Assigning DataContext with Code-Behind</h4>
+        <p>
+          In this approach, we are going to use RegisterView. Open code-behind
+          class of RegisterView, which is RegisterView.xaml.cs and set
+          this.DataContext value.
+          <pre><code class="language-csharp">this.DataContext = new RegisterViewModel(); </code></pre>
+          Your final RegiserView.xaml.cs will look like the following code snippet,
+        </p>
+<pre><code class="language-csharp">using System.Windows.Controls;  
+using WPF_DataContext.VIewModel;  
+    
+  namespace WPF_DataContext.View  
+  {  
+      public partial class RegisterView : UserControl  
+      {  
+          public RegisterView()  
+          {  
+              InitializeComponent();  
+              this.DataContext = new RegisterViewModel();  
+          }  
+      }  
+  } </code></pre>
+  <h5>RegisterView.xaml</h5>
+  <pre><code class="language-xml">&#x3C;UserControl x:Class=&#x22;WPF_DataContext.View.RegisterView&#x22;    
+    xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;    
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;    
+    xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;     
+    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;     
+    xmlns:local=&#x22;clr-namespace:WPF_DataContext.View&#x22;    
+    xmlns:ViewModelWire =&#x22;clr-namespace:WPF_DataContext&#x22;    
+    mc:Ignorable=&#x22;d&#x22;     
+    d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;&#x3E;    
+  &#x3C;Grid&#x3E;    
+      &#x3C;TextBlock Text=&#x22;{Binding Message}&#x22; HorizontalAlignment=&#x22;Center&#x22;/&#x3E;    
+  &#x3C;/Grid&#x3E;    
+&#x3C;/UserControl&#x3E;  </code></pre>
+<h5>RegisterViewModel.cs</h5>
+<pre><code class="language-csharp">using System;  
+using System.Collections.Generic;  
+using System.Linq;  
+using System.Text;  
+using System.Threading.Tasks;  
+
+namespace WPF_DataContext.VIewModel  
+{  
+  public class RegisterViewModel  
+  {  
+      private string _message;  
+
+      public string Message  
+      {  
+          get { return _message; }  
+          set { _message = value; }  
+      }  
+
+      public RegisterViewModel()  
+      {  
+          _message = &#x22;Register View Model is Connected..&#x22;;  
+      }  
+  }  
+} </code></pre>
+<p>Finally, replace LoginView with RegisterView in Mainwindow.xaml</p>
+<pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WPF_DataContext.MainWindow&#x22;      
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;      
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;      
+  xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;      
+  xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;      
+  xmlns:local=&#x22;clr-namespace:WPF_DataContext&#x22;       
+  xmlns:View=&#x22;clr-namespace:WPF_DataContext.View&#x22;      
+  mc:Ignorable=&#x22;d&#x22;      
+  Title=&#x22;MainWindow&#x22; Height=&#x22;450&#x22; Width=&#x22;800&#x22;&#x3E;      
+&#x3C;Grid&#x3E;      
+  &#x3C;View:RegisterView/&#x3E;      
+&#x3C;/Grid&#x3E;      
+&#x3C;/Window&#x3E;   </code></pre>
+      </section>
+      <section id="wpf_11_06">
+        <h4>Auto-wire with ViewModelLocator</h4>
+        <p><span class="keyword">ViewModelLocator</span> centralizes the code to hookup View &#x26; ViewModel. 
+          Which means it provides us loosely coupled way to bind View with ViewModel, with this approach, 
+          View does not need to hardcode the ViewModel it is getting hooked up with. So basically we automate
+           this entire process in a five step approach,</p>
+        <ol>
+          <li>Determine View, For e.g. LoginView.</li>
+          <li>Determine ViewModel, If we follow naming conventions correctly, then it is always ViewModel at the end View&#x27;s name. For e.g.   LoginViewModel.</li>
+          <li>Once you have a type of a ViewModel from step 2, you need to create an instance of that ViewModel type</li>
+          <li>Create an instance of ViewModel</li>
+          <li>Set a DataContext of a View</li>
+        </ol>
+        <p>All these steps take place at runtime, that&#x27;s why View doesn&#x27;t have to worry about it&#x27;s ViewModel binding at compile time.</p>
+        <p>Now that we got this logic setteled, we can simply wrap it inside a method to then reuse the same method. Next, we need to figure out how to call this method from View, and there&#x27;s a simple way to do that, this can be achieved with the help of attached property.</p>
+        <p>Let&#x27;s begin this process by adding a class named ViewModelLocator,</p>
+        <pre><code class="language-csharp">using System;  
+using System.Collections.Generic;  
+using System.ComponentModel;  
+using System.Linq;  
+using System.Text;  
+using System.Threading.Tasks;  
+using System.Windows;  
+  
+namespace WPF_DataContext  
+{  
+    public static class ViewModelLocator  
+    {  
+        /// &#x3C;summary&#x3E;  
+        /// Gets AutoWireViewModel attached property  
+        /// &#x3C;/summary&#x3E;  
+        /// &#x3C;param name=&#x22;obj&#x22;&#x3E;&#x3C;/param&#x3E;  
+        /// &#x3C;returns&#x3E;&#x3C;/returns&#x3E;  
+        public static bool GetAutoWireViewModel(DependencyObject obj)  
+        {  
+            return (bool)obj.GetValue(AutoWireViewModelProperty);  
+        }  
+  
+        /// &#x3C;summary&#x3E;  
+        /// Sets AutoWireViewModel attached property  
+        /// &#x3C;/summary&#x3E;  
+        /// &#x3C;param name=&#x22;obj&#x22;&#x3E;&#x3C;/param&#x3E;  
+        /// &#x3C;param name=&#x22;value&#x22;&#x3E;&#x3C;/param&#x3E;  
+        public static void SetAutoWireViewModel(DependencyObject obj, bool value)  
+        {  
+            obj.SetValue(AutoWireViewModelProperty, value);  
+        }  
+  
+        /// &#x3C;summary&#x3E;  
+        /// AutoWireViewModel attached property  
+        /// &#x3C;/summary&#x3E;  
+        public static readonly DependencyProperty AutoWireViewModelProperty =  
+            DependencyProperty.RegisterAttached(&#x22;AutoWireViewModel&#x22;,  
+            typeof(bool), typeof(ViewModelLocator),  
+            new PropertyMetadata(false, AutoWireViewModelChanged));  
+  
+        /// &#x3C;summary&#x3E;  
+        /// Step 5 approach to hookup View with ViewModel  
+        /// &#x3C;/summary&#x3E;  
+        /// &#x3C;param name=&#x22;d&#x22;&#x3E;&#x3C;/param&#x3E;  
+        /// &#x3C;param name=&#x22;e&#x22;&#x3E;&#x3C;/param&#x3E;  
+        private static void AutoWireViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)  
+        {  
+            if (DesignerProperties.GetIsInDesignMode(d)) return;  
+            var viewType = d.GetType(); //Step 1: Ex- LoginView  
+            var viewModelTypeName = (viewType).ToString().Replace(&#x22;View&#x22;, &#x22;ViewModel&#x22;); //Step 2: Ex- LoginViewModelName  
+            var viewModelType = Type.GetType(viewModelTypeName); // step 3: Ex- get the type of LoginViewModel  
+            var viewModel = Activator.CreateInstance(viewModelType); // step 4: Ex- create an instance of LoginViewModel  
+            ((FrameworkElement)d).DataContext = viewModel; // step 5: Ex- LoginView&#x27;s DataContext is set to LoginViewModel              
+        }  
+    }  
+} </code></pre>
+<p>So far we have crated an attached property which calls our AutoWire logic with its event. This is a boolean type of attached property which will trigger the event when it is set to true. Let&#x27;s see how we can do that in a View.</p>
+<p>First, add a namespace of a LoginViewModel to your View</p>
+<pre><code class="language-csharp">xmlns:ViewModelWire =&#x22;clr-namespace:WPF_DataContext&#x22; </code></pre>
+<p>Second, set AutoWireViewModel to true </p>
+<pre><code class="langauge-csharp">ViewModelWire:ViewModelLocator.AutoWireViewModel=&#x22;True&#x22; </code></pre>
+<p>Now comment the context that we added earlier in this view. at last, you have a LoginView.xaml which would look like this,</p> 
+
+<pre><code class="language-xml">&#x3C;UserControl x:Class=&#x22;WPF_DataContext.View.LoginView&#x22;    
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;    
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;    
+  xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;     
+  xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;     
+  xmlns:local=&#x22;clr-namespace:WPF_DataContext.VIewModel&#x22;    
+  xmlns:ViewModelWire =&#x22;clr-namespace:WPF_DataContext&#x22;    
+  mc:Ignorable=&#x22;d&#x22;     
+  d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;    
+  Height=&#x22;40&#x22; Width=&#x22;200&#x22;    
+  ViewModelWire:ViewModelLocator.AutoWireViewModel=&#x22;True&#x22;&#x3E;    
+&#x3C;!--&#x3C;UserControl.DataContext&#x3E;    
+&#x3C;local:LoginViewModel/&#x3E;    
+&#x3C;/UserControl.DataContext&#x3E;--&#x3E;    
+&#x3C;Grid&#x3E;    
+&#x3C;TextBlock Text=&#x22;{Binding Message}&#x22; HorizontalAlignment=&#x22;Center&#x22;/&#x3E;    
+&#x3C;/Grid&#x3E;    
+&#x3C;/UserControl&#x3E;     </code></pre>
+
+<p>To cofirm that it can work with multiple view at a time, let&#x27;s do few changes in RegisterView as well. And don&#x27;t forget to comment DataContext which we set in a code-behind of RegisterView.xaml.cs.</p>
+<pre><code class="language-xml">&#x3C;UserControl x:Class=&#x22;WPF_DataContext.View.RegisterView&#x22;    
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;    
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;    
+  xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;     
+  xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;     
+  xmlns:local=&#x22;clr-namespace:WPF_DataContext.View&#x22;    
+  xmlns:ViewModelWire =&#x22;clr-namespace:WPF_DataContext&#x22;    
+  mc:Ignorable=&#x22;d&#x22;     
+  d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22;    
+  ViewModelWire:ViewModelLocator.AutoWireViewModel=&#x22;True&#x22;&#x3E;    
+&#x3C;Grid&#x3E;    
+&#x3C;TextBlock Text=&#x22;{Binding Message}&#x22; HorizontalAlignment=&#x22;Center&#x22;/&#x3E;    
+&#x3C;/Grid&#x3E;    
+&#x3C;/UserControl&#x3E; </code></pre>
+<h5>MainWindow.xaml</h5>
+<pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WPF_DataContext.MainWindow&#x22;    
+  xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;    
+  xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;    
+  xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;    
+  xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;    
+  xmlns:local=&#x22;clr-namespace:WPF_DataContext&#x22;     
+  xmlns:localView=&#x22;clr-namespace:WPF_DataContext.View&#x22;    
+  mc:Ignorable=&#x22;d&#x22;    
+  Title=&#x22;MainWindow&#x22; Height=&#x22;450&#x22; Width=&#x22;800&#x22;&#x3E;    
+&#x3C;Grid&#x3E;    
+  &#x3C;Grid.RowDefinitions&#x3E;    
+      &#x3C;RowDefinition/&#x3E;    
+      &#x3C;RowDefinition/&#x3E;    
+  &#x3C;/Grid.RowDefinitions&#x3E;    
+  &#x3C;localView:LoginView/&#x3E;    
+  &#x3C;localView:RegisterView Grid.Row=&#x22;1&#x22;/&#x3E;    
+&#x3C;/Grid&#x3E;    
+&#x3C;/Window&#x3E;  </code></pre>
+</section>
     </div>
   </body>
 
