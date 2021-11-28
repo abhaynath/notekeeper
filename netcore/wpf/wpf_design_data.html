@@ -55,6 +55,16 @@ mc:Ignorable=&#x22;d&#x22;</pre
         <pre><code class="language-html">&#x3C;TextBlock d:Text=&#x22;Abhay&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
 
 &#x3C;TextBlock d:Text=&#x22;Abhay&#x22; Background=&#x22;Red&#x22; d:Foreground=&#x22;White&#x22;&#x3E;&#x3C;/TextBlock&#x3E;</code></pre>
+
+<h4>Using d:DataContext</h4>
+<pre><code class="language-xml">
+  &#x3C;UserControl x:Class=&#x22;WPF_Scratchpad.UserControls.APIInfoControl&#x22;
+    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22; 
+    xmlns:local=&#x22;clr-namespace:WPF_Scratchpad.UserControls&#x22;
+    xmlns:vm=&#x22;clr-namespace:WPF_Scratchpad.ViewModels&#x22;
+    mc:Ignorable=&#x22;d&#x22; 
+    d:DesignHeight=&#x22;450&#x22; d:DesignWidth=&#x22;800&#x22; d:DataContext=&#x22;{d:DesignInstance vm:APIInfoViewModel}&#x22;&#x3E;
+</code></pre>
       </section>
       <section id="wpf_02_02">
         <h4>TextBlock</h4>

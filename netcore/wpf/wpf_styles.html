@@ -306,6 +306,53 @@ Title = &#x22;Control Level Styles&#x22; Height = &#x22;350&#x22; Width = &#x22;
           </div>
         </details>
       </section>
+      <section id="wpf_13_04">
+        <h4>Using FontAwesome</h4>
+        <ol>
+          <li>Install <span class="keyword">FontAwesome.WPF</span> nuget package in project dependency</li>
+          <li>Add FontAwesome namespace in the window/control you want to use like this</li>
+          <li>
+            <p>Add namespace in Window</p>
+            <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;WPF_Scratchpad.TestControls.MyShapes&#x22;
+xmlns:fa=&#x22;http://schemas.fontawesome.io/icons/&#x22;
+mc:Ignorable=&#x22;d&#x22;
+Title=&#x22;My Shapes&#x22; Height=&#x22;450&#x22; Width=&#x22;800&#x22;&#x3E;</code></pre>
+          </li>
+          <li><p>You can add style resource for fontAwesome usercontrols</p>
+<pre><code class="language-xml">&#x3C;Window.Resources&#x3E;
+  &#x3C;Style x:Key=&#x22;faStyle&#x22; TargetType=&#x22;fa:FontAwesome&#x22;&#x3E;
+    &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;#A600B6&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;Setter Property=&#x22;FontSize&#x22; Value=&#x22;30&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;Setter Property=&#x22;HorizontalAlignment&#x22; Value=&#x22;Center&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;Setter Property=&#x22;VerticalAlignment&#x22; Value=&#x22;Center&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;/Style&#x3E;
+&#x3C;/Window.Resources&#x3E;</code></pre>
+
+<p>Usages :</p>
+<pre><code class="language-xml">
+&#x3C;StackPanel&#x3E;
+  &#x3C;fa:FontAwesome Text=&#x22;Hello Abhay&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;&#x3C;/fa:FontAwesome&#x3E;
+  &#x3C;fa:FontAwesome Icon=&#x22;Close&#x22; FontSize=&#x22;20&#x22; Foreground=&#x22;Green&#x22; HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;&#x3C;/fa:FontAwesome&#x3E;
+  &#x3C;fa:ImageAwesome Icon=&#x22;Youtube&#x22; Width=&#x22;50&#x22; Foreground=&#x22;red&#x22;&#x3E;&#x3C;/fa:ImageAwesome&#x3E;
+  &#x3C;fa:FontAwesome Icon=&#x22;UserCircle&#x22; FontSize=&#x22;30&#x22; VerticalAlignment=&#x22;Center&#x22; Foreground=&#x22;#6F006F&#x22;&#x3E;&#x3C;/fa:FontAwesome&#x3E;
+  &#x3C;fa:FontAwesome Style=&#x22;{StaticResource faStyle}&#x22; Icon=&#x22;Windows&#x22;&#x3E;&#x3C;/fa:FontAwesome&#x3E;
+  &#x3C;Label&#x3E;
+      &#x3C;Label.Content&#x3E;
+          &#x3C;StackPanel Orientation=&#x22;Horizontal&#x22;&#x3E;
+              &#x3C;fa:FontAwesome Icon=&#x22;Twitter&#x22; Style=&#x22;{StaticResource faStyle}&#x22;&#x3E;&#x3C;/fa:FontAwesome&#x3E;
+              &#x3C;fa:FontAwesome Text=&#x22;Twitter&#x22; Style=&#x22;{StaticResource faStyle}&#x22;&#x3E;&#x3C;/fa:FontAwesome&#x3E;
+          &#x3C;/StackPanel&#x3E;
+
+      &#x3C;/Label.Content&#x3E;
+  &#x3C;/Label&#x3E;
+&#x3C;/StackPanel&#x3E;
+</code></pre>
+          
+          </li>
+        
+        </ol>
+
+      </section>
     </div>
   </body>
 

@@ -227,6 +227,51 @@ namespace WPFDataTemplates {
   &#x9;
   }</code></pre>
       </section>
+      <section id="wpf_10_04">
+        <h4>Conditional DataTemplate</h4>
+        <h5>Stocks Data</h5>
+        <pre><code class="language-csharp">
+  var Stocks = new ObservableCollection&#x3C;Stock&#x3E;();
+  Stocks.Add(new Stock { StockName = &#x22;TCS&#x22;, Quantity = 35000, IsPositive = true });
+  Stocks.Add(new Stock { StockName = &#x22;MRF&#x22;, Quantity = 15000, IsPositive = false });
+  Stocks.Add(new Stock { StockName = &#x22;HDFC&#x22;, Quantity = 20000, IsPositive = true });
+  Stocks.Add(new Stock { StockName = &#x22;Reliance&#x22;, Quantity = 10000, IsPositive = false });
+        </code></pre>
+        <h5>Windows Resources</h5>
+        <pre><code class="language-xml">
+&#x3C;Window.Resources&#x3E;
+    &#x3C;DataTemplate x:Key=&#x22;PositiveRow&#x22;&#x3E;
+      &#x3C;StackPanel Orientation=&#x22;Horizontal&#x22;&#x3E;
+            &#x3C;TextBlock FontWeight=&#x22;Bold&#x22; Margin=&#x22;0,0,10,0&#x22; Text=&#x22;{Binding StockName}&#x22; Foreground=&#x22;Green&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+            &#x3C;TextBlock Text=&#x22;{Binding Quantity}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+      &#x3C;/StackPanel&#x3E;
+    &#x3C;/DataTemplate&#x3E;
+
+  &#x3C;DataTemplate x:Key=&#x22;NegativeRow&#x22;&#x3E;
+      &#x3C;Button Content=&#x22;{Binding StockName}&#x22; Background=&#x22;Red&#x22; Foreground=&#x22;White&#x22;&#x3E;&#x3C;/Button&#x3E;
+  &#x3C;/DataTemplate&#x3E;
+  &#x3C;DataTemplate x:Key=&#x22;MyRow&#x22;&#x3E;
+    &#x3C;ContentControl Content=&#x22;{Binding}&#x22;&#x3E;
+        &#x3C;ContentControl.Style&#x3E;
+            &#x3C;Style TargetType=&#x22;ContentControl&#x22;&#x3E;
+                &#x3C;Style.Triggers&#x3E;
+                    &#x3C;DataTrigger Binding=&#x22;{Binding IsPositive}&#x22; Value=&#x22;True&#x22;&#x3E;
+                        &#x3C;Setter Property=&#x22;ContentTemplate&#x22; Value=&#x22;{StaticResource PositiveRow}&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                    &#x3C;/DataTrigger&#x3E;
+                    &#x3C;DataTrigger Binding=&#x22;{Binding IsPositive}&#x22; Value=&#x22;False&#x22;&#x3E;
+                        &#x3C;Setter Property=&#x22;ContentTemplate&#x22; Value=&#x22;{StaticResource NegativeRow}&#x22;&#x3E;&#x3C;/Setter&#x3E;
+                    &#x3C;/DataTrigger&#x3E;
+                &#x3C;/Style.Triggers&#x3E;
+            &#x3C;/Style&#x3E;
+        &#x3C;/ContentControl.Style&#x3E;
+    &#x3C;/ContentControl&#x3E;
+  &#x3C;/DataTemplate&#x3E;
+&#x3C;/Window.Resources&#x3E;
+</code></pre>
+
+<p>How to use it</p>
+<pre><code class="language-xml">&#x3C;ListBox ItemsSource=&#x22;{Binding Stocks}&#x22; ItemTemplate=&#x22;{StaticResource MyRow}&#x22; &#x3E;&#x3C;/ListBox&#x3E;</code></pre>
+</section>
     </div>
   </body>
 
