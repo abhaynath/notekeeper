@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Hello World Haskell!</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="hs_index.html">Haskell</a>
+    </nav>
+    <div class="content">
+      <section id="hs_01_01">
+        <h4>Simple hello world application in Haskell</h4>
+        <ol>
+          <li>Create an empty directory 'helloworld'</li>
+
+          <li>Create a new go file 'helloworld.hs'</li>
+          <li>
+            Add following code snippet in 'helloworld.hs'
+
+            <pre><code class="language-hs">main = putStrLn &#x22;Hello World&#x22;</code></pre>
+          </li>
+          <li>
+            To build the project
+            <pre class="shell">ghc -o hello helloworld.hs</pre>
+            This command will create 'hello.exe' in the project directory.
+          </li>
+          <li>
+            To run the application,
+            <pre class="shell">.\hello</pre>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
