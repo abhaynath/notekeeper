@@ -262,7 +262,7 @@ body::-webkit-scrollbar-thumb {
 .space_between > div {
   flex-grow: 1;
   /* border:1px solid gray; */
-  padding: 5px;
+  padding: 10px;
 }
 .space_between h4.space_between p {
   text-align: center;
