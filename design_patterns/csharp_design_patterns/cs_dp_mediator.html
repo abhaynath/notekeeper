@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mediator Pattern</title>
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link
       rel="stylesheet"
@@ -27,8 +28,415 @@
       <section id="cs_01_01">
         <h3>Mediator Design Pattern</h3>
         <p></p>
-        <pre><code class="language-csharp">
-   </code></pre>
+        <details>
+          <summary>Mediator</summary>
+          <ul>
+            <li>
+              <details>
+                <summary>Messages</summary>
+                <ul>
+                  <li>
+                    <details>
+                      <summary>CollectionAdded.cs</summary>
+                      <pre><code class="language-csharp">
+//Collection Messages
+namespace DesignPatternDemo.Mediator.Messages
+{
+    public class CollectionAdded : IMessage
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+    public class CollectionDelete : IMessage
+    {
+        public string Id { get; set; }
+    }
+    public class CollectionEdit : IMessage
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>IMessage.cs</summary>
+                      <pre><code class="language-csharp">
+//IMessage.cs
+namespace DesignPatternDemo.Mediator.Messages
+{
+    public interface IMessage
+    {
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>PhoneMessage.cs</summary>
+                      <pre><code class="language-csharp">
+//PhoneMessage.cs
+namespace DesignPatternDemo.Mediator.Messages
+{
+    public class PhoneMessage : IMessage
+    {
+        public string PhoneInfoMessage { get; set; }
+        public bool IsPhonePriceChanged { get; set; }
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>WatchMessage.cs</summary>
+                      <pre><code class="language-csharp">
+//WatchMessage.cs
+namespace DesignPatternDemo.Mediator.Messages
+{
+    public class WatchMessage : IMessage
+    {
+        public string WatchInfoMessage { get; set; }
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Service</summary>
+                <ul>
+                  <li>
+                    <details>
+                      <summary>ConcreteMediator.cs</summary>
+                      <pre><code class="language-csharp">
+using DesignPatternDemo.Mediator.Messages;
+using DesignPatternDemo.Mediator.Subscribers;
+using System.Reflection;
+
+namespace DesignPatternDemo.Mediator.Service
+{
+    public class ConcreteMediator : IMediator
+    {
+        private readonly IDictionary&#x3C;Type, ISubscribersForGivenMessage&#x3E; _subscribers = new Dictionary&#x3C;Type, ISubscribersForGivenMessage&#x3E;();
+
+        #region public methods
+        public void Subscribe(object subscriber)
+        {
+            var messages = GetMessagesSubscribedBySubscriber(subscriber); // our code has to track which message the subscriber
+            foreach (var messageType in messages)
+            {
+                AddToSubscribersList(messageType);
+
+                _subscribers[messageType].Add(subscriber);
+            }
+        }
+
+        public void Publish(IMessage message)
+        {
+            for (var messageType = message.GetType(); messageType != null; messageType = messageType.BaseType)
+            {
+                if (!_subscribers.ContainsKey(messageType)) continue;
+
+                _subscribers[messageType].Publish(message);
+            }
+        }
+
+
+        #endregion
+
+        #region private methods
+        private static IEnumerable&#x3C;Type&#x3E; GetAllMessages(Type subscriberType)
+        {
+            TypeFilter myFilter = new(CanFilterInterface);
+            var types = subscriberType.FindInterfaces(myFilter, null);
+
+            var messageTypes = types.Select(type =&#x3E; type.GetGenericArguments()[0]);
+
+            return messageTypes;
+        }
+
+        private static bool CanFilterInterface(Type typeObj, Object criteriaObj)
+        {
+            if (typeObj.IsGenericType &#x26;&#x26; typeObj.GetGenericTypeDefinition() == typeof(ISubscriber&#x3C;&#x3E;))
+                return true;
+            else
+                return false;
+        }
+
+        private void AddToSubscribersList(Type type)
+        {
+            if (_subscribers.ContainsKey(type)) return;
+
+            var instanceTypeForeachSubscriber = typeof(SubscribersForGivenMessage&#x3C;&#x3E;);
+            var genericType = instanceTypeForeachSubscriber.MakeGenericType(type);
+            ISubscribersForGivenMessage instanceForSubscriber = Activator.CreateInstance(genericType) as ISubscribersForGivenMessage;
+            _subscribers.Add(type, instanceForSubscriber);
+        }
+
+        private static IEnumerable&#x3C;Type&#x3E; GetMessagesSubscribedBySubscriber(object subscriber)
+        {
+            var subscriberType = subscriber.GetType();
+            return GetAllMessages(subscriberType);
+        }
+
+        private interface ISubscribersForGivenMessage
+        {
+            void Publish(IMessage message);
+            void Add(object handler);
+        }
+
+        private class SubscribersForGivenMessage&#x3C;T&#x3E; : ISubscribersForGivenMessage where T : IMessage
+        {
+            List&#x3C;ISubscriber&#x3C;T&#x3E;&#x3E; _subscribers = new List&#x3C;ISubscriber&#x3C;T&#x3E;&#x3E;();
+            public void Publish(IMessage message)
+            {
+                var handlers = new List&#x3C;ISubscriber&#x3C;T&#x3E;&#x3E;(_subscribers);
+                handlers.ForEach(handler =&#x3E; Publish(handler, message));
+            }
+
+            public void Add(object handler)
+            {
+                _subscribers.Add((ISubscriber&#x3C;T&#x3E;)handler);
+            }
+
+            private static void Publish(ISubscriber&#x3C;T&#x3E; handler, IMessage message)
+            {
+                handler.Handle((T)message);
+            }
+        }
+        #endregion
+    }
+}
+
+</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>IMediator.cs</summary>
+                      <pre><code class="language-csharp">
+using DesignPatternDemo.Mediator.Messages;
+
+namespace DesignPatternDemo.Mediator.Service
+{
+    public interface IMediator
+    {
+        void Publish(IMessage message);
+        void Subscribe(object subscriber);
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>MessageService.cs</summary>
+                      <pre><code class="language-csharp">
+//MessageService.cs
+namespace DesignPatternDemo.Mediator.Service
+{
+    public sealed class MessageService
+    {
+        private static IMediator _instance = null;
+        private MessageService()
+        {
+
+        }
+        public static IMediator Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ConcreteMediator();
+                }
+                return _instance;
+            }
+        }
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Subscribers</summary>
+                <ul>
+                  <li>
+                    <details>
+                      <summary>ISubscriber.cs</summary>
+                      <pre><code class="language-csharp">
+using DesignPatternDemo.Mediator.Messages;
+
+namespace DesignPatternDemo.Mediator.Subscribers
+{
+    public interface ISubscriber&#x3C;T&#x3E; where T : IMessage
+    {
+        void Handle(T message);
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>Subscriber1.cs</summary>
+                      <pre><code class="language-csharp">
+//Subscriber1.cs
+using DesignPatternDemo.Mediator.Messages;
+using DesignPatternDemo.Mediator.Service;
+
+namespace DesignPatternDemo.Mediator.Subscribers
+{
+    public class Subscriber1 : ISubscriber&#x3C;PhoneMessage&#x3E;, ISubscriber&#x3C;WatchMessage&#x3E;
+    {
+        private IMediator _mediator;
+        public Subscriber1()
+        {
+            _mediator = MessageService.Instance;
+            _mediator.Subscribe(this);
+        }
+
+        public void Handle(PhoneMessage message)
+        {
+            Console.WriteLine($&#x22;Subscriber1 (PhoneMessage) received message -{message.PhoneInfoMessage}&#x22;);
+        }
+
+        public void Handle(WatchMessage message)
+        {
+            Console.WriteLine($&#x22;Subscriber1 (WatchMessage) received message -{message.WatchInfoMessage}&#x22;);
+        }
+
+        public void SendPhoneInfo()
+        {
+            var iPhone = new PhoneMessage();
+            iPhone.PhoneInfoMessage = &#x22;iPhone is not good option&#x22;;
+            iPhone.IsPhonePriceChanged = true;
+            _mediator.Publish(iPhone);
+
+        }
+        public void DeleteCollection()
+        {
+            var collection = new CollectionDelete();
+            collection.Id = &#x22;ac4434&#x22;;
+            _mediator.Publish(collection);
+        }
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>Subscriber2.cs</summary>
+                      <pre><code class="language-csharp">
+//Subscriber2.cs
+using DesignPatternDemo.Mediator.Messages;
+using DesignPatternDemo.Mediator.Service;
+
+namespace DesignPatternDemo.Mediator.Subscribers
+{
+    public class Subscriber2 : ISubscriber&#x3C;PhoneMessage&#x3E;
+    {
+        private IMediator _mediator;
+        public Subscriber2()
+        {
+            _mediator = MessageService.Instance;
+            _mediator.Subscribe(this);
+        }
+
+        public void Handle(PhoneMessage message)
+        {
+            Console.WriteLine($&#x22;Subscriber2 (PhoneMessage) received message -{message.PhoneInfoMessage}&#x22;);
+        }
+
+        public void SendWatchInfo()
+        {
+            var titan = new WatchMessage();
+            titan.WatchInfoMessage = &#x22;Tata Watch baught&#x22;;
+            _mediator.Publish(titan);
+
+        }
+        public void AddedCollection()
+        {
+            var collection = new CollectionAdded();
+            collection.Id = &#x22;234acs&#x22;;
+            collection.Name = &#x22;Reddit&#x22;;
+            _mediator.Publish(collection);
+        }
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>Subscriber3.cs</summary>
+                      <pre><code class="language-csharp">
+using DesignPatternDemo.Mediator.Messages;
+using DesignPatternDemo.Mediator.Service;
+
+//Subscriber3.cs
+namespace DesignPatternDemo.Mediator.Subscribers
+{
+    public class Subscriber3 : ISubscriber&#x3C;CollectionAdded&#x3E;,ISubscriber&#x3C;CollectionDelete&#x3E;
+    {
+        private IMediator _mediator;
+        public Subscriber3()
+        {
+            _mediator = MessageService.Instance;
+            _mediator.Subscribe(this);
+        }
+
+        public void Handle(CollectionAdded message)
+        {
+            Console.WriteLine($&#x22;Subscriber3 (CollectionAdded) received message -{message.Name}&#x22;);
+        }
+        public void Handle(CollectionDelete message)
+        {
+            Console.WriteLine($&#x22;Subscriber3 (CollectionDelete) received message -{message.Id}&#x22;);
+        }
+
+
+    }
+}</code></pre>
+                    </details>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>MediatorDemo.cs</summary>
+                <pre><code class="language-csharp">
+//MediatorDemo.cs
+using DesignPatternDemo.Mediator.Subscribers;
+
+namespace DesignPatternDemo.Mediator
+{
+  public class MediatorDemo
+  {
+    public void Demo()
+    {
+        Console.WriteLine(&#x22;--- Mediator demo--&#x22;);
+        var sub1 = new Subscriber1();
+        var sub2 = new Subscriber2();
+        var sub3 = new Subscriber3();
+        sub1.SendPhoneInfo();
+        sub1.DeleteCollection();
+        sub2.SendWatchInfo();
+
+
+        sub2.AddedCollection();
+
+    }
+  }
+}</code></pre>
+              </details>
+            </li>
+          </ul>
+        </details>
       </section>
     </div>
   </body>
