@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>C# Singleton</title>
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link
       rel="stylesheet"
@@ -26,9 +27,230 @@
 
       <section id="cs_01_01">
         <h3>Singleton Design Pattern</h3>
-        <p></p>
-        <pre><code class="language-csharp">
-   </code></pre>
+        <h4>Intent</h4>
+        Singleton is a creational design pattern that lets you ensure that a
+        class has only one instance, while providing a global access point to
+        this instance.
+      
+        <p>
+          <h4>Problem</h4>
+          The Singleton pattern solves two problems at the same time, violating
+          the Single Responsibility Principle:
+
+          <ul>
+            <li>
+              <p>
+                <b>Ensure that a class has just a single instance. </b>Why would
+                anyone want to control how many instances a class has? The most
+                common reason for this is to control access to some shared
+                resource&#x2014;for example, a database or a file.
+              </p>
+              <p>
+                Imagine that you created an object, but after a while decided to
+                create a new one. Instead of receiving a fresh object,
+                you&#x2019;ll get the one you already created.
+              </p>
+              <p>
+                Note that this behavior is impossible to implement with a regular
+                constructor since a constructor call must always return a new
+                object by design.
+              </p>
+            </li>
+  
+            <li>
+              <p>
+                <b>Provide a global access point to that instance.</b> Just like a
+                global variable, the Singleton pattern lets you access some object
+                from anywhere in the program. However, it also protects that
+                instance from being overwritten by other code.
+              </p>
+              <p>
+                There&#x2019;s another side to this problem: you don&#x2019;t want
+                the code that solves problem #1 to be scattered all over your
+                program. It&#x2019;s much better to have it within one class,
+                especially if the rest of your code already depends on it.
+              </p>
+            </li>
+          </ul>
+        </p>
+      
+         <h4>Solution</h4>
+         <ul>
+           <li>Make the default constructor private, to prevent other objects from using the <span class="keyword">new</span> operator with the Singleton class.</li>
+           <li>Create a static creation method that acts as a constructor. Under the hood, this method calls the private constructor to create an object and saves it in a static field. All following calls to this method return the cached object.</li>
+         </ul>
+     
+         <h4>Implementation</h4>
+         It&#x2019;s pretty easy to implement a sloppy Singleton. You just need to hide the constructor and implement a static creation method.
+         The same class behaves incorrectly in a multithreaded environment. Multiple threads can call the creation method simultaneously and get several instances of Singleton class.
+         <details>
+           <summary>Na&#xEF;ve Singleton Implementation</summary>
+           
+          
+            <pre><code class="language-csharp">
+using System;
+
+namespace SingletonTest
+{
+    // The Singleton class defines the &#x60;GetInstance&#x60; method that serves as an
+    // alternative to constructor and lets clients access the same instance of
+    // this class over and over.
+
+    // EN : The Singleton should always be a &#x27;sealed&#x27; class to prevent class
+    // inheritance through external classes and also through nested classes.
+    public sealed class Singleton
+    {
+        // The Singleton&#x27;s constructor should always be private to prevent
+        // direct construction calls with the &#x60;new&#x60; operator.
+        private Singleton() { }
+
+        // The Singleton&#x27;s instance is stored in a static field. There there are
+        // multiple ways to initialize this field, all of them have various pros
+        // and cons. In this example we&#x27;ll show the simplest of these ways,
+        // which, however, doesn&#x27;t work really well in multithreaded program.
+        private static Singleton _instance;
+
+        // This is the static method that controls the access to the singleton
+        // instance. On the first run, it creates a singleton object and places
+        // it into the static field. On subsequent runs, it returns the client
+        // existing object stored in the static field.
+        public static Singleton GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new Singleton();
+            }
+            return _instance;
+        }
+
+        // Finally, any singleton should define some business logic, which can
+        // be executed on its instance.
+        public static void someBusinessLogic()
+        {
+            // ...
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // The client code.
+            Singleton s1 = Singleton.GetInstance();
+            Singleton s2 = Singleton.GetInstance();
+
+            if (s1 == s2)
+            {
+                Console.WriteLine(&#x22;Singleton works, both variables contain the same instance.&#x22;);
+            }
+            else
+            {
+                Console.WriteLine(&#x22;Singleton failed, variables contain different instances.&#x22;);
+            }
+        }
+    }
+}
+            </code></pre>
+          
+         </details>
+
+         <details>
+           <summary>Thread-Safe Singleton</summary>
+           <p>
+            To fix the problem, you have to synchronize threads during the first creation of the Singleton object.
+            <pre><code class="language-csharp">
+using System;
+using System.Threading;
+
+namespace Singleton
+{
+    // This Singleton implementation is called &#x22;double check lock&#x22;. It is safe
+    // in multithreaded environment and provides lazy initialization for the
+    // Singleton object.
+    class Singleton
+    {
+        private Singleton() { }
+
+        private static Singleton _instance;
+
+        // We now have a lock object that will be used to synchronize threads
+        // during first access to the Singleton.
+        private static readonly object _lock = new object();
+
+        public static Singleton GetInstance(string value)
+        {
+            // This conditional is needed to prevent threads stumbling over the
+            // lock once the instance is ready.
+            if (_instance == null)
+            {
+                // Now, imagine that the program has just been launched. Since
+                // there&#x27;s no Singleton instance yet, multiple threads can
+                // simultaneously pass the previous conditional and reach this
+                // point almost at the same time. The first of them will acquire
+                // lock and will proceed further, while the rest will wait here.
+                lock (_lock)
+                {
+                    // The first thread to acquire the lock, reaches this
+                    // conditional, goes inside and creates the Singleton
+                    // instance. Once it leaves the lock block, a thread that
+                    // might have been waiting for the lock release may then
+                    // enter this section. But since the Singleton field is
+                    // already initialized, the thread won&#x27;t create a new
+                    // object.
+                    if (_instance == null)
+                    {
+                        _instance = new Singleton();
+                        _instance.Value = value;
+                    }
+                }
+            }
+            return _instance;
+        }
+
+        // We&#x27;ll use this property to prove that our Singleton really works.
+        public string Value { get; set; }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // The client code.
+            
+            Console.WriteLine(
+                &#x22;{0}\n{1}\n\n{2}\n&#x22;,
+                &#x22;If you see the same value, then singleton was reused (yay!)&#x22;,
+                &#x22;If you see different values, then 2 singletons were created (booo!!)&#x22;,
+                &#x22;RESULT:&#x22;
+            );
+            
+            Thread process1 = new Thread(() =&#x3E;
+            {
+                TestSingleton(&#x22;FOO&#x22;);
+            });
+            Thread process2 = new Thread(() =&#x3E;
+            {
+                TestSingleton(&#x22;BAR&#x22;);
+            });
+            
+            process1.Start();
+            process2.Start();
+            
+            process1.Join();
+            process2.Join();
+        }
+        
+        public static void TestSingleton(string value)
+        {
+            Singleton singleton = Singleton.GetInstance(value);
+            Console.WriteLine(singleton.Value);
+        } 
+    }
+}
+            </code></pre>
+           </p>
+         </details>
+      
       </section>
     </div>
   </body>

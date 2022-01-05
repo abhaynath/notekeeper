@@ -60,14 +60,12 @@
         </section>
 
         <section id="js_03_02">
-            <h4>Drag and Drop (Example 2)</h4>
-            <pre><code class="language-javascript">
-    &#x3C;h1&#x3E;Examples of &#x3C;code&#x3E;DataTransfer&#x3C;/code&#x3E;.{&#x3C;code&#x3E;types&#x3C;/code&#x3E;, &#x3C;code&#x3E;items&#x3C;/code&#x3E;} properties&#x3C;/h1&#x3E;
-    &#x3C;ul&#x3E;
-        &#x3C;li id=&#x22;i1&#x22; ondragstart=&#x22;dragstart_handler(event);&#x22; draggable=&#x22;true&#x22;&#x3E;Drag Item 1 to the Drop Zone&#x3C;/li&#x3E;
-        &#x3C;li id=&#x22;i2&#x22; ondragstart=&#x22;dragstart_handler(event);&#x22; draggable=&#x22;true&#x22;&#x3E;Drag Item 2 to the Drop Zone&#x3C;/li&#x3E;
-    &#x3C;/ul&#x3E;
-    &#x3C;div id=&#x22;target&#x22; ondrop=&#x22;drop_handler(event);&#x22; ondragover=&#x22;dragover_handler(event);&#x22;&#x3E;Drop Zone&#x3C;/div&#x3E;
+            <h4>Drag and Drop (Example of Data Transfer)</h4>
+            <pre><code class="language-javascript">&#x3C;ul&#x3E;
+    &#x3C;li id=&#x22;i1&#x22; ondragstart=&#x22;dragstart_handler(event);&#x22; draggable=&#x22;true&#x22;&#x3E;Drag Item 1 to the Drop Zone&#x3C;/li&#x3E;
+    &#x3C;li id=&#x22;i2&#x22; ondragstart=&#x22;dragstart_handler(event);&#x22; draggable=&#x22;true&#x22;&#x3E;Drag Item 2 to the Drop Zone&#x3C;/li&#x3E;
+&#x3C;/ul&#x3E;
+&#x3C;div id=&#x22;target&#x22; ondrop=&#x22;drop_handler(event);&#x22; ondragover=&#x22;dragover_handler(event);&#x22;&#x3E;Drop Zone&#x3C;/div&#x3E;
 </code></pre>
             <pre><code class="language-javascript">
     function dragstart_handler(ev) {
