@@ -75,9 +75,16 @@
         </p>
       
          <h4>Solution</h4>
+       
          <ul>
            <li>Make the default constructor private, to prevent other objects from using the <span class="keyword">new</span> operator with the Singleton class.</li>
-           <li>Create a static creation method that acts as a constructor. Under the hood, this method calls the private constructor to create an object and saves it in a static field. All following calls to this method return the cached object.</li>
+           <li>Create a static creation method that acts as a constructor. Under the hood, this method calls the private constructor to create an object and saves it in a static field. All following calls to this method return the cached object.
+
+<div>
+
+  <img src="../../images/design_patterns/dp_singleton.jpg"/>
+</div>
+           </li>
          </ul>
      
          <h4>Implementation</h4>

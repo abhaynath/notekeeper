@@ -49,8 +49,10 @@
         appropriate components. As a result, the components depend only on a
         single mediator class instead of being coupled to dozens of their
         colleagues.
-        <div class="space_between">
+        <div>
           <img src="../../images/design_patterns/mediator1.jpg" />
+        </div>
+        <div>
           <img src="../../images/design_patterns/mediator2.png" />
         </div>
         <h4>Implementation</h4>
@@ -513,13 +515,13 @@ namespace DesignPatternDemo.Mediator
             connecting senders and receivers of requests:
             <ul>
               <li>
-                <a href="cs_dp_chain.html">Chain of Responsibility</a> passes a request sequentially along a
-                dynamic chain of potential receivers until one of them handles
-                it.
+                <a href="cs_dp_chain.html">Chain of Responsibility</a> passes a
+                request sequentially along a dynamic chain of potential
+                receivers until one of them handles it.
               </li>
               <li>
-                <a href="cs_dp_command.html">Command</a> establishes unidirectional connections between senders
-                and receivers.
+                <a href="cs_dp_command.html">Command</a> establishes
+                unidirectional connections between senders and receivers.
               </li>
               <li>
                 Mediator eliminates direct connections between senders and
@@ -527,21 +529,24 @@ namespace DesignPatternDemo.Mediator
                 object.
               </li>
               <li>
-                <a href="cs_dp_observer.html">Observer</a> lets receivers dynamically subscribe to and unsubscribe
-                from receiving requests.
+                <a href="cs_dp_observer.html">Observer</a> lets receivers
+                dynamically subscribe to and unsubscribe from receiving
+                requests.
               </li>
             </ul>
           </li>
           <li>
-            <a href="cs_dp_facade.html">Facade</a> and Mediator have similar jobs: they try to organize
-            collaboration between lots of tightly coupled classes.
+            <a href="cs_dp_facade.html">Facade</a> and Mediator have similar
+            jobs: they try to organize collaboration between lots of tightly
+            coupled classes.
 
             <ul>
               <li>
-                <a href="cs_dp_facade.html">Facade</a> defines a simplified interface to a subsystem of objects,
-                but it doesn&#x2019;t introduce any new functionality. The
-                subsystem itself is unaware of the facade. Objects within the
-                subsystem can communicate directly.
+                <a href="cs_dp_facade.html">Facade</a> defines a simplified
+                interface to a subsystem of objects, but it doesn&#x2019;t
+                introduce any new functionality. The subsystem itself is unaware
+                of the facade. Objects within the subsystem can communicate
+                directly.
               </li>
               <li>
                 Mediator centralizes communication between components of the
