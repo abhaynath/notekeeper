@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Kotlin Factory Pattern</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="kt_dp_index.html">Kotlin Design Patterns</a>
+      </nav>
+
+    <section>
+      <h3>Factory Design Pattern</h3>
+      
+      <pre><code class="language-kt">
+package creational
+
+class FactoryMethodExample {
+    fun Demo() {
+        val animalTypes = listOf(
+            &#x22;dog&#x22; to &#x22;bulldog&#x22;,
+            &#x22;dog&#x22; to &#x22;beagle&#x22;,
+            &#x22;cat&#x22; to &#x22;persian&#x22;,
+            &#x22;cat&#x22; to &#x22;russian blue&#x22;,
+            &#x22;cat&#x22; to &#x22;siamese&#x22;
+        )
+
+        val factory = AnimalFactory()
+        for ((type, breed) in animalTypes) {
+            val c = factory.createAnimal(type, breed)
+            println(c)
+        }
+    }
+}
+
+class AnimalFactory {
+    var counter = 0
+    private val dogFactory = DogFactory()
+    private val catFactory = CatFactory()
+
+    fun createAnimal(animalType: String, animalBreed: String): Animal {
+        return when (animalType.trim().lowercase()) {
+            &#x22;cat&#x22; -&#x3E; catFactory.createCat(animalBreed, ++counter)
+            &#x22;dog&#x22; -&#x3E; dogFactory.createDog(animalBreed, ++counter)
+            else -&#x3E; throw RuntimeException(&#x22;Unknown animal $animalType&#x22;)
+        }
+    }
+}
+
+class CatFactory {
+    fun createCat(animalBreed: String, i: Int): Animal {
+        return Cat(i)
+    }
+
+}
+
+class DogFactory {
+    fun createDog(breed: String, id: Int) = when (breed.trim().lowercase()) {
+        &#x22;beagle&#x22; -&#x3E; Beagle(id)
+        &#x22;bulldog&#x22; -&#x3E; Bulldog(id)
+        else -&#x3E; throw RuntimeException(&#x22;Unknown dog breed $breed&#x22;)
+    }
+}
+
+class Beagle(id: Int) : Dog(id)
+
+class Bulldog(id: Int) : Dog(id)
+
+interface Animal {
+    val id: Int
+    // Same as before
+}
+
+class Cat(override val id: Int) : Animal {
+    // Same as before
+}
+
+open class Dog(override val id: Int) : Animal {
+    // Same as before
+}</code></pre>
+    </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
