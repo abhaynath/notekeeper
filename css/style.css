@@ -310,3 +310,6 @@ img {
   width: auto;
   height: auto;
 }
+.content a:visited{
+  color:white;
+}
