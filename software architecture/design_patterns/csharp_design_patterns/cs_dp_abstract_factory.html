@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Abstract Factory Design Pattern</title>
-    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
     <link
       rel="stylesheet"
-      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+      href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../../js/libs/jquery.min.js"></script>
     <link
       rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
+      href="../../../js/libs/highlight/styles/devibeans.min.css"
     />
-    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../../js/libs/highlight/highlight.min.js"></script>
   </head>
 
   <body>
     <div class="content">
       <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="../../../index.html"><i class="fa fa-home"></i></a>
         <a href="cs_dp_index.html">C# Design Patterns</a>
       </nav>
 
@@ -49,7 +49,7 @@
               Victorian, ArtDeco.
             </p>
             <div class="space_between">
-              <img src="../../images/design_patterns/dp_abf1.png" />
+              <img src="../../../images/design_patterns/dp_abf1.png" />
               <p>
                 You need a way to create individual furniture objects so that
                 they match other objects of the same family. Customers get quite
@@ -58,7 +58,7 @@
             </div>
 
             <div class="space_between">
-              <img src="../../images/design_patterns/dp_abf2.png" />
+              <img src="../../../images/design_patterns/dp_abf2.png" />
               <p>
                 Also, you don&#x2019;t want to change existing code when adding
                 new products or families of products to the program. Furniture
@@ -81,7 +81,7 @@
           products follow those interfaces. For example, all chair variants can
           implement the Chair interface; all coffee table variants can implement
           the CoffeeTable interface, and so on.
-          <img src="../../images/design_patterns/dp_abf3.png" />
+          <img src="../../../images/design_patterns/dp_abf3.png" />
         </p>
         <p>
           The next move is to declare the Abstract Factory&#x2014;an interface
@@ -90,7 +90,7 @@
           createCoffeeTable). These methods must return abstract product types
           represented by the interfaces we extracted previously: Chair, Sofa,
           CoffeeTable and so on.
-          <img src="../../images/design_patterns/dp_abf4.png" />
+          <img src="../../../images/design_patterns/dp_abf4.png" />
         </p>
         <p>
           Now, how about the product variants? For each variant of a product
@@ -105,7 +105,7 @@
           factory that you pass to the client code, as well as the product
           variant that the client code receives, without breaking the actual
           client code.
-          <img src="../../images/design_patterns/dp_abf5.png" />
+          <img src="../../../images/design_patterns/dp_abf5.png" />
         </p>
         <p>
           Say the client wants a factory to produce a chair. The client
@@ -159,7 +159,7 @@
               objects via abstract interfaces.
             </li>
           </ol>
-          <img src="../../images/design_patterns/dp_abf6.png" />
+          <img src="../../../images/design_patterns/dp_abf6.png" />
         </div>
       </section>
 
@@ -172,7 +172,7 @@
             client code to concrete UI classes, while keeping all created
             elements consistent with a selected operating system.
           </p>
-          <img src="../../images/design_patterns/dp_abf7.png" />
+          <img src="../../../images/design_patterns/dp_abf7.png" />
           <p>
             The same UI elements in a cross-platform application are expected to
             behave similarly, but look a little bit different under different

@@ -4,24 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <title>C# Factory Pattern</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
     <link
       rel="stylesheet"
-      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+      href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../../js/libs/jquery.min.js"></script>
     <link
       rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
+      href="../../../js/libs/highlight/styles/devibeans.min.css"
     />
-    <title>Factory Design Pattern</title>
-    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../../js/libs/highlight/highlight.min.js"></script>
   </head>
 
   <body>
     <div class="content">
       <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="../../../index.html"><i class="fa fa-home"></i></a>
         <a href="cs_dp_index.html">C# Design Patterns</a>
       </nav>
 
@@ -33,7 +33,7 @@
         type of objects that will be created.
         <h4>Problem</h4>
         <div class="space_between">
-          <img src="../../images/design_patterns/dp_factory1.png" />
+          <img src="../../../images/design_patterns/dp_factory1.png" />
           <div>
             <p>
               Imagine that you&#x2019;re creating a logistics management
@@ -71,7 +71,7 @@
       <section>
         <h4>Solution</h4>
         <div class="space_between">
-          <img src="../../images/design_patterns/dp_factory2.png" />
+          <img src="../../../images/design_patterns/dp_factory2.png" />
           <div>
             <p>
               The Factory Method pattern suggests that you replace direct object
@@ -111,7 +111,7 @@
             </p>
           </div>
           <div>
-            <img src="../../images/design_patterns/dp_factory3.png" />
+            <img src="../../../images/design_patterns/dp_factory3.png" />
             <b
               >As long as all product classes implement a common interface, you
               can pass their objects to the client code without breaking it.</b
@@ -177,7 +177,7 @@
             </p>
           </li>
         </ol>
-        <img src="../../images/design_patterns/dp_factory5.png" />
+        <img src="../../../images/design_patterns/dp_factory5.png" />
       </section>
       <section>
         <h4>Implementation</h4>
@@ -417,7 +417,7 @@ namespace DesignPatternDemo.Factory
           to concrete UI classes.
         </p>
         <p>
-          <img src="../../images/design_patterns/dp_factory6.png" />
+          <img src="../../../images/design_patterns/dp_factory6.png" />
         </p>
         <p>The base dialog class uses different UI elements to render its window. Under various operating systems, these elements may look a little bit different, but they should still behave consistently. A button in Windows is still a button in Linux.</p>
         <p>When the factory method comes into play, you don&#x2019;t need to rewrite the logic of the dialog for each operating system. If we declare a factory method that produces buttons inside the base dialog class, we can later create a dialog subclass that returns Windows-styled buttons from the factory method. The subclass then inherits most of the dialog&#x2019;s code from the base class, but, thanks to the factory method, can render Windows-looking buttons on the screen.</p>
