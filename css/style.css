@@ -111,7 +111,7 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.list summary img {
+.list summary img,.toc li img {
   width: 16px;
   height: 16px;
 }
