@@ -63,6 +63,7 @@ body {
 }
 
 .content {
+  background-color: transparent;
   /*  display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -76,8 +77,7 @@ body {
 .nav_main a i {
   font-size: 1.6em;
 }
-.list {
-}
+
 .list summary:hover {
   cursor: pointer;
 }
@@ -111,7 +111,8 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.list summary img,.toc li img {
+.list summary img,
+.toc li img {
   width: 16px;
   height: 16px;
 }
@@ -119,8 +120,6 @@ body {
   padding-left: 10px;
 }
 
-ol.steps {
-}
 
 ol.steps li {
   padding: 5px;
@@ -146,10 +145,7 @@ pre.code {
   padding: 10px;
 }
 
-ol.toc {
-  /* column-count: 3;
-    column-gap: 50px; */
-}
+
 
 ol.toc > li > a {
   color: white;
@@ -174,8 +170,6 @@ ol.toc li ol li a {
   color: rgb(141, 141, 141);
 }
 
-.content section {
-}
 
 .content table {
   /* font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
@@ -300,7 +294,7 @@ pre code {
   content: " \f08e";
   padding-right: 5px;
 }
-details summary{
+details summary {
   cursor: pointer;
 }
 img {
@@ -310,6 +304,20 @@ img {
   width: auto;
   height: auto;
 }
-.content a:visited{
-  color:white;
+.content a:visited {
+  color: white;
+}
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+}
+.preview details > summary {
+  list-style: none;
+}
+.preview details > summary::-webkit-details-marker {
+  display: none;
+}
+.preview details summary img {
+  width: 100px;
+  height: 100px;
 }
