@@ -120,7 +120,6 @@ body {
   padding-left: 10px;
 }
 
-
 ol.steps li {
   padding: 5px;
 }
@@ -145,8 +144,6 @@ pre.code {
   padding: 10px;
 }
 
-
-
 ol.toc > li > a {
   color: white;
 }
@@ -169,7 +166,6 @@ ol.toc li ol li,
 ol.toc li ol li a {
   color: rgb(141, 141, 141);
 }
-
 
 .content table {
   /* font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; */
@@ -310,6 +306,9 @@ img {
 .preview {
   display: flex;
   flex-wrap: wrap;
+}
+.preview details {
+  padding: 5px;
 }
 .preview details > summary {
   list-style: none;
