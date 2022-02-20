@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Jetpack Layout</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="android_studio_index.html">Android</a>
+    </nav>
+
+    <div class="content">
+      <section id="as_01_01">
+        <div class="space_between">
+          <div>
+            <img src="../../images/android/kotlin/layout/layout1.jpg" />
+          </div>
+          <div>
+            <pre><code class="language-kt">
+@Composable
+fun Greeting() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Cyan),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(&#x22;Hello&#x22;)
+        Text(&#x22;World&#x22;)
+    }
+
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="as_01_02">
+        <div class="space_between">
+          <div>
+            <img src="../../images/android/kotlin/layout/layout2.jpg" />
+          </div>
+          <div>
+            <pre><code class="language-kt">
+@Composable
+fun Greeting() {
+    Column(
+        modifier = Modifier.fillMaxSize().background(Color.Green).padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(&#x22;Header&#x22;, fontWeight = FontWeight.Bold)
+        Text(&#x22;Content&#x22;, color = Color.Red)
+        Text(&#x22;Footer&#x22;, color = Color.White, modifier = Modifier.padding(16.dp).background(Color.Red))
+    }
+
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="as_01_03">
+        <div class="space_between">
+          <div>
+            <img src="../../images/android/kotlin/layout/layout3.jpg" />
+          </div>
+          <div>
+            <pre><code class="language-kt">
+@Composable
+fun Greeting() {
+    Row(
+        modifier = Modifier.fillMaxWidth().background(Color.Cyan),
+
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(&#x22;UserId&#x22;, modifier = Modifier.padding(16.dp))
+        Text(&#x22;Password&#x22;, modifier = Modifier.padding(16.dp))
+    }
+
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="as_01_03">
+        <div class="space_between">
+          <div>
+            <img src="../../images/android/kotlin/layout/layout4.jpg" />
+          </div>
+          <div>
+            <pre><code class="language-kt">
+@Composable
+fun Greeting() {
+    Column(
+        modifier = Modifier.fillMaxWidth().background(Color.Yellow).padding(16.dp),
+
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ) {
+        Text(&#x22;Sachin Tendulkar&#x22;, modifier = Modifier.background(Color.Cyan), fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.padding(16.dp))
+        Text(&#x22;Virender Sehwag&#x22;)
+
+        Text(&#x22;Saurav Ganguly&#x22;, modifier = Modifier.offset(20.dp, 0.dp))
+    }
+
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="as_01_03">
+        <div class="space_between">
+          <div>
+            <img src="../../images/android/kotlin/layout/layout5.jpg" />
+          </div>
+          <div>
+            <pre><code class="language-kt">
+@Composable
+fun Greeting() {
+    Row(
+        modifier = Modifier.fillMaxSize().background(Color.Yellow).padding(16.dp).border(5.dp, Color.Black)
+            .padding(16.dp).border(10.dp, Color.Red).padding(10.dp).border(10.dp, Color.White).padding(10.dp)
+            .border(10.dp, Color.Green),
+
+        horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
+
+    ) {
+        Text(&#x22;Shiva&#x22;,
+            modifier = Modifier.background(Color.Cyan).border(5.dp, Color.Green).padding(16.dp).border(2.dp, Color.Blue)
+                .padding(10.dp).clickable { })
+    }
+}</code></pre>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
