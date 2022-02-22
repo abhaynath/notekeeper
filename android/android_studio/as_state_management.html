@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Jetpack State Management</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="android_studio_index.html">Android</a>
+    </nav>
+
+    <div class="content">
+      <section id="as_01_01">
+        <h4>Local State</h4>
+        <pre><code class="language-kt">
+@Composable
+fun ColorBox(modifier: Modifier = Modifier) {
+    val color = remember { mutableStateOf(Color.Yellow) }
+    Box(modifier = modifier.background(color.value).clickable {
+        color.value = Color(
+            Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f
+        )
+    })
+
+}
+
+fun main() = application {
+    Window(onCloseRequest = ::exitApplication, title = &#x22;Jetpack test&#x22;) {
+        ColorBox(Modifier.fillMaxSize())
+    }
+}</code></pre>
+      </section>
+
+      <section id="as_01_02">
+        <h4>External State Management</h4>
+        <pre><code class="language-kt">
+@Composable
+fun ColorBox(modifier: Modifier = Modifier, updateColor: (Color) -&#x3E; Unit) {
+    Box(modifier = modifier.background(Color.Red).clickable {
+        updateColor(Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f))
+    })
+}
+
+fun main() = application {
+    Window(
+        onCloseRequest = ::exitApplication, title = &#x22;Postman Desktop&#x22;
+    ) {
+        Column(Modifier.fillMaxSize()) {
+            val color = remember { mutableStateOf(Color.Yellow) }
+            ColorBox(Modifier.weight(1f).fillMaxSize()) {
+                color.value = it;
+            }
+            Box(
+                modifier = Modifier
+                    .background(color.value)
+                    .weight(1f)
+                    .fillMaxSize()
+            )
+        }
+    }
+}
+</code></pre>
+      </section>
+
+      <section id="as_01_03">
+        <h4></h4>
+        <pre><code class="language-kt">
+    </code></pre>
+      </section>
+
+      <section id="as_01_04">
+        <h4></h4>
+        <pre><code class="language-kt">
+  </code></pre>
+      </section>
+
+      <section id="as_01_05">
+        <h4></h4>
+        <pre><code class="language-kt">
+</code></pre>
+      </section>
+
+      <section id="as_01_06">
+        <h4></h4>
+        <pre><code class="language-kt">
+</code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
