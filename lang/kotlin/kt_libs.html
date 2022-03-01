@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Libraries</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="kotlin_index.html">Kotlin</a>
+    </nav>
+    <div class="content">
+
+      <section id="kt_03_01">
+    <details>
+      <summary>JSON</summary>
+      <div>
+        <div>Add <b>jackson</b> dependency in <span class="keyword">build.gradle.kts</span>. Build the project to import the library.
+<pre> <code class="">dependencies
+{
+      implementation (&#x22;com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1&#x22;)
+}</code></pre>
+        </div>
+        <div>
+          <h4>Convert list of objects into string and write to file</h4>
+          <pre><code class="language-kt">import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import java.io.File
+data class EquityTransaction(
+    var id: Int,
+    var userId: String,
+    var company: String
+)
+
+val mapper = jacksonObjectMapper()
+val jsonString = mapper.writeValueAsString(transactions)
+
+File(&#x22;jackson.json&#x22;).writeText(jsonString)
+println(jsonString)
+</code></pre>
+        </div>
+        <div>
+          <h4>Read json string from file and convert it into list of objects</h4>
+          <pre><code class="language-kt">
+val mapper = jacksonObjectMapper()
+val jsonString = File(&#x22;jackson.json&#x22;).readText()
+val trans2: List&#x3C;EquityTransaction&#x3E; = mapper.readValue(jsonString)
+
+for (i in trans2) {
+    println(&#x22;${i.isin} --- ${i.symbol}&#x22;)
+}
+          </code></pre>
+        </div>
+        
+      </div>
+    </details>
+        
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

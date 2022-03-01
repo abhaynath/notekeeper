@@ -101,8 +101,28 @@ kotlinc src src/App.kt -include-runtime -d test.jar &#x26;&#x26; java -jar test.
           </li>
         </ol>
       </section>
+      <section id="kt_01_04">
+        <h4>Using Gradle command-line for creating Kotlin App </h4>
+        <ol class="steps">
+          <li>Make sure gradle is installed and <b>GRADLE_HOME</b> is set.</li>
+          <li>Create empty folder and run following command inside the folder
+            <pre class="shell">gradle init</pre>
+            Select the options as per your requirements. It will generate the project.
+          </li>
+          <li>
+            Run app
+            <pre class="shell">gradlew run</pre>
+          </li>
+          <li>
+            Bundle the app
+            <pre class="shell">gradlew build</pre>
+          </li>
+
+        </ol>
+
+      </section>
       <section id="kt_01_01">
-        <h4>Hello World Application in Kotlin</h4>
+        <h4>Hello World Application in Kotlin using IntelliJ Idea</h4>
 
         <ol class="steps">
           <li>Run Intellij Idea. Select 'New Project -> Kotlin'</li>
@@ -127,6 +147,23 @@ kotlinc src src/App.kt -include-runtime -d test.jar &#x26;&#x26; java -jar test.
             function
           </li>
         </ol>
+      </section>
+      <section>
+        <h4>Creating JAR from Intellij Idea console project</h4>
+        <p>
+          Add following task inside <b>build.gradle.kts</b> and run
+          <span class="keyword">jar</span> task from Gradle palette. Then
+          rebuild project.
+        </p>
+        <pre><code>tasks.jar {
+    manifest {
+        attributes[&#x22;Main-Class&#x22;] = &#x22;MainKt&#x22;
+    }
+    configurations[&#x22;compileClasspath&#x22;].forEach { file: File -&#x3E;
+        from(zipTree(file.absoluteFile))
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}</code></pre>
       </section>
       <section>
         <h4>Creating EXE from JAR file</h4>

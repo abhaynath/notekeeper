@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Database</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="kotlin_index.html">Kotlin</a>
+    </nav>
+    <div class="content">
+      <section id="kt_01_01">
+        <details>
+          <summary>SQLite</summary>
+          <div>
+              <ol class="steps">
+                  <li>In <span class="keyword">build.gradle.kts</span> add sqlite dependency
+                
+<pre><code>dependencies {
+    implementation(&#x22;org.xerial:sqlite-jdbc:3.36.0.2&#x22;)
+    implementation(kotlin(&#x22;stdlib-jdk8&#x22;))
+}</code></pre>
+
+Click on 'Reload all Gradle Projects'. This should add libraries in 'External libraries' section
+                </li>
+                <li>
+<pre> <code class="language-kotlin">
+import java.sql.*
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    connectDB()
+}
+
+data class EquityTransaction(
+        var id: Int,
+        var userId: String,
+        var company: String,
+)
+
+fun connectDB() {
+
+    // val conn = DriverManager.getConnection(&#x22;jdbc:sqlite:./trading.db&#x22;)
+    val conn = DriverManager.getConnection(&#x22;jdbc:sqlite:F:/My Data/Work/Learning/Kotlin/basic2/trading.db&#x22;)
+    var stmt: Statement? = null
+    var result: ResultSet? = null
+    var transactions = mutableListOf&#x3C;EquityTransaction&#x3E;()
+    try {
+        stmt = conn.createStatement()
+        result = stmt!!.executeQuery(&#x22;SELECT * FROM equity_trans limit 5;&#x22;)
+        if (stmt.execute(&#x22;SELECT * FROM equity_trans limit 5;&#x22;)) {
+            result = stmt.resultSet
+            while (result.next()) {
+                val id = result.getInt(1)
+                val userId = result.getString(2)
+                val company = result.getString(3)
+
+                transactions.add(EquityTransaction(id, userId, company))
+            }
+            result.close()
+        }
+    } catch (ex: SQLException) {
+        println(&#x22;exception ---&#x22;)
+
+        ex.printStackTrace()
+    }
+    conn.close()
+    for (i in transactions) {
+        println(i.company)
+    }
+}</code></pre>
+                </li>
+              </ol>
+            
+          </div>
+        </details>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

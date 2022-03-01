@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Utility functions</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="kotlin_index.html">Kotlin</a>
+    </nav>
+    <div class="content">
+      <section id="kt_03_01">
+        <h4>Generate random integer from specified range</h4>
+        Following snippet generates a random integer from 0 to 100000<pre><code class="language-kotlin">val rnd = (0..100000).random()</code></pre>
+      </section>
+      <section id="kt_03_01">
+        <h4>Generate random string</h4>
+        <pre><code class="language-kotlin">fun getRandomString(length: Int): String {
+    val charSet = (&#x27;a&#x27;..&#x27;z&#x27;) + (&#x27;A&#x27;..&#x27;Z&#x27;) + (&#x27;0&#x27;..&#x27;9&#x27;)
+    return (1..length)
+        .map { charSet.random() }
+        .joinToString(&#x22;&#x22;)
+
+}</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
