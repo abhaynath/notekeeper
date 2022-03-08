@@ -28,47 +28,50 @@
     <div class="content">
       <section id="as_01_01">
         <h4>Package List</h4>
-        <pre><code class="language-kt">
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.LastBaseline
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
-import kotlinx.coroutines.launch
-</code></pre>
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+  import androidx.compose.desktop.ui.tooling.preview.Preview
+  import androidx.compose.foundation.BorderStroke
+  import androidx.compose.foundation.background
+  import androidx.compose.foundation.clickable
+  import androidx.compose.foundation.layout.*
+  import androidx.compose.foundation.lazy.LazyColumn
+  import androidx.compose.foundation.selection.selectable
+  import androidx.compose.foundation.shape.CircleShape
+  import androidx.compose.material.*
+  import androidx.compose.material.icons.Icons
+  import androidx.compose.material.icons.filled.ArrowBack
+  import androidx.compose.material.icons.filled.Favorite
+  import androidx.compose.material.icons.filled.Settings
+  import androidx.compose.material.icons.filled.Share
+  import androidx.compose.runtime.*
+  import androidx.compose.ui.Alignment
+  import androidx.compose.ui.Modifier
+  import androidx.compose.ui.graphics.Color
+  import androidx.compose.ui.layout.LastBaseline
+  import androidx.compose.ui.text.SpanStyle
+  import androidx.compose.ui.text.TextStyle
+  import androidx.compose.ui.text.buildAnnotatedString
+  import androidx.compose.ui.text.font.FontFamily
+  import androidx.compose.ui.text.font.FontWeight
+  import androidx.compose.ui.text.input.TextFieldValue
+  import androidx.compose.ui.text.style.TextDecoration
+  import androidx.compose.ui.text.withStyle
+  import androidx.compose.ui.unit.Dp
+  import androidx.compose.ui.unit.dp
+  import androidx.compose.ui.window.Window
+  import androidx.compose.ui.window.application
+  import kotlinx.coroutines.launch
+            </code></pre>
+        </details>
       </section>
 
       <section id="as_01_02">
         <h4>Text Styles</h4>
         <img src="../../images/android/kotlin/composables/teststyles.jpg" />
         <details>
-          <summary></summary>
+          <summary>Code</summary>
           <pre><code class="language-kt">
 @Composable
 fun textExample() {
@@ -104,7 +107,7 @@ fun textExample() {
         <h4>TextField binding</h4>
         <img src="../../images/android/kotlin/composables/testfield.jpg" />
         <details>
-          <summary></summary>
+          <summary>Code</summary>
           <pre><code class="language-kt">
 @Composable
 fun textFieldDemo() {
@@ -124,37 +127,38 @@ fun textFieldDemo() {
         <h4>Checkbox</h4>
         <img src="../../images/android/kotlin/composables/checkbox.jpg" />
         <details>
-            <summary>
-
-            </summary>
-            <pre><code class="language-kt">
+          <summary>Code</summary>
+          <pre><code class="language-kt">
 @Composable
 fun checkboxDemo() {
     val checkedState = remember { mutableStateOf(true) }
-    Row(modifier = Modifier.padding(16.dp)) {
-        Checkbox(
-            checked = checkedState.value,
-            onCheckedChange = {
-                checkedState.value = it
-                println(&#x22;Checkbox ${it}&#x22;)
-            },
-        )
-        Text(text = &#x22;Is Active ${checkedState.value}&#x22;)
-    }
-}</code></pre>
-        </details>
-      
-      </section>
 
+    Column(modifier = Modifier.padding(2.dp)) {
+        Row(modifier = Modifier.padding(2.dp), verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(
+                checked = checkedState.value,
+                onCheckedChange = {
+                    checkedState.value = it
+                },
+            )
+            Text(&#x22;I agree terms and conditions.&#x22;)
+        }
+        Button(onClick = {}, modifier = Modifier, checkedState.value) {
+            Text(&#x22;Proceed&#x22;)
+        }
+    }
+
+}
+</code></pre>
+        </details>
+      </section>
 
       <section id="as_01_05">
         <h4>Radio Button</h4>
         <img src="../../images/android/kotlin/composables/radio.jpg" />
         <details>
-            <summary>
-
-            </summary>
-            <pre><code class="language-kt">
+          <summary>Code</summary>
+          <pre><code class="language-kt">
 @Composable
 fun radioButtonDemo() {
     data class Player(var id: String, var name: String)
@@ -169,10 +173,14 @@ fun radioButtonDemo() {
     Column(
         modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(&#x22;Selected option : ${selectedOption.id}&#x22;)
+        Text(&#x22;Selected option : ${selectedOption.id}&#x22;, style = TextStyle(fontWeight = FontWeight.Bold))
         Row() {
             india.forEach { text -&#x3E;
-                Row(Modifier.selectable(selected = (text == selectedOption), onClick = { onOptionSelected(text) })) {
+                Row(
+                    modifier = Modifier.selectable(
+                        selected = (text == selectedOption),
+                        onClick = { onOptionSelected(text) }), verticalAlignment = Alignment.CenterVertically
+                ) {
                     RadioButton(selected = (text == selectedOption), onClick = {
                         onOptionSelected(text)
                         println(text)
@@ -185,113 +193,280 @@ fun radioButtonDemo() {
         }
     }
 }
-            </code></pre>
+
+</code></pre>
         </details>
-      
       </section>
 
       <section id="as_01_06">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>Dropdown</h4>
+        <img src="../../images/android/kotlin/composables/dropdown.jpg" />
         <details>
-            <summary>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun dropDownDemo() {
 
-            </summary>
-            <pre><code class="language-kt">
+    var expanded by remember { mutableStateOf(false) }
+
+    data class Player(var id: Int, var firstName: String, var lastName: String)
+
+    var india = mutableListOf&#x3C;Player&#x3E;()
+    india.add(Player(1, &#x22;Sachin&#x22;, &#x22;Tendulkar&#x22;))
+    india.add(Player(2, &#x22;Virender&#x22;, &#x22;Sehwag&#x22;))
+    india.add(Player(3, &#x22;Rahul&#x22;, &#x22;Dravid&#x22;))
+    india.add(Player(4, &#x22;Saurav&#x22;, &#x22;Ganguly&#x22;))
+    india.add(Player(5, &#x22;Mahandra Singh&#x22;, &#x22;Dhoni&#x22;))
+   
+    val disabledValue = india[2]
+    var selectedIndex by remember { mutableStateOf(0) }
+    Text(&#x22; Selected Id ${india[selectedIndex].id.toString()}&#x22;)
+    Column(modifier = Modifier.padding(8.dp)) {
+        Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.TopStart)) {
+            Text(
+                &#x22;${india[selectedIndex].firstName + &#x22; &#x22; + india[selectedIndex].lastName}&#x22;,
+                modifier = Modifier.clickable(onClick = { expanded = true })
+            )
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                india.forEachIndexed { index, s -&#x3E;
+                    DropdownMenuItem(onClick = {
+                        selectedIndex = index
+                        expanded = false
+                        println(&#x22;Selected Item : ${india[selectedIndex].lastName}&#x22;)
+                    }) {
+                        val disabledText = if (s == disabledValue) {
+                            &#x22; (Disabled)&#x22;
+                        } else {
+                            &#x22;&#x22;
+                        }
+                        Text(text = &#x22;${s.firstName + &#x22; &#x22; + s.lastName + &#x22; &#x22; + disabledText}&#x22;)
+                    }
+                }
+            }
+        }
+    }
+
+}
             </code></pre>
         </details>
-      
       </section>
 
-
       <section id="as_01_07">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>Switch</h4>
+        <img src="../../images/android/kotlin/composables/switch.jpg" />
         <details>
-            <summary>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun switchDemo() {
+    val checkedState = remember { mutableStateOf(true) }
+    Row(modifier = Modifier.padding(8.dp)) {
+        Text(&#x22;Is Active ${checkedState.value.toString()}&#x22;)
+        Switch(checked = checkedState.value, onCheckedChange = {
+            checkedState.value = it
+        })
+    }
 
-            </summary>
-            <pre><code class="language-kt">
+}
             </code></pre>
         </details>
-      
       </section>
 
       <section id="as_01_08">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>Slider</h4>
+        <img src="../../images/android/kotlin/composables/slider.jpg" />
         <details>
-            <summary>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun sliderDemo() {
+    var sliderPosition by remember { mutableStateOf(0f) }
+    Row(modifier = Modifier.padding(8.dp)) {
+        Text(text = sliderPosition.toString())
+        Slider(value = sliderPosition, onValueChange = { sliderPosition = it })
+    }
 
-            </summary>
-            <pre><code class="language-kt">
+}
             </code></pre>
         </details>
-      
       </section>
 
       <section id="as_01_09">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>Tabs</h4>
+        <img src="../../images/android/kotlin/composables/tabs.jpg" />
         <details>
-            <summary>
-
-            </summary>
-            <pre><code class="language-kt">
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun tabsDemo() {
+    var tabIndex by remember { mutableStateOf(0) } // 1.
+    val tabTitles = listOf(&#x22;India&#x22;, &#x22;Australia&#x22;, &#x22;Japan&#x22;)
+    Column { // 2.
+        TabRow(selectedTabIndex = tabIndex) { // 3.
+            tabTitles.forEachIndexed { index, title -&#x3E;
+                Tab(selected = tabIndex == index, // 4.
+                    onClick = { tabIndex = index }, text = { Text(text = title) }) // 5.
+            }
+        }
+        when (tabIndex) { // 6.
+            0 -&#x3E; Text(&#x22;New Delhi&#x22;)
+            1 -&#x3E; Text(&#x22;Sydney&#x22;)
+            2 -&#x3E; Text(&#x22;Tokyo&#x22;)
+        }
+    }
+}
             </code></pre>
         </details>
-      
       </section>
 
-
       <section id="as_01_10">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>Snackbar</h4>
+        <img src="../../images/android/kotlin/composables/snackbar.jpg" />
         <details>
-            <summary>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun snackbarDemo() {
+    Column(modifier = Modifier.padding(8.dp)) {
+        val (snackbarVisibleState, setSnackBarState) = remember { mutableStateOf(false) }
 
-            </summary>
-            <pre><code class="language-kt">
+        Button(onClick = { setSnackBarState(!snackbarVisibleState) }) {
+            if (snackbarVisibleState) {
+                Text(&#x22;Hide Snackbar&#x22;)
+            } else {
+                Text(&#x22;Show Snackbar&#x22;)
+            }
+        }
+        if (snackbarVisibleState) {
+            Snackbar(
+                action = {
+                    Button(onClick = {}) {
+                        Text(&#x22;MyAction&#x22;)
+                    }
+                }, modifier = Modifier.padding(8.dp)
+            ) { Text(text = &#x22;This is a snackbar!&#x22;) }
+        }
+    }
+}
             </code></pre>
         </details>
-      
       </section>
 
       <section id="as_01_11">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>TopAppBar</h4>
+        <img src="../../images/android/kotlin/composables/topappbar.jpg" />
         <details>
-            <summary>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun topAppBarSample() {
+    Column {
+        TopAppBar(elevation = 4.dp, title = {
+            Text(&#x22;I&#x27;m a TopAppBar&#x22;)
+        }, backgroundColor = MaterialTheme.colors.primarySurface, navigationIcon = {
+            IconButton(onClick = {/* Do Something*/ }) {
+                Icon(Icons.Filled.ArrowBack, null)
+            }
+        }, actions = {
+            IconButton(onClick = {/* Do Something*/ }) {
+                Icon(Icons.Filled.Share, null)
+            }
+            IconButton(onClick = {/* Do Something*/ }) {
+                Icon(Icons.Filled.Settings, null)
+            }
+        })
 
-            </summary>
-            <pre><code class="language-kt">
+        Text(&#x22;Hello World&#x22;, modifier = Modifier.padding(8.dp))
+
+    }
+}
             </code></pre>
         </details>
-      
       </section>
 
       <section id="as_01_12">
+        <h4>Small List</h4>
+        <img src="../../images/android/kotlin/composables/small_list.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun smallListDemo() {
+    data class Player(var firstName: String, var lastName: String, var age: Int, var city: String)
+
+    var india = mutableListOf&#x3C;Player&#x3E;()
+    india.add(Player(&#x22;sachin&#x22;, &#x22;tendulkar&#x22;, 45, &#x22;mumbai&#x22;))
+    india.add(Player(&#x22;virender&#x22;, &#x22;sehwag&#x22;, 40, &#x22;najafgadh&#x22;))
+    india.add(Player(&#x22;rahul&#x22;, &#x22;dravid&#x22;, 46, &#x22;banglore&#x22;))
+    india.add(Player(&#x22;saurav&#x22;, &#x22;ganguly&#x22;, 45, &#x22;kolkata&#x22;))
+    Column {
+        india.forEach { player -&#x3E;
+            Row(modifier = Modifier.padding(2.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = {}) {
+                    Icon(Icons.Filled.ArrowForward, null)
+                }
+                Text(&#x22;${player.firstName} ${player.lastName} (${player.age})&#x22;)
+            }
+        }
+    }
+}
+            </code></pre>
+        </details>
+      </section>
+
+      <section id="as_01_13">
         <h4></h4>
         <img src="../../images/android/kotlin/composables/testfield.jpg" />
         <details>
-            <summary>
-
-            </summary>
-            <pre><code class="language-kt">
+          <summary></summary>
+          <pre><code class="language-kt">
             </code></pre>
         </details>
-      
       </section>
 
 
+      <section id="as_01_14">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      </section>
 
 
+      <section id="as_01_15">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      </section>
 
 
+      <section id="as_01_16">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      </section>
 
 
-
-    
+      <section id="as_01_17">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      </section>
     </div>
   </body>
   <script>
