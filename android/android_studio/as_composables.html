@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Composables</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="android_studio_index.html">Android</a>
+    </nav>
+
+    <div class="content">
+      <section id="as_01_01">
+        <h4>Package List</h4>
+        <pre><code class="language-kt">
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.LastBaseline
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import kotlinx.coroutines.launch
+</code></pre>
+      </section>
+
+      <section id="as_01_02">
+        <h4>Text Styles</h4>
+        <img src="../../images/android/kotlin/composables/teststyles.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+@Composable
+fun textExample() {
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(&#x22;Just Text&#x22;)
+        Text(&#x22;Text with cursive font&#x22;, style = TextStyle(fontFamily = FontFamily.Cursive))
+        Text(
+            text = &#x22;Text with LineThrough&#x22;,
+            style = TextStyle(textDecoration = TextDecoration.LineThrough)
+        )
+        Text(
+            text = &#x22;Text with underline&#x22;,
+            style = TextStyle(textDecoration = TextDecoration.Underline)
+        )
+        Text(
+            text = &#x22;Text with underline, linethrough and bold&#x22;,
+            style = TextStyle(
+                textDecoration = TextDecoration.combine(
+                    listOf(
+                        TextDecoration.Underline,
+                        TextDecoration.LineThrough
+                    )
+                ), fontWeight = FontWeight.Bold
+            )
+        )
+    }
+}
+    </code></pre>
+        </details>
+      </section>
+
+      <section id="as_01_03">
+        <h4>TextField binding</h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+@Composable
+fun textFieldDemo() {
+    Column(Modifier.padding(16.dp)) {
+        val textState = remember { mutableStateOf(TextFieldValue()) }
+        TextField(
+            value = textState.value,
+            onValueChange = { textState.value = it }
+        )
+        Text(&#x22;The textfield has this text: &#x22; + textState.value.text)
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_01_04">
+        <h4>Checkbox</h4>
+        <img src="../../images/android/kotlin/composables/checkbox.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+@Composable
+fun checkboxDemo() {
+    val checkedState = remember { mutableStateOf(true) }
+    Row(modifier = Modifier.padding(16.dp)) {
+        Checkbox(
+            checked = checkedState.value,
+            onCheckedChange = {
+                checkedState.value = it
+                println(&#x22;Checkbox ${it}&#x22;)
+            },
+        )
+        Text(text = &#x22;Is Active ${checkedState.value}&#x22;)
+    }
+}</code></pre>
+        </details>
+      
+      </section>
+
+
+      <section id="as_01_05">
+        <h4>Radio Button</h4>
+        <img src="../../images/android/kotlin/composables/radio.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+@Composable
+fun radioButtonDemo() {
+    data class Player(var id: String, var name: String)
+
+    var india = mutableListOf&#x3C;Player&#x3E;()
+    india.add(Player(&#x22;sachin&#x22;, &#x22;Sachin Tendulkar&#x22;))
+    india.add(Player(&#x22;viru&#x22;, &#x22;Virender Sehwag&#x22;))
+    india.add(Player(&#x22;wall&#x22;, &#x22;Rahul Dravid&#x22;))
+
+
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(india[0]) }
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(&#x22;Selected option : ${selectedOption.id}&#x22;)
+        Row() {
+            india.forEach { text -&#x3E;
+                Row(Modifier.selectable(selected = (text == selectedOption), onClick = { onOptionSelected(text) })) {
+                    RadioButton(selected = (text == selectedOption), onClick = {
+                        onOptionSelected(text)
+                        println(text)
+                    })
+                    Text(
+                        text = text.name
+                    )
+                }
+            }
+        }
+    }
+}
+            </code></pre>
+        </details>
+      
+      </section>
+
+      <section id="as_01_06">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      
+      </section>
+
+
+      <section id="as_01_07">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      
+      </section>
+
+      <section id="as_01_08">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      
+      </section>
+
+      <section id="as_01_09">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      
+      </section>
+
+
+      <section id="as_01_10">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      
+      </section>
+
+      <section id="as_01_11">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      
+      </section>
+
+      <section id="as_01_12">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+            <summary>
+
+            </summary>
+            <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      
+      </section>
+
+
+
+
+
+
+
+
+
+    
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
