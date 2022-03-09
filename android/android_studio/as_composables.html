@@ -490,7 +490,7 @@ fun cardDemo() {
       </section>
 
       <section id="as_01_15">
-        <h4></h4>
+        <h4>Badges</h4>
         <img src="../../images/android/kotlin/composables/badges.jpg" />
         <details>
           <summary>Code</summary>
@@ -657,6 +657,73 @@ fun extendedFloatingActionButtonDemo() {
       </section>
 
       <section id="as_01_21">
+        <h4>Lifecycle</h4>
+        <img src="../../images/android/kotlin/composables/lifecycle.png" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun lifecycleDemo() {
+    val count = remember { mutableStateOf(0) }
+
+    Column(modifier = Modifier.padding(8.dp)) {
+        Button(onClick = {
+            count.value++
+        }) {
+            Text(&#x22;Click me&#x22;)
+        }
+
+        if (count.value &#x3C; 3) {
+            // LaunchedEffect(Unit)
+            println(count.value)
+        }
+        DisposableEffect(Unit) {
+            onDispose {
+                println(count.value)
+            }
+        }
+
+        Text(text = &#x22;You have clicked the button: &#x22; + count.value.toString())
+    }
+
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_01_22">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_01_23">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_01_24">
+        <h4></h4>
+        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+            </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_01_25">
         <h4></h4>
         <img src="../../images/android/kotlin/composables/testfield.jpg" />
         <details>
