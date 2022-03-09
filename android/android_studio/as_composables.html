@@ -102,6 +102,28 @@ fun textExample() {
     </code></pre>
         </details>
       </section>
+      <section id="as_01_13">
+        <h4>Annotated String</h4>
+        <img src="../../images/android/kotlin/composables/annotated.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun AnnotatedStringDemo() {
+    Row(modifier = Modifier.padding(10.dp)) {
+        Text(buildAnnotatedString {
+            append(&#x22;Hello,&#x22;)
+            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = Color.Green)) {
+                append(&#x22;Abhay&#x22;)
+                withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline, color = Color.Magenta)) {
+                    append(&#x22; How are you doing ?&#x22;)
+                }
+            }
+        })
+    }
+}</code></pre>
+        </details>
+      </section>
 
       <section id="as_01_03">
         <h4>TextField binding</h4>
@@ -414,24 +436,58 @@ fun smallListDemo() {
         </details>
       </section>
 
-      <section id="as_01_13">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
-        <details>
-          <summary></summary>
-          <pre><code class="language-kt">
-            </code></pre>
-        </details>
-      </section>
-
+   
 
       <section id="as_01_14">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>Card and Alert Dialogue</h4>
+        <img src="../../images/android/kotlin/composables/card_alert.jpg" />
         <details>
-          <summary></summary>
+          <summary>Code</summary>
           <pre><code class="language-kt">
-            </code></pre>
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun cardDemo() {
+    val email = remember { mutableStateOf(&#x22;&#x22;) }
+    val password = remember { mutableStateOf(&#x22;&#x22;) }
+    val openDialog = remember { mutableStateOf(false) }
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(15.dp).clickable { }, elevation = 8.dp
+    ) {
+        Column(
+            modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            OutlinedTextField(email.value, onValueChange = { email.value = it })
+            OutlinedTextField(password.value, onValueChange = { password.value = it })
+            Button(onClick = {
+                openDialog.value = true
+            }) {
+                Text(&#x22;Login&#x22;)
+            }
+        }
+    }
+    if (openDialog.value) {
+
+        AlertDialog(onDismissRequest = {
+            openDialog.value = false
+        }, title = {
+            Text(text = email.value)
+        }, text = {
+            Text(password.value)
+        }, confirmButton = {
+            Button(onClick = {
+                openDialog.value = false
+            }) {
+                Text(&#x22;Confirm&#x22;)
+            }
+        }, dismissButton = {
+            Button(onClick = {
+                openDialog.value = false
+            }) {
+                Text(&#x22;Cancel&#x22;)
+            }
+        })
+    }
+}</code></pre>
         </details>
       </section>
 
