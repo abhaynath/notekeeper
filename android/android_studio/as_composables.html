@@ -436,8 +436,6 @@ fun smallListDemo() {
         </details>
       </section>
 
-   
-
       <section id="as_01_14">
         <h4>Card and Alert Dialogue</h4>
         <img src="../../images/android/kotlin/composables/card_alert.jpg" />
@@ -491,30 +489,174 @@ fun cardDemo() {
         </details>
       </section>
 
-
       <section id="as_01_15">
         <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <img src="../../images/android/kotlin/composables/badges.jpg" />
         <details>
-          <summary></summary>
+          <summary>Code</summary>
           <pre><code class="language-kt">
-            </code></pre>
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+fun badgeBoxDemo() {
+    BottomNavigation {
+        BottomNavigationItem(icon = {
+            BadgedBox(badge = { Badge { Text(&#x22;8&#x22;) } }) {
+                Icon(
+                    Icons.Filled.Favorite, contentDescription = &#x22;Favorite&#x22;
+                )
+            }
+
+        }, selected = false, onClick = {})
+    }
+}</code></pre>
         </details>
       </section>
-
 
       <section id="as_01_16">
-        <h4></h4>
-        <img src="../../images/android/kotlin/composables/testfield.jpg" />
+        <h4>Scaffold</h4>
+        <img src="../../images/android/kotlin/composables/scaffold.png" />
         <details>
-          <summary></summary>
+          <summary>Code</summary>
           <pre><code class="language-kt">
+@Composable
+fun scaffoldDemo() {
+    val materialBlue700 = Color(0xFF1976D2)
+    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Open))
+    Scaffold(scaffoldState = scaffoldState,
+        topBar = { TopAppBar(title = { Text(&#x22;TopAppBar&#x22;) }, backgroundColor = materialBlue700) },
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            FloatingActionButton(onClick = {}) {
+                Text(&#x22;X&#x22;)
+            }
+        },
+        drawerContent = { Text(text = &#x22;drawerContent&#x22;) },
+        content = { Text(&#x22;BodyContent&#x22;) },
+        bottomBar = { BottomAppBar(backgroundColor = materialBlue700) { Text(&#x22;BottomAppBar&#x22;) } })
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_01_17">
+        <h4>Surface</h4>
+        <img src="../../images/android/kotlin/composables/surface.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun surfaceDemo() {
+    Surface(
+        modifier = Modifier.padding(8.dp),
+        border = BorderStroke(1.dp, Color.Cyan),
+        contentColor = Color.Blue,
+        elevation = 8.dp,
+        shape = CircleShape
+    ) {
+        Text(&#x22;Hello World&#x22;, modifier = Modifier.padding(8.dp))
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_01_18">
+        <h4>Model Drawer</h4>
+        <img src="../../images/android/kotlin/composables/model_drawer.png" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun modalDrawerSample() {
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    ModalDrawer(drawerState = drawerState, drawerContent = {
+        Column {
+
+            Button(onClick = {
+                scope.launch {
+                    drawerState.close()
+                }
+            }) {
+                Icon(Icons.Filled.Close, &#x22;&#x22;)
+            }
+            Text(&#x22;Text in Drawer&#x22;)
+        }
+    }, content = {
+        Column {
+
+            Button(onClick = {
+
+                scope.launch {
+                    drawerState.open()
+                }
+
+            }) {
+                Icon(Icons.Filled.Menu, &#x22;&#x22;)
+            }
+
+            Text(&#x22;Text in Bodycontext&#x22;)
+        }
+    })
+}
             </code></pre>
         </details>
       </section>
 
+      <section id="as_01_19">
+        <h4>Model Drawer Bottom</h4>
+        <img src="../../images/android/kotlin/composables/model_drawer_bottom.png" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+@Composable
+@OptIn(ExperimentalMaterialApi::class)
+fun modalBottomSheetSample() {
+    val state = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
+    ModalBottomSheetLayout(sheetState = state, sheetContent = {
+        LazyColumn {
+            items(50) {
+                ListItem(text = { Text(&#x22;Item $it&#x22;) }, icon = {
+                    Icon(
+                        Icons.Default.Favorite, contentDescription = &#x22;Localized description&#x22;
+                    )
+                })
+            }
+        }
+    }) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(&#x22;Rest of the UI&#x22;)
+            Spacer(Modifier.height(20.dp))
+            Button(onClick = { scope.launch { state.show() } }) {
+                Text(&#x22;Click to show sheet&#x22;)
+            }
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
 
-      <section id="as_01_17">
+      <section id="as_01_20">
+        <h4>Floating Action Button</h4>
+        <img src="../../images/android/kotlin/composables/floating_action.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+@Composable
+fun extendedFloatingActionButtonDemo() {
+    ExtendedFloatingActionButton(icon = { Icon(Icons.Filled.Favorite, &#x22;&#x22;) },
+        text = { Text(&#x22;Floating Action Button&#x22;) },
+        onClick = { /*do something*/ },
+        elevation = FloatingActionButtonDefaults.elevation(8.dp)
+    )
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_01_21">
         <h4></h4>
         <img src="../../images/android/kotlin/composables/testfield.jpg" />
         <details>
