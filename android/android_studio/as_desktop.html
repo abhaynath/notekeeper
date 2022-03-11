@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Jetpack Compose for Desktop</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="android_studio_index.html">Android</a>
+    </nav>
+
+    <div class="content">
+      <section id="as_02_minmax">
+        <h4>Window Min-Max-Fullscreen</h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Checkbox
+import androidx.compose.material.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.*
+
+fun main() = application {
+    val state = rememberWindowState(placement = WindowPlacement.Maximized)
+
+    Window(onCloseRequest = ::exitApplication, state) {
+        Column {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(state.placement == WindowPlacement.Fullscreen, {
+                    state.placement = if (it) {
+                        WindowPlacement.Fullscreen
+                    } else {
+                        WindowPlacement.Floating
+                    }
+                })
+                Text(&#x22;isFullscreen&#x22;)
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(state.placement == WindowPlacement.Maximized, {
+                    state.placement = if (it) {
+                        WindowPlacement.Maximized
+                    } else {
+                        WindowPlacement.Floating
+                    }
+                })
+                Text(&#x22;isMaximized&#x22;)
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(state.isMinimized, { state.isMinimized = !state.isMinimized })
+                Text(&#x22;isMinimized&#x22;)
+            }
+
+            Text(&#x22;Position ${state.position}&#x22;, Modifier.clickable {
+                val position = state.position
+                if (position is WindowPosition.Absolute) {
+                    state.position = position.copy(x = state.position.x + 10.dp)
+                }
+            })
+
+            Text(&#x22;Size ${state.size}&#x22;, Modifier.clickable {
+                state.size = state.size.copy(width = state.size.width + 10.dp)
+            })
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_multiinstance">
+        <h4>Window Multiple Instances</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.window.ApplicationScope
+import androidx.compose.ui.window.MenuBar
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+
+fun main() = application {
+    val applicationState = remember { MyApplicationState() }
+
+    for (window in applicationState.windows) {
+        key(window) {
+            MyWindow(window)
+        }
+    }
+}
+
+@Composable
+private fun ApplicationScope.MyWindow(
+    state: MyWindowState
+) = Window(onCloseRequest = state::close, title = state.title) {
+    MenuBar {
+        Menu(&#x22;File&#x22;) {
+            Item(&#x22;New window&#x22;, onClick = state.openNewWindow)
+            Item(&#x22;Exit&#x22;, onClick = state.exit)
+        }
+    }
+}
+
+private class MyApplicationState {
+    val windows = mutableStateListOf&#x3C;MyWindowState&#x3E;()
+
+    init {
+        windows += MyWindowState(&#x22;Initial window&#x22;)
+    }
+
+    fun openNewWindow() {
+        windows += MyWindowState(&#x22;Window ${windows.size}&#x22;)
+    }
+
+    fun exit() {
+        windows.clear()
+    }
+
+    private fun MyWindowState(
+        title: String
+    ) = MyWindowState(
+        title, openNewWindow = ::openNewWindow, exit = ::exit, windows::remove
+    )
+}
+
+private class MyWindowState(
+    val title: String, val openNewWindow: () -&#x3E; Unit, val exit: () -&#x3E; Unit, private val close: (MyWindowState) -&#x3E; Unit
+) {
+    fun close() = close(this)
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_openclose">
+        <h4>Window Open-Close</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import kotlinx.coroutines.delay
+
+fun main() = application {
+    var isPerformingTask by remember { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        delay(2000) // Do some heavy lifting
+        isPerformingTask = false
+    }
+
+    if (isPerformingTask) {
+        Window(onCloseRequest = ::exitApplication) {
+            Text(&#x22;Performing some tasks. Please wait!&#x22;)
+        }
+    } else {
+        Window(onCloseRequest = ::exitApplication) {
+            Text(&#x22;Hello, World!&#x22;)
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_property_change">
+        <h4>Property Change</h4>
+        <img
+          src="../../images/android/kotlin/desktop/window_property_change.jpg"
+        />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+
+fun main() = application {
+    var fileName by remember { mutableStateOf(&#x22;I dont know&#x22;) }
+
+    Window(onCloseRequest = ::exitApplication, title = &#x22;$fileName - Editor&#x22;) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Button(onClick = { fileName = &#x22;note.txt&#x22; }) {
+                Text(&#x22;Save&#x22;)
+            }
+        }
+
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_transparent">
+        <h4>Transparent Window</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+
+fun main() = application {
+    var isOpen by remember { mutableStateOf(true) }
+    if (isOpen) {
+        Window(
+            onCloseRequest = { isOpen = false },
+            title = &#x22;Transparent Window Example&#x22;,
+            transparent = true,
+            undecorated = true, //transparent window must be undecorated
+        ) {
+            Surface(
+                modifier = Modifier.fillMaxSize().padding(5.dp).shadow(3.dp, RoundedCornerShape(20.dp)),
+                color = Color(55, 55, 55),
+                shape = RoundedCornerShape(20.dp) //window has round corners now
+            ) {
+                Text(&#x22;Hello World!&#x22;, color = Color.White)
+            }
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_listenevent">
+        <h4>Listen Event</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+
+fun main() = application {
+    val state = rememberWindowState()
+
+    Window(onCloseRequest = ::exitApplication, state) {
+        // Content
+
+        LaunchedEffect(state) {
+            snapshotFlow { state.size }.onEach(::onWindowResize).launchIn(this)
+
+            snapshotFlow { state.position }.filter { it.isSpecified }.onEach(::onWindowRelocate).launchIn(this)
+        }
+    }
+}
+
+private fun onWindowResize(size: DpSize) {
+    println(&#x22;onWindowResize $size&#x22;)
+}
+
+private fun onWindowRelocate(position: WindowPosition) {
+    println(&#x22;onWindowRelocate $position&#x22;)
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_windowicon">
+        <h4>Window Icon</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Application Window</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+
+fun main() = application {
+    val icon = painterResource(&#x22;joker.png&#x22;)
+    Window(
+        onCloseRequest = ::exitApplication, icon = icon
+    ) {
+        Box(Modifier.paint(icon).fillMaxSize())
+    }
+}
+                </code></pre>
+        </details>
+
+        <details>
+          <summary>SingleApplication Window</summary>
+          <pre><code class="language-kt">
+import androidx.compose.material.Text
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.res.useResource
+import androidx.compose.ui.window.singleWindowApplication
+
+fun main() {
+    val icon = BitmapPainter(useResource(&#x22;joker.png&#x22;, ::loadImageBitmap))
+    singleWindowApplication(icon = icon) {
+        Text(&#x22;Hello World!&#x22;)
+    }
+}
+  
+                  </code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_fullscreen">
+        <h4>Full Screen</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.window.WindowDraggableArea
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
+import androidx.compose.ui.window.WindowState
+import androidx.compose.ui.window.application
+
+fun main() = application {
+    Window(onCloseRequest = ::exitApplication, state = WindowState(WindowPlacement.Maximized), undecorated = true) {
+        WindowDraggableArea {
+            Box(Modifier.fillMaxWidth().height(48.dp).background(Color.DarkGray))
+        }
+    }
+}
+                </code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_closedialgoue">
+        <h4>Window Close Dialogue</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+
+fun main() = application {
+    var isOpen by remember { mutableStateOf(true) }
+    var isAskingToClose by remember { mutableStateOf(false) }
+
+    if (isOpen) {
+        Window(onCloseRequest = { isAskingToClose = true }) {
+            if (isAskingToClose) {
+                Dialog(
+                    onCloseRequest = { isAskingToClose = false },
+                    title = &#x22;Close the document without saving?&#x22;,
+                ) {
+                    Button(onClick = { isOpen = false }) {
+                        Text(&#x22;Yes&#x22;)
+                    }
+                }
+            }
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_trayicon">
+        <h4>Tray Icon</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.window.Tray
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+
+fun main() = application {
+    val icon = painterResource(&#x22;joker.png&#x22;)
+
+    Tray(icon = icon, menu = {
+        Item(&#x22;Quit App&#x22;, onClick = ::exitApplication)
+    })
+    Window(onCloseRequest = ::exitApplication, icon = icon) {
+        Image(
+            painter = icon, contentDescription = &#x22;Icon&#x22;, modifier = Modifier.fillMaxSize()
+        )
+    }
+}</code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_context1">
+        <h4>Context menu 1</h4>
+        <img src="../../images/android/kotlin/desktop/context_menu_1.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.singleWindowApplication
+
+@OptIn(ExperimentalComposeUiApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
+fun main() = singleWindowApplication(title = &#x22;Context menu&#x22;) {
+    val text = remember { mutableStateOf(&#x22;Hello!&#x22;) }
+    TextField(value = text.value, onValueChange = { text.value = it }, label = { Text(text = &#x22;Input&#x22;) })
+}</code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_contextmenu2">
+        <h4>Custom Context menu</h4>
+        <img src="../../images/android/kotlin/desktop/context_menu_2_user_defined.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.ContextMenuDataProvider
+import androidx.compose.foundation.ContextMenuItem
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.singleWindowApplication
+
+@OptIn(ExperimentalComposeUiApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
+fun main() = singleWindowApplication(title = &#x22;Context menu&#x22;) {
+    val text = remember { mutableStateOf(&#x22;Hello!&#x22;) }
+    Column {
+        ContextMenuDataProvider(items = {
+            listOf(ContextMenuItem(&#x22;User-defined Action&#x22;) {/*do something here*/ },
+                ContextMenuItem(&#x22;Another user-defined action&#x22;) {/*do something else*/ })
+        }) {
+            TextField(value = text.value, onValueChange = { text.value = it }, label = { Text(text = &#x22;Input&#x22;) })
+
+            Spacer(Modifier.height(16.dp))
+
+            SelectionContainer {
+                Text(&#x22;Hello World!&#x22;)
+            }
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_customarea">
+        <h4>Custom Area Context Menu</h4>
+        <img src="../../images/android/kotlin/desktop/context_menu_3_custom_area.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.ContextMenuArea
+import androidx.compose.foundation.ContextMenuItem
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.singleWindowApplication
+
+@OptIn(ExperimentalComposeUiApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
+fun main() = singleWindowApplication(title = &#x22;Context menu&#x22;) {
+    ContextMenuArea(items = {
+        listOf(ContextMenuItem(&#x22;User-defined Action&#x22;) {/*do something here*/ },
+            ContextMenuItem(&#x22;Another user-defined action&#x22;) {/*do something else*/ })
+    }) {
+        Box(modifier = Modifier.background(Color.Blue).height(100.dp).width(100.dp))
+    }
+}</code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_menubar">
+        <h4>Menubar</h4>
+        <img src="../../images/android/kotlin/desktop/menubar.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyShortcut
+import androidx.compose.ui.window.MenuBar
+import androidx.compose.ui.window.Window
+
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun MenubarDemo() {
+    var action by remember { mutableStateOf(&#x22;Last action: None&#x22;) }
+    var isOpen by remember { mutableStateOf(true) }
+
+    if (isOpen) {
+        var isSubmenuShowing by remember { mutableStateOf(false) }
+
+        Window(title=&#x22;Menubar demo app&#x22;,onCloseRequest = { isOpen = false }) {
+            MenuBar {
+                Menu(&#x22;File&#x22;, mnemonic = &#x27;F&#x27;) {
+                    Item(&#x22;Copy&#x22;, onClick = { action = &#x22;Last action: Copy&#x22; }, shortcut = KeyShortcut(Key.C, ctrl = true))
+                    Item(
+                        &#x22;Paste&#x22;, onClick = { action = &#x22;Last action: Paste&#x22; }, shortcut = KeyShortcut(Key.V, ctrl = true)
+                    )
+                }
+                Menu(&#x22;Actions&#x22;, mnemonic = &#x27;A&#x27;) {
+                    CheckboxItem(&#x22;Advanced settings&#x22;, checked = isSubmenuShowing, onCheckedChange = {
+                        isSubmenuShowing = !isSubmenuShowing
+                    })
+                    if (isSubmenuShowing) {
+                        Menu(&#x22;Settings&#x22;) {
+                            Item(&#x22;Setting 1&#x22;, onClick = { action = &#x22;Last action: Setting 1&#x22; })
+                            Item(&#x22;Setting 2&#x22;, onClick = { action = &#x22;Last action: Setting 2&#x22; })
+                        }
+                    }
+                    Separator()
+                    Item(&#x22;About&#x22;, icon = TrayIcon, onClick = { action = &#x22;Last action: About&#x22; })
+                    Item(&#x22;Exit&#x22;, onClick = { isOpen = false }, shortcut = KeyShortcut(Key.Escape), mnemonic = &#x27;E&#x27;)
+                }
+            }
+
+            Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+            ) {
+                Text(text = action)
+            }
+        }
+    }
+}
+
+object TrayIcon : Painter() {
+    override val intrinsicSize = Size(256f, 256f)
+
+    override fun DrawScope.onDraw() {
+        drawOval(Color(0xFFFFA500))
+    }
+}</code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_dial1">
+        <h4>Dialogue 1</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.window.*
+
+fun main() = application {
+    Window(
+        onCloseRequest = ::exitApplication,
+    ) {
+        var isDialogOpen by remember { mutableStateOf(false) }
+
+        Button(onClick = { isDialogOpen = true }) {
+            Text(text = &#x22;Open dialog&#x22;)
+        }
+
+        if (isDialogOpen) {
+            Dialog(
+                onCloseRequest = { isDialogOpen = false },
+                state = rememberDialogState(position = WindowPosition(Alignment.Center))
+            ) {
+                // Dialog&#x27;s content
+            }
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_dial2">
+        <h4>Dialgoue using Swing</h4>
+        <!-- <img src="../../images/android/kotlin/desktop/window_max_min.jpg" /> -->
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.runtime.*
+import androidx.compose.ui.window.AwtWindow
+import androidx.compose.ui.window.application
+import java.awt.FileDialog
+import java.awt.Frame
+
+fun main() = application {
+    var isOpen by remember { mutableStateOf(true) }
+
+    if (isOpen) {
+        FileDialog(onCloseRequest = {
+            isOpen = false
+            println(&#x22;Result $it&#x22;)
+        })
+    }
+}
+
+@Composable
+private fun FileDialog(
+    parent: Frame? = null, onCloseRequest: (result: String?) -&#x3E; Unit
+) = AwtWindow(
+    create = {
+        object : FileDialog(parent, &#x22;Choose a file&#x22;, LOAD) {
+            override fun setVisible(value: Boolean) {
+                super.setVisible(value)
+                if (value) {
+                    onCloseRequest(file)
+                }
+            }
+        }
+    }, dispose = FileDialog::dispose
+)
+                </code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_img1">
+        <h4>Image loading from resources</h4>
+        <img src="../../images/android/kotlin/desktop/image_loading_1.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+/*
+
+Add your image in resources directory of project
+*/
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.window.singleWindowApplication
+
+@OptIn(ExperimentalComposeUiApi::class)
+fun main() = singleWindowApplication {
+    ImageLoading1()
+}
+
+@Composable
+fun ImageLoading1() {
+    Column() {
+        Image(
+            painter = painterResource(&#x22;joker.png&#x22;), contentDescription = &#x22;Joker&#x22;, modifier = Modifier.fillMaxSize()
+        )
+    }
+
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_img1">
+        <h4>Image loading from folders</h4>
+        <img src="../../images/android/kotlin/desktop/image_loading_2.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.res.loadSvgPainter
+import androidx.compose.ui.res.loadXmlImageVector
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.singleWindowApplication
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.xml.sax.InputSource
+import java.io.File
+import java.io.IOException
+import java.net.URL
+
+fun main() = singleWindowApplication {
+    val density = LocalDensity.current
+    Row(modifier = Modifier.padding(16.dp)) {
+        AsyncImage(
+            load = { loadImageBitmap(File(&#x22;F:\\My Data\\Work\\Learning\\Kotlin\\KotlinDesktopApps\\DesktopToDoApp\\src\\main\\resources\\joker.png&#x22;)) },
+            painterFor = { remember { BitmapPainter(it) } },
+            contentDescription = &#x22;Joker&#x22;,
+            modifier = Modifier.width(200.dp)
+        )
+        AsyncImage(
+            load = {
+                loadSvgPainter(
+                    &#x22;https://github.com/JetBrains/compose-jb/raw/master/artwork/idea-logo.svg&#x22;, density
+                )
+            },
+            painterFor = { it },
+            contentDescription = &#x22;Idea logo&#x22;,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier.width(200.dp)
+        )
+        AsyncImage(
+            load = {
+                loadXmlImageVector(
+                    File(&#x22;F:\\My Data\\Work\\Learning\\Kotlin\\KotlinDesktopApps\\DesktopToDoApp\\src\\main\\resources\\compose-logo.xml&#x22;),
+                    density
+                )
+            },
+            painterFor = { rememberVectorPainter(it) },
+            contentDescription = &#x22;Compose logo&#x22;,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier.width(200.dp)
+        )
+    }
+}
+
+@Composable
+fun &#x3C;T&#x3E; AsyncImage(
+    load: suspend () -&#x3E; T,
+    painterFor: @Composable (T) -&#x3E; Painter,
+    contentDescription: String,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Fit,
+) {
+    val image: T? by produceState&#x3C;T?&#x3E;(null) {
+        value = withContext(Dispatchers.IO) {
+            try {
+                load()
+            } catch (e: IOException) {
+                // instead of printing to console, you can also write this to log,
+                // or show some error placeholder
+                e.printStackTrace()
+                null
+            }
+        }
+    }
+
+    if (image != null) {
+        Image(
+            painter = painterFor(image!!),
+            contentDescription = contentDescription,
+            contentScale = contentScale,
+            modifier = modifier
+        )
+    }
+}
+
+/* Loading from file with java.io API */
+
+fun loadImageBitmap(file: File): ImageBitmap = file.inputStream().buffered().use(::loadImageBitmap)
+
+fun loadSvgPainter(file: File, density: Density): Painter =
+    file.inputStream().buffered().use { loadSvgPainter(it, density) }
+
+fun loadXmlImageVector(file: File, density: Density): ImageVector =
+    file.inputStream().buffered().use { loadXmlImageVector(InputSource(it), density) }
+
+/* Loading from network with java.net API */
+
+fun loadImageBitmap(url: String): ImageBitmap = URL(url).openStream().buffered().use(::loadImageBitmap)
+
+fun loadSvgPainter(url: String, density: Density): Painter =
+    URL(url).openStream().buffered().use { loadSvgPainter(it, density) }
+
+fun loadXmlImageVector(url: String, density: Density): ImageVector =
+    URL(url).openStream().buffered().use { loadXmlImageVector(InputSource(it), density) }
+
+/* Loading from network with Ktor client API (https://ktor.io/docs/client.html). */
+
+/*
+
+suspend fun loadImageBitmap(url: String): ImageBitmap =
+    urlStream(url).use(::loadImageBitmap)
+
+suspend fun loadSvgPainter(url: String, density: Density): Painter =
+    urlStream(url).use { loadSvgPainter(it, density) }
+
+suspend fun loadXmlImageVector(url: String, density: Density): ImageVector =
+    urlStream(url).use { loadXmlImageVector(InputSource(it), density) }
+
+@OptIn(KtorExperimentalAPI::class)
+private suspend fun urlStream(url: String) = HttpClient(CIO).use {
+    ByteArrayInputStream(it.get(url))
+}
+
+    */
+                </code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_img3">
+        <h4>Image loading using Canvas</h4>
+        <img src="../../images/android/kotlin/desktop/image_loading_3.jpg" />
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-kt">
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.graphics.withSave
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.res.loadSvgPainter
+import androidx.compose.ui.res.loadXmlImageVector
+import androidx.compose.ui.res.useResource
+import androidx.compose.ui.window.singleWindowApplication
+import org.xml.sax.InputSource
+
+fun main() = singleWindowApplication {
+    val density = LocalDensity.current // to calculate the intrinsic size of vector images (SVG, XML)
+
+    val sample = remember {
+        useResource(&#x22;joker.png&#x22;, ::loadImageBitmap)
+    }
+    val ideaLogo = remember {
+        useResource(&#x22;idea-logo.svg&#x22;) { loadSvgPainter(it, density) }
+    }
+    val composeLogo = rememberVectorPainter(
+        remember {
+            useResource(&#x22;compose-logo.xml&#x22;) { loadXmlImageVector(InputSource(it), density) }
+        }
+    )
+
+    Canvas(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        drawIntoCanvas { canvas -&#x3E;
+            canvas.withSave {
+                canvas.drawImage(sample, Offset.Zero, Paint())
+                canvas.translate(sample.width.toFloat(), 0f)
+                with(ideaLogo) {
+                    draw(ideaLogo.intrinsicSize)
+                }
+                canvas.translate(ideaLogo.intrinsicSize.width, 0f)
+                with(composeLogo) {
+                    draw(Size(100f, 100f))
+                }
+            }
+        }
+    }
+}
+                </code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+
+
+      <section id="as_02_">
+        <h4></h4>
+        <img src="../../images/android/kotlin/desktop/window_max_min.jpg" />
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt">
+                </code></pre>
+        </details>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
