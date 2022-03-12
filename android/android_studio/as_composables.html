@@ -442,19 +442,17 @@ fun smallListDemo() {
           <summary>Code</summary>
           <pre><code class="language-kt">
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -463,13 +461,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+
+data class Player(val firstName: String, val lastName: String)
+data class Team(val title: String, val players: List&#x3C;Player&#x3E;)
+
 @Composable
 fun ExpandableDemo() {
-    data class Team(val title: String, val players: List&#x3C;String&#x3E;)
-
-    val india = Team(&#x22;India&#x22;, listOf(&#x22;Sachin Tendulkar&#x22;, &#x22;Virender Sehwag&#x22;, &#x22;Rahul Dravid&#x22;))
-    val australia = Team(&#x22;Australia&#x22;, listOf(&#x22;Adam Gilchrist&#x22;, &#x22;Mathew Hayden&#x22;, &#x22;Ricky Ponting&#x22;))
-    val southAfrica = Team(&#x22;South Africa&#x22;, listOf(&#x22;Herschelle Gibbs&#x22;, &#x22;Gary Kristen&#x22;, &#x22;Jaques Kallis&#x22;, &#x22;Lance Kluzner&#x22;))
+    val india =
+        Team(&#x22;India&#x22;, listOf(Player(&#x22;Sachin&#x22;, &#x22;Tendulkar&#x22;), Player(&#x22;Virender&#x22;, &#x22;Sehwag&#x22;), Player(&#x22;Rahul&#x22;, &#x22;Dravid&#x22;)))
+    val australia =
+        Team(&#x22;Australia&#x22;, listOf(Player(&#x22;Adam&#x22;, &#x22;Gilchrist&#x22;), Player(&#x22;Mathew&#x22;, &#x22;Hayden&#x22;), Player(&#x22;Ricky&#x22;, &#x22;Ponting&#x22;)))
+    val southAfrica = Team(
+        &#x22;South Africa&#x22;, listOf(
+            Player(&#x22;Herschelle&#x22;, &#x22;Gibbs&#x22;),
+            Player(&#x22;Gary&#x22;, &#x22;Kristen&#x22;),
+            Player(&#x22;Jaques&#x22;, &#x22;Kallis&#x22;),
+            Player(&#x22;Lance&#x22;, &#x22;Kluzner&#x22;)
+        )
+    )
 
     val teams = listOf&#x3C;Team&#x3E;(india, australia, southAfrica)
     val teamsCards = mutableListOf&#x3C;CollapsableSection&#x3E;()
@@ -481,10 +490,14 @@ fun ExpandableDemo() {
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CollapsableLazyColumn(
     sections: List&#x3C;CollapsableSection&#x3E;, modifier: Modifier = Modifier
 ) {
+    val openDialog = remember { mutableStateOf(false) }
+    val firstName = remember { mutableStateOf(&#x22;&#x22;) }
+    val lastName = remember { mutableStateOf(&#x22;&#x22;) }
     val collapsedState = remember(sections) { sections.map { true }.toMutableStateList() }
     LazyColumn(modifier) {
         sections.forEachIndexed { i, dataItem -&#x3E;
@@ -511,23 +524,51 @@ fun CollapsableLazyColumn(
             }
             if (!collapsed) {
                 items(dataItem.players) { row -&#x3E;
-                    Row {
-                        Spacer(modifier = Modifier.size(MaterialIconDimension.dp))
-                        Text(
-                            row, modifier = Modifier.padding(vertical = 10.dp)
-                        )
+                    Row(
+                        modifier = Modifier.fillParentMaxWidth().padding(4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(row.firstName, modifier = Modifier.padding(vertical = 10.dp))
+                        Button(onClick = {
+                            firstName.value = row.firstName
+                            lastName.value = row.lastName
+                            openDialog.value = true
+                        }) {
+                            Text(&#x22;Details&#x22;)
+                        }
                     }
                     Divider()
                 }
             }
         }
     }
+    if (openDialog.value) {
+        AlertDialog(onDismissRequest = {
+            openDialog.value = false
+        }, title = {
+            Text(text = firstName.value)
+        }, text = {
+            Text(lastName.value)
+        }, confirmButton = {
+            Button(onClick = {
+                openDialog.value = false
+            }) {
+                Text(&#x22;Confirm&#x22;)
+            }
+        }, dismissButton = {
+            Button(onClick = {
+                openDialog.value = false
+            }) {
+                Text(&#x22;Cancel&#x22;)
+            }
+        })
+    }
 }
 
-data class CollapsableSection(val title: String, val players: List&#x3C;String&#x3E;)
+data class CollapsableSection(val title: String, val players: List&#x3C;Player&#x3E;)
 
-const val MaterialIconDimension = 24f
-        </code></pre>
+const val MaterialIconDimension = 24f</code></pre>
         </details>
       </section>
 
