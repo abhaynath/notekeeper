@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Sqlite Basics</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="sqlite_index.html">Sqlite</a>
+    </nav>
+
+    <div class="content">
+      <section id="installation">
+        <h4>Basics</h4>
+        <details>
+          <summary>Installation</summary>
+          <ol class="steps">
+            <li>
+              Go to
+              <a target="_blank" href="https://www.sqlite.org/download.html"
+                >sqlite.org</a
+              >
+            </li>
+            <li>Download <b>sqlite-tools-win32-x86</b> zip file.</li>
+            <li>Unzip it in any folder.</li>
+            <li>
+              Add path to the sqlite3 folder in environment variable.
+              <img src="../../images/database/sqlite/path.jpg" />
+            </li>
+            <li>
+              Documentation for command line shell.
+              <a target="_blank" href="https://www.sqlite.org/cli.html"
+                >Sqlite Documentation</a
+              >
+            </li>
+          </ol>
+
+          <!-- <pre><code class="language-sql">
+                select * from users;
+            </code></pre> -->
+        </details>
+      </section>
+
+      <section id="basic_shell">
+        <h4>Using sqlite shell</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              The SQLite project provides a simple command-line program named
+              sqlite3 (or sqlite3.exe on Windows) that allows the user to
+              manually enter and execute SQL statements against an SQLite
+              database or against a ZIP archive. This document provides a brief
+              introduction on how to use the sqlite3 program.
+            </p>
+            <p>
+              Start the sqlite3 program by typing <span class="keyword">&#x22;sqlite3&#x22;</span> at the
+              command prompt, optionally followed by the name the file that
+              holds the SQLite database (or ZIP archive). If the named file does
+              not exist, a new database file with the given name will be created
+              automatically. If no database file is specified on the
+              command-line, a temporary database is created and automatically
+              deleted when the &#x22;sqlite3&#x22; program exits.
+            </p>
+            <p>
+              On startup, the sqlite3 program will show a brief banner message
+              then prompt you to enter SQL. Type in SQL statements (terminated
+              by a semicolon), press &#x22;Enter&#x22; and the SQL will be
+              executed.
+
+              <img src="../../images/database/sqlite/shell1.jpg" />
+            </p>
+          </div>
+        </details>
+      </section>
+      <section id="sample_db">
+          <h4>Sample database</h4>
+          <details>
+              <summary>Create a database</summary>
+              <div>
+                  <pre class="shell">sqlite3 cricket</pre>
+
+                  <pre class="shell">
+create table players(id integer primary key,
+    firstName text,
+    lastName text, 
+    matches integer, 
+    average decimal(10,2)
+);
+                  </pre>
+              </div>
+          </details>
+          <details>
+              <summary>Insert Query</summary>
+              <div>
+                  <pre class="shell">
+insert into players(firstName,lastName,matches,average)
+values(&#x27;sachin&#x27;,&#x27;tendulkar&#x27;,453,46.84);</pre>
+              </div>
+          </details>
+          <details>
+              <summary>Select Query</summary>
+              <pre class="shell">select * from players;</pre>
+              <img src="../../images/database/sqlite/shell2.jpg" />
+          </details>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
