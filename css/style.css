@@ -320,3 +320,7 @@ img {
   width: 100px;
   height: 100px;
 }
+table.simple td{
+  background-color: black;
+  text-align: center;
+}

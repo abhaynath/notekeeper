@@ -70,10 +70,11 @@
               introduction on how to use the sqlite3 program.
             </p>
             <p>
-              Start the sqlite3 program by typing <span class="keyword">&#x22;sqlite3&#x22;</span> at the
-              command prompt, optionally followed by the name the file that
-              holds the SQLite database (or ZIP archive). If the named file does
-              not exist, a new database file with the given name will be created
+              Start the sqlite3 program by typing
+              <span class="keyword">&#x22;sqlite3&#x22;</span> at the command
+              prompt, optionally followed by the name the file that holds the
+              SQLite database (or ZIP archive). If the named file does not
+              exist, a new database file with the given name will be created
               automatically. If no database file is specified on the
               command-line, a temporary database is created and automatically
               deleted when the &#x22;sqlite3&#x22; program exits.
@@ -90,35 +91,168 @@
         </details>
       </section>
       <section id="sample_db">
-          <h4>Sample database</h4>
-          <details>
-              <summary>Create a database</summary>
-              <div>
-                  <pre class="shell">sqlite3 cricket</pre>
+        <h4>Sample database</h4>
+        <details>
+          <summary>Create a database</summary>
+          <div>
+            <pre class="shell">sqlite3 cricket</pre>
 
-                  <pre class="shell">
+            <pre class="shell">
 create table players(id integer primary key,
     firstName text,
     lastName text, 
     matches integer, 
     average decimal(10,2)
 );
-                  </pre>
-              </div>
-          </details>
-          <details>
-              <summary>Insert Query</summary>
-              <div>
-                  <pre class="shell">
+                  </pre
+            >
+          </div>
+        </details>
+        <details>
+          <summary>Insert Query</summary>
+          <div>
+            <pre class="shell">
 insert into players(firstName,lastName,matches,average)
-values(&#x27;sachin&#x27;,&#x27;tendulkar&#x27;,453,46.84);</pre>
-              </div>
-          </details>
-          <details>
-              <summary>Select Query</summary>
-              <pre class="shell">select * from players;</pre>
-              <img src="../../images/database/sqlite/shell2.jpg" />
-          </details>
+values(&#x27;sachin&#x27;,&#x27;tendulkar&#x27;,453,46.84);</pre
+            >
+          </div>
+        </details>
+        <details>
+          <summary>Select Query</summary>
+          <pre class="shell">select * from players;</pre>
+          <img src="../../images/database/sqlite/shell2.jpg" />
+        </details>
+      </section>
+
+      <section>
+        <h4>Dot Commands</h4>
+        <details>
+          <summary>Query Schema</summary>
+          <ul>
+            <li>
+              <b>Get list of all Tables</b>
+              <pre class="shell">.tables</pre>
+            </li>
+
+            <li>
+              <b>Get schema of all tables</b>
+              <pre class="shell">.schema</pre>
+            </li>
+            <li>
+              <b>Show schema of specific table</b>
+              <pre class="shell">.schema  players</pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>Output format</summary>
+          <ul>
+            <li>
+              <b
+                >Change the output format. Default
+                <span class="keyword">list</span></b
+              >
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="https://www.sqlite.org/cli.html#changing_output_formats"
+                >More information about changing formats</a
+              >
+            </li>
+            <pre class="shell">.mode format_type</pre>
+
+            <table class="simple">
+              <tr>
+                <td>ascii</td>
+                <td>box</td>
+                <td>csv</td>
+                <td>column</td>
+                <td>html</td>
+                <td>insert</td>
+                <td>json</td>
+              </tr>
+
+              <tr>
+                <td>line</td>
+                <td>list</td>
+                <td>markdown</td>
+                <td>quote</td>
+                <td>table</td>
+                <td>tabs</td>
+                <td>tcl</td>
+              </tr>
+            </table>
+          </ul>
+          <img src="../../images/database/sqlite/modes.jpg" />
+        </details>
+
+        <details>
+          <summary>Writing output to files</summary>
+          <div>
+            <p>By default, sqlite3 sends query results to standard output.</p>
+            <p>
+              You can change this using the <b>&#x22;.output&#x22;</b> and
+              <b>&#x22;.once&#x22;</b> commands. Just put the name of an output
+              file as an argument to .output and all subsequent query results
+              will be written to that file.
+            </p>
+            <p>
+              Or use the .once command instead of .output and output will only
+              be redirected for the single next command before reverting to the
+              console.
+            </p>
+            <p>
+              Use .output with no arguments to begin writing to standard output
+              again.
+            </p>
+            <ul>
+              <li>
+                <b>Write sql output to JSON file.</b>
+                <pre class="shell">
+sqlite3 cricket
+
+.mode json
+
+.output players.json
+
+select * from players;
+                </pre>
+                players.json
+                <pre><code class="language-json">
+[
+&#x9;{
+&#x9;&#x9;&#x22;id&#x22;: 1,
+&#x9;&#x9;&#x22;firstName&#x22;: &#x22;sachin&#x22;,
+&#x9;&#x9;&#x22;lastName&#x22;: &#x22;tendulkar&#x22;,
+&#x9;&#x9;&#x22;matches&#x22;: 453,
+&#x9;&#x9;&#x22;average&#x22;: 46.84
+&#x9;},
+&#x9;{
+&#x9;&#x9;&#x22;id&#x22;: 2,
+&#x9;&#x9;&#x22;firstName&#x22;: &#x22;virender&#x22;,
+&#x9;&#x9;&#x22;lastName&#x22;: &#x22;sehwag&#x22;,
+&#x9;&#x9;&#x22;matches&#x22;: 350,
+&#x9;&#x9;&#x22;average&#x22;: 26.66
+&#x9;}
+]</code></pre>
+              </li>
+              <li>
+                <b></b>
+                <pre class="shell"></pre>
+              </li>
+              <li>
+                <b></b>
+                <pre class="shell"></pre>
+              </li>
+              <li>
+                <b></b>
+                <pre class="shell"></pre>
+              </li>
+            </ul>
+          </div>
+        </details>
       </section>
     </div>
   </body>
