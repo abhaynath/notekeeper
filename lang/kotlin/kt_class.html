@@ -9,7 +9,10 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
     <title>Class</title>
@@ -21,181 +24,361 @@
       <a href="kotlin_index.html">Kotlin</a>
     </nav>
     <div class="content">
-      <section id="kt_05_01">
-        <h4>Example 1</h4>
-        <pre><code class="language-kotlin">
-    class BankAccount {
-        var accountBalance:Double =0.0
-        var accountNumber:Int  = 0
-        
-            fun displayBalance(){
-            println(&#x22;Balance : ${accountBalance}&#x22;)
-        println(&#x22;Number ${accountNumber}&#x22;)
-            
-        }
-            
-    }
-    fun main(){
-        val abhay = BankAccount()
-        abhay.accountBalance = 34.44
-        abhay.accountNumber = 1
-        abhay.displayBalance()
-        
-        
-    }
-        </code></pre>
+      <section>
+        <h4>Primary Constuctor</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-kt">
+/*   Class having parameterized constructor which initialize a property .
+If you are not having any annotations or modifiers(public, private, protected),
+then you can omit the constructor keyword.
 
-        <h4>Example 2</h4>
-        <pre><code class="language-kotlin">
-    class Grade(val letter: String, val points: Double, val credits: Double)
+*/
 
-    class Student(val firstName: String, val lastName: String, val grades: MutableList&#x3C;Grade&#x3E; = mutableListOf(), var credits: Double = 0.0) 
-    {
-        fun recordGrade(grade: Grade) {
-            grades.add(grade);
-            credits += grade.credits;
-        }
+class Batsman constructor(runs: Int, innings: Int) {
+    val average = runs.toDouble() / innings.toDouble()
+}
 
-        fun display() {
-            println(&#x22;$firstName $lastName credits : $credits&#x22;);
-            for (i in grades) {
-                println(&#x22;${i.letter} -- ${i.points}&#x22;)
-            }
-            println(&#x22;---------&#x22;);
-        }
+fun main(args: Array&#x3C;String&#x3E;) {
+    val sachin = Batsman(18457, 453)
+    //println(sachin.runs)  // error ! (runs is not available)
+    println(sachin.average)
+}</code></pre>
+
+            <pre><code class="language-kotlin">
+class Grade(val letter: String, val points: Double, val credits: Double)
+
+class Student(val firstName: String, val lastName: String, val grades: MutableList&#x3C;Grade&#x3E; = mutableListOf(), var credits: Double = 0.0) 
+{
+    fun recordGrade(grade: Grade) {
+        grades.add(grade);
+        credits += grade.credits;
     }
 
-    val jane = Student(&#x22;Mary&#x22;, &#x22;Jane&#x22;);
-    val history = Grade(&#x22;B&#x22;, 3.4, 2.3);
-    val maths = Grade(&#x22;A&#x22;, 1.1, 6.6);
+    fun display() {
+        println(&#x22;$firstName $lastName credits : $credits&#x22;);
+        for (i in grades) {
+            println(&#x22;${i.letter} -- ${i.points}&#x22;)
+        }
+        println(&#x22;---------&#x22;);
+    }
+}
 
-    fun main() {
-        jane.recordGrade(history);
-        jane.recordGrade(maths);
-        jane.display();
+val jane = Student(&#x22;Mary&#x22;, &#x22;Jane&#x22;);
+val history = Grade(&#x22;B&#x22;, 3.4, 2.3);
+val maths = Grade(&#x22;A&#x22;, 1.1, 6.6);
 
-    } 
+fun main() {
+    jane.recordGrade(history);
+    jane.recordGrade(maths);
+    jane.display();
+
+} 
     </code></pre>
+          </div>
+        </details>
+      </section>
+      <section>
+        <h4>Initializer Block</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              So, we have seen that primary constructor is used to initialize
+              the member variables of a class.
+            </p>
+            <p>
+              But we are not writing any code of initialization in the primary
+              constructor, then how will our goal be achieved?
+            </p>
+            <p>
+              To achieve this task, we use an initializer block called
+              <b>init()</b> to initialize the member variables with the
+              constructor variables.
+            </p>
+            <p>
+              This <b>init()</b> block is executed just after the creation of an
+              object.
+            </p>
+            <pre><code class="language-kt">
+class Batsman(name: String, runs: Int, innings: Int, notOut: Int, balls: Int) {
+    val playerName: String = name
+    var average: Double = 0.0
+    var strikeRate: Double = 0.0
+
+    init {
+        average = runs.toDouble() / (innings - notOut)
+        strikeRate = (runs.toDouble() / balls) * 100
+    }
+
+    fun print() {
+        println(&#x22;${playerName} ${average} ${strikeRate}&#x22;)
+    }
+}
+            
+fun main(args: Array&#x3C;String&#x3E;) {
+    val sachin = Batsman(&#x22;Sachin Tendulkar&#x22;, 18426, 452, 41, 21367)
+    sachin.print()
+
+}</code></pre>
+
+            <h4>Multiple init blocks</h4>
+            <pre><code class="language-kt">
+class Circle(r: Double = 0.0) {
+    var radius: Double = 0.0
+    var diameter: Double = 0.0
+    var circumference: Double = 0.0
+    var area: Double = 0.0
+
+    init {
+        radius = r
+    }
+
+    init {
+        diameter = 2 * radius
+    }
+
+    init {
+        circumference = Math.PI * diameter
+    }
+
+    init {
+        area = Math.PI * radius * radius
+    }
+
+    fun print() {
+        println(&#x22; Radius = ${radius}, Diameter = ${diameter}, Circumference = ${circumference}, Area = ${area}&#x22;)
+    }
+}
+
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    val circle1 = Circle(5.6)
+    circle1.print()
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section>
+        <h4>Default values in constructor</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              You need not pass all the parameters while declaring an object.
+              You can put default values to parameters of the constructor as
+              shown below
+            </p>
+            <pre><code class="language-kt">
+class Batsman(name: String = &#x22;&#x22;, matches: Int = 0) {
+    val playerName = name
+    val playerMatches = matches
+    fun print() {
+        println(&#x22;${playerName}  ${playerMatches}&#x22;)
+    }
+}
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    val sachin = Batsman()
+    val virender = Batsman(&#x22;Virender Sehwag&#x22;, 305)
+    sachin.print()
+    virender.print()
+
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section>
+        <h4>Data Class</h4>
+        <details>
+          <summary></summary>
+          <pre><code class="language-kotlin">
+data class StudentData(var firstName:String,var lastName:String,var id:Int);
+
+val abhay = StudentData(&#x22;Abhay&#x22;,&#x22;Nath&#x22;,1);
+val rohit = StudentData(&#x22;Rohit&#x22;,&#x22;Sharma&#x22;,2);
+val abhayCopy = abhay.copy();
+
+
+fun main(){
+    println(abhay.firstName);
+    println(rohit.lastName);
+
+    println(&#x22;abhay==rohit : ${abhay==rohit}&#x22;)
+    println(&#x22;abhay==abhayCopy : ${abhay==abhayCopy}&#x22;)
+    println(&#x22;abhay===abhayCopy : ${abhay===abhayCopy}&#x22;)
+
+    val (firstName,lastName,id) = abhayCopy;
+
+
+    println(&#x22;abhaycopy properties : $firstName $lastName $id&#x22;)
+    abhay.firstName=&#x22;Sachin Tendulkar&#x22;;
+    println(&#x22;abhayCopy =  ${abhayCopy.firstName} ---  abhay =  ${abhay.firstName}&#x22;)
+}
+        </code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt"></code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt"></code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt"></code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt"></code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt"></code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <pre><code class="language-kt"></code></pre>
+        </details>
+      </section>
+      <section id="kt_05_01">
+        <h4>Example 2</h4>
       </section>
 
       <section id="kt_05_02">
         <h4>Data Class</h4>
-        <pre><code class="language-kotlin">
-    data class StudentData(var firstName:String,var lastName:String,var id:Int);
-
-    val abhay = StudentData(&#x22;Abhay&#x22;,&#x22;Nath&#x22;,1);
-    val rohit = StudentData(&#x22;Rohit&#x22;,&#x22;Sharma&#x22;,2);
-    val abhayCopy = abhay.copy();
-
-
-    fun main(){
-        println(abhay.firstName);
-        println(rohit.lastName);
-
-        println(&#x22;abhay==rohit : ${abhay==rohit}&#x22;)
-        println(&#x22;abhay==abhayCopy : ${abhay==abhayCopy}&#x22;)
-        println(&#x22;abhay===abhayCopy : ${abhay===abhayCopy}&#x22;)
-
-        val (firstName,lastName,id) = abhayCopy;
-
-
-        println(&#x22;abhaycopy properties : $firstName $lastName $id&#x22;)
-        abhay.firstName=&#x22;Sachin Tendulkar&#x22;;
-        println(&#x22;abhayCopy =  ${abhayCopy.firstName} ---  abhay =  ${abhay.firstName}&#x22;)
-    }
-</code></pre>
       </section>
 
       <section id="kt_05_03">
         <h4>Enum Classes</h4>
-        <pre><code class="language-kotlin">
-    import java.util.*
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-kotlin">
+import java.util.*
 
-    enum class DayOfWeek(val isWeekend: Boolean = false) {
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday(true),
-        Sunday(true);
+enum class DayOfWeek(val isWeekend: Boolean = false) {
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday(true),
+    Sunday(true);
 
-        companion object {
-            fun today():DayOfWeek{
-                val calenderDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-                var adjustedDay = calenderDayOfWeek - 2;
-                val days = DayOfWeek.values();
-                if(adjustedDay&#x3C;0){
-                    adjustedDay+=days.count()
-                }
-                val today = days.first(){it.ordinal == adjustedDay}
-                return today;
+    companion object {
+        fun today():DayOfWeek{
+            val calenderDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+            var adjustedDay = calenderDayOfWeek - 2;
+            val days = DayOfWeek.values();
+            if(adjustedDay&#x3C;0){
+                adjustedDay+=days.count()
             }
+            val today = days.first(){it.ordinal == adjustedDay}
+            return today;
         }
     }
+}
 
-    fun main() {
-        for(day in DayOfWeek.values()){
-            println(&#x22;${day.ordinal}  ${day.name} ${day.isWeekend}&#x22;);
-        }
-
-        val dayIndex = 3;
-        val dayAtIndex = DayOfWeek.values()[dayIndex]
-        println(&#x22;Day at Index ${dayIndex} = ${dayAtIndex}&#x22;);
-
-        val tuesDay = DayOfWeek.valueOf(&#x22;Tuesday&#x22;);
-        println(&#x22;TuesDay index is ${tuesDay.ordinal}&#x22;)
-
-        val today = DayOfWeek.today();
-        val isWeekend = &#x22;It is ${if(today.isWeekend) &#x22;&#x22; else &#x22; not &#x22;}the weekend&#x22;;
-        println(&#x22;It is ${today}. $isWeekend.&#x22;)
+fun main() {
+    for(day in DayOfWeek.values()){
+        println(&#x22;${day.ordinal}  ${day.name} ${day.isWeekend}&#x22;);
     }
-</code></pre>
+
+    val dayIndex = 3;
+    val dayAtIndex = DayOfWeek.values()[dayIndex]
+    println(&#x22;Day at Index ${dayIndex} = ${dayAtIndex}&#x22;);
+
+    val tuesDay = DayOfWeek.valueOf(&#x22;Tuesday&#x22;);
+    println(&#x22;TuesDay index is ${tuesDay.ordinal}&#x22;)
+
+    val today = DayOfWeek.today();
+    val isWeekend = &#x22;It is ${if(today.isWeekend) &#x22;&#x22; else &#x22; not &#x22;}the weekend&#x22;;
+    println(&#x22;It is ${today}. $isWeekend.&#x22;)
+}
+                </code></pre>
+          </div>
+        </details>
       </section>
 
       <section id="kt_05_04">
         <h4>using object keyword for singleton object</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-kotlin">
+data class Student(val firstName: String, val lastName: String) {
+    val fullName = &#x22;$firstName $lastName&#x22;;
+}
 
-        <pre><code class="language-kotlin">
-    data class Student(val firstName: String, val lastName: String) {
-        val fullName = &#x22;$firstName $lastName&#x22;;
+val abhay = Student(&#x22;Abhay&#x22;, &#x22;Nath&#x22;);
+val virat = Student(&#x22;virat&#x22;, &#x22;Kohli&#x22;);
+
+object StudentRegister {
+    val allStudents = mutableListOf&#x3C;Student&#x3E;()
+
+    fun addStudent(student: Student) {
+        allStudents.add(student);
     }
-    
-    val abhay = Student(&#x22;Abhay&#x22;, &#x22;Nath&#x22;);
-    val virat = Student(&#x22;virat&#x22;, &#x22;Kohli&#x22;);
-    
-    object StudentRegister {
-        val allStudents = mutableListOf&#x3C;Student&#x3E;()
-    
-        fun addStudent(student: Student) {
-            allStudents.add(student);
-        }
-    
-        fun removeStudent(student: Student) {
-            allStudents.remove(student);
-        }
-    
-        fun display() {
-            for (student in allStudents) {
-                println(student.fullName);
-            }
-        }
-    
+
+    fun removeStudent(student: Student) {
+        allStudents.remove(student);
     }
-    
-    fun main() {
-        StudentRegister.addStudent(abhay);
-        StudentRegister.addStudent(virat);
-        StudentRegister.display();
-        StudentRegister.removeStudent(abhay);
-        StudentRegister.display();
+
+    fun display() {
+        for (student in allStudents) {
+            println(student.fullName);
+        }
     }
-     </code></pre>
+
+}
+
+fun main() {
+    StudentRegister.addStudent(abhay);
+    StudentRegister.addStudent(virat);
+    StudentRegister.display();
+    StudentRegister.removeStudent(abhay);
+    StudentRegister.display();
+}
+             </code></pre>
+          </div>
+        </details>
       </section>
 
       <section id="kt_05_05">
         <h4>using object for the namespace</h4>
-        <pre><code class="language-kotlin">
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-kotlin">
     object JsonKeys{
         const val ID = &#x22;_id&#x22;;
         const val SESSION_ID=&#x22;session_id&#x22;;
@@ -205,52 +388,60 @@
         println(JsonKeys.ID);
     }
 </code></pre>
+          </div>
+        </details>
       </section>
 
       <section id="kt_05_06">
         <h4>factory pattern using companion object</h4>
-        <pre><code class="language-kotlin">
-    class Scientist private constructor(val id: Int, val firstName: String, val lastName: String) {
-        companion object {
-            var currentId = 0;
-            fun newScientist(firstName: String, lastName: String): Scientist {
-                currentId += 1;
-                return Scientist(currentId, firstName, lastName);
-            }
-        }
-    
-        var fullName = &#x22;$firstName $lastName&#x22;;
-    }
-    
-    object ScientistRepository {
-        val allScientist = mutableListOf&#x3C;Scientist&#x3E;()
-    
-        fun addScientist(scientist: Scientist) {
-            allScientist.add(scientist)
-        }
-    
-        fun removeScientist(scientist: Scientist) {
-            allScientist.remove(scientist)
-        }
-    
-        fun display() {
-            for (scientist in allScientist) {
-                println(&#x22;${scientist.id} ${scientist.fullName}&#x22;)
-            }
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-kotlin">
+class Scientist private constructor(val id: Int, val firstName: String, val lastName: String) {
+    companion object {
+        var currentId = 0;
+        fun newScientist(firstName: String, lastName: String): Scientist {
+            currentId += 1;
+            return Scientist(currentId, firstName, lastName);
         }
     }
-    
-    fun main() {
-        val newton = Scientist.newScientist(&#x22;Issac&#x22;, &#x22;Newton&#x22;);
-        val einstein = Scientist.newScientist(&#x22;Albert&#x22;, &#x22;Einstein&#x22;);
-        ScientistRepository.addScientist(newton)
-        ScientistRepository.addScientist(einstein)
-        ScientistRepository.display()
+
+    var fullName = &#x22;$firstName $lastName&#x22;;
+}
+
+object ScientistRepository {
+    val allScientist = mutableListOf&#x3C;Scientist&#x3E;()
+
+    fun addScientist(scientist: Scientist) {
+        allScientist.add(scientist)
     }
+
+    fun removeScientist(scientist: Scientist) {
+        allScientist.remove(scientist)
+    }
+
+    fun display() {
+        for (scientist in allScientist) {
+            println(&#x22;${scientist.id} ${scientist.fullName}&#x22;)
+        }
+    }
+}
+
+fun main() {
+    val newton = Scientist.newScientist(&#x22;Issac&#x22;, &#x22;Newton&#x22;);
+    val einstein = Scientist.newScientist(&#x22;Albert&#x22;, &#x22;Einstein&#x22;);
+    ScientistRepository.addScientist(newton)
+    ScientistRepository.addScientist(einstein)
+    ScientistRepository.display()
+}
 </code></pre>
+          </div>
+        </details>
       </section>
     </div>
   </body>
-  <script>hljs.highlightAll();</script>
- 
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
