@@ -25,10 +25,213 @@
       <a href="kotlin_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="introduction">
+        <h4>Introduction</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              Interfaces in Kotlin can contain declarations of abstract methods,
+              as well as method implementations. What makes them different from
+              abstract classes is that interfaces cannot store a state. They can
+              have properties, but these need to be abstract or provide accessor
+              implementations.
+            </p>
+            <p>An interface is defined using the keyword interface:</p>
+            <pre> <code class="language-kt">
+interface MyInterface 
+{
+  fun bar()
+  fun foo() {
+    // optional body
+  }
+}</code></pre>
+
+            <p>A class or object can implement one or more interfaces:</p>
+            <pre><code class="language-kt">
+class Child : MyInterface {
+  override fun bar() {
+      // body
+  }
+}
+</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="properties">
+        <h4>Properties in interfaces</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              You can declare properties in interfaces. A property declared in
+              an interface can either be abstract or provide implementations for
+              accessors. Properties declared in interfaces can&#x27;t have
+              backing fields, and therefore accessors declared in interfaces
+              can&#x27;t reference them:
+            </p>
+            <pre> <code class="language-kt">
+interface MyInterface {
+    val prop: Int // abstract
+
+    val propertyWithImplementation: String
+        get() = &#x22;foo&#x22;
+
+    fun foo() {
+        print(prop)
+    }
+}
+
+class Child : MyInterface {
+    override val prop: Int = 29
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="inheritance">
+        <h4>Interfaces Inheritance</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              An interface can derive from other interfaces, meaning it can both
+              provide implementations for their members and declare new
+              functions and properties. Quite naturally, classes implementing
+              such an interface are only required to define the missing
+              implementations:
+            </p>
+
+            <pre> <code class="language-kt">
+interface Named {
+    val name: String
+}
+
+interface Person : Named {
+    val firstName: String
+    val lastName: String
+    override val name: String get() = &#x22;$firstName $lastName&#x22;
+}
+
+data class Employee(override val firstName: String, override val lastName: String) : Person
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    val emp = Employee(&#x22;sachin&#x22;, &#x22;tendulkar&#x22;)
+    println(emp.name)
+}
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="conflicts">
+        <h4>Resolving overriding conflicts</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              When you declare many types in your supertype list, you may
+              inherit more than one implementation of the same method:
+            </p>
+            <pre> <code class="language-kt">
+interface A {
+    fun foo() { print(&#x22;A&#x22;) }
+    fun bar()
+}
+
+interface B {
+    fun foo() { print(&#x22;B&#x22;) }
+    fun bar() { print(&#x22;bar&#x22;) }
+}
+
+class C : A {
+    override fun bar() { print(&#x22;bar&#x22;) }
+}
+
+class D : A, B {
+    override fun foo() {
+        super&#x3C;A&#x3E;.foo()
+        super&#x3C;B&#x3E;.foo()
+    }
+
+    override fun bar() {
+        super&#x3C;B&#x3E;.bar()
+    }
+}</code></pre>
+            <p>
+              Interfaces A and B both declare functions foo() and bar(). Both of
+              them implement foo(), but only B implements bar() (bar() is not
+              marked as abstract in A, because this is the default for
+              interfaces if the function has no body). Now, if you derive a
+              concrete class C from A, you have to override bar() and provide an
+              implementation.
+            </p>
+            <p>
+              However, if you derive D from A and B, you need to implement all
+              the methods that you have inherited from multiple interfaces, and
+              you need to specify how exactly D should implement them. This rule
+              applies both to methods for which you&#x27;ve inherited a single
+              implementation (bar()) and to those for which you&#x27;ve
+              inherited multiple implementations (foo()).
+            </p>
+          </div>
+        </details>
+      </section>
+
       <section id="kt_03_01">
         <h4></h4>
-        <pre> <code class="language-kotlin">
- </code></pre>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="kt_03_01">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="kt_03_01">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="kt_03_01">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="kt_03_01">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
       </section>
     </div>
   </body>
