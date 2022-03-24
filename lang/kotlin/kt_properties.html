@@ -25,73 +25,304 @@
       <a href="kotlin_index.html">Kotlin</a>
     </nav>
     <div class="content">
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+      <section id="declaration">
+        <h4>Declaring properties</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              Properties in Kotlin classes can be declared either as mutable,
+              using the var keyword, or as read-only, using the val keyword.
+            </p>
+            <pre> <code class="language-kotlin">
+  class Address {
+      var name: String = &#x22;Holmes, Sherlock&#x22;
+      var street: String = &#x22;Baker&#x22;
+      var city: String = &#x22;London&#x22;
+      var state: String? = null
+      var zip: String = &#x22;123456&#x22;
+  }
+  
+  fun main(args: Array&#x3C;String&#x3E;) {
+      val address = Address()
+      println(address.city)
+  }</code></pre>
+          </div>
+        </details>
       </section>
 
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+      <section id="getterSetter">
+        <h4>Getters and setters</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>The full syntax for declaring a property is as follows:</p>
+            <pre> <code class="language-kotlin">
+  var &#x3C;propertyName&#x3E;[: &#x3C;PropertyType&#x3E;] [= &#x3C;property_initializer&#x3E;]
+  [&#x3C;getter&#x3E;]
+  [&#x3C;setter&#x3E;]
+              </code></pre>
+            <p>
+              The initializer, getter, and setter are optional. The property
+              type is optional if it can be inferred from the initializer or the
+              getter&#x2019;s return type, as shown below:
+            </p>
+            <pre><code class="language-kt">var initialized = 1 // has type Int, default getter and setter
+  // var allByDefault // ERROR: explicit initializer required, default getter and setter implied</code></pre>
+            <p>
+              The full syntax of a read-only property declaration differs from a
+              mutable one in two ways: it starts with val instead of var and
+              does not allow a setter:
+            </p>
+
+            <pre><code class="language-kt">val simple: Int? // has type Int, default getter, must be initialized in constructor
+  val inferredType = 1 // has type Int and a default getter</code></pre>
+            <p>
+              You can define custom accessors for a property. If you define a
+              custom getter, it will be called every time you access the
+              property (this way you can implement a computed property).
+              Here&#x27;s an example of a custom getter:
+            </p>
+            <pre><code class="language-kt">class Rectangle(val width: Int, val height: Int) {
+    val area: Int // property type is optional since it can be inferred from the getter&#x27;s return type
+        get() = this.width * this.height
+  }</code></pre>
+            <p>
+              You can omit the property type if it can be inferred from the
+              getter:
+            </p>
+            <pre><code class="language-kt">val area get() = this.width * this.height</code></pre>
+            <p>
+              If you define a custom setter, it will be called every time you
+              assign a value to the property, except its initialization. A
+              custom setter looks like this:
+            </p>
+            <pre><code class="language-kt">var stringRepresentation: String
+    get() = this.toString()
+    set(value) {
+        setDataFromString(value) // parses the string and assigns values to other properties
+    }
+  </code></pre>
+            <p>
+              By convention, the name of the setter parameter is value, but you
+              can choose a different name if you prefer.
+            </p>
+            <p>
+              If you need to annotate an accessor or change its visibility, but
+              you don&#x27;t need to change the default implementation, you can
+              define the accessor without defining its body:
+            </p>
+            <pre><code class="language-kt">var setterVisibility: String = &#x22;abc&#x22;
+    private set // the setter is private and has the default implementation
+  
+  var setterWithAnnotation: Any? = null
+    @Inject set // annotate the setter with Inject</code></pre>
+
+            <pre><code class="language-kt">class Player {
+      var matches: Int = 0
+          get() = field
+          set(value) {
+              if (value &#x3E; 0) {
+                  field = value
+              }
+          }
+  
+      fun print() {
+          println(&#x22;Player = $matches&#x22;)
+      }
+  }
+  
+  fun main(args: Array&#x3C;String&#x3E;) {
+      val sachin = Player()
+      sachin.print()
+      sachin.matches = -15
+      sachin.print()
+      sachin.matches = 452
+      sachin.print()
+  }</code></pre>
+            <p>
+              Following snippet creates a class Circle which takes radius as a
+              constructor parameter and calculates diameter, circumference and
+              area. These field are read only and only can be changed if radius
+              is changed.
+            </p>
+            <pre><code class="language-kt">
+    class Circle(r: Double) {
+      constructor(rd: Int) : this(rd.toDouble())
+  
+      var diameter: Double = 0.0
+          private set
+      var circumference: Double = 0.0
+          private set
+      var area: Double = 0.0
+          private set
+      var radius: Double = 0.0
+          set(value) {
+              if (value &#x3E; 0) {
+                  field = value
+                  calculate()
+              }
+          }
+  
+      init {
+          if (r &#x3E; 0) {
+              radius = r
+              calculate()
+          }
+      }
+  
+      private fun calculate() {
+          diameter = 2 * radius
+          circumference = Math.PI * diameter
+          area = Math.PI * radius * radius
+      }
+  
+      fun print() {
+          println(&#x22;Circle radius = $radius diameter = $diameter Circumference = $circumference  area = $area&#x22;)
+      }
+  }
+  
+  fun main(args: Array&#x3C;String&#x3E;) {
+      val c1 = Circle(5.0)
+      c1.print()
+      c1.radius = 10.0
+      c1.print()
+  
+      val c2 = Circle(3)
+      c2.print()
+  
+  
+  }
+  </code></pre>
+          </div>
+        </details>
       </section>
 
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+      <section id="backingField">
+        <h4>Backing fields</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              In Kotlin, a field is only used as a part of a property to hold
+              its value in memory. Fields cannot be declared directly. However,
+              when a property needs a backing field, Kotlin provides it
+              automatically. This backing field can be referenced in the
+              accessors using the field identifier:
+            </p>
+            <pre> <code class="language-kt">
+var counter = 0 // the initializer assigns the backing field directly
+  set(value) {
+      if (value &#x3E;= 0)
+          field = value
+          // counter = value // ERROR StackOverflow: Using actual name &#x27;counter&#x27; would make setter recursive
+  }</code></pre>
+            <p>
+              The field identifier can only be used in the accessors of the
+              property.
+            </p>
+            <p>
+              A backing field will be generated for a property if it uses the
+              default implementation of at least one of the accessors, or if a
+              custom accessor references it through the field identifier.
+            </p>
+            <p>
+              For example, there would be no backing field in the following
+              case:
+            </p>
+            <pre><code class="language-kt">val isEmpty: Boolean
+    get() = this.size == 0</code></pre>
+          </div>
+        </details>
       </section>
 
-
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+      <section id="backingProperty">
+        <h4>Backing properties</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>If you want to do something that does not fit into this implicit backing field scheme, you can always fall back to having a backing property:</p>
+            <pre> <code class="language-kotlin">
+private var _table: Map&#x3C;String, Int&#x3E;? = null
+public val table: Map&#x3C;String, Int&#x3E;
+    get() {
+        if (_table == null) {
+            _table = HashMap() // Type parameters are inferred
+        }
+        return _table ?: throw AssertionError(&#x22;Set to null by another thread&#x22;)
+    }</code></pre>
+          </div>
+        </details>
       </section>
 
-
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+      <section id="compileTimeConstants">
+        <h4>Compile-time constants</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>If the value of a read-only property is known at compile time, mark it as a compile time constant using the const modifier. Such a property needs to fulfil the following requirements:</p>
+            <ul>
+              <li>It must be a top-level property, or a member of an object declaration or a companion object.</li>
+              <li>It must be initialized with a value of type String or a primitive type</li>
+              <li>It cannot be a custom getter</li>
+            </ul>
+            <pre><code class="language-kt">const val SUBSYSTEM_DEPRECATED: String = &#x22;This subsystem is deprecated&#x22;</code></pre>
+          </div>
+         
+        </details>
       </section>
 
+      <section id="lateInit">
+        <h4>Late-initialized properties and variables</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>Normally, properties declared as having a non-null type must be initialized in the constructor. However, it is often the case that doing so is not convenient. For example, properties can be initialized through dependency injection, or in the setup method of a unit test. In these cases, you cannot supply a non-null initializer in the constructor, but you still want to avoid null checks when referencing the property inside the body of a class.</p>
+            <p>To handle such cases, you can mark the property with the lateinit modifier:</p>
+            <pre> <code class="language-kt">public class MyTest {
+    lateinit var subject: TestSubject
 
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+    @SetUp fun setup() {
+        subject = TestSubject()
+    }
+
+    @Test fun test() {
+        subject.method()  // dereference directly
+    }
+}</code></pre>
+            <p>This modifier can be used on var properties declared inside the body of a class (not in the primary constructor, and only when the property does not have a custom getter or setter), as well as for top-level properties and local variables. The type of the property or variable must be non-null, and it must not be a primitive type.</p>
+            <p>Accessing a lateinit property before it has been initialized throws a special exception that clearly identifies the property being accessed and the fact that it hasn&#x27;t been initialized.</p>
+          </div>
+         
+        </details>
       </section>
 
-
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+      <section id="checkLateInit">
+        <h4>Checking whether a lateinit var is initialized</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>To check whether a lateinit var has already been initialized, use .isInitialized on the reference to that property:</p>
+            <pre><code class="language-kt">if (foo::bar.isInitialized) {
+    println(foo.bar)
+}</code></pre>
+<p>This check is only available for properties that are lexically accessible when declared in the same type, in one of the outer types, or at top level in the same file.</p>
+          </div>
+         
+        </details>
       </section>
 
-
-      <section id="kt_03_01">
-        <h4></h4>
-        <div>
-          <pre> <code class="language-kotlin">
-            </code></pre>
-        </div>
+      <section id="delegatedProperty">
+        <h4>Delegated properties</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>The most common kind of property simply reads from (and maybe writes to) a backing field, but custom getters and setters allow you to use properties so one can implement any sort of behavior of a property. Somewhere in between the simplicity of the first kind and variety of the second, there are common patterns for what properties can do. A few examples: lazy values, reading from a map by a given key, accessing a database, notifying a listener on access.</p>
+            <p>Such common behaviors can be implemented as libraries using delegated properties.</p>
+            
+          </div>
+         
+        </details>
       </section>
     </div>
   </body>

@@ -27,150 +27,157 @@
     <div class="content">
       <section id="kt_01_00">
         <h4>Using Kotlin Compiler in command-line</h4>
-
-        <ol class="steps">
-          <li>
-            Download
-            <a
-              href="https://github.com/JetBrains/kotlin/releases/tag/v1.6.10"
-              target="_blank"
-              >kotlin-compiler.zip</a
-            >
-            and extract it any folder.
-          </li>
-          <li>
-            Add path to environment variable in System settings e.g
-            <b>F:\Programs\kotlin-compiler\kotlinc\bin</b>
-          </li>
-          <li>
-            Create a empty folder 'test'. Create new folder 'src' to hold all
-            source code. Add a new file <span class="keyword">App.kt</span> in
-            src folder with following code
-            <pre><code class="language-kt">/* 
-    test/src/App.kt 
+        <details>
+          <summary></summary>
+          <ol class="steps">
+            <li>
+              Download
+              <a
+                href="https://github.com/JetBrains/kotlin/releases/tag/v1.6.10"
+                target="_blank"
+                >kotlin-compiler.zip</a
+              >
+              and extract it any folder.
+            </li>
+            <li>
+              Add path to environment variable in System settings e.g
+              <b>F:\Programs\kotlin-compiler\kotlinc\bin</b>
+            </li>
+            <li>
+              Create a empty folder 'test'. Create new folder 'src' to hold all
+              source code. Add a new file <span class="keyword">App.kt</span> in
+              src folder with following code
+              <pre><code class="language-kt">/* 
+test/src/App.kt 
 */
-  
-  import models.*
-  
-  fun main() {
-      var abhay = Person()
-      abhay.show()
-  }
-              </code></pre>
-          </li>
 
-          <li>
-            Create a new folder 'models' inside src folder. Add a new file
-            <span class="keyword">Person.kt</span> in models folder with
-            following code
+import models.*
 
-            <pre><code class="language-kt">
+fun main() {
+var abhay = Person()
+abhay.show()
+}
+        </code></pre>
+            </li>
+
+            <li>
+              Create a new folder 'models' inside src folder. Add a new file
+              <span class="keyword">Person.kt</span> in models folder with
+              following code
+
+              <pre><code class="language-kt">
 /*
-  test/src/models/Person.kt
+test/src/models/Person.kt
 */
 package models
 
 class Person {
-    var firstName: String = &#x22;Abhay&#x22;
-    var lastName: String = &#x22;Nath&#x22;
-    var city: String = &#x22;Mumbai&#x22;
+var firstName: String = &#x22;Abhay&#x22;
+var lastName: String = &#x22;Nath&#x22;
+var city: String = &#x22;Mumbai&#x22;
 
-    fun show() {
-        println(&#x22;Name = ${firstName} ${lastName} \t City = ${city}&#x22;)
-    }
+fun show() {
+  println(&#x22;Name = ${firstName} ${lastName} \t City = ${city}&#x22;)
 }
-                </code></pre>
-          </li>
-          <li>
-            To compile the 'src' folder, use kotlinc command.
-            <pre class="shell">
+}
+          </code></pre>
+            </li>
+            <li>
+              To compile the 'src' folder, use kotlinc command.
+              <pre class="shell">
 kotlinc src src/App.kt -include-runtime -d test.jar</pre
-            >
+              >
 
-            This will create a new jar file 'test.jar'
-          </li>
-          <li>
-            To run a jar file,
-            <pre class="shell">java -jar test.jar</pre>
-          </li>
-          <li>
-            To compile and run at one command
-            <pre class="shell">
+              This will create a new jar file 'test.jar'
+            </li>
+            <li>
+              To run a jar file,
+              <pre class="shell">java -jar test.jar</pre>
+            </li>
+            <li>
+              To compile and run at one command
+              <pre class="shell">
 kotlinc src src/App.kt -include-runtime -d test.jar &#x26;&#x26; java -jar test.jar</pre
-            >
-          </li>
-        </ol>
+              >
+            </li>
+          </ol>
+        </details>
       </section>
       <section id="kt_01_04">
-        <h4>Using Gradle command-line for creating Kotlin App </h4>
-        <ol class="steps">
-          <li>Make sure gradle is installed and <b>GRADLE_HOME</b> is set.</li>
-          <li>Create empty folder and run following command inside the folder
-            <pre class="shell">gradle init</pre>
-            Select the options as per your requirements. It will generate the project.
-          </li>
-          <li>
-            Run app
-            <pre class="shell">gradlew run</pre>
-          </li>
-          <li>
-            Bundle the app
-            <pre class="shell">gradlew build</pre>
-          </li>
-
-        </ol>
-
+        <h4>Using Gradle command-line for creating Kotlin App</h4>
+        <details>
+          <summary></summary>
+          <ol class="steps">
+            <li>
+              Make sure gradle is installed and <b>GRADLE_HOME</b> is set.
+            </li>
+            <li>
+              Create empty folder and run following command inside the folder
+              <pre class="shell">gradle init</pre>
+              Select the options as per your requirements. It will generate the
+              project.
+            </li>
+            <li>
+              Run app
+              <pre class="shell">gradlew run</pre>
+            </li>
+            <li>
+              Bundle the app
+              <pre class="shell">gradlew build</pre>
+            </li>
+          </ol>
+        </details>
       </section>
       <section id="kt_01_01">
         <h4>Hello World Application in Kotlin using IntelliJ Idea</h4>
+        <details>
+          <summary></summary>
+          <ol class="steps">
+            <li>Run Intellij Idea. Select 'New Project -> Kotlin'</li>
+            <li>Type the Project name in the input box.</li>
+            <li>Intellij will create a 'src' folder.</li>
+            <li>
+              Right click on src folder, select 'New->Kotlin file/class'. File
+              name is 'app.kt'
+            </li>
 
-        <ol class="steps">
-          <li>Run Intellij Idea. Select 'New Project -> Kotlin'</li>
-          <li>Type the Project name in the input box.</li>
-          <li>Intellij will create a 'src' folder.</li>
-          <li>
-            Right click on src folder, select 'New->Kotlin file/class'. File
-            name is 'app.kt'
-          </li>
+            <li>
+              Add following code snippet in 'app.kt'
 
-          <li>
-            Add following code snippet in 'app.kt'
-
-            <pre><code>
-  fun main(){
-      println("Hello World Kotlin !")
-  }
-  </code></pre>
-          </li>
-          <li>
-            Build and run application by pressing on green arrow against main
-            function
-          </li>
-        </ol>
+              <pre><code>
+fun main(){
+println("Hello World Kotlin !")
+}
+</code></pre>
+            </li>
+            <li>
+              Build and run application by pressing on green arrow against main
+              function
+            </li>
+          </ol>
+        </details>
       </section>
       <section>
         <h4>Creating JAR from Intellij Idea console project</h4>
-        <p>
-          Add following task inside <b>build.gradle.kts</b> and run
-          <span class="keyword">jar</span> task from Gradle palette. Then
-          rebuild project.
-        </p>
-        <pre><code>tasks.jar {
-    manifest {
-        attributes[&#x22;Main-Class&#x22;] = &#x22;MainKt&#x22;
-    }
-    configurations[&#x22;compileClasspath&#x22;].forEach { file: File -&#x3E;
-        from(zipTree(file.absoluteFile))
-    }
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}</code></pre>
-      </section>
-      <section>
-        <h4>Creating EXE from JAR file</h4>
-        <p>Install <b>Launch4j</b></p>
-        <img src="../../images/lang/kt/l1.jpg" />
-        <img src="../../images/lang/kt/l2.jpg" />
-        <img src="../../images/lang/kt/l3.jpg" />
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              Add following task inside <b>build.gradle.kts</b> and run
+              <span class="keyword">jar</span> task from Gradle palette. Then
+              rebuild project.
+            </p>
+            <pre><code>tasks.jar {
+        manifest {
+            attributes[&#x22;Main-Class&#x22;] = &#x22;MainKt&#x22;
+        }
+        configurations[&#x22;compileClasspath&#x22;].forEach { file: File -&#x3E;
+            from(zipTree(file.absoluteFile))
+        }
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }</code></pre>
+          </div>
+        </details>
       </section>
     </div>
   </body>
