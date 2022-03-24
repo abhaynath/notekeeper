@@ -191,6 +191,42 @@ fun main(args: Array&#x3C;String&#x3E;) {
         </details>
       </section>
 
+      <section id="secondaryConstructor">
+        <h4>Secondary constructor</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>Kotlin may have one or more secondary constructors. Secondary constructors allow initialization of variables and allow to provide some logic to the class as well. They are prefixed with the constructor keyword.</p>
+            <pre><code class="language-kt">
+class Rectangle(var length: Double, var breadth: Double) {
+  constructor(side: Double) : this(side, side)
+  constructor(l: Int, b: Int) : this(l.toDouble(), b.toDouble())
+
+  var area: Double = 0.0
+
+  init {
+      println(&#x22;---area created--&#x22;)
+      area = length * breadth
+  }
+
+  fun print() {
+      println(&#x22;Rectangle = $length  $breadth Area = ${area}&#x22;)
+  }
+}
+
+fun main(args: Array&#x3C;String&#x3E;) {
+  val rect1 = Rectangle(9.0, 6.0)
+  val rect2 = Rectangle(10, 5)
+  val square = Rectangle(5.0)
+  rect1.print()
+  rect2.print()
+  square.print()
+}</code></pre>
+          </div>
+          
+        </details>
+      </section>
+
       <section id="dataClass">
         <h4>Data Class</h4>
         <details>
@@ -387,14 +423,7 @@ fun main() {
         </details>
       </section>
 
-      <section>
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <pre><code class="language-kt"></code></pre>
-        </details>
-      </section>
-
+    
       <section>
         <h4></h4>
         <details>
