@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Visibility Modifiers</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="kotlin_index.html">Kotlin</a>
+    </nav>
+    <div class="content">
+      <section id="visibility">
+        <h4>Visibility Modifiers</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              In Kotlin, visibility modifiers are used to restrict the
+              accessibility of classes, objects, interfaces, constructors,
+              functions, properties, and their setters to a certain level. No
+              need to set the visibility of getters because they have the same
+              visibility as the property.
+            </p>
+            <p>There are four visibility modifiers in Kotlin.</p>
+            <table>
+              <tr>
+                <th>Modifier</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td>public</td>
+                <td>visible everywhere</td>
+              </tr>
+              <tr>
+                <td>private</td>
+                <td>visible inside same class only</td>
+              </tr>
+              <tr>
+                <td>internal</td>
+                <td>visible inside same module</td>
+              </tr>
+              <tr>
+                <td>protected</td>
+                <td>visible inside the same class and its subclasses</td>
+              </tr>
+            </table>
+            <p>
+              If there is no specified modifier then by default it is public.
+              Let&#x2019;s start discussing the above modifiers one by one.
+            </p>
+          </div>
+        </details>
+      </section>
+
+      <section id="public">
+        <h4>Public Modifier</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              n Kotlin, the default modifier is public. It is possibly the most
+              frequently used modifier in the entire language and there are
+              additional restrictions on who can see the element being modified.
+              Unlike Java, in Kotlin there is no need to declare anything as
+              public &#x2013; it is the default modifier, if we don&#x2019;t
+              declare another modifier &#x2013; public works the same in Kotlin,
+              as in Java. When we apply the public modifier to top-level
+              elements &#x2013; classes, functions or variables declared
+              directly inside a package, then any other code can access it. If
+              we apply the public modifier to a nested element &#x2013; an inner
+              class, or function inside a class &#x2013; then any code that can
+              access the container can also access this element.
+            </p>
+            <pre> <code class="language-kt">
+class A {
+    var myVar = 10
+}
+
+// specified with public modifier
+public class B {
+    var myVar2 = 20
+    fun display() {
+        println(&#x22;Accessible everywhere&#x22;)
+    }
+}
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    val aObj = A()
+    val bObj = B()
+
+    println(aObj.myVar)
+    println(bObj.myVar2)
+    bObj.display()
+}</code></pre>
+            <p>
+              Here, Class A and B are accessible from anywhere in the entire
+              code, the variables int, int2, and the function display() are
+              accessible from anything that can access classes A and B.
+            </p>
+          </div>
+        </details>
+      </section>
+
+      <section id="private">
+        <h4>Private Modifier</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              In Kotlin, private modifiers allow only the code declared inside
+              the same scope, access. It does not allow access to the modifier
+              variable or function outside the scope. Unlike Java, Kotlin allows
+              multiple top-level declarations in the same file &#x2013; a
+              private top-level element can be accessed by everything else in
+              the same file.
+            </p>
+            <pre> <code class="language-kt">
+// class A is accessible from same source file
+private class A {
+    private val int = 10
+    fun display() {
+        // we can access int in the same class
+        println(int)
+        println(&#x22;Accessing int successful&#x22;)
+    }
+}
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    var a = A()
+    a.display()
+    // can not access &#x27;int&#x27;: it is private in class A
+    //println(a.int)
+}</code></pre>
+<p>Here, Class A is only accessible from within the same source file, and the int variable is only accessible from the inside of class A. When we tried to access int from outside the class, it gives a compile-time error. </p>
+
+          </div>
+        </details>
+      </section>
+
+      <section id="internal">
+        <h4>Internal Modifier</h4>
+        <details>
+          <summary></summary>
+          <div>
+              <p>In Kotlin, the internal modifier is a newly added modifier that is not supported by Java. Marked as internal means that it will be available in the same module, if we try to access the declaration from another module it will give an error. A module means a group of files that are compiled together.</p>
+
+            <pre> <code class="language-kt">
+internal class A {}
+
+public class B {
+    internal val myVar = 10
+    internal fun display() {
+    }
+}</code></pre>
+<p>Here, Class A is only accessible from inside the same module. The variable int and function display() are only accessible from inside the same module, even though class B can be accessed from anywhere. </p>
+          </div>
+        </details>
+      </section>
+
+      <section id="protected">
+        <h4>Protected Modifier</h4>
+        <details>
+          <summary></summary>
+          <div>
+              <p>In Kotlin, the protected modifier strictly allows accessibility to the declaring class and its subclasses. The protected modifier can not be declared at the top level. In the below program, we have accessed the int variable in the getvalue() function of the derived class. </p>
+            <pre> <code class="language-kt">
+// base class
+open class A {
+    // protected variable
+    protected val myVar = 10
+}
+
+// derived class
+class B : A() {
+    fun getvalue(): Int {
+        // accessed from the subclass
+        return myVar
+    }
+}
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    var a = B()
+    println(&#x22;The value of integer is: &#x22; + a.getvalue())
+}</code></pre>
+
+<h4>Overriding of Protected Modifier</h4>
+<p>We need to mark the protected variable or function using an open keywords to override in the derived class. In the below program, we have overridden the myVar variable. </p>
+<pre><code class="language-kt">// base class
+open class A {
+    // protected variable
+    open protected val int = 10
+
+}
+
+// derived class
+class B : A() {
+    override val int = 20
+    fun getvalue(): Int {
+        // accessed from the subclass
+        return int
+    }
+}
+
+fun main(args: Array<String>) {
+    var a = B()
+    println("The overridden value of integer is: " + a.getvalue())
+}</code></pre>
+<h4>Constructor Visibility</h4>
+<p>By default constructors are public, but we can also change the visibility of a constructor by using the modifiers.</p>
+<pre><code class="language-kt">class A (name : String) {
+    // other code
+}</code></pre>
+<p>We must explicitly specify this by using the constructor keyword whilst changing the visibility.  </p>
+<pre><code class="language-kt">class A private constructor (name : String) {
+    // other code
+}
+</code></pre>
+          </div>
+        </details>
+      </section>
+
+
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
