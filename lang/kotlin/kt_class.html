@@ -196,7 +196,12 @@ fun main(args: Array&#x3C;String&#x3E;) {
         <details>
           <summary></summary>
           <div>
-            <p>Kotlin may have one or more secondary constructors. Secondary constructors allow initialization of variables and allow to provide some logic to the class as well. They are prefixed with the constructor keyword.</p>
+            <p>
+              Kotlin may have one or more secondary constructors. Secondary
+              constructors allow initialization of variables and allow to
+              provide some logic to the class as well. They are prefixed with
+              the constructor keyword.
+            </p>
             <pre><code class="language-kt">
 class Rectangle(var length: Double, var breadth: Double) {
   constructor(side: Double) : this(side, side)
@@ -223,7 +228,6 @@ fun main(args: Array&#x3C;String&#x3E;) {
   square.print()
 }</code></pre>
           </div>
-          
         </details>
       </section>
 
@@ -257,8 +261,6 @@ fun main(){
         </code></pre>
         </details>
       </section>
-
-   
 
       <section id="enumClasses">
         <h4>Enum Classes</h4>
@@ -308,6 +310,127 @@ fun main() {
     println(&#x22;It is ${today}. $isWeekend.&#x22;)
 }
                 </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="nestedClass">
+        <h4>Nested Class</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              A class is declared within another class then it is called a
+              nested class. By default nested class is static so we can access
+              the nested class property or variables using dot(.) notation
+              without creating an object of the class.
+            </p>
+            <pre><code class="language-kt">
+  class outerClass {
+    // outer class properties or member function
+    class nestedClass {
+        // inner class properties or member function
+    }
+}</code></pre>
+            <b
+              >Note: Nested class can&#x2019;t access the members of the outer
+              class, but we can access the property of nested class from the
+              outer class without creating an object for nested class.</b
+            >
+            <pre><code class="language-kt">
+// outer class declaration
+class outerClass {
+    var str = &#x22;Outer class&#x22;
+
+    // nested class declaration
+    class nestedClass {
+        val firstName = &#x22;Shivaji&#x22;
+        val lastName = &#x22;Bhosle&#x22;
+    }
+}
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    // accessing member of Nested class
+    print(outerClass.nestedClass().firstName)
+    print(&#x22; &#x22;)
+    println(outerClass.nestedClass().lastName)
+}
+            </code></pre>
+            <p>
+              In Kotlin, to access the member function of nested class, we need
+              to create the object for nested class and call the member function
+              using it.
+            </p>
+            <pre><code class="language-kt">
+// outer class declaration
+class outerClass {
+    var str = &#x22;Outer class&#x22;
+
+    // nested class declaration
+    class nestedClass {
+        var s1 = &#x22;Nested class&#x22;
+
+        // nested class member function
+        fun nestfunc(str2: String): String {
+            var s2 = s1.plus(str2)
+            return s2
+        }
+    }
+}
+
+fun main(args: Array&#x3C;String&#x3E;) {
+    // creating object of Nested class
+    val nested = outerClass.nestedClass()
+    // invoking the nested member function by passing string
+    var result = nested.nestfunc(&#x22; member function call successful&#x22;)
+    println(result)
+}
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="innerClass">
+        <h4>Inner Class</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              When we can declare a class inside another class using the keyword
+              inner then it is called inner class. With the help of the inner
+              class, we can access the outer class property inside the inner
+              class.
+            </p>
+            <pre><code class="language-kt">
+class outerClass {
+    // outer class properties or member function
+    inner class innerClass {
+        // inner class properties or member function
+    }
+}</code></pre>
+<p>In the below program we are trying to access str from the inner class member function. But it does not work and gives a compile-time error.</p>
+<pre><code class="language-kt">
+// outer class declaration
+class outerClass {
+    var str = &#x22;Outer class&#x22;
+    // innerClass declaration without using inner keyword
+    class innerClass {
+        var s1 = &#x22;Inner class&#x22;
+        fun nestfunc(): String {
+            // can not access the outer class property str
+            var s2 = str //Error !
+            return s2
+        }
+    }
+}
+// main function
+fun main(args: Array&#x3C;String&#x3E;) {
+    // creating object for inner class
+    val inner= outerClass().innerClass()  //Error !
+    // inner function call using object
+    println(inner.nestfunc())
+}</code></pre>
+
           </div>
         </details>
       </section>
@@ -423,7 +546,6 @@ fun main() {
         </details>
       </section>
 
-    
       <section>
         <h4></h4>
         <details>
