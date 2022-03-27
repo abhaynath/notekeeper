@@ -9,8 +9,11 @@
       rel="stylesheet"
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
-   
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
     <title>Collections</title>
@@ -22,6 +25,376 @@
       <a href="kotlin_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="overview">
+        <h4>Collections overview</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              The Kotlin Standard Library provides a comprehensive set of tools
+              for managing collections &#x2013; groups of a variable number of
+              items (possibly zero) that are significant to the problem being
+              solved and are commonly operated on.
+            </p>
+            <p>
+              Collections are a common concept for most programming languages,
+              so if you&#x27;re familiar with, for example, Java or Python
+              collections, you can skip this introduction and proceed to the
+              detailed sections.
+            </p>
+            <p>
+              A collection usually contains a number of objects (this number may
+              also be zero) of the same type. Objects in a collection are called
+              elements or items. For example, all the students in a department
+              form a collection that can be used to calculate their average age.
+            </p>
+            <p>The following collection types are relevant for Kotlin:</p>
+            <ul>
+              <li>
+                <b>List</b> is an ordered collection with access to elements by
+                indices &#x2013; integer numbers that reflect their position.
+                Elements can occur more than once in a list. An example of a
+                list is a telephone number: it&#x27;s a group of digits, their
+                order is important, and they can repeat.
+              </li>
+              <li>
+                <b>Set</b> is a collection of unique elements. It reflects the
+                mathematical abstraction of set: a group of objects without
+                repetitions. Generally, the order of set elements has no
+                significance. For example, the numbers on lottery tickets form a
+                set: they are unique, and their order is not important.
+              </li>
+              <li>
+                <b>Map</b> (or dictionary) is a set of key-value pairs. Keys are
+                unique, and each of them maps to exactly one value. The values
+                can be duplicates. Maps are useful for storing logical
+                connections between objects, for example, an employee&#x27;s ID
+                and their position.
+              </li>
+            </ul>
+            <p>
+              Kotlin lets you manipulate collections independently of the exact
+              type of objects stored in them. In other words, you add a String
+              to a list of Strings the same way as you would do with Ints or a
+              user-defined class. So, the Kotlin Standard Library offers generic
+              interfaces, classes, and functions for creating, populating, and
+              managing collections of any type.
+            </p>
+            <p>
+              The collection interfaces and related functions are located in the
+              kotlin.collections package. Let&#x27;s get an overview of its
+              contents.
+            </p>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="collectionTypes">
+        <h4>Collection types</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              The Kotlin Standard Library provides implementations for basic
+              collection types: sets, lists, and maps. A pair of interfaces
+              represent each collection type:
+            </p>
+            <ul>
+              <li>
+                A read-only interface that provides operations for accessing
+                collection elements.
+              </li>
+              <li>
+                A mutable interface that extends the corresponding read-only
+                interface with write operations: adding, removing, and updating
+                its elements.
+              </li>
+            </ul>
+            <p>
+              Note that altering a mutable collection doesn&#x27;t require it to
+              be a var: write operations modify the same mutable collection
+              object, so the reference doesn&#x27;t change. Although, if you try
+              to reassign a val collection, you&#x27;ll get a compilation error.
+            </p>
+            <pre><code class="language-kt">val numbers = mutableListOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+numbers.add(&#x22;five&#x22;)   // this is OK
+println(numbers)
+//numbers = mutableListOf(&#x22;six&#x22;, &#x22;seven&#x22;)      // compilation error
+            </code></pre>
+            <p>
+              The read-only collection types are covariant. This means that, if
+              a Rectangle class inherits from Shape, you can use a
+              List&#x3C;Rectangle&#x3E; anywhere the List&#x3C;Shape&#x3E; is
+              required. In other words, the collection types have the same
+              subtyping relationship as the element types. Maps are covariant on
+              the value type, but not on the key type.
+            </p>
+            <p>
+              In turn, mutable collections aren&#x27;t covariant; otherwise,
+              this would lead to runtime failures. If
+              MutableList&#x3C;Rectangle&#x3E; was a subtype of
+              MutableList&#x3C;Shape&#x3E;, you could insert other Shape
+              inheritors (for example, Circle) into it, thus violating its
+              Rectangle type argument.
+            </p>
+            <img
+              style="width: 600px; background-color: #ffffff42; padding: 5px"
+              src="../../images/lang/kt/l5.png"
+            />
+          </div>
+        </details>
+      </section>
+
+      <section id="collection">
+        <h4>Collection</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              Let&#x27;s walk through the interfaces and their implementations.
+              To learn about Collection, read the section below.
+            </p>
+            <p>
+              <span class="keyword">Collection&#x3C;T&#x3E;</span> is the root
+              of the collection hierarchy. This interface represents the common
+              behavior of a read-only collection: retrieving size, checking item
+              membership, and so on. Collection inherits from the
+              <span class="keyword">Iterable&#x3C;T&#x3E;</span> interface that
+              defines the operations for iterating elements. You can use
+              Collection as a parameter of a function that applies to different
+              collection types. For more specific cases, use the
+              Collection&#x27;s inheritors: List and Set.
+            </p>
+            <pre> <code class="language-kt">fun printAll(strings: Collection&#x3C;String&#x3E;) {
+    for (s in strings) print(&#x22;$s &#x22;)
+    println()
+}
+
+fun main() {
+    val stringList = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;one&#x22;)
+    printAll(stringList)
+
+    val stringSet = setOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;)
+    printAll(stringSet)
+}
+            </code></pre>
+            <p>
+              <span class="keyword">MutableCollection&#x3C;T&#x3E;</span> is a
+              Collection with write operations, such as add and remove.
+            </p>
+            <pre><code class="language-kt">fun List&#x3C;String&#x3E;.getShortWordsTo(shortWords: MutableList&#x3C;String&#x3E;, maxLength: Int) {
+    this.filterTo(shortWords) { it.length &#x3C;= maxLength }
+    // throwing away the articles
+    val articles = setOf(&#x22;a&#x22;, &#x22;A&#x22;, &#x22;an&#x22;, &#x22;An&#x22;, &#x22;the&#x22;, &#x22;The&#x22;)
+    shortWords -= articles
+}
+
+fun main() {
+    val words = &#x22;A long time ago in a galaxy far far away&#x22;.split(&#x22; &#x22;)
+    val shortWords = mutableListOf&#x3C;String&#x3E;()
+    words.getShortWordsTo(shortWords, 3)
+    println(shortWords)
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="list">
+        <h4>List</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              List&#x3C;T&#x3E; stores elements in a specified order and
+              provides indexed access to them. Indices start from zero &#x2013;
+              the index of the first element &#x2013; and go to lastIndex which
+              is the (list.size - 1).
+            </p>
+            <pre> <code class="language-kt">fun main() {
+    val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+    println(&#x22;Number of elements: ${numbers.size}&#x22;)
+    println(&#x22;Third element: ${numbers.get(2)}&#x22;)
+    println(&#x22;Fourth element: ${numbers[3]}&#x22;)
+    println(&#x22;Index of element \&#x22;two\&#x22; ${numbers.indexOf(&#x22;two&#x22;)}&#x22;)
+}</code></pre>
+            <p>
+              List elements (including nulls) can duplicate: a list can contain
+              any number of equal objects or occurrences of a single object. Two
+              lists are considered equal if they have the same sizes and
+              structurally equal elements at the same positions.
+            </p>
+            <pre> <code class="language-kt">data class Person(var name: String, var age: Int)
+
+fun main() {
+    val abhay = Person(&#x22;Abhay&#x22;, 31)
+    val people = listOf(Person(&#x22;Sachin&#x22;, 20), abhay, abhay)
+    val people2 = listOf(Person(&#x22;Sachin&#x22;, 20), Person(&#x22;Abhay&#x22;, 31), abhay)
+    println(people == people2)
+    abhay.age = 32
+    println(people == people2)
+}</code></pre>
+            <pre class="shell">
+true
+false
+</pre
+            >
+            <p>
+              MutableList&#x3C;T&#x3E; is a List with list-specific write
+              operations, for example, to add or remove an element at a specific
+              position.
+            </p>
+            <pre>
+              <code class="language-kt">
+  fun main() {
+    val india = mutableListOf&#x3C;String&#x3E;();
+    india.add(&#x22;Sachin&#x22;);
+    india.add(&#x22;Virender&#x22;);
+    india.add(&#x22;Rahul&#x22;);
+    india.add(&#x22;MS Dhoni&#x22;);
+    india.add(&#x22;Virat Kohli&#x22;);
+    india.add(&#x22;Rohit Sharma&#x22;);
+
+    println(india.isEmpty());
+    println(&#x22;Size ${india.size}&#x22;);
+
+    println(&#x22;First element : ${india.first()}&#x22;);
+    println(&#x22;Last Element : ${india.last()}&#x22;);
+
+
+    val firstPlayer = india[0];
+    println(&#x22;--firstPlayer = ${firstPlayer}&#x22;);
+
+    val secondPlayer = india.get(1);
+    println(&#x22;--SecondPlayer = ${secondPlayer}&#x22;);
+
+    val openers = india.slice(0..1);
+    println(openers);
+    println(openers.joinToString());
+
+    println(&#x22;Rahul contains = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
+    india.remove(&#x22;Rahul&#x22;);
+    println(&#x22;Rahul contains now = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
+
+    india.removeAt(1);
+    println(&#x22;--removed item ${india}&#x22;)
+
+    india[0] = &#x22;Sanath Jaysurya&#x22;;
+
+    for ((index, player) in india.withIndex()) {
+        println(&#x22;$index --- $player&#x22;);
+    }
+}</code></pre>
+<details>
+  <summary>Output</summary>
+  <pre class="shell">false
+Size 6
+First element : Sachin
+Last Element : Rohit Sharma
+--firstPlayer = Sachin
+--SecondPlayer = Virender
+[Sachin, Virender]
+Sachin, Virender
+Rahul contains = true
+Rahul contains now = false
+--removed item [Sachin, MS Dhoni, Virat Kohli, Rohit Sharma]
+0 --- Sanath Jaysurya
+1 --- MS Dhoni
+2 --- Virat Kohli
+3 --- Rohit Sharma</pre>
+</details>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+            </code></pre>
+          </div>
+        </details>
+      </section>
       <section id="kt_03_01">
         <h4>Array</h4>
         <pre> <code class="language-kotlin">
@@ -37,53 +410,12 @@
       </section>
       <section id="kt_03_02">
         <h4>Mutable List</h4>
-        <pre>
-          <code class="language-kotlin">
-    fun main() {
-      val india = mutableListOf&#x3C;String&#x3E;();
-      india.add(&#x22;Sachin&#x22;);
-      india.add(&#x22;Virender&#x22;);
-      india.add(&#x22;Rahul&#x22;);
-      india.add(&#x22;MS Dhoni&#x22;);
-      india.add(&#x22;Virat Kohli&#x22;);
-      india.add(&#x22;Rohit Sharma&#x22;);
-  
-      println(india.isEmpty());
-      println(&#x22;Size ${india.size}&#x22;);
-  
-      println(&#x22;First element : ${india.first()}&#x22;);
-      println(&#x22;Last Element : ${india.last()}&#x22;);
-      println(&#x22;Minimum : ${india.min()}&#x22;)
-  
-      val firstPlayer = india[0];
-      println(&#x22;--firstPlayer = ${firstPlayer}&#x22;);
-  
-      val secondPlayer = india.get(1);
-      println(&#x22;--SecondPlayer = ${secondPlayer}&#x22;);
-  
-      val openers = india.slice(0..1);
-      println(openers);
-      println(openers.joinToString());
-  
-      println(&#x22;Rahul contains = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
-      india.remove(&#x22;Rahul&#x22;);
-      println(&#x22;Rahul contains now = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
-  
-      india.removeAt(1);
-      println(&#x22;--removed item ${india}&#x22;)
-  
-      india[0] = &#x22;Sanath Jaysurya&#x22;;
-  
-      for ((index, player) in india.withIndex()) {
-          println(&#x22;$index --- $player&#x22;);
-      }
-  }
-  </code></pre>
+        
       </section>
     </div>
   </body>
 
   <script>
-   hljs.highlightAll();
+    hljs.highlightAll();
   </script>
 </html>
