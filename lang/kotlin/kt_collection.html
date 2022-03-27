@@ -286,9 +286,10 @@ false
         println(&#x22;$index --- $player&#x22;);
     }
 }</code></pre>
-<details>
-  <summary>Output</summary>
-  <pre class="shell">false
+            <details>
+              <summary>Output</summary>
+              <pre class="shell">
+false
 Size 6
 First element : Sachin
 Last Element : Rohit Sharma
@@ -302,30 +303,128 @@ Rahul contains now = false
 0 --- Sanath Jaysurya
 1 --- MS Dhoni
 2 --- Virat Kohli
-3 --- Rohit Sharma</pre>
-</details>
+3 --- Rohit Sharma</pre
+              >
+            </details>
+            <p>
+              As you see, in some aspects lists are very similar to arrays.
+              However, there is one important difference: an array&#x27;s size
+              is defined upon initialization and is never changed; in turn, a
+              list doesn&#x27;t have a predefined size; a list&#x27;s size can
+              be changed as a result of write operations: adding, updating, or
+              removing elements.
+            </p>
+            <p>
+              In Kotlin, the default implementation of List is ArrayList which
+              you can think of as a resizable array.
+            </p>
           </div>
         </details>
       </section>
 
-      <section id="">
-        <h4></h4>
+      <section id="set">
+        <h4>Set</h4>
         <details>
           <summary></summary>
           <div>
-            <pre> <code class="language-kt">
-            </code></pre>
+            <p>
+              Set&#x3C;T&#x3E; stores unique elements; their order is generally
+              undefined. null elements are unique as well: a Set can contain
+              only one null. Two sets are equal if they have the same size, and
+              for each element of a set there is an equal element in the other
+              set.
+            </p>
+            <pre><code class="language-kt">fun main() {
+    val numbers = setOf(1, 2, 3, 4)
+    println(&#x22;Number of elements: ${numbers.size}&#x22;)
+    if (numbers.contains(1)) println(&#x22;1 is in the set&#x22;)
+
+    val numbersBackwards = setOf(4, 3, 2, 1)
+    println(&#x22;The sets are equal: ${numbers == numbersBackwards}&#x22;)
+}</code></pre>
+            <p>
+              MutableSet is a Set with write operations from MutableCollection.
+            </p>
+            <p>
+              The default implementation of Set &#x2013; LinkedHashSet &#x2013;
+              preserves the order of elements insertion. Hence, the functions
+              that rely on the order, such as first() or last(), return
+              predictable results on such sets.
+            </p>
+            <pre><code class="language-kt">fun main() {
+  val numbers = setOf(1, 2, 3, 4)  // LinkedHashSet is the default implementation
+  val numbersBackwards = setOf(4, 3, 2, 1)
+
+  println(numbers.first() == numbersBackwards.first())
+  println(numbers.first() == numbersBackwards.last())
+}</code></pre>
+            <p>
+              An alternative implementation &#x26;#x2013; HashSet &#x26;#x2013;
+              says nothing about the elements order, so calling such functions
+              on it returns unpredictable results. However, HashSet requires
+              less memory to store the same number of elements.
+            </p>
           </div>
         </details>
       </section>
 
-      <section id="">
-        <h4></h4>
+      <section id="map">
+        <h4>Map</h4>
         <details>
           <summary></summary>
           <div>
-            <pre> <code class="language-kt">
-            </code></pre>
+            <p>
+              Map&#x3C;K, V&#x3E; is not an inheritor of the Collection
+              interface; however, it&#x27;s a Kotlin collection type as well. A
+              Map stores key-value pairs (or entries); keys are unique, but
+              different keys can be paired with equal values. The Map interface
+              provides specific functions, such as access to value by key,
+              searching keys and values, and so on.
+            </p>
+            <pre><code class="language-kt">fun main() {
+    val numbersMap = mapOf(&#x22;key1&#x22; to 1, &#x22;key2&#x22; to 2, &#x22;key3&#x22; to 3, &#x22;key4&#x22; to 1)
+
+    println(&#x22;All keys: ${numbersMap.keys}&#x22;)
+    println(&#x22;All values: ${numbersMap.values}&#x22;)
+    if (&#x22;key2&#x22; in numbersMap) println(&#x22;Value by key \&#x22;key2\&#x22;: ${numbersMap[&#x22;key2&#x22;]}&#x22;)
+    if (1 in numbersMap.values) println(&#x22;The value 1 is in the map&#x22;)
+    if (numbersMap.containsValue(1)) println(&#x22;The value 1 is in the map&#x22;) // same as previous
+}</code></pre>
+            <pre class="shell">
+All keys: [key1, key2, key3, key4]
+All values: [1, 2, 3, 1]
+Value by key &#x22;key2&#x22;: 2
+The value 1 is in the map
+The value 1 is in the map</pre
+            >
+            <p>
+              Two maps containing the equal pairs are equal regardless of the
+              pair order.
+            </p>
+            <pre><code class="language-kt">fun main() {
+  val numbersMap = mapOf(&#x22;key1&#x22; to 1, &#x22;key2&#x22; to 2, &#x22;key3&#x22; to 3, &#x22;key4&#x22; to 1)
+  val anotherMap = mapOf(&#x22;key2&#x22; to 2, &#x22;key1&#x22; to 1, &#x22;key4&#x22; to 1, &#x22;key3&#x22; to 3)
+
+  println(&#x22;The maps are equal: ${numbersMap == anotherMap}&#x22;)
+}</code></pre>
+            <p>
+              MutableMap is a Map with map write operations, for example, you
+              can add a new key-value pair or update the value associated with
+              the given key.
+            </p>
+            <pre><code class="language-kt">fun main() {
+  val numbersMap = mutableMapOf(&#x22;one&#x22; to 1, &#x22;two&#x22; to 2)
+  numbersMap.put(&#x22;three&#x22;, 3)
+  numbersMap[&#x22;one&#x22;] = 11
+
+  println(numbersMap)
+}</code></pre>
+            <p>
+              The default implementation of Map &#x2013; LinkedHashMap &#x2013;
+              preserves the order of elements insertion when iterating the map.
+              In turn, an alternative implementation &#x2013; HashMap &#x2013;
+              says nothing about the elements order.
+            </p>
           </div>
         </details>
       </section>
@@ -410,7 +509,6 @@ Rahul contains now = false
       </section>
       <section id="kt_03_02">
         <h4>Mutable List</h4>
-        
       </section>
     </div>
   </body>
