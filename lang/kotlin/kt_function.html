@@ -10,7 +10,10 @@
       href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
     />
     <script src="../../js/libs/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Functions</title>
   </head>
@@ -21,6 +24,231 @@
       <a href="kotlin_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="noBlock">
+        <h4>function without block</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              If the function contains only one statement, we can skip curly
+              braces.
+            </p>
+            <pre><code class="language-kt">
+fun area(radius: Double) = Math.PI * radius * radius
+
+fun main() {
+    println(area(5.5))
+}
+            </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="default">
+        <h4>Default arguments</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              Function parameters can have default values, which are used when
+              you skip the corresponding argument. This reduces the number of
+              overloads
+            </p>
+            <pre><code class="language-kt">fun area(radius: Double = 3.5): Double {
+    return Math.PI * radius * radius
+}
+
+fun main() {
+    println(area())
+    println(area(5.5))
+}</code></pre>
+            <p>A default value is defined using = after the type.</p>
+            <p>
+              Overriding methods always use the same default parameter values as
+              the base method. When overriding a method that has default
+              parameter values, the default parameter values must be omitted
+              from the signature
+            </p>
+            <pre><code class="language-kt">open class A {
+    open fun foo(i: Int = 10) {}
+}
+
+class B : A() {
+    override fun foo(i: Int) {
+        println(i)
+    }
+}
+
+fun main() {
+    val b = B()
+    b.foo()
+    b.foo(45)
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="named">
+        <h4>Named arguments</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              When calling a function, you can name one or more of its
+              arguments. This can be helpful when a function has many arguments
+              and it&#x27;s difficult to associate a value with an argument,
+              especially if it&#x27;s a boolean or null value.
+            </p>
+            <p>
+              When you use named arguments in a function call, you can freely
+              change the order they are listed in, and if you want to use their
+              default values, you can just leave these arguments out altogether.
+            </p>
+            <pre><code class="language-kt">fun getName(firstName: String = &#x22;&#x22;, middleName: String = &#x22;&#x22;, lastName: String = &#x22;&#x22;): String {
+    var f = firstName.trim().replaceFirstChar { it.uppercaseChar() }
+    var m = if (middleName.trim().length &#x3E; 0) middleName.first().toString().uppercase() + &#x22;.&#x22; else &#x22;&#x22;
+    var l = lastName.trim().replaceFirstChar { it.uppercaseChar() }
+
+    val fullName = if (m.length &#x3E; 0) f + &#x22; &#x22; + m + &#x22; &#x22; + l else f + &#x22; &#x22; + l
+    return fullName
+}
+
+fun main() {
+    println(getName(&#x22;sachin&#x22;, &#x22;ramesh&#x22;, &#x22;tendulkar&#x22;))
+    println(getName(middleName = &#x22;kiran&#x22;, lastName = &#x22;nath&#x22;, firstName = &#x22;abhay&#x22;))
+    println(getName(lastName = &#x22;sehwag&#x22;, firstName = &#x22;virender&#x22;, middleName = &#x22;mayur&#x22;))
+    println(getName(&#x22;Rohit&#x22;, lastName = &#x22;Sharma&#x22;))
+}</code></pre>
+            <b>Output</b>
+            <pre class="shell">
+Sachin R. Tendulkar
+Abhay K. Nath
+Virender M. Sehwag
+Rohit Sharma</pre
+            >
+          </div>
+        </details>
+      </section>
+
+      <section id="varang">
+        <h4>varang and spread operator</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p>
+              You can mark a parameter of a function (usually the last one) with
+              the vararg modifier
+            </p>
+            <pre><code class="language-kt">fun getSum(vararg nums: Int): Int {
+    var sum = 0
+    nums.forEach { sum += it }
+    return sum
+}
+
+fun main() {
+    println(getSum(3, 4, 5, 7, 9))
+    val arr = listOf&#x3C;Int&#x3E;(44, 66, 22, 23)
+    println(getSum(*arr.toIntArray()))
+}</code></pre>
+            <b>Another example</b>
+            <pre><code class="language-kt">fun &#x3C;T&#x3E; asList(vararg ts: T): List&#x3C;T&#x3E; {
+  val result = ArrayList&#x3C;T&#x3E;()
+  for (t in ts) // ts is an Array
+      result.add(t)
+  return result
+}
+fun main() {
+  val list = asList(1, 2, 3)
+  list.forEach { println(it) }
+}</code></pre>
+            <p>
+              Inside a function, a vararg-parameter of type T is visible as an
+              array of T, as in the example above, where the ts variable has
+              type Array&#x3C;out T&#x3E;.
+            </p>
+            <p>
+              Only one parameter can be marked as vararg. If a vararg parameter
+              is not the last one in the list, values for the subsequent
+              parameters can be passed using named argument syntax, or, if the
+              parameter has a function type, by passing a lambda outside the
+              parentheses.
+            </p>
+            <p>
+              When you call a vararg-function, you can pass arguments
+              individually, for example asList(1, 2, 3). If you already have an
+              array and want to pass its contents to the function, use the
+              spread operator (prefix the array with *):
+            </p>
+
+            <pre><code class="language-kt">val a = arrayOf(1, 2, 3)
+val list = asList(-1, 0, *a, 4)</code></pre>
+            <p>
+              If you want to pass a primitive type array into vararg, you need
+              to convert it to a regular (typed) array using the toTypedArray()
+              function
+            </p>
+
+            <pre><code class="language-kt">val a = intArrayOf(1, 2, 3) // IntArray is a primitive type array
+val list = asList(-1, 0, *a.toTypedArray(), 4)</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p></p>
+            <pre><code class="language-kt"></code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p></p>
+            <pre><code class="language-kt"></code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p></p>
+            <pre><code class="language-kt"></code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p></p>
+            <pre><code class="language-kt"></code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <p></p>
+            <pre><code class="language-kt"></code></pre>
+          </div>
+        </details>
+      </section>
+
       <section id="kt_04_01">
         <h4>Storing function in variable</h4>
         <pre>
@@ -37,6 +265,7 @@
       </section>
     </div>
   </body>
-  <script>hljs.highlightAll();</script>
- 
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
