@@ -25,15 +25,564 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="ll">
+        <h4>Linked List</h4>
+        <pre><code class="language-kt">package ds
+
+import models.Node
+
+class LinkedList&#x3C;T&#x3E; : Iterable&#x3C;T&#x3E;, Collection&#x3C;T&#x3E;, MutableIterable&#x3C;T&#x3E;, MutableCollection&#x3C;T&#x3E; {
+    override fun remove(element: T): Boolean {
+        val iterator = iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item == element) {
+                iterator.remove()
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun removeAll(elements: Collection&#x3C;T&#x3E;): Boolean {
+        var result = false
+        for (item in elements) {
+            result = remove(item) || result
+        }
+        return result
+    }
+
+    override fun retainAll(elements: Collection&#x3C;T&#x3E;): Boolean {
+        var result = false
+        val iterator = this.iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (!elements.contains(item)) {
+                iterator.remove()
+                result = true
+            }
+        }
+        return result
+    }
+
+    override var size = 0
+        private set
+
+    override fun contains(element: T): Boolean {
+        for (item in this) {
+            if (item == element) return true
+        }
+        return false
+    }
+
+    override fun containsAll(elements: Collection&#x3C;T&#x3E;): Boolean {
+        for (searched in elements) {
+            if (!contains(searched)) return false
+        }
+        return true
+    }
+
+    override fun isEmpty(): Boolean {
+        return size == 0
+    }
+
+    override fun add(element: T): Boolean {
+        append(element)
+        return true
+    }
+
+    override fun addAll(elements: Collection&#x3C;T&#x3E;): Boolean {
+        for (element in elements) {
+            append(element)
+        }
+        return true
+    }
+
+    override fun clear() {
+        head = null
+        tail = null
+        size = 0
+    }
+
+    override fun iterator(): MutableIterator&#x3C;T&#x3E; {
+        return LinkedListIterator(this)
+    }
+
+    private var head: Node&#x3C;T&#x3E;? = null
+    private var tail: Node&#x3C;T&#x3E;? = null
+
+
+    override fun toString(): String {
+        if (isEmpty()) {
+            return &#x22;Empty list&#x22;
+        } else {
+            return head.toString()
+        }
+    }
+
+    fun push(value: T): LinkedList&#x3C;T&#x3E; {
+        head = Node(value = value, next = head)
+        if (tail == null) {
+            tail = head
+        }
+        size++
+        return this
+    }
+
+    fun append(value: T) {
+        if (isEmpty()) {
+            push(value)
+            return
+        }
+        tail?.next = Node(value = value)
+        tail = tail?.next
+        size++
+    }
+
+    fun nodeAt(index: Int): Node&#x3C;T&#x3E;? {
+        var currentNode = head
+        var currentIndex = 0
+
+        while (currentNode != null &#x26;&#x26; currentIndex &#x3C; index) {
+            currentNode = currentNode.next
+            currentIndex++
+        }
+        return currentNode
+    }
+
+    fun insert(value: T, afterNode: Node&#x3C;T&#x3E;): Node&#x3C;T&#x3E; {
+        if (tail == afterNode) {
+            append(value)
+            return tail!!
+        }
+        val newNode = Node(value = value, next = afterNode.next)
+        afterNode.next = newNode
+        size++
+        return newNode
+    }
+
+    fun pop(): T? {
+        if (!isEmpty()) size--
+        val result = head?.value
+        head = head?.next
+        if (isEmpty()) {
+            tail = null
+        }
+
+        return result
+    }
+
+    fun removeLast(): T? {
+        val head = head ?: return null
+        if (head.next == null) return pop()
+        size--
+
+        var prev = head
+        var current = head
+
+        var next = current.next
+        while (next != null) {
+            prev = current
+            current = next
+            next = current.next
+        }
+
+        prev.next = null
+        tail = prev
+        return current.value
+    }
+
+    fun removeAfter(node: Node&#x3C;T&#x3E;): T? {
+        val result = node.next?.value
+
+        if (node.next == tail) {
+            tail = node
+        }
+
+        if (node.next != null) {
+            size--
+        }
+
+        node.next = node.next?.next
+        return result
+    }
+}</code></pre>
+      </section>
+
+      <section id="LinkedListIterator">
+        <h4>Linked List Iterator</h4>
+        <pre><code class="language-kt">package ds
+
+import models.Node
+
+class LinkedListIterator&#x3C;T&#x3E;(
+    private val list: LinkedList&#x3C;T&#x3E;
+) : Iterator&#x3C;T&#x3E;, MutableIterator&#x3C;T&#x3E; {
+
+    private var index = 0
+    private var lastNode: Node&#x3C;T&#x3E;? = null
+
+    override fun hasNext(): Boolean {
+        return index &#x3C; list.size
+    }
+
+    override fun next(): T {
+
+        if (index &#x3E;= list.size) throw IndexOutOfBoundsException()
+
+        lastNode = if (index == 0) {
+            list.nodeAt(0)
+        } else {
+            lastNode?.next
+        }
+
+        index++
+        return lastNode!!.value
+    }
+
+    override fun remove() {
+
+        if (index == 1) {
+            list.pop()
+        } else {
+
+            val prevNode = list.nodeAt(index - 2) ?: return
+
+            list.removeAfter(prevNode)
+            lastNode = prevNode
+        }
+        index--
+    }
+}</code></pre>
+      </section>
+
+      <section id="DoublyLinkedList">
+        <h4>Doubly Linked List</h4>
+        <pre><code class="language-kt">package ds
+
+import models.Node
+
+class DoublyLinkedList&#x3C;T&#x3E; {
+
+    fun isEmpty(): Boolean {
+        return head == null
+    }
+
+    private var head: Node&#x3C;T&#x3E;? = null
+    private var tail: Node&#x3C;T&#x3E;? = null
+
+
+    override fun toString(): String {
+        if (isEmpty()) {
+            return &#x22;Empty list&#x22;
+        }
+        return head.toString()
+    }
+
+
+    fun append(value: T) {
+
+        val newNode = Node(value = value, previous = tail)
+        if (isEmpty()) {
+            head = newNode
+            tail = newNode
+            return
+        }
+
+        tail?.next = newNode
+
+        tail = newNode
+    }
+
+    fun node(index: Int): Node&#x3C;T&#x3E;? {
+        // 1
+        var currentNode = head
+        var currentIndex = 0
+
+        // 2
+        while (currentNode != null &#x26;&#x26; currentIndex &#x3C; index) {
+            currentNode = currentNode.next
+            currentIndex += 1
+        }
+
+        return currentNode
+    }
+
+    fun remove(node: Node&#x3C;T&#x3E;): T {
+
+        val prev = node.previous
+        val next = node.next
+
+        if (prev != null) {
+            prev.next = node.previous
+        } else {
+            head = next
+        }
+
+        next?.previous = prev
+
+        if (next == null) {
+            tail = prev
+        }
+
+        node.previous = null
+        node.next = null
+
+        return node.value
+    }
+
+    val first: Node&#x3C;T&#x3E;?
+        get() = head
+
+}</code></pre>
+      </section>
+
+      <section id="LinkedListQueue">
+        <h4>Linked List Queue</h4>
+        <pre><code class="language-kt">package ds
+
+class LinkedListQueue&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
+
+    private val list = DoublyLinkedList&#x3C;T&#x3E;()
+
+    private var size = 0
+
+    override val count: Int
+        get() = size
+
+    override fun enqueue(element: T): Boolean {
+        list.append(element)
+        size++
+        return true
+    }
+
+    override fun dequeue(): T? {
+        val firstNode = list.first ?: return null
+        size--
+        return list.remove(firstNode)
+    }
+
+    override fun peek(): T? = list.first?.value
+
+    override fun toString(): String = list.toString()
+}</code></pre>
+      </section>
+
+      <section id="Demo">
+        <h4>Demo</h4>
+        <pre><code class="language-kt">fun linkedListDemo() {
+    &#x22;creating and linking nodes&#x22; example {
+        val node1 = Node(value = 1)
+        val node2 = Node(value = 2)
+        val node3 = Node(value = 3)
+
+        node1.next = node2
+        node2.next = node3
+
+        println(node1)
+    }
+
+    &#x22;push&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+
+        println(list)
+    }
+
+    &#x22;fluent interface push&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.push(3).push(2).push(1)
+        println(list)
+    }
+
+    &#x22;append&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.append(1)
+        list.append(2)
+        list.append(3)
+
+        println(list)
+    }
+
+    &#x22;inserting at a particular index&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+
+        println(&#x22;Before inserting: $list&#x22;)
+        var middleNode = list.nodeAt(1)!!
+        for (i in 1..3) {
+            middleNode = list.insert(-1 * i, middleNode)
+        }
+        println(&#x22;After inserting: $list&#x22;)
+    }
+
+    &#x22;pop&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+
+        println(&#x22;Before popping list: $list&#x22;)
+        val poppedValue = list.pop()
+        println(&#x22;After popping list: $list&#x22;)
+        println(&#x22;Popped value: $poppedValue&#x22;)
+    }
+
+    &#x22;removing the last node&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+
+        println(&#x22;Before removing last node: $list&#x22;)
+        val removedValue = list.removeLast()
+
+        println(&#x22;After removing last node: $list&#x22;)
+        println(&#x22;Removed value: $removedValue&#x22;)
+    }
+
+    &#x22;removing a node after a particular node&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+
+        println(&#x22;Before removing at particular index: $list&#x22;)
+        val index = 1
+        val node = list.nodeAt(index - 1)!!
+        val removedValue = list.removeAfter(node)
+
+        println(&#x22;After removing at index $index: $list&#x22;)
+        println(&#x22;Removed value: $removedValue&#x22;)
+    }
+
+    &#x22;printing doubles&#x22; example {
+        val list = LinkedList&#x3C;Int&#x3E;()
+        list.push(3)
+        list.push(2)
+        list.push(1)
+        println(list)
+
+        for (item in list) {
+            println(&#x22;Double: ${item * 2}&#x22;)
+        }
+    }
+
+    &#x22;removing elements&#x22; example {
+        val list: MutableCollection&#x3C;Int&#x3E; = LinkedList()
+        list.add(3)
+        list.add(2)
+        list.add(1)
+
+        println(list)
+        list.remove(1)
+        println(list)
+    }
+
+    &#x22;retaining elements&#x22; example {
+        val list: MutableCollection&#x3C;Int&#x3E; = LinkedList()
+        list.add(3)
+        list.add(2)
+        list.add(1)
+        list.add(4)
+        list.add(5)
+
+        println(list)
+        list.retainAll(listOf(3, 4, 5))
+        println(list)
+    }
+
+    &#x22;remove all elements&#x22; example {
+        val list: MutableCollection&#x3C;Int&#x3E; = LinkedList()
+        list.add(3)
+        list.add(2)
+        list.add(1)
+        list.add(4)
+        list.add(5)
+
+        println(list)
+        list.removeAll(listOf(3, 4, 5))
+        println(list)
+    }
+}</code></pre>
+
+<h4>Output</h4>
+<pre class="shell">
+---Example of creating and linking nodes---
+1 -&#x3E; 2 -&#x3E; 3
+
+---Example of push---
+1 -&#x3E; 2 -&#x3E; 3
+
+---Example of fluent interface push---
+1 -&#x3E; 2 -&#x3E; 3
+
+---Example of append---
+1 -&#x3E; 2 -&#x3E; 3
+
+---Example of inserting at a particular index---
+Before inserting: 1 -&#x3E; 2 -&#x3E; 3
+After inserting: 1 -&#x3E; 2 -&#x3E; -1 -&#x3E; -2 -&#x3E; -3 -&#x3E; 3
+
+---Example of pop---
+Before popping list: 1 -&#x3E; 2 -&#x3E; 3
+After popping list: 2 -&#x3E; 3
+Popped value: 1
+
+---Example of removing the last node---
+Before removing last node: 1 -&#x3E; 2 -&#x3E; 3
+After removing last node: 1 -&#x3E; 2
+Removed value: 3
+
+---Example of removing a node after a particular node---
+Before removing at particular index: 1 -&#x3E; 2 -&#x3E; 3
+After removing at index 1: 1 -&#x3E; 3
+Removed value: 2
+
+---Example of printing doubles---
+1 -&#x3E; 2 -&#x3E; 3
+Double: 2
+Double: 4
+Double: 6
+
+---Example of removing elements---
+3 -&#x3E; 2 -&#x3E; 1
+3 -&#x3E; 2
+
+---Example of retaining elements---
+3 -&#x3E; 2 -&#x3E; 1 -&#x3E; 4 -&#x3E; 5
+3 -&#x3E; 4 -&#x3E; 5
+
+---Example of remove all elements---
+3 -&#x3E; 2 -&#x3E; 1 -&#x3E; 4 -&#x3E; 5
+2 -&#x3E; 1
+</pre>
+      </section>
+
       <section id="">
         <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <pre><code class="language-kt"></code></pre>
+      </section>
+
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt"></code></pre>
+      </section>
+
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt"></code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt"></code></pre>
       </section>
     </div>
   </body>

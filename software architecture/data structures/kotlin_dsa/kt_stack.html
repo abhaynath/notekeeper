@@ -25,15 +25,204 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="Stack">
+        <h4>Stack</h4>
+        <pre><code class="language-kt">package ds
+
+interface Stack&#x3C;T&#x3E; {
+    fun push(element: T)
+    fun pop(): T?
+    val count: Int
+        get
+
+    fun peek(): T?
+    val isEmpty: Boolean
+        get() = count == 0
+}</code></pre>
+      </section>
+
+      <section id="StackImpl">
+        <h4>StackImpl</h4>
+        <pre><code class="language-kt">package ds
+
+class StackImpl&#x3C;T&#x3E; : Stack&#x3C;T&#x3E; {
+
+    private val storage = arrayListOf&#x3C;T&#x3E;()
+
+    companion object {
+        fun &#x3C;T&#x3E; create(items: Iterable&#x3C;T&#x3E;): Stack&#x3C;T&#x3E; {
+            val stack = StackImpl&#x3C;T&#x3E;()
+            for (item in items) {
+                stack.push(item)
+            }
+            return stack
+        }
+    }
+
+    override fun push(element: T) {
+        storage.add(element)
+    }
+
+    override fun pop(): T? {
+        if (isEmpty) {
+            return null
+        }
+        return storage.removeAt(count - 1)
+    }
+
+    override fun peek(): T? {
+        return storage.lastOrNull()
+    }
+
+    override val count: Int
+        get() = storage.size
+
+    override fun toString() = buildString {
+        appendLine(&#x22;----top----&#x22;)
+        storage.asReversed().forEach {
+            appendLine(&#x22;$it&#x22;)
+        }
+        appendLine(&#x22;-----------&#x22;)
+    }
+}</code></pre>
+      </section>
+
+      <section id="StackQueue">
+        <h4>StackQueue</h4>
+        <pre><code class="language-kt">package ds
+
+class StackQueue&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
+    private val leftStack = StackImpl&#x3C;T&#x3E;()
+    private val rightStack = StackImpl&#x3C;T&#x3E;()
+
+    override val isEmpty: Boolean
+        get() = leftStack.isEmpty &#x26;&#x26; rightStack.isEmpty
+
+    override val count: Int
+        get() = leftStack.count + rightStack.count
+
+    override fun peek(): T? {
+        if (leftStack.isEmpty) {
+            transferElements()
+        }
+        return leftStack.peek()
+    }
+
+    override fun enqueue(element: T): Boolean {
+        rightStack.push(element)
+        return true
+    }
+
+    override fun dequeue(): T? {
+        if (leftStack.isEmpty) {
+            transferElements()
+        }
+        return leftStack.pop()
+    }
+
+    private fun transferElements() {
+        var nextElement = rightStack.pop()
+        while (nextElement != null) {
+            leftStack.push(nextElement)
+            nextElement = rightStack.pop()
+        }
+    }
+
+    override fun toString(): String {
+        return &#x22;Left stack:\n$leftStack \nRight stack:\n$rightStack&#x22;
+    }
+}</code></pre>
+      </section>
+
+      <section id="stackOf">
+        <h4>stackOf</h4>
+        <pre><code class="language-kt">
+fun &#x3C;T&#x3E; stackOf(vararg elements: T): Stack&#x3C;T&#x3E; {
+    return StackImpl.create(elements.asList())
+}</code></pre>
+      </section>
+
+      <section id="Demo">
+        <h4>Demo</h4>
+        <pre><code class="language-kt">fun stackDemo() {
+    &#x22;using a stack&#x22; example {
+        val stack = StackImpl&#x3C;Int&#x3E;().apply {
+            push(1)
+            push(2)
+            push(3)
+            push(4)
+        }
+        print(stack)
+        val poppedElement = stack.pop()
+        if (poppedElement != null) {
+            println(&#x22;Popped: $poppedElement&#x22;)
+        }
+        print(stack)
+    }
+    &#x22;initializing a stack from a list&#x22; example {
+        val list = listOf(&#x22;A&#x22;, &#x22;B&#x22;, &#x22;C&#x22;, &#x22;D&#x22;)
+        val stack = StackImpl.create(list)
+        print(stack)
+        println(&#x22;Popped: ${stack.pop()}&#x22;)
+    }
+    &#x22;initializing a stack from an array literal&#x22; example {
+        val stack = stackOf(1.0, 2.0, 3.0, 4.0)
+        print(stack)
+        println(&#x22;Popped: ${stack.pop()}&#x22;)
+    }
+}</code></pre>
+<h4>Output</h4>
+<pre class="shell">
+---Example of using a stack---
+----top----
+4
+3
+2
+1
+-----------
+Popped: 4
+----top----
+3
+2
+1
+-----------
+
+---Example of initializing a stack from a list---
+----top----
+D
+C
+B
+A
+-----------
+Popped: D
+
+---Example of initializing a stack from an array literal---
+----top----
+4.0
+3.0
+2.0
+1.0
+-----------
+Popped: 4.0
+</pre>
+      </section>
+
       <section id="">
         <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
       </section>
     </div>
   </body>

@@ -25,15 +25,342 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="Queue">
+        <h4>Queue</h4>
+        <pre><code class="language-kt">package ds
+
+interface Queue&#x3C;T&#x3E; {
+    fun enqueue(element: T): Boolean
+    fun dequeue(): T?
+    val count: Int
+        get
+    val isEmpty: Boolean
+        get() = count == 0
+
+    fun peek(): T?
+}</code></pre>
+      </section>
+
+      <section id="ArrayListQueue">
+        <h4>ArrayList Queue</h4>
+        <pre><code class="language-kt">package ds
+
+class ArrayListQueue&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
+
+    private val list = arrayListOf&#x3C;T&#x3E;()
+
+    override fun enqueue(element: T): Boolean {
+        list.add(element)
+        return true
+    }
+
+    override fun dequeue(): T? = if (isEmpty) null else list.removeAt(0)
+
+    override val count: Int
+        get() = list.size
+
+    override fun peek(): T? = list.getOrNull(0)
+
+
+    override fun toString(): String = list.toString()
+}</code></pre>
+      </section>
+
+      <section id="QueueStack">
+        <h4>Queue Stack</h4>
+        <pre><code class="language-kt">package ds
+
+class QueueStack&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
+
+    private var leftStack = arrayListOf&#x3C;T&#x3E;()
+    private var rightStack = arrayListOf&#x3C;T&#x3E;()
+
+    override fun enqueue(element: T): Boolean {
+        rightStack.add(element)
+        return true
+    }
+
+    override fun dequeue(): T? {
+        if (rightStack.isEmpty()) return null
+
+        if (leftStack.isEmpty()) {
+            leftStack = ArrayList(rightStack.asReversed())
+            rightStack = arrayListOf()
+        }
+
+        return leftStack.removeAt(leftStack.size - 1)
+    }
+
+    override val count = leftStack.size + rightStack.size
+
+    override fun peek(): T? {
+        return if (!leftStack.isEmpty()) leftStack.lastOrNull() else rightStack.firstOrNull()
+    }
+}</code></pre>
+      </section>
+
+      <section id="LinkedListQueue">
+        <h4>LinkedList Queue</h4>
+        <a target="_blank" href="kt_linkedlist.html#DoublyLinkedList">DoublyLinkedList</a>
+        <pre><code class="language-kt">package ds
+
+class LinkedListQueue&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
+
+    private val list = DoublyLinkedList&#x3C;T&#x3E;()
+
+    private var size = 0
+
+    override val count: Int
+        get() = size
+
+    override fun enqueue(element: T): Boolean {
+        list.append(element)
+        size++
+        return true
+    }
+
+    override fun dequeue(): T? {
+        val firstNode = list.first ?: return null
+        size--
+        return list.remove(firstNode)
+    }
+
+    override fun peek(): T? = list.first?.value
+
+    override fun toString(): String = list.toString()
+}</code></pre>
+      </section>
+
+      <section id="StackQueue">
+        <h4>Stack Queue</h4>
+        <pre><code class="language-kt">
+package ds
+
+class StackQueue&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
+    private val leftStack = StackImpl&#x3C;T&#x3E;()
+    private val rightStack = StackImpl&#x3C;T&#x3E;()
+
+    override val isEmpty: Boolean
+        get() = leftStack.isEmpty &#x26;&#x26; rightStack.isEmpty
+
+    override val count: Int
+        get() = leftStack.count + rightStack.count
+
+    override fun peek(): T? {
+        if (leftStack.isEmpty) {
+            transferElements()
+        }
+        return leftStack.peek()
+    }
+
+    override fun enqueue(element: T): Boolean {
+        rightStack.push(element)
+        return true
+    }
+
+    override fun dequeue(): T? {
+        if (leftStack.isEmpty) {
+            transferElements()
+        }
+        return leftStack.pop()
+    }
+
+    private fun transferElements() {
+        var nextElement = rightStack.pop()
+        while (nextElement != null) {
+            leftStack.push(nextElement)
+            nextElement = rightStack.pop()
+        }
+    }
+
+    override fun toString(): String {
+        return &#x22;Left stack:\n$leftStack \nRight stack:\n$rightStack&#x22;
+    }
+}</code></pre>
+      </section>
+
+      <section id="RingBuffer">
+        <h4>RingBuffer</h4>
+        <pre><code class="language-kt">package ds
+
+class RingBuffer&#x3C;T&#x3E;(private val size: Int) {
+
+    private var array = ArrayList&#x3C;T?&#x3E;(size)
+    private var readIndex = 0
+    private var writeIndex = 0
+
+    val count: Int
+        get() = availableSpaceForReading
+
+    private val availableSpaceForReading: Int
+        get() = (writeIndex - readIndex)
+
+    val first: T?
+        get() = array.getOrNull(readIndex)
+
+    val isEmpty: Boolean
+        get() = (count == 0)
+
+    private val availableSpaceForWriting: Int
+        get() = (size - availableSpaceForReading)
+
+    val isFull: Boolean
+        get() = (availableSpaceForWriting == 0)
+
+    fun write(element: T): Boolean {
+        return if (!isFull) {
+            if (array.size &#x3C; size) {
+                array.add(element)
+            } else {
+                array[writeIndex % size] = element
+            }
+            writeIndex += 1
+            true
+        } else {
+            false
+        }
+    }
+
+    fun read(): T? {
+        return if (!isEmpty) {
+            val element = array[readIndex % size]
+            readIndex += 1
+            element
+        } else {
+            null
+        }
+    }
+
+    override fun toString(): String {
+        val values = (0 until availableSpaceForReading).map { offset -&#x3E;
+            &#x22;${array[(readIndex + offset) % size]!!}&#x22;
+        }
+        return values.joinToString(prefix = &#x22;[&#x22;, separator = &#x22;, &#x22;, postfix = &#x22;]&#x22;)
+    }
+
+}</code></pre>
+      </section>
+
+      <section id="RingBufferQueue">
+        <h4>RingBuffer Queue</h4>
+        <pre><code class="language-kt">package ds
+
+class RingBufferQueue&#x3C;T&#x3E;(size: Int) : Queue&#x3C;T&#x3E; {
+
+    private val ringBuffer: RingBuffer&#x3C;T&#x3E; = RingBuffer(size)
+
+    override val count: Int
+        get() = ringBuffer.count
+
+    override fun peek(): T? = ringBuffer.first
+
+    override fun enqueue(element: T): Boolean = ringBuffer.write(element)
+
+    override fun dequeue(): T? = if (ringBuffer.isEmpty) null else ringBuffer.read()
+
+    override fun toString(): String = ringBuffer.toString()
+}</code></pre>
+      </section>
+
+   
+      <section id="Demo">
+        <h4>Demo</h4>
+        <pre><code class="language-kt">fun queueDemo() {
+    &#x22;Queue with ArrayList&#x22; example {
+        val queue = ArrayListQueue&#x3C;String&#x3E;().apply {
+            enqueue(&#x22;Ray&#x22;)
+            enqueue(&#x22;Brian&#x22;)
+            enqueue(&#x22;Eric&#x22;)
+        }
+        println(queue)
+        queue.dequeue()
+        println(queue)
+        println(&#x22;Next up: ${queue.peek()}&#x22;)
+    }
+
+    &#x22;Queue with Doubly Linked List&#x22; example {
+        val queue = LinkedListQueue&#x3C;String&#x3E;().apply {
+            enqueue(&#x22;Ray&#x22;)
+            enqueue(&#x22;Brian&#x22;)
+            enqueue(&#x22;Eric&#x22;)
+        }
+        println(queue)
+        queue.dequeue()
+        println(queue)
+        println(&#x22;Next up: ${queue.peek()}&#x22;)
+    }
+
+    &#x22;Queue with Ring Buffer&#x22; example {
+        val queue = RingBufferQueue&#x3C;String&#x3E;(10).apply {
+            enqueue(&#x22;Ray&#x22;)
+            enqueue(&#x22;Brian&#x22;)
+            enqueue(&#x22;Eric&#x22;)
+        }
+        println(queue)
+        queue.dequeue()
+        println(queue)
+        println(&#x22;Next up: ${queue.peek()}&#x22;)
+    }
+
+    &#x22;Queue with Double Stack&#x22; example {
+        val queue = StackQueue&#x3C;String&#x3E;().apply {
+            enqueue(&#x22;Ray&#x22;)
+            enqueue(&#x22;Brian&#x22;)
+            enqueue(&#x22;Eric&#x22;)
+        }
+        println(queue)
+        queue.dequeue()
+        println(queue)
+        println(&#x22;Next up: ${queue.peek()}&#x22;)
+    }
+}</code></pre>
+<h4>Output</h4>
+<pre class="shell">
+---Example of Queue with ArrayList---
+[Ray, Brian, Eric]
+[Brian, Eric]
+Next up: Brian
+
+---Example of Queue with Doubly Linked List---
+Ray -&#x3E; Brian -&#x3E; Eric
+Brian -&#x3E; Eric
+Next up: Brian
+
+---Example of Queue with Ring Buffer---
+[Ray, Brian, Eric]
+[Brian, Eric]
+Next up: Brian
+
+---Example of Queue with Double Stack---
+Left stack:
+----top----
+-----------
+ 
+Right stack:
+----top----
+Eric
+Brian
+Ray
+-----------
+
+Left stack:
+----top----
+Brian
+Eric
+-----------
+ 
+Right stack:
+----top----
+-----------
+
+Next up: Brian
+</pre>
+      </section>
+
       <section id="">
         <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <pre><code class="language-kt">
+        </code></pre>
       </section>
     </div>
   </body>
