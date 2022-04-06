@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../../js/libs/jquery.min.js"></script>
+    <title>Models</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="kt_dsa_index.html">Kotlin</a>
+    </nav>
+    <div class="content">
+      <section id="avlnode">
+        <h4>AVLNode</h4>
+        <pre> <code class="language-kt">package models
+
+import utility.VisitorAVLNode
+
+class AVLNode&#x3C;T : Comparable&#x3C;T&#x3E;&#x3E;(var value: T) {
+
+    var leftChild: AVLNode&#x3C;T&#x3E;? = null
+    var rightChild: AVLNode&#x3C;T&#x3E;? = null
+
+    val min: AVLNode&#x3C;T&#x3E;?
+        get() = leftChild?.min ?: this
+
+    var height = 0
+
+    val leftHeight: Int
+        get() = leftChild?.height ?: -1
+
+    val rightHeight: Int
+        get() = rightChild?.height ?: -1
+
+    val balanceFactor: Int
+        get() = leftHeight - rightHeight
+
+    override fun toString() = diagram(this)
+
+    private fun diagram(
+        node: AVLNode&#x3C;T&#x3E;?, top: String = &#x22;&#x22;, root: String = &#x22;&#x22;, bottom: String = &#x22;&#x22;
+    ): String {
+        return node?.let {
+            if (node.leftChild == null &#x26;&#x26; node.rightChild == null) {
+                &#x22;$root${node.value}\n&#x22;
+            } else {
+                diagram(
+                    node.rightChild,
+                    &#x22;$top &#x22;,
+                    &#x22;$top&#x250C;&#x2500;&#x2500;&#x22;,
+                    &#x22;$top&#x2502; &#x22;
+                ) + root + &#x22;${node.value}\n&#x22; + diagram(node.leftChild, &#x22;$bottom&#x2502; &#x22;, &#x22;$bottom&#x2514;&#x2500;&#x2500;&#x22;, &#x22;$bottom &#x22;)
+            }
+        } ?: &#x22;${root}null\n&#x22;
+    }
+
+    fun traverseInOrder(visit: VisitorAVLNode&#x3C;T&#x3E;) {
+        leftChild?.traverseInOrder(visit)
+        visit(value)
+        rightChild?.traverseInOrder(visit)
+    }
+
+    fun traversePreOrder(visit: VisitorAVLNode&#x3C;T&#x3E;) {
+        visit(value)
+        leftChild?.traversePreOrder(visit)
+        rightChild?.traversePreOrder(visit)
+    }
+
+    fun traversePostOrder(visit: VisitorAVLNode&#x3C;T&#x3E;) {
+        leftChild?.traversePostOrder(visit)
+        rightChild?.traversePostOrder(visit)
+        visit(value)
+    }
+
+}</code></pre>
+      </section>
+
+      <section id="binaryNode">
+        <h4>BinaryNode</h4>
+        <pre> <code class="language-kt">package models
+
+import utility.VisitorBinary
+
+class BinaryNode&#x3C;T&#x3E;(var value: T) {
+
+    var leftChild: BinaryNode&#x3C;T&#x3E;? = null
+    var rightChild: BinaryNode&#x3C;T&#x3E;? = null
+
+    val min: BinaryNode&#x3C;T&#x3E;?
+        get() = leftChild?.min ?: this
+
+    override fun toString() = diagram(this)
+
+    private fun diagram(
+        node: BinaryNode&#x3C;T&#x3E;?, top: String = &#x22;&#x22;, root: String = &#x22;&#x22;, bottom: String = &#x22;&#x22;
+    ): String {
+        return node?.let {
+            if (node.leftChild == null &#x26;&#x26; node.rightChild == null) {
+                &#x22;$root${node.value}\n&#x22;
+            } else {
+                diagram(
+                    node.rightChild, &#x22;$top &#x22;, &#x22;$top&#x250C;&#x2500;&#x2500;&#x22;, &#x22;$top&#x2502; &#x22;
+                ) + root + &#x22;${node.value}\n&#x22; + diagram(node.leftChild, &#x22;$bottom&#x2502; &#x22;, &#x22;$bottom&#x2514;&#x2500;&#x2500;&#x22;, &#x22;$bottom &#x22;)
+            }
+        } ?: &#x22;${root}null\n&#x22;
+    }
+
+    fun traverseInOrder(visit: VisitorBinary&#x3C;T&#x3E;) {
+        leftChild?.traverseInOrder(visit)
+        visit(value)
+        rightChild?.traverseInOrder(visit)
+    }
+
+    fun traversePreOrder(visit: VisitorBinary&#x3C;T&#x3E;) {
+        visit(value)
+        leftChild?.traversePreOrder(visit)
+        rightChild?.traversePreOrder(visit)
+    }
+
+    fun traversePostOrder(visit: VisitorBinary&#x3C;T&#x3E;) {
+        leftChild?.traversePostOrder(visit)
+        rightChild?.traversePostOrder(visit)
+        visit(value)
+    }
+
+}</code></pre>
+      </section>
+
+      <section id="edge">
+        <h4>Edge</h4>
+        <pre> <code class="language-kt">package models
+
+data class Edge&#x3C;T&#x3E;(val source: Vertex&#x3C;T&#x3E;, val destination: Vertex&#x3C;T&#x3E;, val weight: Double? = null)
+  </code></pre>
+      </section>
+
+      <section id="node">
+        <h4>Node</h4>
+        <pre> <code class="language-kt">package models
+
+data class Node&#x3C;T&#x3E;(var value: T, var next: Node&#x3C;T&#x3E;? = null, var previous: Node&#x3C;T&#x3E;? = null) {
+    override fun toString(): String {
+        return if (next != null) {
+            &#x22;$value -&#x3E; ${next.toString()}&#x22;
+        } else {
+            &#x22;$value&#x22;
+        }
+    }
+}</code></pre>
+      </section>
+
+      <section id="ref">
+        <h4>Ref</h4>
+        <pre><code class="language-kt">package models
+
+data class Ref&#x3C;T&#x3E;(var value: T)</code></pre>
+      </section>
+
+      <section id="treeNode">
+        <h4>TreeNode</h4>
+        <pre> <code class="language-kt">package models
+
+import ds.ArrayListQueue
+import utility.VisitorTree
+
+
+class TreeNode&#x3C;T&#x3E;(val value: T) {
+    private val children: MutableList&#x3C;TreeNode&#x3C;T&#x3E;&#x3E; = mutableListOf()
+
+    fun add(child: TreeNode&#x3C;T&#x3E;) = children.add(child)
+
+    fun forEachDepthFirst(visit: VisitorTree&#x3C;T&#x3E;) {
+        visit(this)
+        children.forEach {
+            it.forEachDepthFirst(visit)
+        }
+    }
+
+    fun forEachLevelOrder(visit: VisitorTree&#x3C;T&#x3E;) {
+        visit(this)
+        val queue = ArrayListQueue&#x3C;TreeNode&#x3C;T&#x3E;&#x3E;()
+        children.forEach { queue.enqueue(it) }
+
+        var node = queue.dequeue()
+        while (node != null) {
+            visit(node)
+            node.children.forEach { queue.enqueue(it) }
+            node = queue.dequeue()
+        }
+    }
+
+    fun search(value: T): TreeNode&#x3C;T&#x3E;? {
+        var result: TreeNode&#x3C;T&#x3E;? = null
+
+        forEachLevelOrder {
+            if (it.value == value) {
+                result = it
+            }
+        }
+
+        return result
+    }
+}</code></pre>
+      </section>
+
+      <section id="trieNode">
+        <h4>TrieNode</h4>
+        <pre> <code class="language-kt">package models
+
+class TrieNode&#x3C;Key&#x3E;(var key: Key?, var parent: TrieNode&#x3C;Key&#x3E;?) {
+    val children: HashMap&#x3C;Key, TrieNode&#x3C;Key&#x3E;&#x3E; = HashMap()
+    var isTerminating = false
+}</code></pre>
+      </section>
+
+      <section id="vertex">
+        <h4>Vertex</h4>
+        <pre> <code class="language-kt">package models
+
+data class Vertex&#x3C;T&#x3E;(val index: Int, val data: T)
+</code></pre>
+      </section>
+
+      <section id="visit">
+        <h4>Visit</h4>
+        <pre> <code class="language-kt">package models
+
+import enums.VisitType
+
+class Visit&#x3C;T&#x3E;(val type: VisitType, val edge: Edge&#x3C;T&#x3E;? = null)
+</code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

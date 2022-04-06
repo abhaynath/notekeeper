@@ -25,15 +25,143 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
-      <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+      <section id="Dijkstra">
+        <h4>Dijkstra</h4>
+        <ul>
+          <li><a target="_blank" href="kt_models.html#edge">models.Edge</a></li>
+          <li>
+            <a target="_blank" href="kt_models.html#vertex">models.Vertex</a>
+          </li>
+          <li>
+            <a target="_blank" href="kt_models.html#visit">models.Visit</a>
+          </li>
+          <li>
+            <a target="_blank" href="kt_enums.html#visitType"
+              >enums.VisitType</a
+            >
+          </li>
+          <li><a target="_blank" href=""></a></li>
+          <li><a href=""></a></li>
+          <li><a href=""></a></li>
+          <li><a href=""></a></li>
+        </ul>
+        <pre> <code class="language-kt">package alg
+
+import ds.AdjacencyList
+import ds.ComparatorPriorityQueueImpl
+import enums.VisitType
+import models.Edge
+import models.Vertex
+import models.Visit
+
+class Dijkstra&#x3C;T&#x3E;(private val graph: AdjacencyList&#x3C;T&#x3E;) {
+
+    private fun route(destination: Vertex&#x3C;T&#x3E;, paths: HashMap&#x3C;Vertex&#x3C;T&#x3E;, Visit&#x3C;T&#x3E;&#x3E;): ArrayList&#x3C;Edge&#x3C;T&#x3E;&#x3E; {
+        var vertex = destination
+        val path = arrayListOf&#x3C;Edge&#x3C;T&#x3E;&#x3E;()
+
+        loop@ while (true) {
+            val visit = paths[vertex] ?: break
+
+            when (visit.type) {
+                VisitType.START -&#x3E; break@loop
+                VisitType.EDGE -&#x3E; visit.edge?.let {
+                    path.add(it)
+                    vertex = it.source
+                }
+            }
+        }
+
+        return path
+    }
+
+    private fun distance(destination: Vertex&#x3C;T&#x3E;, paths: HashMap&#x3C;Vertex&#x3C;T&#x3E;, Visit&#x3C;T&#x3E;&#x3E;): Double {
+        val path = route(destination, paths)
+        return path.sumOf { it.weight ?: 0.0 }
+    }
+
+    fun shortestPath(start: Vertex&#x3C;T&#x3E;): HashMap&#x3C;Vertex&#x3C;T&#x3E;, Visit&#x3C;T&#x3E;&#x3E; {
+        val paths: HashMap&#x3C;Vertex&#x3C;T&#x3E;, Visit&#x3C;T&#x3E;&#x3E; = HashMap()
+        paths[start] = Visit(VisitType.START)
+
+        val distanceComparator = Comparator&#x3C;Vertex&#x3C;T&#x3E;&#x3E;({ first, second -&#x3E;
+            (distance(second, paths) - distance(first, paths)).toInt()
+        })
+
+        val priorityQueue = ComparatorPriorityQueueImpl(distanceComparator)
+        priorityQueue.enqueue(start)
+
+        while (true) {
+            val vertex = priorityQueue.dequeue() ?: break
+            val edges = graph.edges(vertex)
+
+            edges.forEach {
+                val weight = it.weight ?: return@forEach
+
+                if (paths[it.destination] == null || distance(vertex, paths) + weight &#x3C; distance(
+                        it.destination, paths
+                    )
+                ) {
+                    paths[it.destination] = Visit(VisitType.EDGE, it)
+                    priorityQueue.enqueue(it.destination)
+                }
+            }
+        }
+
+        return paths
+    }
+
+    fun shortestPath(destination: Vertex&#x3C;T&#x3E;, paths: HashMap&#x3C;Vertex&#x3C;T&#x3E;, Visit&#x3C;T&#x3E;&#x3E;): ArrayList&#x3C;Edge&#x3C;T&#x3E;&#x3E; {
+        return route(destination, paths)
+    }
+
+}</code></pre>
+      </section>
+      <section>
+        <h4>Demo</h4>
+        <pre><code class="language-kt">fun dijkstraDemo() {
+    println(&#x22;---------dijkstra shortest path---------&#x22;)
+    val graph = AdjacencyList&#x3C;String&#x3E;()
+
+    val a = graph.createVertex(&#x22;A&#x22;)
+    val b = graph.createVertex(&#x22;B&#x22;)
+    val c = graph.createVertex(&#x22;C&#x22;)
+    val d = graph.createVertex(&#x22;D&#x22;)
+    val e = graph.createVertex(&#x22;E&#x22;)
+    val f = graph.createVertex(&#x22;F&#x22;)
+    val g = graph.createVertex(&#x22;G&#x22;)
+    val h = graph.createVertex(&#x22;H&#x22;)
+
+    graph.add(EdgeType.DIRECTED, a, b, 8.0)
+    graph.add(EdgeType.DIRECTED, a, f, 9.0)
+    graph.add(EdgeType.DIRECTED, a, g, 1.0)
+    graph.add(EdgeType.DIRECTED, b, f, 3.0)
+    graph.add(EdgeType.DIRECTED, b, e, 1.0)
+    graph.add(EdgeType.DIRECTED, f, a, 2.0)
+    graph.add(EdgeType.DIRECTED, h, f, 2.0)
+    graph.add(EdgeType.DIRECTED, h, g, 5.0)
+    graph.add(EdgeType.DIRECTED, g, c, 3.0)
+    graph.add(EdgeType.DIRECTED, c, e, 1.0)
+    graph.add(EdgeType.DIRECTED, c, b, 3.0)
+    graph.add(EdgeType.UNDIRECTED, e, c, 8.0)
+    graph.add(EdgeType.DIRECTED, e, b, 1.0)
+    graph.add(EdgeType.DIRECTED, e, d, 2.0)
+
+    val dijkstra = Dijkstra(graph)
+    val pathsFromA = dijkstra.shortestPath(a)
+    val path = dijkstra.shortestPath(d, pathsFromA)
+    path.forEach {
+        println(&#x22;${it.source.data} --|${it.weight ?: 0.0}|--&#x3E; ${it.destination.data}&#x22;)
+    }
+}</code></pre>
+<h4>Output</h4>
+<pre class="shell">
+---------dijkstra shortest path---------
+E --|2.0|--&#x3E; D
+C --|1.0|--&#x3E; E
+G --|3.0|--&#x3E; C
+A --|1.0|--&#x3E; G
+</pre>
       </section>
     </div>
   </body>
