@@ -25,15 +25,37 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
-      <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+      <section id="bfs">
+        <h4>Breadth First Search</h4>
+        <a target="_blank" href="kt_graph.html#AdjacencyList">AdjacencyList</a>
+        <pre> <code class="language-kt">
+fun breadthFirstSearch() {
+    println(&#x22;---------breadth First Search---------&#x22;)
+    val graph = AdjacencyList&#x3C;String&#x3E;()
+    val a = graph.createVertex(&#x22;A&#x22;)
+    val b = graph.createVertex(&#x22;B&#x22;)
+    val c = graph.createVertex(&#x22;C&#x22;)
+    val d = graph.createVertex(&#x22;D&#x22;)
+    val e = graph.createVertex(&#x22;E&#x22;)
+    val f = graph.createVertex(&#x22;F&#x22;)
+    val g = graph.createVertex(&#x22;G&#x22;)
+    val h = graph.createVertex(&#x22;H&#x22;)
+
+    graph.add(EdgeType.UNDIRECTED, a, b, null)
+    graph.add(EdgeType.UNDIRECTED, a, c, null)
+    graph.add(EdgeType.UNDIRECTED, a, d, null)
+    graph.add(EdgeType.UNDIRECTED, b, e, null)
+    graph.add(EdgeType.UNDIRECTED, c, f, null)
+    graph.add(EdgeType.UNDIRECTED, c, g, null)
+    graph.add(EdgeType.UNDIRECTED, e, h, null)
+    graph.add(EdgeType.UNDIRECTED, e, f, null)
+    graph.add(EdgeType.UNDIRECTED, f, g, null)
+
+    val vertices = graph.breadthFirstSearch(a)
+    vertices.forEach {
+        println(it.data)
+    }
+}</code></pre>
       </section>
     </div>
   </body>

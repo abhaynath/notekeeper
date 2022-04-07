@@ -25,15 +25,253 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="AVLTree">
+        <h4>AVLTree</h4>
+        <pre><code class="language-kt">
+package models
+
+import utility.VisitorAVLNode
+
+class AVLNode&#x3C;T : Comparable&#x3C;T&#x3E;&#x3E;(var value: T) {
+
+    var leftChild: AVLNode&#x3C;T&#x3E;? = null
+    var rightChild: AVLNode&#x3C;T&#x3E;? = null
+
+    val min: AVLNode&#x3C;T&#x3E;?
+        get() = leftChild?.min ?: this
+
+    var height = 0
+
+    val leftHeight: Int
+        get() = leftChild?.height ?: -1
+
+    val rightHeight: Int
+        get() = rightChild?.height ?: -1
+
+    val balanceFactor: Int
+        get() = leftHeight - rightHeight
+
+    override fun toString() = diagram(this)
+
+    private fun diagram(
+        node: AVLNode&#x3C;T&#x3E;?, top: String = &#x22;&#x22;, root: String = &#x22;&#x22;, bottom: String = &#x22;&#x22;
+    ): String {
+        return node?.let {
+            if (node.leftChild == null &#x26;&#x26; node.rightChild == null) {
+                &#x22;$root${node.value}\n&#x22;
+            } else {
+                diagram(
+                    node.rightChild,
+                    &#x22;$top &#x22;,
+                    &#x22;$top&#x250C;&#x2500;&#x2500;&#x22;,
+                    &#x22;$top&#x2502; &#x22;
+                ) + root + &#x22;${node.value}\n&#x22; + diagram(node.leftChild, &#x22;$bottom&#x2502; &#x22;, &#x22;$bottom&#x2514;&#x2500;&#x2500;&#x22;, &#x22;$bottom &#x22;)
+            }
+        } ?: &#x22;${root}null\n&#x22;
+    }
+
+    fun traverseInOrder(visit: VisitorAVLNode&#x3C;T&#x3E;) {
+        leftChild?.traverseInOrder(visit)
+        visit(value)
+        rightChild?.traverseInOrder(visit)
+    }
+
+    fun traversePreOrder(visit: VisitorAVLNode&#x3C;T&#x3E;) {
+        visit(value)
+        leftChild?.traversePreOrder(visit)
+        rightChild?.traversePreOrder(visit)
+    }
+
+    fun traversePostOrder(visit: VisitorAVLNode&#x3C;T&#x3E;) {
+        leftChild?.traversePostOrder(visit)
+        rightChild?.traversePostOrder(visit)
+        visit(value)
+    }
+
+}
+        </code></pre>
+        <pre><code class="language-kt">typealias VisitorAVLNode&#x3C;T&#x3E; = (T) -&#x3E; Unit</code></pre>
+        <pre><code class="language-kt">
+import models.AVLNode
+import kotlin.math.max
+
+class AVLTree&#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; {
+
+    var root: AVLNode&#x3C;T&#x3E;? = null
+
+    fun insert(value: T) {
+        root = insert(root, value)
+    }
+
+    fun remove(value: T) {
+        root = remove(root, value)
+    }
+
+    private fun remove(node: AVLNode&#x3C;T&#x3E;?, value: T): AVLNode&#x3C;T&#x3E;? {
+        node ?: return null
+
+        when {
+            value == node.value -&#x3E; {
+
+                if (node.leftChild == null &#x26;&#x26; node.rightChild == null) {
+                    return null
+                }
+
+                if (node.leftChild == null) {
+                    return node.rightChild
+                }
+
+                if (node.rightChild == null) {
+                    return node.leftChild
+                }
+
+                node.rightChild?.min?.value?.let {
+                    node.value = it
+                }
+
+                node.rightChild = remove(node.rightChild, node.value)
+            }
+            value &#x3C; node.value -&#x3E; node.leftChild = remove(node.leftChild, value)
+            else -&#x3E; node.rightChild = remove(node.rightChild, value)
+        }
+        val balancedNode = balanced(node)
+        balancedNode.height = max(
+            balancedNode.leftHeight, balancedNode.rightHeight
+        ) + 1
+        return balancedNode
+    }
+
+    override fun toString() = root?.toString() ?: &#x22;empty tree&#x22;
+
+    fun contains(value: T): Boolean {
+
+        var current = root
+
+
+        while (current != null) {
+
+            if (current.value == value) {
+                return true
+            }
+
+            current = if (value &#x3C; current.value) {
+                current.leftChild
+            } else {
+                current.rightChild
+            }
+        }
+
+        return false
+    }
+
+    private fun balanced(node: AVLNode&#x3C;T&#x3E;): AVLNode&#x3C;T&#x3E; {
+        return when (node.balanceFactor) {
+            2 -&#x3E; {
+                if (node.leftChild?.balanceFactor == -1) {
+                    leftRightRotate(node)
+                } else {
+                    rightRotate(node)
+                }
+            }
+            -2 -&#x3E; {
+                if (node.rightChild?.balanceFactor == 1) {
+                    rightLeftRotate(node)
+                } else {
+                    leftRotate(node)
+                }
+            }
+            else -&#x3E; node
+        }
+    }
+
+    private fun leftRotate(node: AVLNode&#x3C;T&#x3E;): AVLNode&#x3C;T&#x3E; {
+
+        val pivot = node.rightChild!!
+
+        node.rightChild = pivot.leftChild
+
+        pivot.leftChild = node
+
+        node.height = max(node.leftHeight, node.rightHeight) + 1
+        pivot.height = max(pivot.leftHeight, pivot.rightHeight) + 1
+
+        return pivot
+    }
+
+    private fun rightRotate(node: AVLNode&#x3C;T&#x3E;): AVLNode&#x3C;T&#x3E; {
+        val pivot = node.leftChild!!
+        node.leftChild = pivot.rightChild
+        pivot.rightChild = node
+        node.height = max(node.leftHeight, node.rightHeight) + 1
+        pivot.height = max(pivot.leftHeight, pivot.rightHeight) + 1
+        return pivot
+    }
+
+    private fun rightLeftRotate(node: AVLNode&#x3C;T&#x3E;): AVLNode&#x3C;T&#x3E; {
+        val rightChild = node.rightChild ?: return node
+        node.rightChild = rightRotate(rightChild)
+        return leftRotate(node)
+    }
+
+    private fun leftRightRotate(node: AVLNode&#x3C;T&#x3E;): AVLNode&#x3C;T&#x3E; {
+        val leftChild = node.leftChild ?: return node
+        node.leftChild = rightRotate(leftChild)
+        return rightRotate(node)
+    }
+
+    private fun insert(node: AVLNode&#x3C;T&#x3E;?, value: T): AVLNode&#x3C;T&#x3E; {
+        node ?: return AVLNode(value)
+        if (value &#x3C; node.value) {
+            node.leftChild = insert(node.leftChild, value)
+        } else {
+            node.rightChild = insert(node.rightChild, value)
+        }
+        val balancedNode = balanced(node)
+        balancedNode.height = max(
+            balancedNode.leftHeight, balancedNode.rightHeight
+        ) + 1
+        return balancedNode
+    }
+
+}
+
+        </code></pre>
+      </section>
+
       <section id="">
         <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
       </section>
     </div>
   </body>
