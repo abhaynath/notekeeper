@@ -101,7 +101,9 @@ class QueueStack&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
 
       <section id="LinkedListQueue">
         <h4>LinkedList Queue</h4>
-        <a target="_blank" href="kt_linkedlist.html#DoublyLinkedList">DoublyLinkedList</a>
+        <a target="_blank" href="kt_linkedlist.html#DoublyLinkedList"
+          >DoublyLinkedList</a
+        >
         <pre><code class="language-kt">package ds
 
 class LinkedListQueue&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
@@ -261,8 +263,60 @@ class RingBufferQueue&#x3C;T&#x3E;(size: Int) : Queue&#x3C;T&#x3E; {
     override fun toString(): String = ringBuffer.toString()
 }</code></pre>
       </section>
+      <section id="AbstractPriorityQueue">
+        <h4>Abstract Priority Queue</h4>
+        <pre><code class="language-kt">
+package ds
 
-   
+abstract class AbstractPriorityQueue&#x3C;T&#x3E; : Queue&#x3C;T&#x3E; {
+
+    abstract val heap: Heap&#x3C;T&#x3E;
+        get
+
+    override val count: Int
+        get() = heap.count
+
+    override fun enqueue(element: T): Boolean {
+        heap.insert(element)
+        return true
+    }
+
+    override fun dequeue() = heap.remove()
+
+    override fun peek() = heap.peek()
+}</code></pre>
+      </section>
+
+
+      <section id="ComparatorPriorityQueueImpl">
+        <h4>Comparator Priority Queue Impl</h4>
+        <pre><code class="language-kt">
+package ds
+
+class ComparatorPriorityQueueImpl&#x3C;T&#x3E;(
+    private val comparator: Comparator&#x3C;T&#x3E;
+) : AbstractPriorityQueue&#x3C;T&#x3E;() {
+    override val heap = ComparatorHeapImpl(comparator)
+}</code></pre>
+      </section>
+
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt"></code></pre>
+      </section>
+
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt"></code></pre>
+      </section>
+
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt"></code></pre>
+      </section>
       <section id="Demo">
         <h4>Demo</h4>
         <pre><code class="language-kt">fun queueDemo() {
@@ -314,8 +368,8 @@ class RingBufferQueue&#x3C;T&#x3E;(size: Int) : Queue&#x3C;T&#x3E; {
         println(&#x22;Next up: ${queue.peek()}&#x22;)
     }
 }</code></pre>
-<h4>Output</h4>
-<pre class="shell">
+        <h4>Output</h4>
+        <pre class="shell">
 ---Example of Queue with ArrayList---
 [Ray, Brian, Eric]
 [Brian, Eric]
@@ -354,7 +408,8 @@ Right stack:
 -----------
 
 Next up: Brian
-</pre>
+</pre
+        >
       </section>
 
       <section id="">

@@ -25,15 +25,88 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
-      <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+      <section id="Prim">
+        <h4>Prim</h4>
+        <ul>
+          <li>
+            <a target="_blank" href="kt_que.html#AbstractPriorityQueue"
+              >Abstract Priority Queue</a
+            >
+          </li>
+          <li>
+            <a target="_blank" href="kt_que.html#ComparatorPriorityQueueImpl"
+              >Comparator Priority Queue Implementation</a
+            >
+          </li>
+          <li>
+            <a target="_blank" href="kt_graph.html#AdjacencyList"
+              >Adjacency List</a
+            >
+          </li>
+          <li><a target="_blank" href="kt_graph.html#Graph">Graph</a></li>
+          <li><a target="_blank" href="kt_models.html">Models</a></li>
+          <li><a target="_blank" href=""></a></li>
+        </ul>
+        <pre> <code class="language-kt">
+package alg
+
+import ds.AbstractPriorityQueue
+import ds.AdjacencyList
+import ds.ComparatorPriorityQueueImpl
+import ds.Graph
+import enums.EdgeType
+import models.Edge
+import models.Vertex
+import kotlin.math.roundToInt
+
+object Prim {
+
+    private fun &#x3C;T&#x3E; addAvailableEdges(
+        vertex: Vertex&#x3C;T&#x3E;, graph: Graph&#x3C;T&#x3E;, visited: Set&#x3C;Vertex&#x3C;T&#x3E;&#x3E;, priorityQueue: AbstractPriorityQueue&#x3C;Edge&#x3C;T&#x3E;&#x3E;
+    ) {
+        graph.edges(vertex).forEach { edge -&#x3E;
+            if (edge.destination !in visited) {
+                priorityQueue.enqueue(edge)
+            }
+        }
+    }
+
+    fun &#x3C;T&#x3E; produceMinimumSpanningTree(
+        graph: AdjacencyList&#x3C;T&#x3E;
+    ): Pair&#x3C;Double, AdjacencyList&#x3C;T&#x3E;&#x3E; {
+        var cost = 0.0
+        val mst = AdjacencyList&#x3C;T&#x3E;()
+        val visited = mutableSetOf&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+        val comparator = Comparator&#x3C;Edge&#x3C;T&#x3E;&#x3E; { first, second -&#x3E;
+            val firstWeight = first.weight ?: 0.0
+            val secondWeight = second.weight ?: 0.0
+            (secondWeight - firstWeight).roundToInt()
+        }
+        val priorityQueue = ComparatorPriorityQueueImpl(comparator)
+        mst.copyVertices(graph)
+
+        val start = graph.vertices.firstOrNull() ?: return Pair(cost, mst)
+
+        visited.add(start)
+        addAvailableEdges(start, graph, visited, priorityQueue)
+
+        while (true) {
+            val smallestEdge = priorityQueue.dequeue() ?: break
+            val vertex = smallestEdge.destination
+            if (vertex in visited) continue
+
+            visited.add(vertex)
+            cost += smallestEdge.weight ?: 0.0
+
+            mst.add(EdgeType.UNDIRECTED, smallestEdge.source, smallestEdge.destination, smallestEdge.weight)
+
+            addAvailableEdges(vertex, graph, visited, priorityQueue)
+        }
+
+        return Pair(cost, mst)
+    }
+
+}</code></pre>
       </section>
     </div>
   </body>

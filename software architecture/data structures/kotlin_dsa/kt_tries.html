@@ -25,15 +25,194 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="trie">
+        <h4>Trie</h4>
+        <pre><code class="language-kt">package models
+
+class TrieNode&#x3C;Key&#x3E;(var key: Key?, var parent: TrieNode&#x3C;Key&#x3E;?) {
+    val children: HashMap&#x3C;Key, TrieNode&#x3C;Key&#x3E;&#x3E; = HashMap()
+    var isTerminating = false
+}</code></pre>
+        <pre><code class="language-kt">package ds
+
+import models.TrieNode
+
+class Trie&#x3C;Key&#x3E; {
+
+    private val root = TrieNode&#x3C;Key&#x3E;(key = null, parent = null)
+
+    fun insert(list: List&#x3C;Key&#x3E;) {
+
+        var current = root
+
+        list.forEach { element -&#x3E;
+            if (current.children[element] == null) {
+                current.children[element] = TrieNode(element, current)
+            }
+            current = current.children[element]!!
+        }
+
+        current.isTerminating = true
+    }
+
+    fun contains(list: List&#x3C;Key&#x3E;): Boolean {
+        var current = root
+
+        list.forEach { element -&#x3E;
+            val child = current.children[element] ?: return false
+            current = child
+        }
+
+        return current.isTerminating
+    }
+
+    fun remove(list: List&#x3C;Key&#x3E;) {
+
+        var current = root
+
+        list.forEach { element -&#x3E;
+            val child = current.children[element] ?: return
+            current = child
+        }
+
+        if (!current.isTerminating) return
+
+
+        current.isTerminating = false
+
+        while (current.parent != null &#x26;&#x26; current.children.isEmpty() &#x26;&#x26; !current.isTerminating) {
+            current.parent!!.children.remove(current.key)
+            current = current.parent!!
+        }
+    }
+
+    fun collections(prefix: List&#x3C;Key&#x3E;): List&#x3C;List&#x3C;Key&#x3E;&#x3E; {
+
+        var current = root
+
+        prefix.forEach { element -&#x3E;
+            val child = current.children[element] ?: return emptyList()
+            current = child
+        }
+
+        return collections(prefix, current)
+    }
+
+    private fun collections(prefix: List&#x3C;Key&#x3E;, node: TrieNode&#x3C;Key&#x3E;?): List&#x3C;List&#x3C;Key&#x3E;&#x3E; {
+
+        val results = mutableListOf&#x3C;List&#x3C;Key&#x3E;&#x3E;()
+
+        if (node?.isTerminating == true) {
+            results.add(prefix)
+        }
+
+        node?.children?.forEach { (key, node) -&#x3E;
+            results.addAll(collections(prefix + key, node))
+        }
+
+        return results
+    }
+
+}</code></pre>
+      </section>
+
+      <section id="demo">
+        <h4>Demo</h4>
+        <pre><code class="language-kt">fun trieDemo() {
+    &#x22;insert and contains&#x22; example {
+        val trie = Trie&#x3C;Char&#x3E;()
+        trie.insert(&#x22;cute&#x22;)
+        if (trie.contains(&#x22;cute&#x22;)) {
+            println(&#x22;cute is in the trie&#x22;)
+        }
+    }
+
+    &#x22;remove&#x22; example {
+        val trie = Trie&#x3C;Char&#x3E;()
+
+        trie.insert(&#x22;cut&#x22;)
+        trie.insert(&#x22;cute&#x22;)
+
+        println(&#x22;\n*** Before removing ***&#x22;)
+        assert(trie.contains(&#x22;cut&#x22;))
+        println(&#x22;\&#x22;cut\&#x22; is in the trie&#x22;)
+        assert(trie.contains(&#x22;cute&#x22;))
+        println(&#x22;\&#x22;cute\&#x22; is in the trie&#x22;)
+
+        println(&#x22;\n*** After removing cut ***&#x22;)
+        trie.remove(&#x22;cut&#x22;)
+        assert(!trie.contains(&#x22;cut&#x22;))
+        assert(trie.contains(&#x22;cute&#x22;))
+        println(&#x22;\&#x22;cute\&#x22; is still in the trie&#x22;)
+    }
+
+    &#x22;prefix matching&#x22; example {
+        val trie = Trie&#x3C;Char&#x3E;().apply {
+            insert(&#x22;car&#x22;)
+            insert(&#x22;card&#x22;)
+            insert(&#x22;care&#x22;)
+            insert(&#x22;cared&#x22;)
+            insert(&#x22;cars&#x22;)
+            insert(&#x22;carbs&#x22;)
+            insert(&#x22;carapace&#x22;)
+            insert(&#x22;cargo&#x22;)
+        }
+
+        println(&#x22;\nCollections starting with \&#x22;car\&#x22;&#x22;)
+        val prefixedWithCar = trie.collections(&#x22;car&#x22;)
+        println(prefixedWithCar)
+
+        println(&#x22;\nCollections starting with \&#x22;care\&#x22;&#x22;)
+        val prefixedWithCare = trie.collections(&#x22;care&#x22;)
+        println(prefixedWithCare)
+    }
+}</code></pre>
+        <h4>Output</h4>
+        <pre class="shell">
+---Example of insert and contains---
+cute is in the trie
+
+---Example of remove---
+
+*** Before removing ***
+&#x22;cut&#x22; is in the trie
+&#x22;cute&#x22; is in the trie
+
+*** After removing cut ***
+&#x22;cute&#x22; is still in the trie
+
+---Example of prefix matching---
+
+Collections starting with &#x22;car&#x22;
+[car, carapace, carbs, cars, card, care, cared, cargo]
+
+Collections starting with &#x22;care&#x22;
+[care, cared]</pre
+        >
+      </section>
+
       <section id="">
         <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
       </section>
     </div>
   </body>

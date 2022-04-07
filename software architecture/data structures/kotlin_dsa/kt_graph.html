@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../../js/libs/jquery.min.js"></script>
+    <title>Graph</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="kt_dsa_index.html">Kotlin</a>
+    </nav>
+    <div class="content">
+      <section id="Graph">
+        <h4>Graph</h4>
+        <ul>
+          <li>
+            <a target="_blank" href="kt_que.html#QueueStack">QueueStack</a>
+          </li>
+          <li>
+            <a target="_blank" href="kt_stack.html#StackImpl">StackImpl</a>
+          </li>
+        </ul>
+        <ul>
+            <li><a target="_blank" href="kt_dijkstra.html">Dijkstra algorithms</a></li>
+            <li><a target="_blank" href="kt_prims.html">Prims algorithms</a></li>
+        </ul>
+        <pre><code class="language-kt">
+data class Vertex&#x3C;T&#x3E;(val index: Int, val data: T)
+
+data class Edge&#x3C;T&#x3E;(val source: Vertex&#x3C;T&#x3E;, val destination: Vertex&#x3C;T&#x3E;, val weight: Double? = null)
+
+data class Ref&#x3C;T&#x3E;(var value: T)
+
+enum class EdgeType {
+    DIRECTED, UNDIRECTED
+}</code></pre>
+        <pre> <code class="language-kt">package ds
+
+import enums.EdgeType
+import models.Edge
+import models.Ref
+import models.Vertex
+
+interface Graph&#x3C;T&#x3E; {
+
+    fun createVertex(data: T): Vertex&#x3C;T&#x3E;
+    fun addDirectedEdge(source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;, weight: Double?)
+    fun addUndirectedEdge(source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;, weight: Double?) {
+        addDirectedEdge(source, destination, weight)
+        addDirectedEdge(destination, source, weight)
+    }
+
+    fun add(edge: EdgeType, source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;, weight: Double?) {
+        when (edge) {
+            EdgeType.DIRECTED -&#x3E; addDirectedEdge(source, destination, weight)
+            EdgeType.UNDIRECTED -&#x3E; addUndirectedEdge(source, destination, weight)
+        }
+    }
+
+    fun edges(source: Vertex&#x3C;T&#x3E;): ArrayList&#x3C;Edge&#x3C;T&#x3E;&#x3E;
+    fun weight(source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;): Double?
+
+    fun numberOfPaths(source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;): Int {
+        val numberOfPaths = Ref(0) // 1
+        val visited: ArrayList&#x3C;Vertex&#x3C;T&#x3E;&#x3E; = arrayListOf() // 2
+        paths(source, destination, visited, numberOfPaths) // 3
+        return numberOfPaths.value
+    }
+
+    fun breadthFirstSearch(source: Vertex&#x3C;T&#x3E;): ArrayList&#x3C;Vertex&#x3C;T&#x3E;&#x3E; {
+        val queue = QueueStack&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+        val enqueued = ArrayList&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+        val visited = ArrayList&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+        queue.enqueue(source) // 1
+        enqueued.add(source)
+        while (true) {
+            val vertex = queue.dequeue() ?: break // 2
+            visited.add(vertex) // 3
+            val neighborEdges = edges(vertex) // 4
+            neighborEdges.forEach {
+                if (!enqueued.contains(it.destination)) { // 5
+                    queue.enqueue(it.destination)
+                    enqueued.add(it.destination)
+                }
+            }
+        }
+        return visited
+    }
+
+    fun paths(source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;, visited: ArrayList&#x3C;Vertex&#x3C;T&#x3E;&#x3E;, pathCount: Ref&#x3C;Int&#x3E;) {
+        visited.add(source) // 1
+        if (source == destination) { // 2
+            pathCount.value += 1
+        } else {
+            val neighbors = edges(source) // 3
+            neighbors.forEach { edge -&#x3E;
+                // 4
+                if (!visited.contains(edge.destination)) {
+                    paths(edge.destination, destination, visited, pathCount)
+                }
+            }
+        }
+        // 5
+        visited.remove(source)
+    }
+
+    fun depthFirstSearch(source: Vertex&#x3C;T&#x3E;): ArrayList&#x3C;Vertex&#x3C;T&#x3E;&#x3E; {
+        val stack = StackImpl&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+        val visited = arrayListOf&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+        val pushed = mutableSetOf&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+
+        stack.push(source)
+        pushed.add(source)
+        visited.add(source)
+
+        outer@ while (true) {
+            if (stack.isEmpty) break
+
+            val vertex = stack.peek()!!
+            val neighbors = edges(vertex)
+
+            if (neighbors.isEmpty()) {
+                stack.pop()
+                continue
+            }
+
+            for (i in 0 until neighbors.size) {
+                val destination = neighbors[i].destination
+                if (destination !in pushed) {
+                    stack.push(destination)
+                    pushed.add(destination)
+                    visited.add(destination)
+                    continue@outer
+                }
+            }
+            stack.pop()
+        }
+
+        return visited
+    }
+
+}</code></pre>
+      </section>
+      <section id="AdjacencyList">
+        <h4>Adjacency List</h4>
+        <pre> <code class="language-kt">
+package ds
+
+import models.Edge
+import models.Vertex
+
+class AdjacencyList&#x3C;T&#x3E; : Graph&#x3C;T&#x3E; {
+
+    private val adjacencies: HashMap&#x3C;Vertex&#x3C;T&#x3E;, ArrayList&#x3C;Edge&#x3C;T&#x3E;&#x3E;&#x3E; = HashMap()
+
+    val vertices: Set&#x3C;Vertex&#x3C;T&#x3E;&#x3E;
+        get() = adjacencies.keys
+
+    override fun createVertex(data: T): Vertex&#x3C;T&#x3E; {
+        val vertex = Vertex(adjacencies.count(), data)
+        adjacencies[vertex] = ArrayList()
+        return vertex
+    }
+
+    override fun addDirectedEdge(source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;, weight: Double?) {
+        val edge = Edge(source, destination, weight)
+        adjacencies[source]?.add(edge)
+    }
+
+    override fun edges(source: Vertex&#x3C;T&#x3E;) = adjacencies[source] ?: arrayListOf()
+
+    override fun weight(source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;): Double? {
+        return edges(source).firstOrNull { it.destination == destination }?.weight
+    }
+
+    override fun toString(): String {
+        return buildString {
+            adjacencies.forEach { (vertex, edges) -&#x3E;
+                val edgeString = edges.joinToString { it.destination.data.toString() }
+                append(&#x22;${vertex.data} ---&#x3E; [ $edgeString ]\n&#x22;)
+            }
+        }
+    }
+
+    fun copyVertices(graph: AdjacencyList&#x3C;T&#x3E;) {
+        graph.vertices.forEach {
+            adjacencies[it] = arrayListOf()
+        }
+    }
+
+}
+        </code></pre>
+      </section>
+
+      <section id="AdjacencyMatrix">
+        <h4>Adjacency Matrix</h4>
+
+        <pre> <code class="language-kt">
+class AdjacencyMatrix&#x3C;T&#x3E; : Graph&#x3C;T&#x3E; {
+
+    private val vertices = arrayListOf&#x3C;Vertex&#x3C;T&#x3E;&#x3E;()
+    private val weights = arrayListOf&#x3C;ArrayList&#x3C;Double?&#x3E;&#x3E;()
+
+    override fun createVertex(data: T): Vertex&#x3C;T&#x3E; {
+        val vertex = Vertex(vertices.count(), data)
+        vertices.add(vertex)
+        weights.forEach {
+            it.add(null)
+        }
+        val row = ArrayList&#x3C;Double?&#x3E;(vertices.count())
+        repeat(vertices.count()) {
+            row.add(null)
+        }
+        weights.add(row)
+        return vertex
+    }
+
+    override fun addDirectedEdge(
+        source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;, weight: Double?
+    ) {
+        weights[source.index][destination.index] = weight
+    }
+
+    override fun edges(source: Vertex&#x3C;T&#x3E;): ArrayList&#x3C;Edge&#x3C;T&#x3E;&#x3E; {
+        val edges = arrayListOf&#x3C;Edge&#x3C;T&#x3E;&#x3E;()
+        (0 until weights.size).forEach { column -&#x3E;
+            val weight = weights[source.index][column]
+            if (weight != null) {
+                edges.add(Edge(source, vertices[column], weight))
+            }
+        }
+        return edges
+    }
+
+    override fun weight(
+        source: Vertex&#x3C;T&#x3E;, destination: Vertex&#x3C;T&#x3E;
+    ): Double? {
+        return weights[source.index][destination.index]
+    }
+
+    override fun toString(): String {
+        val verticesDescription = vertices.joinToString(separator = &#x22;\n&#x22;) { &#x22;${it.index}: ${it.data}&#x22; }
+
+        val grid = weights.map { row -&#x3E;
+            buildString {
+                (0 until weights.size).forEach { columnIndex -&#x3E;
+                    val value = row[columnIndex]
+                    if (value != null) {
+                        append(&#x22;$value\t&#x22;)
+                    } else {
+                        append(&#x22;&#xF8;\t\t&#x22;)
+                    }
+                }
+            }
+        }
+
+        val edgesDescription = grid.joinToString(&#x22;\n&#x22;)
+        return &#x22;$verticesDescription\n\n$edgesDescription&#x22;
+    }
+
+}
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre> <code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="demo">
+        <h4>Demo</h4>
+        <pre> <code class="language-kt">
+fun graphDemo() {
+    val graph = AdjacencyMatrix&#x3C;String&#x3E;()
+
+    val singapore = graph.createVertex(&#x22;Singapore&#x22;)
+    val tokyo = graph.createVertex(&#x22;Tokyo&#x22;)
+    val hongKong = graph.createVertex(&#x22;Hong Kong&#x22;)
+    val detroit = graph.createVertex(&#x22;Detroit&#x22;)
+    val sanFrancisco = graph.createVertex(&#x22;San Francisco&#x22;)
+    val washingtonDC = graph.createVertex(&#x22;Washington, DC&#x22;)
+    val austinTexas = graph.createVertex(&#x22;Austin, Texas&#x22;)
+    val seattle = graph.createVertex(&#x22;Seattle&#x22;)
+
+    graph.add(EdgeType.UNDIRECTED, singapore, hongKong, 300.0)
+    graph.add(EdgeType.UNDIRECTED, singapore, tokyo, 500.0)
+    graph.add(EdgeType.UNDIRECTED, hongKong, tokyo, 250.0)
+    graph.add(EdgeType.UNDIRECTED, tokyo, detroit, 450.0)
+    graph.add(EdgeType.UNDIRECTED, tokyo, washingtonDC, 300.0)
+    graph.add(EdgeType.UNDIRECTED, hongKong, sanFrancisco, 600.0)
+    graph.add(EdgeType.UNDIRECTED, detroit, austinTexas, 50.0)
+    graph.add(EdgeType.UNDIRECTED, austinTexas, washingtonDC, 292.0)
+    graph.add(EdgeType.UNDIRECTED, sanFrancisco, washingtonDC, 337.0)
+    graph.add(EdgeType.UNDIRECTED, washingtonDC, seattle, 277.0)
+    graph.add(EdgeType.UNDIRECTED, sanFrancisco, seattle, 218.0)
+    graph.add(EdgeType.UNDIRECTED, austinTexas, sanFrancisco, 297.0)
+
+    println(graph)
+
+    println(&#x22;San Francisco Outgoing Flights:&#x22;)
+    println(&#x22;--------------------------------&#x22;)
+    graph.edges(sanFrancisco).forEach { edge -&#x3E;
+        println(&#x22;from: ${edge.source.data} to: ${edge.destination.data}&#x22;)
+    }
+}
+        </code></pre>
+        <pre class="shell">
+0: Singapore
+1: Tokyo
+2: Hong Kong
+3: Detroit
+4: San Francisco
+5: Washington, DC
+6: Austin, Texas
+7: Seattle
+
+&#xF8;&#x9;&#x9;500.0&#x9;300.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;
+500.0&#x9;&#xF8;&#x9;&#x9;250.0&#x9;450.0&#x9;&#xF8;&#x9;&#x9;300.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;
+300.0&#x9;250.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;600.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;
+&#xF8;&#x9;&#x9;450.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;50.0&#x9;&#xF8;&#x9;&#x9;
+&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;600.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;337.0&#x9;297.0&#x9;218.0&#x9;
+&#xF8;&#x9;&#x9;300.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;337.0&#x9;&#xF8;&#x9;&#x9;292.0&#x9;277.0&#x9;
+&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;50.0&#x9;297.0&#x9;292.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;
+&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;218.0&#x9;277.0&#x9;&#xF8;&#x9;&#x9;&#xF8;&#x9;&#x9;
+San Francisco Outgoing Flights:
+--------------------------------
+from: San Francisco to: Hong Kong
+from: San Francisco to: Washington, DC
+from: San Francisco to: Austin, Texas
+from: San Francisco to: Seattle
+        </pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
