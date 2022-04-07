@@ -25,15 +25,218 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="Heap">
+        <h4>Heap</h4>
+        <pre><code class="language-kt">
+interface Heap&#x3C;T&#x3E; : HeapCollection&#x3C;T&#x3E; {
+    fun peek(): T?
+}
+
+interface HeapCollection&#x3C;T&#x3E; {
+  val count: Int
+      get
+
+  val isEmpty: Boolean
+      get() = count == 0
+
+  fun insert(element: T)
+
+  fun remove(): T?
+
+  fun remove(index: Int): T?
+}
+</code></pre>
+      </section>
+
+      <section id="AbstractHeap">
+        <h4>Abstract Heap</h4>
+        <pre><code class="language-kt">
+package ds
+
+import java.util.*
+
+abstract class AbstractHeap&#x3C;T&#x3E;() : Heap&#x3C;T&#x3E; {
+    var elements: ArrayList&#x3C;T&#x3E; = ArrayList&#x3C;T&#x3E;()
+
+    override val count: Int
+        get() = elements.size
+
+    override fun peek(): T? = elements.first()
+
+    override fun insert(element: T) {
+        elements.add(element)
+        siftUp(count - 1)
+    }
+
+    private fun siftUp(index: Int) {
+        var child = index
+        var parent = parentIndex(child)
+        while (child &#x3E; 0 &#x26;&#x26; compare(elements[child], elements[parent]) &#x3E; 0) {
+            Collections.swap(elements, child, parent)
+            child = parent
+            parent = parentIndex(child)
+        }
+    }
+
+    override fun remove(): T? {
+        if (isEmpty) return null
+
+        Collections.swap(elements, 0, count - 1)
+        val item = elements.removeAt(count - 1)
+        siftDown(0)
+        return item
+    }
+
+    private fun siftDown(index: Int) {
+        var parent = index 
+        while (true) { 
+            val left = leftChildIndex(parent)
+            val right = rightChildIndex(parent)
+            var candidate = parent 
+            if (left &#x3C; count &#x26;&#x26; compare(elements[left], elements[candidate]) &#x3E; 0) {
+                candidate = left 
+            }
+            if (right &#x3C; count &#x26;&#x26; compare(elements[right], elements[candidate]) &#x3E; 0) {
+                candidate = right
+            }
+            if (candidate == parent) {
+                return 
+            }
+            Collections.swap(elements, parent, candidate)
+            parent = candidate
+        }
+    }
+
+    override fun remove(index: Int): T? {
+        if (index &#x3E;= count) return null
+
+        return if (index == count - 1) {
+            elements.removeAt(count - 1) 
+        } else {
+            Collections.swap(elements, index, count - 1)
+            val item = elements.removeAt(count - 1)
+            siftDown(index)
+            siftUp(index)
+            item
+        }
+    }
+
+    private fun index(element: T, i: Int): Int? {
+        if (i &#x3E;= count) {
+            return null
+        }
+        if (compare(element, elements[i]) &#x3E; 0) {
+            return null
+        }
+        if (element == elements[i]) {
+            return i
+        }
+        val leftChildIndex = index(element, leftChildIndex(i))
+        if (leftChildIndex != null) return leftChildIndex 
+        val rightChildIndex = index(element, rightChildIndex(i))
+        if (rightChildIndex != null) return rightChildIndex 
+        return null
+    }
+
+    protected fun heapify(values: ArrayList&#x3C;T&#x3E;) {
+        elements = values
+        if (!elements.isEmpty()) {
+            (count / 2 downTo 0).forEach {
+                siftDown(it)
+            }
+        }
+    }
+
+    private fun leftChildIndex(index: Int) = (2 * index) + 1
+
+    private fun rightChildIndex(index: Int) = (2 * index) + 2
+
+    private fun parentIndex(index: Int) = (index - 1) / 2
+
+    abstract fun compare(a: T, b: T): Int
+}
+        </code></pre>
+      </section>
+
+      <section id="ComparableHeapImpl">
+        <h4>Comparable Heap Impl</h4>
+        <pre><code class="language-kt">
+import java.util.ArrayList
+
+class ComparableHeapImpl&#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; : AbstractHeap&#x3C;T&#x3E;() {
+
+    companion object {
+        fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; create(
+            elements: ArrayList&#x3C;T&#x3E;
+        ): Heap&#x3C;T&#x3E; {
+            val heap = ComparableHeapImpl&#x3C;T&#x3E;()
+            heap.heapify(elements)
+            return heap
+        }
+    }
+
+    override fun compare(a: T, b: T): Int = a.compareTo(b)
+}</code></pre>
+      </section>
+
+      <section id="ComparatorHeapImpl">
+        <h4>Comparator Heap Impl</h4>
+        <pre><code class="language-kt">
+import java.util.ArrayList
+import java.util.Comparator
+
+class ComparatorHeapImpl&#x3C;T&#x3E;(
+    private val comparator: Comparator&#x3C;T&#x3E;
+) : AbstractHeap&#x3C;T&#x3E;() {
+
+    companion object {
+        fun &#x3C;T&#x3E; create(
+            elements: ArrayList&#x3C;T&#x3E;, comparator: Comparator&#x3C;T&#x3E;
+        ): Heap&#x3C;T&#x3E; {
+            val heap = ComparatorHeapImpl(comparator)
+            heap.heapify(elements)
+            return heap
+        }
+    }
+
+    override fun compare(a: T, b: T): Int = comparator.compare(a, b)
+}</code></pre>
+      </section>
+
       <section id="">
         <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <pre><code class="language-kt">
+        </code></pre>
       </section>
     </div>
   </body>
