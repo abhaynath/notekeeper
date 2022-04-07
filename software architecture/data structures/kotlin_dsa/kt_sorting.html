@@ -25,6 +25,459 @@
       <a href="kt_dsa_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="commonFunction">
+        <h4>Common functions</h4>
+        <pre><code class="language-kt">fun &#x3C;T&#x3E; MutableList&#x3C;T&#x3E;.swapAt(first: Int, second: Int) {
+      val aux = this[first]
+      this[first] = this[second]
+      this[second] = aux
+  }
+  
+  fun &#x3C;T&#x3E; Array&#x3C;T&#x3E;.swapAt(first: Int, second: Int) {
+      val aux = this[first]
+      this[first] = this[second]
+      this[second] = aux
+  }
+  
+  val ascending = Comparator { first: Int, second: Int -&#x3E;
+      when {
+          first &#x3C; second -&#x3E; -1
+          first &#x3E; second -&#x3E; 1
+          else -&#x3E; 0
+      }
+  }</code></pre>
+      </section>
+      <section id="BubbleSort">
+        <h4>BubbleSort</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.bubbleSort(showPasses: Boolean = false) {
+              
+    if (this.size &#x3C; 2) return
+    
+    for (end in (1 until this.size).reversed()) {
+        var swapped = false
+        
+        for (current in 0 until end) {
+            if (this[current] &#x3E; this[current + 1]) {
+                
+                this.swapAt(current, current + 1)
+                swapped = true
+            }
+        }
+        
+        if (showPasses) println(this)
+        
+        if (!swapped) return
+    }
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="insertionSort">
+        <h4>insertionSort</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.insertionSort(showPasses: Boolean = false) {
+    if (this.size &#x3C; 2) return
+    
+    for (current in 1 until this.size) {
+        
+        for (shifting in (1..current).reversed()) {
+            
+            if (this[shifting] &#x3C; this[shifting - 1]) {
+                this.swapAt(shifting, shifting - 1)
+            } else {
+                break
+            }
+        }
+        
+        if (showPasses) println(this)
+    }
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="selectionSort">
+        <h4>Selection Sort</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.selectionSort(showPasses: Boolean = false) {
+
+    if (this.size &#x3C; 2) return
+    // 1
+    for (current in 0 until (this.size - 1)) {
+        var lowest = current
+        // 2
+        for (other in (current + 1) until this.size) {
+            if (this[lowest] &#x3E; this[other]) {
+                lowest = other
+            }
+        }
+        // 3
+        if (lowest != current) {
+            this.swapAt(lowest, current)
+        }
+        // 4
+        if (showPasses) println(this)
+    }
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="mergeSort">
+        <h4>Merge Sort</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; List&#x3C;T&#x3E;.mergeSort(): List&#x3C;T&#x3E; {
+    if (this.size &#x3C; 2) return this
+    val middle = this.size / 2
+    val left = this.subList(0, middle).mergeSort()
+    val right = this.subList(middle, this.size).mergeSort()
+
+    return merge(left, right)
+}
+
+private fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; merge(left: List&#x3C;T&#x3E;, right: List&#x3C;T&#x3E;): List&#x3C;T&#x3E; {
+    // 1
+    var leftIndex = 0
+    var rightIndex = 0
+    // 2
+    val result = mutableListOf&#x3C;T&#x3E;()
+    // 3
+    while (leftIndex &#x3C; left.size &#x26;&#x26; rightIndex &#x3C; right.size) {
+        val leftElement = left[leftIndex]
+        val rightElement = right[rightIndex]
+        // 4
+        if (leftElement &#x3C; rightElement) {
+            result.add(leftElement)
+            leftIndex += 1
+        } else if (leftElement &#x3E; rightElement) {
+            result.add(rightElement)
+            rightIndex += 1
+        } else {
+            result.add(leftElement)
+            leftIndex += 1
+            result.add(rightElement)
+            rightIndex += 1
+        }
+    }
+    // 5
+    if (leftIndex &#x3C; left.size) {
+        result.addAll(left.subList(leftIndex, left.size))
+    }
+    if (rightIndex &#x3C; right.size) {
+        result.addAll(right.subList(rightIndex, right.size))
+    }
+    return result
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="radixSort">
+        <h4>Radix Sort</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun MutableList&#x3C;Int&#x3E;.radixSort() {
+    val base = 10
+    var done = false
+    var digits = 1
+    while (!done) {
+        done = true
+        // 1
+        val buckets = arrayListOf&#x3C;MutableList&#x3C;Int&#x3E;&#x3E;().apply {
+            for (i in 0..9) {
+                this.add(arrayListOf())
+            }
+        }
+        this.forEach { number -&#x3E;
+            val remainingPart = number / digits
+            val digit = remainingPart % base
+            buckets[digit].add(number)
+
+            if (remainingPart &#x3E; 0) {
+                done = false
+            }
+        }
+        digits *= base
+        this.clear()
+        this.addAll(buckets.flatten())
+    }
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="heapSort">
+        <h4>Heap Sort</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T&#x3E; Array&#x3C;T&#x3E;.heapSort(comparator: Comparator&#x3C;T&#x3E;) {
+    this.heapify(comparator)
+    for (index in this.indices.reversed()) { // 1
+        this.swapAt(0, index) // 2
+        siftDown(0, index, comparator) // 3
+    }
+}
+
+fun &#x3C;T&#x3E; Array&#x3C;T&#x3E;.heapify(comparator: Comparator&#x3C;T&#x3E;) {
+    if (this.isNotEmpty()) {
+        (this.size / 2 downTo 0).forEach {
+            this.siftDown(it, this.size, comparator)
+        }
+    }
+}
+
+fun &#x3C;T&#x3E; Array&#x3C;T&#x3E;.siftDown(
+    index: Int, upTo: Int, comparator: Comparator&#x3C;T&#x3E;
+) {
+    var parent = index
+    while (true) {
+        val left = leftChildIndex(parent)
+        val right = rightChildIndex(parent)
+        var candidate = parent
+        if (left &#x3C; upTo &#x26;&#x26; comparator.compare(this[left], this[candidate]) &#x3E; 0) {
+            candidate = left
+        }
+        if (right &#x3C; upTo &#x26;&#x26; comparator.compare(this[right], this[candidate]) &#x3E; 0) {
+            candidate = right
+        }
+        if (candidate == parent) {
+            return
+        }
+        this.swapAt(parent, candidate)
+        parent = candidate
+    }
+}
+private fun leftChildIndex(index: Int) = (2 * index) + 1
+
+private fun rightChildIndex(index: Int) = (2 * index) + 2
+</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="quicksortNaive">
+        <h4>Quick Sort Naive</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; List&#x3C;T&#x3E;.quicksortNaive(): List&#x3C;T&#x3E; {
+    if (this.size &#x3C; 2) return this
+
+    val pivot = this[this.size / 2] // 2
+    val less = this.filter { it &#x3C; pivot } // 3
+    val equal = this.filter { it == pivot }
+    val greater = this.filter { it &#x3E; pivot }
+    return less.quicksortNaive() + equal + greater.quicksortNaive() // 4
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="quicksortDutchFlag">
+        <h4>Quick sort Dutch Flag</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.quicksortDutchFlag(low: Int, high: Int) {
+    if (low &#x3C; high) {
+        val middle = partitionDutchFlag(low, high, high)
+        this.quicksortDutchFlag(low, middle.first - 1)
+        this.quicksortDutchFlag(middle.second + 1, high)
+    }
+}
+fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.partitionDutchFlag(low: Int, high: Int, pivotIndex: Int): Pair&#x3C;Int, Int&#x3E; {
+  val pivot = this[pivotIndex]
+  var smaller = low // 1
+  var equal = low // 2
+  var larger = high // 3
+  while (equal &#x3C;= larger) { // 4
+      if (this[equal] &#x3C; pivot) {
+          this.swapAt(smaller, equal)
+          smaller += 1
+          equal += 1
+      } else if (this[equal] == pivot) {
+          equal += 1
+      } else {
+          this.swapAt(equal, larger)
+          larger -= 1
+      }
+  }
+  return Pair(smaller, larger) // 5
+}
+</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="quicksortHoare">
+        <h4>Quick sort Hoare</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.quicksortHoare(low: Int, high: Int) {
+      if (low &#x3C; high) {
+          val p = this.partitionHoare(low, high)
+          this.quicksortHoare(low, p)
+          this.quicksortHoare(p + 1, high)
+      }
+}
+fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.partitionHoare(low: Int, high: Int): Int {
+    val pivot = this[low] // 1
+    var i = low - 1 // 2
+    var j = high + 1
+
+    while (true) {
+      do {
+            j -= 1
+        } while (this[j] &#x3E; pivot)
+
+        do {
+            i += 1
+        } while (this[i] &#x3C; pivot)
+
+        if (i &#x3C; j) { 
+            this.swapAt(i, j)
+        } else {
+            return j
+        }
+    }
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="quicksortLomuto">
+        <h4>Quick sort Lomuto</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.quicksortLomuto(low: Int, high: Int) {
+    if (low &#x3C; high) {
+        val pivot = this.partitionLomuto(low, high)
+        this.quicksortLomuto(low, pivot - 1)
+        this.quicksortLomuto(pivot + 1, high)
+    }
+}
+
+fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.partitionLomuto(low: Int, high: Int): Int {
+    val pivot = this[high]
+
+    var i = low
+    for (j in low until high) {
+        if (this[j] &#x3C;= pivot) {
+            this.swapAt(i, j)
+            i += 1
+        }
+        this.subList(low, i)
+    }
+    this.swapAt(i, high)
+    return i
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="quickSortMedian">
+        <h4>Quick Sort Median</h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.quickSortMedian(low: Int, high: Int) {
+    if (low &#x3C; high) {
+        val pivotIndex = medianOfThree(low, high)
+        this.swapAt(pivotIndex, high)
+        val pivot = partitionLomuto(low, high)
+        this.quicksortLomuto(low, pivot - 1)
+        this.quicksortLomuto(pivot + 1, high)
+    }
+}
+fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.partitionLomuto(low: Int, high: Int): Int {
+    val pivot = this[high]
+
+    var i = low
+    for (j in low until high) {
+        if (this[j] &#x3C;= pivot) {
+            this.swapAt(i, j)
+            i += 1
+        }
+        this.subList(low, i)
+    }
+    this.swapAt(i, high)
+    return i
+}
+fun &#x3C;T : Comparable&#x3C;T&#x3E;&#x3E; MutableList&#x3C;T&#x3E;.medianOfThree(low: Int, high: Int): Int {
+    val center = (low + high) / 2
+    if (this[low] &#x3E; this[center]) {
+        this.swapAt(low, center)
+    }
+    if (this[low] &#x3E; this[high]) {
+        this.swapAt(low, high)
+    }
+    if (this[center] &#x3E; this[high]) {
+        this.swapAt(center, high)
+    }
+    return center
+}</code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+                </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+                </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+                </code></pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="">
+        <h4></h4>
+        <details>
+          <summary></summary>
+          <div>
+            <pre> <code class="language-kt">
+                </code></pre>
+          </div>
+        </details>
+      </section>
+
       <section id="">
         <h4></h4>
         <details>
