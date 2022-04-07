@@ -233,10 +233,19 @@ class ComparatorHeapImpl&#x3C;T&#x3E;(
         </code></pre>
       </section>
 
-      <section id="">
-        <h4></h4>
+      <section id="demo">
+        <h4>Demo</h4>
         <pre><code class="language-kt">
-        </code></pre>
+fun heapDemo() {
+    val array = arrayListOf(1, 12, 3, 4, 1, 6, 8, 7) // 1
+    val inverseComparator = object : Comparator&#x3C;Int&#x3E; { // 2
+        override fun compare(o1: Int, o2: Int): Int = o2.compareTo(o1)
+    }
+    val minHeap = ComparatorHeapImpl.create(array, inverseComparator) // 3
+    while (!minHeap.isEmpty) { // 4
+        println(minHeap.remove())
+    }
+}</code></pre>
       </section>
     </div>
   </body>
