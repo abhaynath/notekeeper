@@ -27,185 +27,166 @@
     <div class="content">
       <section id="overview">
         <h4>Collections overview</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              The Kotlin Standard Library provides a comprehensive set of tools
-              for managing collections &#x2013; groups of a variable number of
-              items (possibly zero) that are significant to the problem being
-              solved and are commonly operated on.
-            </p>
-            <p>
-              Collections are a common concept for most programming languages,
-              so if you&#x27;re familiar with, for example, Java or Python
-              collections, you can skip this introduction and proceed to the
-              detailed sections.
-            </p>
-            <p>
-              A collection usually contains a number of objects (this number may
-              also be zero) of the same type. Objects in a collection are called
-              elements or items. For example, all the students in a department
-              form a collection that can be used to calculate their average age.
-            </p>
-            <p>The following collection types are relevant for Kotlin:</p>
-            <ul>
-              <li>
-                <b>List</b> is an ordered collection with access to elements by
-                indices &#x2013; integer numbers that reflect their position.
-                Elements can occur more than once in a list. An example of a
-                list is a telephone number: it&#x27;s a group of digits, their
-                order is important, and they can repeat.
-              </li>
-              <li>
-                <b>Set</b> is a collection of unique elements. It reflects the
-                mathematical abstraction of set: a group of objects without
-                repetitions. Generally, the order of set elements has no
-                significance. For example, the numbers on lottery tickets form a
-                set: they are unique, and their order is not important.
-              </li>
-              <li>
-                <b>Map</b> (or dictionary) is a set of key-value pairs. Keys are
-                unique, and each of them maps to exactly one value. The values
-                can be duplicates. Maps are useful for storing logical
-                connections between objects, for example, an employee&#x27;s ID
-                and their position.
-              </li>
-            </ul>
-            <p>
-              Kotlin lets you manipulate collections independently of the exact
-              type of objects stored in them. In other words, you add a String
-              to a list of Strings the same way as you would do with Ints or a
-              user-defined class. So, the Kotlin Standard Library offers generic
-              interfaces, classes, and functions for creating, populating, and
-              managing collections of any type.
-            </p>
-            <p>
-              The collection interfaces and related functions are located in the
-              kotlin.collections package. Let&#x27;s get an overview of its
-              contents.
-            </p>
-            <pre> <code class="language-kt">
-            </code></pre>
-          </div>
-        </details>
+        <div>
+          <p>
+            The Kotlin Standard Library provides a comprehensive set of tools
+            for managing collections &#x2013; groups of a variable number of
+            items (possibly zero) that are significant to the problem being
+            solved and are commonly operated on.
+          </p>
+        
+          <p>
+            A collection usually contains a number of objects (this number may
+            also be zero) of the same type. Objects in a collection are called
+            elements or items. For example, all the students in a department
+            form a collection that can be used to calculate their average age.
+          </p>
+          <p>The following collection types are relevant for Kotlin:</p>
+          <ul>
+            <li>
+              <b>List</b> is an ordered collection with access to elements by
+              indices &#x2013; integer numbers that reflect their position.
+              Elements can occur more than once in a list. An example of a list
+              is a telephone number: it&#x27;s a group of digits, their order is
+              important, and they can repeat.
+            </li>
+            <li>
+              <b>Set</b> is a collection of unique elements. It reflects the
+              mathematical abstraction of set: a group of objects without
+              repetitions. Generally, the order of set elements has no
+              significance. For example, the numbers on lottery tickets form a
+              set: they are unique, and their order is not important.
+            </li>
+            <li>
+              <b>Map</b> (or dictionary) is a set of key-value pairs. Keys are
+              unique, and each of them maps to exactly one value. The values can
+              be duplicates. Maps are useful for storing logical connections
+              between objects, for example, an employee&#x27;s ID and their
+              position.
+            </li>
+          </ul>
+          <p>
+            Kotlin lets you manipulate collections independently of the exact
+            type of objects stored in them. In other words, you add a String to
+            a list of Strings the same way as you would do with Ints or a
+            user-defined class. So, the Kotlin Standard Library offers generic
+            interfaces, classes, and functions for creating, populating, and
+            managing collections of any type.
+          </p>
+          <p>
+            The collection interfaces and related functions are located in the
+            kotlin.collections package. Let&#x27;s get an overview of its
+            contents.
+          </p>
+        </div>
       </section>
 
       <section id="collectionTypes">
         <h4>Collection types</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              The Kotlin Standard Library provides implementations for basic
-              collection types: sets, lists, and maps. A pair of interfaces
-              represent each collection type:
-            </p>
-            <ul>
-              <li>
-                A read-only interface that provides operations for accessing
-                collection elements.
-              </li>
-              <li>
-                A mutable interface that extends the corresponding read-only
-                interface with write operations: adding, removing, and updating
-                its elements.
-              </li>
-            </ul>
-            <p>
-              Note that altering a mutable collection doesn&#x27;t require it to
-              be a var: write operations modify the same mutable collection
-              object, so the reference doesn&#x27;t change. Although, if you try
-              to reassign a val collection, you&#x27;ll get a compilation error.
-            </p>
-            <pre><code class="language-kt">val numbers = mutableListOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+        <div>
+          <p>
+            The Kotlin Standard Library provides implementations for basic
+            collection types: sets, lists, and maps. A pair of interfaces
+            represent each collection type:
+          </p>
+          <ul>
+            <li>
+              A read-only interface that provides operations for accessing
+              collection elements.
+            </li>
+            <li>
+              A mutable interface that extends the corresponding read-only
+              interface with write operations: adding, removing, and updating
+              its elements.
+            </li>
+          </ul>
+          <p>
+            Note that altering a mutable collection doesn&#x27;t require it to
+            be a var: write operations modify the same mutable collection
+            object, so the reference doesn&#x27;t change. Although, if you try
+            to reassign a val collection, you&#x27;ll get a compilation error.
+          </p>
+          <pre><code class="language-kt">val numbers = mutableListOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
 numbers.add(&#x22;five&#x22;)   // this is OK
 println(numbers)
 //numbers = mutableListOf(&#x22;six&#x22;, &#x22;seven&#x22;)      // compilation error
-            </code></pre>
-            <p>
-              The read-only collection types are covariant. This means that, if
-              a Rectangle class inherits from Shape, you can use a
-              List&#x3C;Rectangle&#x3E; anywhere the List&#x3C;Shape&#x3E; is
-              required. In other words, the collection types have the same
-              subtyping relationship as the element types. Maps are covariant on
-              the value type, but not on the key type.
-            </p>
-            <p>
-              In turn, mutable collections aren&#x27;t covariant; otherwise,
-              this would lead to runtime failures. If
-              MutableList&#x3C;Rectangle&#x3E; was a subtype of
-              MutableList&#x3C;Shape&#x3E;, you could insert other Shape
-              inheritors (for example, Circle) into it, thus violating its
-              Rectangle type argument.
-            </p>
-            <img
-              style="width: 600px; background-color: #ffffff42; padding: 5px"
-              src="../../images/lang/kt/l5.png"
-            />
-          </div>
-        </details>
+          </code></pre>
+          <p>
+            The read-only collection types are covariant. This means that, if a
+            Rectangle class inherits from Shape, you can use a
+            List&#x3C;Rectangle&#x3E; anywhere the List&#x3C;Shape&#x3E; is
+            required. In other words, the collection types have the same
+            subtyping relationship as the element types. Maps are covariant on
+            the value type, but not on the key type.
+          </p>
+          <p>
+            In turn, mutable collections aren&#x27;t covariant; otherwise, this
+            would lead to runtime failures. If MutableList&#x3C;Rectangle&#x3E;
+            was a subtype of MutableList&#x3C;Shape&#x3E;, you could insert
+            other Shape inheritors (for example, Circle) into it, thus violating
+            its Rectangle type argument.
+          </p>
+          <img
+            style="width: 600px; background-color: #ffffff42; padding: 5px"
+            src="../../images/lang/kt/l5.png"
+          />
+        </div>
       </section>
 
       <section id="collection">
         <h4>Collection</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              Let&#x27;s walk through the interfaces and their implementations.
-              To learn about Collection, read the section below.
-            </p>
-            <p>
-              <span class="keyword">Collection&#x3C;T&#x3E;</span> is the root
-              of the collection hierarchy. This interface represents the common
-              behavior of a read-only collection: retrieving size, checking item
-              membership, and so on. Collection inherits from the
-              <span class="keyword">Iterable&#x3C;T&#x3E;</span> interface that
-              defines the operations for iterating elements. You can use
-              Collection as a parameter of a function that applies to different
-              collection types. For more specific cases, use the
-              Collection&#x27;s inheritors: List and Set.
-            </p>
-            <pre> <code class="language-kt">fun printAll(strings: Collection&#x3C;String&#x3E;) {
-    for (s in strings) print(&#x22;$s &#x22;)
-    println()
+        <div>
+          <p>
+            Let&#x27;s walk through the interfaces and their implementations. To
+            learn about Collection, read the section below.
+          </p>
+          <p>
+            <span class="keyword">Collection&#x3C;T&#x3E;</span> is the root of
+            the collection hierarchy. This interface represents the common
+            behavior of a read-only collection: retrieving size, checking item
+            membership, and so on. Collection inherits from the
+            <span class="keyword">Iterable&#x3C;T&#x3E;</span> interface that
+            defines the operations for iterating elements. You can use
+            Collection as a parameter of a function that applies to different
+            collection types. For more specific cases, use the Collection&#x27;s
+            inheritors: List and Set.
+          </p>
+          <pre> <code class="language-kt">fun printAll(strings: Collection&#x3C;String&#x3E;) {
+  for (s in strings) print(&#x22;$s &#x22;)
+  println()
 }
 
 fun main() {
-    val stringList = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;one&#x22;)
-    printAll(stringList)
+  val stringList = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;one&#x22;)
+  printAll(stringList)
 
-    val stringSet = setOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;)
-    printAll(stringSet)
+  val stringSet = setOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;)
+  printAll(stringSet)
 }
-            </code></pre>
-            <p>
-              <span class="keyword">MutableCollection&#x3C;T&#x3E;</span> is a
-              Collection with write operations, such as add and remove.
-            </p>
-            <pre><code class="language-kt">fun List&#x3C;String&#x3E;.getShortWordsTo(shortWords: MutableList&#x3C;String&#x3E;, maxLength: Int) {
-    this.filterTo(shortWords) { it.length &#x3C;= maxLength }
-    // throwing away the articles
-    val articles = setOf(&#x22;a&#x22;, &#x22;A&#x22;, &#x22;an&#x22;, &#x22;An&#x22;, &#x22;the&#x22;, &#x22;The&#x22;)
-    shortWords -= articles
+          </code></pre>
+          <p>
+            <span class="keyword">MutableCollection&#x3C;T&#x3E;</span> is a
+            Collection with write operations, such as add and remove.
+          </p>
+          <pre><code class="language-kt">fun List&#x3C;String&#x3E;.getShortWordsTo(shortWords: MutableList&#x3C;String&#x3E;, maxLength: Int) {
+  this.filterTo(shortWords) { it.length &#x3C;= maxLength }
+  // throwing away the articles
+  val articles = setOf(&#x22;a&#x22;, &#x22;A&#x22;, &#x22;an&#x22;, &#x22;An&#x22;, &#x22;the&#x22;, &#x22;The&#x22;)
+  shortWords -= articles
 }
 
 fun main() {
-    val words = &#x22;A long time ago in a galaxy far far away&#x22;.split(&#x22; &#x22;)
-    val shortWords = mutableListOf&#x3C;String&#x3E;()
-    words.getShortWordsTo(shortWords, 3)
-    println(shortWords)
+  val words = &#x22;A long time ago in a galaxy far far away&#x22;.split(&#x22; &#x22;)
+  val shortWords = mutableListOf&#x3C;String&#x3E;()
+  words.getShortWordsTo(shortWords, 3)
+  println(shortWords)
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
       <section id="kt_03_01">
         <h4>Array</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kotlin">
+        <div>
+          <pre> <code class="language-kotlin">
 val arr1 = arrayOf(&#x22;C&#x22;,&#x22;C++&#x22;,&#x22;Java&#x22;)
 val arr2 = arrayOf(2,3,&#x22;String also allowed here&#x22;,false)
 val arr3 = intArrayOf(1,2,3,4,5,6)
@@ -213,100 +194,97 @@ val arr4 = floatArrayOf(3.467f,5.64f)
 
 
 for(i in arr4){
-    println(i)
+  println(i)
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="list">
         <h4>List</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              List&#x3C;T&#x3E; stores elements in a specified order and
-              provides indexed access to them. Indices start from zero &#x2013;
-              the index of the first element &#x2013; and go to lastIndex which
-              is the (list.size - 1).
-            </p>
-            <pre> <code class="language-kt">fun main() {
-    val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
-    println(&#x22;Number of elements: ${numbers.size}&#x22;)
-    println(&#x22;Third element: ${numbers.get(2)}&#x22;)
-    println(&#x22;Fourth element: ${numbers[3]}&#x22;)
-    println(&#x22;Index of element \&#x22;two\&#x22; ${numbers.indexOf(&#x22;two&#x22;)}&#x22;)
+        <div>
+          <p>
+            List&#x3C;T&#x3E; stores elements in a specified order and provides
+            indexed access to them. Indices start from zero &#x2013; the index
+            of the first element &#x2013; and go to lastIndex which is the
+            (list.size - 1).
+          </p>
+          <pre> <code class="language-kt">fun main() {
+  val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+  println(&#x22;Number of elements: ${numbers.size}&#x22;)
+  println(&#x22;Third element: ${numbers.get(2)}&#x22;)
+  println(&#x22;Fourth element: ${numbers[3]}&#x22;)
+  println(&#x22;Index of element \&#x22;two\&#x22; ${numbers.indexOf(&#x22;two&#x22;)}&#x22;)
 }</code></pre>
-            <p>
-              List elements (including nulls) can duplicate: a list can contain
-              any number of equal objects or occurrences of a single object. Two
-              lists are considered equal if they have the same sizes and
-              structurally equal elements at the same positions.
-            </p>
-            <pre> <code class="language-kt">data class Person(var name: String, var age: Int)
+          <p>
+            List elements (including nulls) can duplicate: a list can contain
+            any number of equal objects or occurrences of a single object. Two
+            lists are considered equal if they have the same sizes and
+            structurally equal elements at the same positions.
+          </p>
+          <pre> <code class="language-kt">data class Person(var name: String, var age: Int)
 
 fun main() {
-    val abhay = Person(&#x22;Abhay&#x22;, 31)
-    val people = listOf(Person(&#x22;Sachin&#x22;, 20), abhay, abhay)
-    val people2 = listOf(Person(&#x22;Sachin&#x22;, 20), Person(&#x22;Abhay&#x22;, 31), abhay)
-    println(people == people2)
-    abhay.age = 32
-    println(people == people2)
+  val abhay = Person(&#x22;Abhay&#x22;, 31)
+  val people = listOf(Person(&#x22;Sachin&#x22;, 20), abhay, abhay)
+  val people2 = listOf(Person(&#x22;Sachin&#x22;, 20), Person(&#x22;Abhay&#x22;, 31), abhay)
+  println(people == people2)
+  abhay.age = 32
+  println(people == people2)
 }</code></pre>
-            <pre class="shell">
+          <pre class="shell">
 true
 false
 </pre
-            >
-            <p>
-              MutableList&#x3C;T&#x3E; is a List with list-specific write
-              operations, for example, to add or remove an element at a specific
-              position.
-            </p>
-            <pre>
-              <code class="language-kt">
-  fun main() {
-    val india = mutableListOf&#x3C;String&#x3E;();
-    india.add(&#x22;Sachin&#x22;);
-    india.add(&#x22;Virender&#x22;);
-    india.add(&#x22;Rahul&#x22;);
-    india.add(&#x22;MS Dhoni&#x22;);
-    india.add(&#x22;Virat Kohli&#x22;);
-    india.add(&#x22;Rohit Sharma&#x22;);
+          >
+          <p>
+            MutableList&#x3C;T&#x3E; is a List with list-specific write
+            operations, for example, to add or remove an element at a specific
+            position.
+          </p>
+          <pre>
+            <code class="language-kt">
+fun main() {
+  val india = mutableListOf&#x3C;String&#x3E;();
+  india.add(&#x22;Sachin&#x22;);
+  india.add(&#x22;Virender&#x22;);
+  india.add(&#x22;Rahul&#x22;);
+  india.add(&#x22;MS Dhoni&#x22;);
+  india.add(&#x22;Virat Kohli&#x22;);
+  india.add(&#x22;Rohit Sharma&#x22;);
 
-    println(india.isEmpty());
-    println(&#x22;Size ${india.size}&#x22;);
+  println(india.isEmpty());
+  println(&#x22;Size ${india.size}&#x22;);
 
-    println(&#x22;First element : ${india.first()}&#x22;);
-    println(&#x22;Last Element : ${india.last()}&#x22;);
+  println(&#x22;First element : ${india.first()}&#x22;);
+  println(&#x22;Last Element : ${india.last()}&#x22;);
 
 
-    val firstPlayer = india[0];
-    println(&#x22;--firstPlayer = ${firstPlayer}&#x22;);
+  val firstPlayer = india[0];
+  println(&#x22;--firstPlayer = ${firstPlayer}&#x22;);
 
-    val secondPlayer = india.get(1);
-    println(&#x22;--SecondPlayer = ${secondPlayer}&#x22;);
+  val secondPlayer = india.get(1);
+  println(&#x22;--SecondPlayer = ${secondPlayer}&#x22;);
 
-    val openers = india.slice(0..1);
-    println(openers);
-    println(openers.joinToString());
+  val openers = india.slice(0..1);
+  println(openers);
+  println(openers.joinToString());
 
-    println(&#x22;Rahul contains = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
-    india.remove(&#x22;Rahul&#x22;);
-    println(&#x22;Rahul contains now = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
+  println(&#x22;Rahul contains = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
+  india.remove(&#x22;Rahul&#x22;);
+  println(&#x22;Rahul contains now = ${india.contains(&#x22;Rahul&#x22;)}&#x22;)
 
-    india.removeAt(1);
-    println(&#x22;--removed item ${india}&#x22;)
+  india.removeAt(1);
+  println(&#x22;--removed item ${india}&#x22;)
 
-    india[0] = &#x22;Sanath Jaysurya&#x22;;
+  india[0] = &#x22;Sanath Jaysurya&#x22;;
 
-    for ((index, player) in india.withIndex()) {
-        println(&#x22;$index --- $player&#x22;);
-    }
+  for ((index, player) in india.withIndex()) {
+      println(&#x22;$index --- $player&#x22;);
+  }
 }</code></pre>
-            <details>
-              <summary>Output</summary>
-              <pre class="shell">
+          <details>
+            <summary>Output</summary>
+            <pre class="shell">
 false
 Size 6
 First element : Sachin
@@ -322,129 +300,122 @@ Rahul contains now = false
 1 --- MS Dhoni
 2 --- Virat Kohli
 3 --- Rohit Sharma</pre
-              >
-            </details>
-            <p>
-              As you see, in some aspects lists are very similar to arrays.
-              However, there is one important difference: an array&#x27;s size
-              is defined upon initialization and is never changed; in turn, a
-              list doesn&#x27;t have a predefined size; a list&#x27;s size can
-              be changed as a result of write operations: adding, updating, or
-              removing elements.
-            </p>
-            <p>
-              In Kotlin, the default implementation of List is ArrayList which
-              you can think of as a resizable array.
-            </p>
-          </div>
-        </details>
+            >
+          </details>
+          <p>
+            As you see, in some aspects lists are very similar to arrays.
+            However, there is one important difference: an array&#x27;s size is
+            defined upon initialization and is never changed; in turn, a list
+            doesn&#x27;t have a predefined size; a list&#x27;s size can be
+            changed as a result of write operations: adding, updating, or
+            removing elements.
+          </p>
+          <p>
+            In Kotlin, the default implementation of List is ArrayList which you
+            can think of as a resizable array.
+          </p>
+        </div>
       </section>
 
       <section id="set">
         <h4>Set</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              Set&#x3C;T&#x3E; stores unique elements; their order is generally
-              undefined. null elements are unique as well: a Set can contain
-              only one null. Two sets are equal if they have the same size, and
-              for each element of a set there is an equal element in the other
-              set.
-            </p>
-            <pre><code class="language-kt">fun main() {
-    val numbers = setOf(1, 2, 3, 4)
-    println(&#x22;Number of elements: ${numbers.size}&#x22;)
-    if (numbers.contains(1)) println(&#x22;1 is in the set&#x22;)
+        <div>
+          <p>
+            Set&#x3C;T&#x3E; stores unique elements; their order is generally
+            undefined. null elements are unique as well: a Set can contain
+            only one null. Two sets are equal if they have the same size, and
+            for each element of a set there is an equal element in the other
+            set.
+          </p>
+          <pre><code class="language-kt">fun main() {
+  val numbers = setOf(1, 2, 3, 4)
+  println(&#x22;Number of elements: ${numbers.size}&#x22;)
+  if (numbers.contains(1)) println(&#x22;1 is in the set&#x22;)
 
-    val numbersBackwards = setOf(4, 3, 2, 1)
-    println(&#x22;The sets are equal: ${numbers == numbersBackwards}&#x22;)
-}</code></pre>
-            <p>
-              MutableSet is a Set with write operations from MutableCollection.
-            </p>
-            <p>
-              The default implementation of Set &#x2013; LinkedHashSet &#x2013;
-              preserves the order of elements insertion. Hence, the functions
-              that rely on the order, such as first() or last(), return
-              predictable results on such sets.
-            </p>
-            <pre><code class="language-kt">fun main() {
-  val numbers = setOf(1, 2, 3, 4)  // LinkedHashSet is the default implementation
   val numbersBackwards = setOf(4, 3, 2, 1)
-
-  println(numbers.first() == numbersBackwards.first())
-  println(numbers.first() == numbersBackwards.last())
+  println(&#x22;The sets are equal: ${numbers == numbersBackwards}&#x22;)
 }</code></pre>
-            <p>
-              An alternative implementation &#x26;#x2013; HashSet &#x26;#x2013;
-              says nothing about the elements order, so calling such functions
-              on it returns unpredictable results. However, HashSet requires
-              less memory to store the same number of elements.
-            </p>
-          </div>
-        </details>
+          <p>
+            MutableSet is a Set with write operations from MutableCollection.
+          </p>
+          <p>
+            The default implementation of Set &#x2013; LinkedHashSet &#x2013;
+            preserves the order of elements insertion. Hence, the functions
+            that rely on the order, such as first() or last(), return
+            predictable results on such sets.
+          </p>
+          <pre><code class="language-kt">fun main() {
+val numbers = setOf(1, 2, 3, 4)  // LinkedHashSet is the default implementation
+val numbersBackwards = setOf(4, 3, 2, 1)
+
+println(numbers.first() == numbersBackwards.first())
+println(numbers.first() == numbersBackwards.last())
+}</code></pre>
+          <p>
+            An alternative implementation &#x26;#x2013; HashSet &#x26;#x2013;
+            says nothing about the elements order, so calling such functions
+            on it returns unpredictable results. However, HashSet requires
+            less memory to store the same number of elements.
+          </p>
+        </div>
       </section>
 
       <section id="map">
         <h4>Map</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              Map&#x3C;K, V&#x3E; is not an inheritor of the Collection
-              interface; however, it&#x27;s a Kotlin collection type as well. A
-              Map stores key-value pairs (or entries); keys are unique, but
-              different keys can be paired with equal values. The Map interface
-              provides specific functions, such as access to value by key,
-              searching keys and values, and so on.
-            </p>
-            <pre><code class="language-kt">fun main() {
-    val numbersMap = mapOf(&#x22;key1&#x22; to 1, &#x22;key2&#x22; to 2, &#x22;key3&#x22; to 3, &#x22;key4&#x22; to 1)
+        <div>
+          <p>
+            Map&#x3C;K, V&#x3E; is not an inheritor of the Collection
+            interface; however, it&#x27;s a Kotlin collection type as well. A
+            Map stores key-value pairs (or entries); keys are unique, but
+            different keys can be paired with equal values. The Map interface
+            provides specific functions, such as access to value by key,
+            searching keys and values, and so on.
+          </p>
+          <pre><code class="language-kt">fun main() {
+  val numbersMap = mapOf(&#x22;key1&#x22; to 1, &#x22;key2&#x22; to 2, &#x22;key3&#x22; to 3, &#x22;key4&#x22; to 1)
 
-    println(&#x22;All keys: ${numbersMap.keys}&#x22;)
-    println(&#x22;All values: ${numbersMap.values}&#x22;)
-    if (&#x22;key2&#x22; in numbersMap) println(&#x22;Value by key \&#x22;key2\&#x22;: ${numbersMap[&#x22;key2&#x22;]}&#x22;)
-    if (1 in numbersMap.values) println(&#x22;The value 1 is in the map&#x22;)
-    if (numbersMap.containsValue(1)) println(&#x22;The value 1 is in the map&#x22;) // same as previous
+  println(&#x22;All keys: ${numbersMap.keys}&#x22;)
+  println(&#x22;All values: ${numbersMap.values}&#x22;)
+  if (&#x22;key2&#x22; in numbersMap) println(&#x22;Value by key \&#x22;key2\&#x22;: ${numbersMap[&#x22;key2&#x22;]}&#x22;)
+  if (1 in numbersMap.values) println(&#x22;The value 1 is in the map&#x22;)
+  if (numbersMap.containsValue(1)) println(&#x22;The value 1 is in the map&#x22;) // same as previous
 }</code></pre>
-            <pre class="shell">
+          <pre class="shell">
 All keys: [key1, key2, key3, key4]
 All values: [1, 2, 3, 1]
 Value by key &#x22;key2&#x22;: 2
 The value 1 is in the map
 The value 1 is in the map</pre
-            >
-            <p>
-              Two maps containing the equal pairs are equal regardless of the
-              pair order.
-            </p>
-            <pre><code class="language-kt">fun main() {
-  val numbersMap = mapOf(&#x22;key1&#x22; to 1, &#x22;key2&#x22; to 2, &#x22;key3&#x22; to 3, &#x22;key4&#x22; to 1)
-  val anotherMap = mapOf(&#x22;key2&#x22; to 2, &#x22;key1&#x22; to 1, &#x22;key4&#x22; to 1, &#x22;key3&#x22; to 3)
+          >
+          <p>
+            Two maps containing the equal pairs are equal regardless of the
+            pair order.
+          </p>
+          <pre><code class="language-kt">fun main() {
+val numbersMap = mapOf(&#x22;key1&#x22; to 1, &#x22;key2&#x22; to 2, &#x22;key3&#x22; to 3, &#x22;key4&#x22; to 1)
+val anotherMap = mapOf(&#x22;key2&#x22; to 2, &#x22;key1&#x22; to 1, &#x22;key4&#x22; to 1, &#x22;key3&#x22; to 3)
 
-  println(&#x22;The maps are equal: ${numbersMap == anotherMap}&#x22;)
+println(&#x22;The maps are equal: ${numbersMap == anotherMap}&#x22;)
 }</code></pre>
-            <p>
-              MutableMap is a Map with map write operations, for example, you
-              can add a new key-value pair or update the value associated with
-              the given key.
-            </p>
-            <pre><code class="language-kt">fun main() {
-  val numbersMap = mutableMapOf(&#x22;one&#x22; to 1, &#x22;two&#x22; to 2)
-  numbersMap.put(&#x22;three&#x22;, 3)
-  numbersMap[&#x22;one&#x22;] = 11
+          <p>
+            MutableMap is a Map with map write operations, for example, you
+            can add a new key-value pair or update the value associated with
+            the given key.
+          </p>
+          <pre><code class="language-kt">fun main() {
+val numbersMap = mutableMapOf(&#x22;one&#x22; to 1, &#x22;two&#x22; to 2)
+numbersMap.put(&#x22;three&#x22;, 3)
+numbersMap[&#x22;one&#x22;] = 11
 
-  println(numbersMap)
+println(numbersMap)
 }</code></pre>
-            <p>
-              The default implementation of Map &#x2013; LinkedHashMap &#x2013;
-              preserves the order of elements insertion when iterating the map.
-              In turn, an alternative implementation &#x2013; HashMap &#x2013;
-              says nothing about the elements order.
-            </p>
-          </div>
-        </details>
+          <p>
+            The default implementation of Map &#x2013; LinkedHashMap &#x2013;
+            preserves the order of elements insertion when iterating the map.
+            In turn, an alternative implementation &#x2013; HashMap &#x2013;
+            says nothing about the elements order.
+          </p>
+        </div>
       </section>
     </div>
   </body>

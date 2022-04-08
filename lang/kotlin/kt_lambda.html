@@ -27,261 +27,236 @@
     <div class="content">
       <section id="lambdas">
         <h4>Lambdas Expressions and Anonymous Functions</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              Lambdas expression and Anonymous function both are function
-              literals means these functions are not declared but passed
-              immediately as an expression.
-            </p>
-            <p><b>Lambda Expression</b></p>
-            <p>
-              As we know, syntax of Kotlin lambdas is similar to Java Lambdas. A
-              function without name is called anonymous function. For lambda
-              expression we can say that it is anonymous function
-            </p>
-            <pre> <code class="language-kt">fun main() {
-    val greeting = { println(&#x22;Hello World&#x22;) }
-    greeting()
-    greeting.invoke()
+        <div>
+          <p>
+            Lambdas expression and Anonymous function both are function literals
+            means these functions are not declared but passed immediately as an
+            expression.
+          </p>
+          <p><b>Lambda Expression</b></p>
+          <p>
+            As we know, syntax of Kotlin lambdas is similar to Java Lambdas. A
+            function without name is called anonymous function. For lambda
+            expression we can say that it is anonymous function
+          </p>
+          <pre> <code class="language-kt">fun main() {
+  val greeting = { println(&#x22;Hello World&#x22;) }
+  greeting()
+  greeting.invoke()
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="syntax">
         <h4>Syntax of Lambda expression</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              A lambda expression is always surrounded by curly braces, argument
-              declarations go inside curly braces and have optional type
-              annotations, the code_body goes after an arrow -&#x3E; sign. If
-              the inferred return type of the lambda is not Unit, then the last
-              expression inside the lambda body is treated as return value.
-            </p>
-            <pre> <code class="language-kt">val lambda_name : Data_type = { argument_List -&#x3E; code_body }</code></pre>
-            <pre> <code class="language-kt">val sum = {a: Int , b: Int -&#x3E; a + b}</code></pre>
-            <p>
-              In Kotlin, the lambda expression contains optional part except
-              code_body. Below is the lambda expression after eliminating the
-              optional part.
-            </p>
+        <div>
+          <p>
+            A lambda expression is always surrounded by curly braces, argument
+            declarations go inside curly braces and have optional type
+            annotations, the code_body goes after an arrow -&#x3E; sign. If the
+            inferred return type of the lambda is not Unit, then the last
+            expression inside the lambda body is treated as return value.
+          </p>
+          <pre> <code class="language-kt">val lambda_name : Data_type = { argument_List -&#x3E; code_body }</code></pre>
+          <pre> <code class="language-kt">val sum = {a: Int , b: Int -&#x3E; a + b}</code></pre>
+          <p>
+            In Kotlin, the lambda expression contains optional part except
+            code_body. Below is the lambda expression after eliminating the
+            optional part.
+          </p>
 
-            <pre> <code class="language-kt">val sum:(Int,Int) -&#x3E; Int = { a, b -&#x3E; a + b}</code></pre>
-            <h4>Kotlin program of using lambda expression</h4>
-            <pre> <code class="language-kt">// with type annotation in lambda expression
+          <pre> <code class="language-kt">val sum:(Int,Int) -&#x3E; Int = { a, b -&#x3E; a + b}</code></pre>
+          <h4>Kotlin program of using lambda expression</h4>
+          <pre> <code class="language-kt">// with type annotation in lambda expression
 val sum1 = { a: Int, b: Int -&#x3E; a + b }
 
 // without type annotation in lambda expression
 val sum2: (Int, Int) -&#x3E; Int = { a, b -&#x3E; a + b }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    val result1 = sum1(2, 3)
-    val result2 = sum2(3, 4)
-    println(&#x22;The sum of two numbers is: $result1&#x22;)
-    println(&#x22;The sum of two numbers is: $result2&#x22;)
+  val result1 = sum1(2, 3)
+  val result2 = sum2(3, 4)
+  println(&#x22;The sum of two numbers is: $result1&#x22;)
+  println(&#x22;The sum of two numbers is: $result2&#x22;)
 
-    // directly print the return value of lambda
-    // without storing in a variable.
-    println(sum1(5, 7))
+  // directly print the return value of lambda
+  // without storing in a variable.
+  println(sum1(5, 7))
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="typeinference">
         <h4>Type inference in lambdas</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              Kotlin&#x2019;s type inference helps the compiler to evaluate the
-              type of a lambda expression. Below is the lambda expression using
-              which we can compute the sum of two integers.
-            </p>
-            <pre><code class="language-kt">val sum = {a: Int , b: Int -&#x3E; a + b}</code></pre>
-            <p>
-              Here, Kotlin compiler self evaluate it as a function which take
-              two parameters of type Int and returns Int value.
-            </p>
-            <pre><code class="language-kt">(Int,Int) -&#x3E; Int</code></pre>
-            <p>
-              If we wanted to return String value than we can do it with help of
-              toString() inbuilt function.
-            </p>
-            <pre><code class="language-kt">val sum1 = { a: Int, b: Int -&#x3E;
-    val num = a + b
-    num.toString()     //convert Integer to String
+        <div>
+          <p>
+            Kotlin&#x2019;s type inference helps the compiler to evaluate the
+            type of a lambda expression. Below is the lambda expression using
+            which we can compute the sum of two integers.
+          </p>
+          <pre><code class="language-kt">val sum = {a: Int , b: Int -&#x3E; a + b}</code></pre>
+          <p>
+            Here, Kotlin compiler self evaluate it as a function which take two
+            parameters of type Int and returns Int value.
+          </p>
+          <pre><code class="language-kt">(Int,Int) -&#x3E; Int</code></pre>
+          <p>
+            If we wanted to return String value than we can do it with help of
+            toString() inbuilt function.
+          </p>
+          <pre><code class="language-kt">val sum1 = { a: Int, b: Int -&#x3E;
+  val num = a + b
+  num.toString()     //convert Integer to String
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    val result1 = sum1(2, 3)
-    println(&#x22;The sum of two numbers is: $result1&#x22;)
+  val result1 = sum1(2, 3)
+  println(&#x22;The sum of two numbers is: $result1&#x22;)
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="declaration">
         <h4>Type declaration in lambdas</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              We must explicitly declare the type of our lambda expression. If
-              lambda returns no value then we can use: Unit Pattern: (Input)
-              -&#x3E; Output
-            </p>
-            <p>Lambdas examples with return type</p>
+        <div>
+          <p>
+            We must explicitly declare the type of our lambda expression. If
+            lambda returns no value then we can use: Unit Pattern: (Input)
+            -&#x3E; Output
+          </p>
+          <p>Lambdas examples with return type</p>
 
-            <pre><code class="language-kt">val lambda1: (Int) -&#x3E; Int = (a -&#x3E; a * a)
+          <pre><code class="language-kt">val lambda1: (Int) -&#x3E; Int = (a -&#x3E; a * a)
 val lambda2: (String,String) -&#x3E; String = { a , b -&#x3E; a + b }
 val lambda3: (Int)-&#x3E; Unit = {print(Int)}</code></pre>
-            <h4>Lambdas as class extension</h4>
-            <pre><code class="language-kt">val lambda4: String.(Int) -&#x3E; String = {this + it} </code></pre>
-            <p>
-              Here, it represents the implicit name of single parameter and we
-              will discuss later
-            </p>
-            <pre><code class="language-kt">val lambda4: String.(Int) -&#x3E; String = { this + it }
+          <h4>Lambdas as class extension</h4>
+          <pre><code class="language-kt">val lambda4: String.(Int) -&#x3E; String = {this + it} </code></pre>
+          <p>
+            Here, it represents the implicit name of single parameter and we
+            will discuss later
+          </p>
+          <pre><code class="language-kt">val lambda4: String.(Int) -&#x3E; String = { this + it }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    val result = &#x22;Abhay&#x22;.lambda4(50)
-    print(result)
+  val result = &#x22;Abhay&#x22;.lambda4(50)
+  print(result)
 }</code></pre>
-            <b>Explanation</b>
-            <p>
-              In the above example, we are using the lambda expression as class
-              extension. We have passed the parameters according to the format
-              given above. this keyword is used for the string and it keyword is
-              used for the Int parameter passed in the lambda. Then the
-              code_body concatenates both the values and returns to variable
-              result.
-            </p>
-          </div>
-        </details>
+          <b>Explanation</b>
+          <p>
+            In the above example, we are using the lambda expression as class
+            extension. We have passed the parameters according to the format
+            given above. this keyword is used for the string and it keyword is
+            used for the Int parameter passed in the lambda. Then the code_body
+            concatenates both the values and returns to variable result.
+          </p>
+        </div>
       </section>
 
       <section id="it">
         <h4>it: implicit name of a single parameter</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              In most of cases lambdas contains the single parameter. Here, it
-              is used to represent the single parameter we pass to lambda
-              expression.
-            </p>
-            <p>Kotlin program using shorthand form of lambda function</p>
-            <pre><code class="language-kt">val numbers = arrayOf(1, -2, 3, -4, 5)
+        <div>
+          <p>
+            In most of cases lambdas contains the single parameter. Here, it
+            is used to represent the single parameter we pass to lambda
+            expression.
+          </p>
+          <p>Kotlin program using shorthand form of lambda function</p>
+          <pre><code class="language-kt">val numbers = arrayOf(1, -2, 3, -4, 5)
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    println(numbers.filter { it &#x3E; 0 })
+  println(numbers.filter { it &#x3E; 0 })
 }</code></pre>
-            <h4>Kotlin program using longhand form of lambda function</h4>
-            <pre><code class="language-kt">val numbers = arrayOf(1, -2, 3, -4, 5)
+          <h4>Kotlin program using longhand form of lambda function</h4>
+          <pre><code class="language-kt">val numbers = arrayOf(1, -2, 3, -4, 5)
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    println(numbers.filter { item -&#x3E; item &#x3E; 0 })
+  println(numbers.filter { item -&#x3E; item &#x3E; 0 })
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="returning">
         <h4>Returning a value from lambda expression</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              After execution of lambda the final value returned by the lambda
-              expression. Any of these Integer, String or Boolean value can be
-              returned by the lambda function.
-            </p>
-            <pre><code class="language-kt">val find = fun(num: Int): String {
-    if (num % 2 == 0 &#x26;&#x26; num &#x3C; 0) {
-        return &#x22;Number is even and negative&#x22;
-    } else if (num % 2 == 0 &#x26;&#x26; num &#x3E; 0) {
-        return &#x22;Number is even and positive&#x22;
-    } else if (num % 2 != 0 &#x26;&#x26; num &#x3C; 0) {
-        return &#x22;Number is odd and negative&#x22;
-    } else {
-        return &#x22;Number is odd and positive&#x22;
-    }
+        <div>
+          <p>
+            After execution of lambda the final value returned by the lambda
+            expression. Any of these Integer, String or Boolean value can be
+            returned by the lambda function.
+          </p>
+          <pre><code class="language-kt">val find = fun(num: Int): String {
+  if (num % 2 == 0 &#x26;&#x26; num &#x3C; 0) {
+      return &#x22;Number is even and negative&#x22;
+  } else if (num % 2 == 0 &#x26;&#x26; num &#x3E; 0) {
+      return &#x22;Number is even and positive&#x22;
+  } else if (num % 2 != 0 &#x26;&#x26; num &#x3C; 0) {
+      return &#x22;Number is odd and negative&#x22;
+  } else {
+      return &#x22;Number is odd and positive&#x22;
+  }
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    val result = find(112)
-    println(result)
+  val result = find(112)
+  println(result)
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="anon">
         <h4>Anonymous Function</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              An anonymous function is very similar to regular function except
-              for the name of the function which is omitted from the
-              declaration. The body of the anonymous function can be either an
-              expression or block.
-            </p>
-            <p><b>Example 1:</b> Function body as an expression</p>
-            <pre><code class="language-kt">fun(a: Int, b: Int) : Int = a * b</code></pre>
-            <p><b>Example 2:</b> Function body as a block</p>
-            <pre><code class="language-kt">fun(a: Int, b: Int): Int {
-    val mul = a * b
-    return mul
+        <div>
+          <p>
+            An anonymous function is very similar to regular function except
+            for the name of the function which is omitted from the
+            declaration. The body of the anonymous function can be either an
+            expression or block.
+          </p>
+          <p><b>Example 1:</b> Function body as an expression</p>
+          <pre><code class="language-kt">fun(a: Int, b: Int) : Int = a * b</code></pre>
+          <p><b>Example 2:</b> Function body as a block</p>
+          <pre><code class="language-kt">fun(a: Int, b: Int): Int {
+  val mul = a * b
+  return mul
 }</code></pre>
-            <p>
-              The return type and parameters are also specified in same way as
-              for regular function but we can omit the parameters if they can be
-              inferred from the context. The return type of the function can be
-              inferred automatically from the function if it is an expression
-              and has to be specified explicitly for the anonymous function if
-              it is body block.
-            </p>
-          </div>
-        </details>
+          <p>
+            The return type and parameters are also specified in same way as
+            for regular function but we can omit the parameters if they can be
+            inferred from the context. The return type of the function can be
+            inferred automatically from the function if it is an expression
+            and has to be specified explicitly for the anonymous function if
+            it is body block.
+          </p>
+        </div>
       </section>
 
       <section id="difference">
         <h4>Difference between lambda expressions and anonymous functions</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              The only difference is the behavior of non-local returns. A return
-              statement without a label always returns from the function
-              declared with the fun keyword. This means that a return inside a
-              lambda expression will return from the enclosing function, whereas
-              a return inside an anonymous function will return from the
-              anonymous function itself.
-            </p>
-            <pre><code class="language-kt">// anonymous function with body as an expression
+        <div>
+          <p>
+            The only difference is the behavior of non-local returns. A return
+            statement without a label always returns from the function
+            declared with the fun keyword. This means that a return inside a
+            lambda expression will return from the enclosing function, whereas
+            a return inside an anonymous function will return from the
+            anonymous function itself.
+          </p>
+          <pre><code class="language-kt">// anonymous function with body as an expression
 val anonymous1 = fun(x: Int, y: Int): Int = x + y
 
 // anonymous function with body as a block
 val anonymous2 = fun(a: Int, b: Int): Int {
-    val mul = a * b
-    return mul
+  val mul = a * b
+  return mul
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    //invoking functions
-    val sum = anonymous1(3, 5)
-    val mul = anonymous2(3, 5)
-    println(&#x22;The sum of two numbers is: $sum&#x22;)
-    println(&#x22;The multiply of two numbers is: $mul&#x22;)
+  //invoking functions
+  val sum = anonymous1(3, 5)
+  val mul = anonymous2(3, 5)
+  println(&#x22;The sum of two numbers is: $sum&#x22;)
+  println(&#x22;The multiply of two numbers is: $mul&#x22;)
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
     </div>
   </body>

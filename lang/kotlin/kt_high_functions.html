@@ -43,133 +43,118 @@
         <h4>
           Passing lambda expression as a parameter to Higher-Order Function
         </h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              We can pass a lambda expression as a parameter to Higher-Order
-              Function.
-            </p>
-            <p>There are two types of lambda expression which can be passed</p>
-            <ul>
-              <li>Lambda expression which return Unit</li>
-              <li>
-                Lambda expression which return any of the value integer,string
-                etc
-              </li>
-            </ul>
-            <pre><code class="language-kt">// lambda expression
+        <div>
+          <p>
+            We can pass a lambda expression as a parameter to Higher-Order
+            Function.
+          </p>
+          <p>There are two types of lambda expression which can be passed</p>
+          <ul>
+            <li>Lambda expression which return Unit</li>
+            <li>
+              Lambda expression which return any of the value integer,string etc
+            </li>
+          </ul>
+          <pre><code class="language-kt">// lambda expression
 var lambda = { println(&#x22;Abhay&#x22;) }
 
 // higher-order function
 fun higherfunc(lmbd: () -&#x3E; Unit) {     // accepting lambda as parameter
-    lmbd()                             //invokes lambda expression
+  lmbd()                             //invokes lambda expression
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    //invoke higher-order function
-    higherfunc(lambda)                 // passing lambda as parameter
+  //invoke higher-order function
+  higherfunc(lambda)                 // passing lambda as parameter
 }</code></pre>
-            <h4>lambda expression which returns Integer value</h4>
-            <pre><code class="language-kt">// lambda expression
+          <h4>lambda expression which returns Integer value</h4>
+          <pre><code class="language-kt">// lambda expression
 var lambda = { a: Int, b: Int -&#x3E; a + b }
 
 // higher order function
 fun higherfunc(lmbd: (Int, Int) -&#x3E; Int) {     // accepting lambda as parameter
 
-    var result = lmbd(2, 4) // invokes the lambda expression by passing parameters
-    println(&#x22;The sum of two numbers is: $result&#x22;)
+  var result = lmbd(2, 4) // invokes the lambda expression by passing parameters
+  println(&#x22;The sum of two numbers is: $result&#x22;)
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    higherfunc(lambda)         //passing lambda as parameter
+  higherfunc(lambda)         //passing lambda as parameter
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="fn">
         <h4>Passing function as a parameter to Higher-Order function</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              We can pass a function as a parameter in Higher-Order function.
-            </p>
-            <p>There are two types of functions which can be passed</p>
-            <ul>
-              <li>function which return Unit</li>
-              <li>
-                function which return any of the value integer, string etc
-              </li>
-            </ul>
-            <pre><code class="language-kt">// regular function definition
+        <div>
+          <p>We can pass a function as a parameter in Higher-Order function.</p>
+          <p>There are two types of functions which can be passed</p>
+          <ul>
+            <li>function which return Unit</li>
+            <li>function which return any of the value integer, string etc</li>
+          </ul>
+          <pre><code class="language-kt">// regular function definition
 fun printMe(s: String): Unit {
-    println(s)
+  println(s)
 }
 
 // higher-order function definition
 fun higherfunc(str: String, myfunc: (String) -&#x3E; Unit) {
 // invoke regular function using local name
-    myfunc(str)
+  myfunc(str)
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    // invoke higher-order function
-    higherfunc(&#x22;Abhay&#x22;, ::printMe)
+  // invoke higher-order function
+  higherfunc(&#x22;Abhay&#x22;, ::printMe)
 }</code></pre>
-            <h4>passing function which returns integer value</h4>
-            <pre><code class="language-kt">// regular function definition
+          <h4>passing function which returns integer value</h4>
+          <pre><code class="language-kt">// regular function definition
 fun add(a: Int, b: Int): Int {
-    var sum = a + b
-    return sum
+  var sum = a + b
+  return sum
 }
 
 // higher-order function definition
 fun higherfunc(addfunc: (Int, Int) -&#x3E; Int) {
-    // invoke regular function using local name
-    var result = addfunc(3, 6)
-    print(&#x22;The sum of two numbers is: $result&#x22;)
+  // invoke regular function using local name
+  var result = addfunc(3, 6)
+  print(&#x22;The sum of two numbers is: $result&#x22;)
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    // invoke higher-order function
-    higherfunc(::add)
+  // invoke higher-order function
+  higherfunc(::add)
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
 
       <section id="return">
         <h4>Returning a function from Higher-Order function</h4>
-        <details>
-          <summary></summary>
-          <div>
-            <p>
-              We can return a function from higher-order function. While
-              returning the function, we have to specify the parameter types and
-              return type of regular function in the return type of the
-              higher-order function.
-            </p>
-            <pre><code class="language-kt">// function declaration
+        <div>
+          <p>
+            We can return a function from higher-order function. While returning
+            the function, we have to specify the parameter types and return type
+            of regular function in the return type of the higher-order function.
+          </p>
+          <pre><code class="language-kt">// function declaration
 fun mul(a: Int, b: Int): Int {
-    return a * b
+  return a * b
 }
 
 //higher-order function declaration
 fun higherfunc(): ((Int, Int) -&#x3E; Int) {
-    return ::mul
+  return ::mul
 }
 
 fun main(args: Array&#x3C;String&#x3E;) {
-    // invoke function and store the returned function into a variable
-    val multiply = higherfunc()
-    // invokes the mul() function by passing arguments
-    val result = multiply(2, 4)
-    println(&#x22;The multiplication of two numbers is: $result&#x22;)
+  // invoke function and store the returned function into a variable
+  val multiply = higherfunc()
+  // invokes the mul() function by passing arguments
+  val result = multiply(2, 4)
+  println(&#x22;The multiplication of two numbers is: $result&#x22;)
 }</code></pre>
-          </div>
-        </details>
+        </div>
       </section>
     </div>
   </body>
