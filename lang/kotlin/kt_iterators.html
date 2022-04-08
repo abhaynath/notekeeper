@@ -26,69 +26,127 @@
     </nav>
     <div class="content">
       <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <p>
+          For traversing collection elements, the Kotlin standard library
+          supports the commonly used mechanism of iterators &#x2013; objects
+          that provide access to the elements sequentially without exposing the
+          underlying structure of the collection. Iterators are useful when you
+          need to process all the elements of a collection one-by-one, for
+          example, print values or make similar updates to them.
+        </p>
+        <p>
+          Iterators can be obtained for inheritors of the
+          <span class="keyword">Iterable&#x3C;T&#x3E;</span>
+          interface, including Set and List, by calling the iterator() function.
+        </p>
+        <p>
+          Once you obtain an iterator, it points to the first element of a
+          collection; calling the next() function returns this element and moves
+          the iterator position to the following element if it exists.
+        </p>
+        <p>
+          Once the iterator passes through the last element, it can no longer be
+          used for retrieving elements; neither can it be reset to any previous
+          position. To iterate through the collection again, create a new
+          iterator.
+        </p>
+
+        <pre><code class="language-kt">fun main() {
+    val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+    val numbersIterator = numbers.iterator()
+    while (numbersIterator.hasNext()) {
+        println(numbersIterator.next())
+    }
+}</code></pre>
+        <p>
+          Another way to go through an
+          <span class="keyword">Iterable</span> collection is the well-known for
+          loop. When using for on a collection, you obtain the iterator
+          implicitly. So, the following code is equivalent to the example above:
+        </p>
+
+        <pre><code class="language-kt">fun main() {
+    val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+    for (item in numbers) {
+        println(item)
+    }
+}</code></pre>
+        <p>
+          Finally, there is a useful forEach() function that lets you
+          automatically iterate a collection and execute the given code for each
+          element. So, the same example would look like this
+        </p>
+
+        <pre><code class="language-kt">fun main() {
+    val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+    numbers.forEach {
+        println(it)
+    }
+}</code></pre>
       </section>
 
       <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+        <h4>List iterators</h4>
+        <p>
+          For lists, there is a special iterator implementation:
+          <span class="keyword">ListIterator</span>. It supports iterating lists
+          in both directions: forwards and backwards.
+        </p>
+
+        <p>
+          Backward iteration is implemented by the functions
+          <span class="keyword">hasPrevious()</span> and
+          <span class="keyword">previous()</span>. Additionally, the
+          ListIterator provides information about the element indices with the
+          functions <span class="keyword">nextIndex()</span> and
+          <span class="keyword">previousIndex()</span>.
+        </p>
+        <pre><code class="language-kt">fun main() {
+    val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+    val listIterator = numbers.listIterator()
+    while (listIterator.hasNext()) listIterator.next()
+    println(&#x22;Iterating backwards:&#x22;)
+    while (listIterator.hasPrevious()) {
+        print(&#x22;Index: ${listIterator.previousIndex()}&#x22;)
+        println(&#x22;, value: ${listIterator.previous()}&#x22;)
+    }
+}</code></pre>
+        <p>
+          Having the ability to iterate in both directions, means the
+          <span class="keyword">ListIterator</span> can still be used after it
+          reaches the last element.
+        </p>
       </section>
 
       <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
-      </section>
+        <h4>Mutable iterators</h4>
+        <p>
+          For iterating mutable collections, there is MutableIterator that
+          extends Iterator with the element removal function remove(). So, you
+          can remove elements from a collection while iterating it.
+        </p>
+        <pre><code class="language-kt">fun main() {
+    val numbers = mutableListOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;) 
+    val mutableIterator = numbers.iterator()
 
-      <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
-      </section>
+    mutableIterator.next()
+    mutableIterator.remove()    
+    println(&#x22;After removal: $numbers&#x22;)
+}</code></pre>
+        <p>
+          In addition to removing elements, the MutableListIterator can also
+          insert and replace elements while iterating the list.
+        </p>
+        <pre><code class="language-kt">fun main() {
+  val numbers = mutableListOf(&#x22;one&#x22;, &#x22;four&#x22;, &#x22;four&#x22;) 
+  val mutableListIterator = numbers.listIterator()
 
-      <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
-      </section>
-
-      <section id="">
-        <h4></h4>
-        <details>
-          <summary></summary>
-          <div>
-            <pre> <code class="language-kt">
-                </code></pre>
-          </div>
-        </details>
+  mutableListIterator.next()
+  mutableListIterator.add(&#x22;two&#x22;)
+  mutableListIterator.next()
+  mutableListIterator.set(&#x22;three&#x22;)   
+  println(numbers)
+}</code></pre>
       </section>
     </div>
   </body>

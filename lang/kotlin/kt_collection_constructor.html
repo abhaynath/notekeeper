@@ -19,7 +19,7 @@
     />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>Collections</title>
+    <title>Constructing collections</title>
   </head>
 
   <body>
@@ -38,16 +38,14 @@
           the compiler detects the element type automatically. When creating
           empty collections, specify the type explicitly.
         </p>
-        <pre> <code class="language-kt">
-val numbersSet = setOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+        <pre> <code class="language-kt">val numbersSet = setOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
 val emptySet = mutableSetOf&#x3C;String&#x3E;()</code></pre>
         <p>
           The same is available for maps with the functions mapOf() and
           mutableMapOf(). The map&#x27;s keys and values are passed as Pair
           objects (usually created with to infix function).
         </p>
-        <pre> <code class="language-kt">
-val numbersMap = mutableMapOf<String, String>().apply { this["one"] = "1"; this["two"] = "2" }</code></pre>
+        <pre> <code class="language-kt">val numbersMap = mutableMapOf<String, String>().apply { this["one"] = "1"; this["two"] = "2" }</code></pre>
         <p>
           Note that the to notation creates a short-living Pair object, so
           it&#x27;s recommended that you use it only if performance isn&#x27;t
@@ -62,45 +60,100 @@ val numbersMap = mutableMapOf<String, String>().apply { this["one"] = "1"; this[
 
       <section id="builder">
         <h4>Create with collection builder functions</h4>
-        <pre> <code class="language-kt">
-        </code></pre>
+        <p>Another way of creating a collection is to call a builder function &#x2013; buildList(), buildSet(), or buildMap(). They create a new, mutable collection of the corresponding type, populate it using write operations, and return a read-only collection with the same elements:</p>
+        <pre><code class="language-kt">val map = buildMap { // this is MutableMap&#x3C;String, Int&#x3E;, types of key and value are inferred from the &#x60;put()&#x60; calls below
+    put(&#x22;a&#x22;, 1)
+    put(&#x22;b&#x22;, 0)
+    put(&#x22;c&#x22;, 4)
+}
+
+println(map) // {a=1, b=0, c=4}</code></pre>
       </section>
 
       <section id="empty">
         <h4>Empty collections</h4>
-        <pre> <code class="language-kt">
-        </code></pre>
+        <p>There are also functions for creating collections without any elements: emptyList(), emptySet(), and emptyMap(). When creating empty collections, you should specify the type of elements that the collection will hold.</p>
+        <pre><code class="language-kt">val empty = emptyList&#x3C;String&#x3E;()</code></pre>
       </section>
 
       <section id="list">
         <h4>Initializer functions for lists</h4>
-        <pre> <code class="language-kt">
-        </code></pre>
+        <p>For lists, there is a constructor that takes the list size and the initializer function that defines the element value based on its index.</p>
+        <pre> <code class="language-kt">fun main() {
+    val doubled = List(3, { it * 2 })  // or MutableList if you want to change its content later
+    println(doubled)
+}</code></pre>
       </section>
 
       <section id="concrete">
         <h4>Concrete type constructors</h4>
-        <pre> <code class="language-kt">
-        </code></pre>
+        <p>To create a concrete type collection, such as an ArrayList or LinkedList, you can use the available constructors for these types. Similar constructors are available for implementations of Set and Map</p>
+        <pre> <code class="language-kt">val linkedList = LinkedList&#x3C;String&#x3E;(listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;))
+val presizedSet = HashSet&#x3C;Int&#x3E;(32)</code></pre>
       </section>
 
       <section id="copy">
         <h4>Copy</h4>
-        <pre> <code class="language-kt">
-        </code></pre>
+        <p>To create a collection with the same elements as an existing collection, you can use copying functions. Collection copying functions from the standard library create shallow copy collections with references to the same elements. Thus, a change made to a collection element reflects in all its copies.</p>
+        <p>Collection copying functions, such as toList(), toMutableList(), toSet() and others, create a snapshot of a collection at a specific moment. Their result is a new collection of the same elements. If you add or remove elements from the original collection, this won&#x27;t affect the copies. Copies may be changed independently of the source as well.</p>
+        <pre> <code class="language-kt">class Person(var name: String)
+fun main() {
+    val alice = Person(&#x22;Alice&#x22;)
+    val sourceList = mutableListOf(alice, Person(&#x22;Bob&#x22;))
+    val copyList = sourceList.toList()
+    sourceList.add(Person(&#x22;Charles&#x22;))
+    alice.name = &#x22;Alicia&#x22;
+    println(&#x22;First item&#x27;s name is: ${sourceList[0].name} in source and ${copyList[0].name} in copy&#x22;)
+    println(&#x22;List size is: ${sourceList.size} in source and ${copyList.size} in copy&#x22;)
+}</code></pre>
+<p>These functions can also be used for converting collections to other types, for example, build a set from a list or vice versa.</p>
+<pre><code class="language-kt">fun main() {
+  val sourceList = mutableListOf(1, 2, 3)    
+  val copySet = sourceList.toMutableSet()
+  copySet.add(3)
+  copySet.add(4)    
+  println(copySet)
+}</code></pre>
+<p>Alternatively, you can create new references to the same collection instance. New references are created when you initialize a collection variable with an existing collection. So, when the collection instance is altered through a reference, the changes are reflected in all its references.</p>
+<pre> <code class="language-kt">fun main() {
+  val sourceList = mutableListOf(1, 2, 3)
+  val referenceList = sourceList
+  referenceList.add(4)
+  println(&#x22;Source size: ${sourceList.size}&#x22;)
+}</code></pre>
+<p>Collection initialization can be used for restricting mutability. For example, if you create a List reference to a MutableList, the compiler will produce errors if you try to modify the collection through this reference.</p>
+<pre><code class="language-kt">fun main() {
+    val sourceList = mutableListOf(1, 2, 3)
+    val referenceList: List&#x3C;Int&#x3E; = sourceList
+    //referenceList.add(4)            //compilation error
+    sourceList.add(4)
+    println(referenceList) // shows the current state of sourceList
+}</code></pre>
+
       </section>
 
       <section id="invoke">
         <h4>Invoke functions on other collections</h4>
-        <pre> <code class="language-kt">
-        </code></pre>
+        <p>Collections can be created in result of various operations on other collections. For example, filtering a list creates a new list of elements that match the filter:</p>
+        <pre><code class="language-kt">fun main() {
+    val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)  
+    val longerThan3 = numbers.filter { it.length &#x3E; 3 }
+    println(longerThan3)
+}</code></pre>
+<p>Mapping produces a list of a transformation results:</p>
+<pre><code class="language-kt">fun main() {
+  val numbers = setOf(1, 2, 3)
+  println(numbers.map { it * 3 })
+  println(numbers.mapIndexed { idx, value -&#x3E; value * idx })
+}</code></pre>
+<p>Association produces maps:</p>
+<pre><code class="language-kt">fun main() {
+  val numbers = listOf(&#x22;one&#x22;, &#x22;two&#x22;, &#x22;three&#x22;, &#x22;four&#x22;)
+  println(numbers.associateWith { it.length })
+}</code></pre>
       </section>
 
-      <section id="">
-        <h4></h4>
-        <pre> <code class="language-kt">
-        </code></pre>
-      </section>
+    
     </div>
   </body>
 
