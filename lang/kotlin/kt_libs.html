@@ -25,20 +25,45 @@
       <a href="kotlin_index.html">Kotlin</a>
     </nav>
     <div class="content">
+      <section id="common">
+        <details>
+          <summary>Useful libraries</summary>
+          <pre><code class="language-kt">dependencies {
+    implementation(&#x22;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0&#x22;)
+    implementation(&#x22;com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2&#x22;)
+    implementation(&#x22;org.junit.jupiter:junit-jupiter:5.8.2&#x22;)
+    implementation(&#x22;org.xerial:sqlite-jdbc:3.36.0.3&#x22;)
+    implementation(&#x22;com.github.kittinunf.fuel:fuel:2.3.1&#x22;)
+    implementation(&#x22;com.google.code.gson:gson:2.9.0&#x22;)
+    implementation(&#x22;com.squareup.retrofit2:retrofit:2.9.0&#x22;)
+    implementation(&#x22;com.squareup.okhttp3:okhttp:4.9.3&#x22;)
+    implementation(&#x22;io.reactivex.rxjava2:rxkotlin:2.4.0&#x22;)
 
+    runtimeOnly(&#x22;com.github.kittinunf.fuel:fuel-jackson:2.3.1&#x22;)
+    runtimeOnly(&#x22;io.reactivex.rxjava2:rxkotlin:2.4.0&#x22;)
+    runtimeOnly(&#x22;org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2&#x22;)
+    
+    testImplementation(&#x22;org.jetbrains.kotlin:kotlin-test:1.6.10&#x22;)
+
+}</code></pre>
+        </details>
+      </section>
       <section id="kt_03_01">
-    <details>
-      <summary>JSON</summary>
-      <div>
-        <div>Add <b>jackson</b> dependency in <span class="keyword">build.gradle.kts</span>. Build the project to import the library.
-<pre> <code class="">dependencies
+        <details>
+          <summary>JSON</summary>
+          <div>
+            <div>
+              Add <b>jackson</b> dependency in
+              <span class="keyword">build.gradle.kts</span>. Build the project
+              to import the library.
+              <pre> <code class="">dependencies
 {
       implementation (&#x22;com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1&#x22;)
 }</code></pre>
-        </div>
-        <div>
-          <h4>Convert list of objects into string and write to file</h4>
-          <pre><code class="language-kt">import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+            </div>
+            <div>
+              <h4>Convert list of objects into string and write to file</h4>
+              <pre><code class="language-kt">import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.File
 data class EquityTransaction(
     var id: Int,
@@ -52,10 +77,12 @@ val jsonString = mapper.writeValueAsString(transactions)
 File(&#x22;jackson.json&#x22;).writeText(jsonString)
 println(jsonString)
 </code></pre>
-        </div>
-        <div>
-          <h4>Read json string from file and convert it into list of objects</h4>
-          <pre><code class="language-kt">
+            </div>
+            <div>
+              <h4>
+                Read json string from file and convert it into list of objects
+              </h4>
+              <pre><code class="language-kt">
 val mapper = jacksonObjectMapper()
 val jsonString = File(&#x22;jackson.json&#x22;).readText()
 val trans2: List&#x3C;EquityTransaction&#x3E; = mapper.readValue(jsonString)
@@ -64,11 +91,9 @@ for (i in trans2) {
     println(&#x22;${i.isin} --- ${i.symbol}&#x22;)
 }
           </code></pre>
-        </div>
-        
-      </div>
-    </details>
-        
+            </div>
+          </div>
+        </details>
       </section>
     </div>
   </body>
