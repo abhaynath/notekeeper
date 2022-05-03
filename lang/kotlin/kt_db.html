@@ -29,18 +29,21 @@
         <details>
           <summary>SQLite</summary>
           <div>
-              <ol class="steps">
-                  <li>In <span class="keyword">build.gradle.kts</span> add sqlite dependency
-                
-<pre><code>dependencies {
+            <ol class="steps">
+              <li>
+                In <span class="keyword">build.gradle.kts</span> add sqlite
+                dependency
+
+                <pre><code>dependencies {
     implementation(&#x22;org.xerial:sqlite-jdbc:3.36.0.2&#x22;)
     implementation(kotlin(&#x22;stdlib-jdk8&#x22;))
 }</code></pre>
 
-Click on 'Reload all Gradle Projects'. This should add libraries in 'External libraries' section
-                </li>
-                <li>
-<pre> <code class="language-kotlin">
+                Click on 'Reload all Gradle Projects'. This should add libraries
+                in 'External libraries' section
+              </li>
+              <li>
+                <pre> <code class="language-kotlin">
 import java.sql.*
 
 fun main(args: Array&#x3C;String&#x3E;) {
@@ -84,9 +87,78 @@ fun connectDB() {
         println(i.company)
     }
 }</code></pre>
-                </li>
-              </ol>
-            
+              </li>
+            </ol>
+          </div>
+        </details>
+      </section>
+
+      <section id="kt_01_02">
+        <details>
+          <summary>Postgress</summary>
+          <div>
+            <ol class="steps">
+              <li>
+                In <span class="keyword">build.gradle.kts</span> add postgres
+                sql driver dependency
+
+                <pre><code>dependencies {
+  implementation(&#x22;org.postgresql:postgresql:42.3.3&#x22;)
+}</code></pre>
+
+                Click on 'Reload all Gradle Projects'. This should add libraries
+                in 'External libraries' section
+              </li>
+              <li>
+                <pre> <code class="language-kotlin">
+  data class AppModel(
+    val id: Int,
+    val title: String,
+    val rating: Double,
+    val size: String,
+    val review: Int,
+    val installs: String,
+    val lastUpdated: String,
+    val currentVersion: String,
+    val androidVersion: String
+)
+
+
+fun connectPostgress() {
+    println(&#x22;Postgress connect&#x22;)
+    val dbName = &#x22;Playstore&#x22;
+    val dbUser = &#x22;postgres&#x22;
+    val dbPassword = &#x22;abhay123&#x22;
+    val server = &#x22;localhost&#x22;
+    val port = 5432
+
+    val jdbcUrl = &#x22;jdbc:postgresql://${server}:${port}/${dbName}&#x22;
+
+    val connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword)
+    val query =
+        connection.prepareStatement(&#x22;SELECT id, title, rating, review, size, installs,  lastupdated, currentversion, androidversion FROM public.apps limit 25&#x22;)
+    val result = query.executeQuery()
+    val apps = mutableListOf&#x3C;AppModel&#x3E;()
+    while (result.next()) {
+        val id = result.getInt(&#x22;id&#x22;)
+        val title = result.getString(&#x22;title&#x22;)
+        val rating = result.getDouble(&#x22;rating&#x22;)
+        val size = result.getString(&#x22;size&#x22;)
+        val review = result.getInt(&#x22;review&#x22;)
+        val installs = result.getString(&#x22;installs&#x22;)
+        val lastUpdated = result.getString(&#x22;lastupdated&#x22;)
+        val currentVersion = result.getString(&#x22;currentversion&#x22;)
+        val androidVersion = result.getString(&#x22;androidversion&#x22;)
+
+        apps.add(AppModel(id, title, rating, size, review, installs, lastUpdated, currentVersion, androidVersion))
+    }
+    apps.forEach() {
+        println(&#x22;${it.title} --- ${it.installs} --- ${it.rating} --- ${it.lastUpdated} --- ${it.currentVersion} --- ${it.androidVersion} --- ${it.review}&#x22;)
+    }
+
+}</code></pre>
+              </li>
+            </ol>
           </div>
         </details>
       </section>
