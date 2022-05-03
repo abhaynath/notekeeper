@@ -159,6 +159,91 @@ fun connectPostgress() {
 }</code></pre>
               </li>
             </ol>
+<h4>Using Connection pool</h4>
+            <ol class="steps">
+              <li>
+                In <span class="keyword">build.gradle.kts</span> add postgres
+                sql driver dependency
+
+                <pre><code>dependencies {
+    implementation(&#x22;org.postgresql:postgresql:42.3.3&#x22;)
+    implementation(&#x22;com.zaxxer:HikariCP:5.0.1&#x22;)
+    implementation(&#x22;org.slf4j:slf4j-nop:1.7.36&#x22;)
+}</code></pre>
+
+                Click on 'Reload all Gradle Projects'. This should add libraries
+                in 'External libraries' section
+              </li>
+              <li>
+                <pre> <code class="language-kotlin">
+val dataSource = HikariDataSource()
+
+fun initConnection() {
+    val dbName = &#x22;demodb&#x22;
+    val dbUser = &#x22;postgres&#x22;
+    val dbPassword = &#x22;abhay123&#x22;
+    val server = &#x22;localhost&#x22;
+    val port = 5432
+
+
+    val jdbcUrl = &#x22;jdbc:postgresql://${server}:${port}/${dbName}&#x22;
+    dataSource.jdbcUrl = jdbcUrl
+    dataSource.username = dbUser
+    dataSource.password = dbPassword
+
+}
+
+fun getUsers() {
+    println(&#x22;getusers&#x22;)
+    val connection = dataSource.connection
+    val query = connection.prepareStatement(&#x22;SELECT * FROM users&#x22;)
+    val result = query.executeQuery()
+    val apps = mutableListOf&#x3C;User&#x3E;()
+    while (result.next()) {
+        val id = result.getInt(&#x22;id&#x22;)
+        val createdAt = result.getString(&#x22;created_at&#x22;)
+        val name = result.getString(&#x22;name&#x22;)
+        val email = result.getString(&#x22;email&#x22;)
+        val password = result.getString(&#x22;password&#x22;)
+        val role = result.getString(&#x22;role&#x22;)
+
+        apps.add(User(id, createdAt, name, email, password, role))
+    }
+    apps.forEach() {
+        println(&#x22;${it.id} --- ${it.name} --- ${it.createdAt} --- ${it.email} --- ${it.password} --- ${it.role}&#x22;)
+    }
+    println(dataSource.maximumPoolSize)
+}
+
+fun updateName(id: Int, name: String) {
+    val sql = &#x22;update users set name=&#x27;$name&#x27; where id=$id&#x22;;
+    val connection = dataSource.connection
+    val query = connection.prepareStatement(sql)
+    query.executeUpdate()
+}
+
+fun deleteName(id: Int) {
+    val sql = &#x22;delete from users where id=$id&#x22;;
+    val connection = dataSource.connection
+    val query = connection.prepareStatement(sql)
+    query.executeUpdate()
+}
+
+fun insertUser(createdAt: String, name: String, email: String, password: String, role: String) {
+    val user = User(1, createdAt, name, email, password, role)
+    val sql =
+        &#x22;INSERT INTO users(created_at, name, email, password, role) VALUES (&#x27;${user.createdAt}&#x27;,&#x27;${user.name}&#x27;,&#x27;${user.email}&#x27;,&#x27;${user.password}&#x27;,&#x27;${user.role}&#x27;)&#x22;;
+
+    val connection = dataSource.connection
+    val query = connection.prepareStatement(sql)
+    query.executeUpdate()
+    println(&#x22;---inserted !---&#x22;)
+}
+
+
+  </code></pre>
+              </li>
+            </ol>
           </div>
         </details>
       </section>
