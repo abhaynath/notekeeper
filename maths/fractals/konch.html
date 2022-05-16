@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Intersecting Lines &amp; segments</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="fractal_index.html">Fractals</a>
+      </nav>
+
+      <section id="cs_01_01">
+        <h3>Konch</h3>
+        <a target="_blank" href="demo/intersection1_demo.html">Demo</a>
+        <p></p>
+
+        <details>
+          <summary>Code</summary>
+          <pre><code class="language-html">
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang=&#x22;en&#x22;&#x3E;
+  &#x3C;head&#x3E;
+    &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+    &#x3C;meta http-equiv=&#x22;X-UA-Compatible&#x22; content=&#x22;IE=edge&#x22; /&#x3E;
+    &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+    &#x3C;title&#x3E;Intersection of lines&#x3C;/title&#x3E;
+  &#x3C;/head&#x3E;
+  &#x3C;style type=&#x22;text/css&#x22;&#x3E;
+    html,
+    body {
+      margin: 0px;
+    }
+
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+  &#x3C;/style&#x3E;
+  &#x3C;body&#x3E;
+    &#x3C;canvas id=&#x22;canvas&#x22;&#x3E;&#x3C;/canvas&#x3E;
+  &#x3C;/body&#x3E;
+  &#x3C;script&#x3E;
+    var canvas = document.getElementById(&#x22;canvas&#x22;);
+    var c = canvas.getContext(&#x22;2d&#x22;);
+    var width = (canvas.width = window.innerWidth);
+    var height = (canvas.height = window.innerHeight);
+
+    const getId = () =&#x3E; {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    };
+
+    function Point(x, y) {
+      this.x = x;
+      this.y = y;
+      this.id = getId();
+      this.title = &#x22;&#x22;;
+      this.print = function () {
+        console.log(this);
+      };
+    }
+
+    function Shape(c) {
+      this.context = c;
+      this.id = getId();
+      this.points = [];
+      this.selected = null;
+      this.joints = [];
+
+      this.config = {
+        font: &#x22;10px arial&#x22;,
+        textAlign: &#x22;center&#x22;,
+        radius: 15,
+        pointFillColor: &#x22;#000000&#x22;,
+        textColor: &#x22;#ffffff&#x22;,
+        lineColor: &#x22;#0000ff&#x22;,
+        lineWidth: 1,
+        intersectionRadius: 5,
+        intersectionLineWidth: 3,
+        intersectionColor: &#x22;#00ff00&#x22;,
+      };
+      this.drawPoint = function (p) {
+        this.context.font = this.config.font;
+        this.context.textAlign = this.config.textAlign;
+
+        this.context.fillStyle = this.config.pointFillColor;
+        if (this.selected == p.id) {
+          this.context.fillStyle = &#x22;red&#x22;;
+        }
+        this.context.beginPath();
+        this.context.arc(p.x, p.y, this.config.radius, 0, Math.PI * 2, false);
+        this.context.fill();
+        this.context.fillStyle = this.config.textColor;
+        this.context.fillText(p.title, p.x, p.y + 5);
+      };
+      this.print = function () {
+        console.log(this.points);
+      };
+      this.addJoint = function (p1, p2) {
+        this.joints.push([p1, p2]);
+        console.log(this.joints);
+      };
+      this.add = function (p) {
+        p.title = &#x22;P&#x22; + (this.points.length + 1);
+        this.points.push(p);
+      };
+      this.segmentIntersect = function (p0, p1, p2, p3) {
+        // console.log(p0, p1, p2, p3);
+        var A1 = p1.y - p0.y,
+          B1 = p0.x - p1.x,
+          C1 = A1 * p0.x + B1 * p0.y,
+          A2 = p3.y - p2.y,
+          B2 = p2.x - p3.x,
+          C2 = A2 * p2.x + B2 * p2.y,
+          denominator = A1 * B2 - A2 * B1;
+
+        if (denominator == 0) {
+          return null;
+        }
+
+        var intersectX = (B2 * C1 - B1 * C2) / denominator,
+          intersectY = (A1 * C2 - A2 * C1) / denominator,
+          rx0 = (intersectX - p0.x) / (p1.x - p0.x),
+          ry0 = (intersectY - p0.y) / (p1.y - p0.y),
+          rx1 = (intersectX - p2.x) / (p3.x - p2.x),
+          ry1 = (intersectY - p2.y) / (p3.y - p2.y);
+
+        if (
+          ((rx0 &#x3E;= 0 &#x26;&#x26; rx0 &#x3C;= 1) || (ry0 &#x3E;= 0 &#x26;&#x26; ry0 &#x3C;= 1)) &#x26;&#x26;
+          ((rx1 &#x3E;= 0 &#x26;&#x26; rx1 &#x3C;= 1) || (ry1 &#x3E;= 0 &#x26;&#x26; ry1 &#x3C;= 1))
+        ) {
+          return {
+            x: intersectX,
+            y: intersectY,
+          };
+        } else {
+          return null;
+        }
+      };
+      this.lineIntersect = function (p0, p1, p2, p3) {
+        var A1 = p1.y - p0.y,
+          B1 = p0.x - p1.x,
+          C1 = A1 * p0.x + B1 * p0.y,
+          A2 = p3.y - p2.y,
+          B2 = p2.x - p3.x,
+          C2 = A2 * p2.x + B2 * p2.y,
+          denominator = A1 * B2 - A2 * B1;
+
+        if (denominator == 0) {
+          return null;
+        }
+
+        return {
+          x: (B2 * C1 - B1 * C2) / denominator,
+          y: (A1 * C2 - A2 * C1) / denominator,
+        };
+      };
+      this.drawJoints = function () {
+        this.context.strokeStyle = this.config.lineColor;
+        this.context.lineWidth = this.config.lineWidth;
+        this.joints.forEach((arr) =&#x3E; {
+          this.context.beginPath();
+          this.context.moveTo(arr[0].x, arr[0].y);
+          this.context.lineTo(arr[1].x, arr[1].y);
+          this.context.stroke();
+        });
+      };
+
+      this.drawIntersection = function () {
+        this.context.strokeStyle = this.config.intersectionColor;
+        this.context.lineWidth = this.config.intersectionLineWidth;
+        if (this.points.length &#x3E;= 4) {
+          /*
+          var intersect = this.segmentIntersect(
+            this.points[0],
+            this.points[3],
+            this.points[1],
+            this.points[2]
+          );
+*/
+          var intersect = this.lineIntersect(
+            this.points[0],
+            this.points[3],
+            this.points[1],
+            this.points[2]
+          );
+          if (intersect) {
+            this.context.beginPath();
+            this.context.arc(
+              intersect.x,
+              intersect.y,
+              this.config.intersectionRadius,
+              0,
+              Math.PI * 2,
+              false
+            );
+            this.context.stroke();
+          }
+        }
+      };
+      this.draw = function () {
+        this.context.clearRect(0, 0, width, height);
+
+        this.drawJoints();
+        this.drawIntersection();
+        this.points.forEach((p) =&#x3E; {
+          this.drawPoint(p);
+        });
+      };
+
+      this.getClickPoint = function (x, y) {
+        for (var i = 0; i &#x3C; this.points.length; i++) {
+          var p = this.points[i];
+          var dx = p.x - x;
+          var dy = p.y - y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist &#x3C; 10) {
+            return p;
+          }
+        }
+      };
+      this.selectPoint = function (i) {
+        this.selected = i;
+      };
+      this.updatePoint = function (id, x, y) {
+        var index = this.points.findIndex((p) =&#x3E; p.id == id);
+        if (index != -1) {
+          this.points[index].x = x;
+          this.points[index].y = y;
+        }
+      };
+    }
+
+    var gap = 50;
+    var p1 = new Point(gap, gap);
+    var p2 = new Point(width - gap, gap);
+    var p3 = new Point(gap, height - gap);
+    var p4 = new Point(width - gap, height - gap);
+    var box = new Shape(c);
+    box.add(p1);
+    box.add(p2);
+    box.add(p3);
+    box.add(p4);
+    box.addJoint(p1, p4);
+    box.addJoint(p2, p3);
+    box.print();
+    box.draw();
+    function onMouseDown(event) {
+      var clickPoint = box.getClickPoint(event.clientX, event.clientY);
+      if (clickPoint) {
+        box.selectPoint(clickPoint.id);
+        document.body.addEventListener(&#x22;mousemove&#x22;, onMouseMove);
+        document.body.addEventListener(&#x22;mouseup&#x22;, onMouseUp);
+      }
+    }
+    function onMouseMove(event) {
+      box.updatePoint(box.selected, event.clientX, event.clientY);
+      render();
+    }
+
+    function onMouseUp(event) {
+      box.selectPoint(null);
+      document.body.removeEventListener(&#x22;mousemove&#x22;, onMouseMove);
+      document.body.removeEventListener(&#x22;mouseup&#x22;, onMouseUp);
+      render();
+    }
+    function render() {
+      box.draw();
+    }
+    document.body.addEventListener(&#x22;mousedown&#x22;, onMouseDown);
+  &#x3C;/script&#x3E;
+&#x3C;/html&#x3E;
+
+</code></pre>
+        </details>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
