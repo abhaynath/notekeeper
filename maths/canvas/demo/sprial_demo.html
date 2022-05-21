@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic</title>
+  </head>
+  <style type="text/css">
+    html,
+    body {
+      margin: 0px;
+      background-color: black;
+    }
+
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 10px;
+    }
+    #controls {
+      color: white;
+      position: absolute;
+      top: 0px;
+    }
+  </style>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="controls">
+      <input type="range" id="a" min="1" max="5" value="1" step="0.1" /><label
+        for="a"
+        id="la"
+      ></label>
+      <input
+        type="range"
+        id="b"
+        min="0"
+        max="10"
+        value="1.0"
+        step="0.1"
+      /><label for="b" id="lb"></label>
+      <input
+        type="range"
+        id="gap"
+        min="0.1"
+        max="1"
+        value="0.79"
+        step="0.01"
+      /><label for="gap" id="lg"></label>
+    </div>
+  </body>
+  <script>
+    var canvas = document.getElementById("canvas");
+    var width = (canvas.width = window.innerWidth);
+    var height = (canvas.height = window.innerHeight);
+
+    // var width = (canvas.width = 1000);
+    // var height = (canvas.height = 500);
+    var centerx = width / 2;
+    var centery = height / 2;
+    var c = canvas.getContext("2d");
+    var inputA = document.getElementById("a");
+    var inputB = document.getElementById("b");
+    var inputGap = document.getElementById("gap");
+
+    inputA.onchange = updateSlider;
+    inputB.onchange = updateSlider;
+    inputGap.onchange = updateSlider;
+
+    function updateSlider(e) {
+      update();
+    }
+    function update() {
+      var a = parseFloat(inputA.value);
+      var b = parseFloat(inputB.value);
+      var g = parseFloat(inputGap.value);
+      document.getElementById("lb").innerHTML = b;
+      document.getElementById("la").innerHTML = a;
+      document.getElementById("lg").innerHTML = g;
+      spiral(c, a, b, g);
+    }
+
+    function spiral(context, a, b, g) {
+      var angle = 0;
+      context.fillStyle = "black";
+      context.fillRect(0, 0, width, height);
+
+      context.moveTo(centerx, centery);
+      context.beginPath();
+
+      var gradient = context.createRadialGradient(centerx, centery, centerx, width,height,centerx);
+      gradient.addColorStop("0", "magenta");
+      gradient.addColorStop("0.5", "blue");
+      gradient.addColorStop("1.0", "red");
+      for (i = 0; i < (720*3); i++) {
+        angle = g * i;
+        var x = centerx + (a + b * angle) * Math.cos(angle);
+        var y = centery + (a + b * angle) * Math.sin(angle);
+
+        context.lineTo(x, y);
+      }
+      context.strokeStyle = gradient;
+      //context.endPath();
+      // context.closePath();
+      context.stroke();
+    }
+    update();
+  </script>
+</html>
