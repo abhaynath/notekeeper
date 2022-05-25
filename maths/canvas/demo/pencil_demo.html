@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawing</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        background-color: black;
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    var canvas = document.getElementById("canvas");
+    var width = (canvas.width = window.innerWidth);
+    var height = (canvas.height = window.innerHeight);
+    var c = canvas.getContext("2d");
+    var isDrawing = false;
+    var prevX = (prevY = 0);
+    var gradient = c.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0.0, "red");
+    gradient.addColorStop(1 / 6, "orange");
+    gradient.addColorStop(2 / 6, "yellow");
+    gradient.addColorStop(3 / 6, "green");
+    gradient.addColorStop(4 / 6, "aqua");
+    gradient.addColorStop(5 / 6, "blue");
+    gradient.addColorStop(1.0, "purple");
+    c.strokeStyle = gradient;
+    c.lineWidth = 3;
+
+    function mouseDown(e) {
+      isDrawing = true;
+      prevX = e.clientX;
+      prevY = e.clientY;
+    }
+    function mouseUp(e) {
+      isDrawing = false;
+    }
+    function mouseMove(e) {
+      var x = e.clientX;
+      var y = e.clientY;
+      if (isDrawing) {
+        c.moveTo(prevX, prevY);
+        c.lineTo(x, y);
+        c.stroke();
+        prevX = x;
+        prevY = y;
+      }
+    }
+    function mouseOut(e) {
+      isDrawing = false;
+      prevX = 0;
+      prevY = 0;
+    }
+    canvas.addEventListener("mousedown", mouseDown);
+    canvas.addEventListener("mouseup", mouseUp);
+    canvas.addEventListener("mousemove", mouseMove);
+    canvas.addEventListener("mouseout", mouseOut);
+  </script>
+</html>

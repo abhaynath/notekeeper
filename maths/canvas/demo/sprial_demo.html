@@ -48,6 +48,9 @@
         value="0.79"
         step="0.01"
       /><label for="gap" id="lg"></label>
+
+      <input type="range" id="r1" min="10" max="1000" value="100" step="10" />
+      <input type="range" id="r2" min="100" max="1000" value="200" step="10" />
     </div>
   </body>
   <script>
@@ -63,10 +66,14 @@
     var inputA = document.getElementById("a");
     var inputB = document.getElementById("b");
     var inputGap = document.getElementById("gap");
+    var inputR1 = document.getElementById("r1");
+    var inputR2 = document.getElementById("r2");
 
     inputA.onchange = updateSlider;
     inputB.onchange = updateSlider;
     inputGap.onchange = updateSlider;
+    inputR1.onchange = updateSlider;
+    inputR2.onchange = updateSlider;
 
     function updateSlider(e) {
       update();
@@ -89,11 +96,24 @@
       context.moveTo(centerx, centery);
       context.beginPath();
 
-      var gradient = context.createRadialGradient(centerx, centery, centerx, width,height,centerx);
-      gradient.addColorStop("0", "magenta");
-      gradient.addColorStop("0.5", "blue");
-      gradient.addColorStop("1.0", "red");
-      for (i = 0; i < (720*3); i++) {
+      // var gradient = context.createRadialGradient(
+      //   centerx,
+      //   centery,
+      //   100,
+      //   centerx,
+      //   centery,
+      //   700
+      // );
+      var gradient = getRainbowGradient(
+        centerx,
+        centery,
+        inputR1.value,
+        centerx,
+        centery,
+        inputR2.value
+      );
+
+      for (i = 0; i < 720 * 3; i++) {
         angle = g * i;
         var x = centerx + (a + b * angle) * Math.cos(angle);
         var y = centery + (a + b * angle) * Math.sin(angle);
@@ -104,6 +124,18 @@
       //context.endPath();
       // context.closePath();
       context.stroke();
+    }
+
+    function getRainbowGradient(x1, y1, r1, x2, y2, r2) {
+      var gradient = c.createRadialGradient(x1, y1, r1, x2, y2, r2);
+      gradient.addColorStop(0.0, "red");
+      gradient.addColorStop(1 / 6, "orange");
+      gradient.addColorStop(2 / 6, "yellow");
+      gradient.addColorStop(3 / 6, "green");
+      gradient.addColorStop(4 / 6, "aqua");
+      gradient.addColorStop(5 / 6, "blue");
+      gradient.addColorStop(1.0, "purple");
+      return gradient;
     }
     update();
   </script>

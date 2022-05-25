@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Line</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+      #canvas {
+        border: 1px solid gray;
+      }
+      #code {
+        padding: 5px;
+        background-color: rgb(72 72 72);
+        color: #adff2e;
+      }
+      .flex {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      input[type="range"] {
+        width: 200px;
+      }
+      label {
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="controls">
+        <div>
+          <input
+            id="lsolid"
+            type="radio"
+            name="linestyle"
+            value="solid"
+            onclick="onRadioChange(this)"
+            checked
+          />Solid
+          <input
+            id="ldash"
+            type="radio"
+            name="linestyle"
+            value="dash"
+            onclick="onRadioChange(this)"
+          />Dashed
+          <div id="divGap">
+            <input id="ll" type="range" min="0" max="60" step="1" value="5" />
+            <input id="lg" type="range" min="0" max="60" step="1" value="2" />
+          </div>
+        </div>
+        <div>
+          <select id="comboCap">
+            <option value="butt">butt</option>
+            <option value="round" selected>round</option>
+            <option value="square">square</option>
+          </select>
+          <select id="comboJoint">
+            <option value="bevel">bevel</option>
+            <option value="round" selected>round</option>
+            <option value="miter">miter</option>
+          </select>
+
+          <input id="clr" type="color" value="#00ff00" />
+          <input id="lw" type="range" min="0" max="50" step="1" value="1" />
+        </div>
+        <pre id="code"></pre>
+      </div>
+
+      <div>
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+  </body>
+  <script>
+    var selectedLineStyle = "solid";
+    var canvas = document.getElementById("canvas");
+    var width = (canvas.width = window.innerWidth - 6);
+    var height = (canvas.height = 350);
+
+    var cX = width / 2;
+    var cY = height / 2;
+    var lw = document.getElementById("lw");
+    var clr = document.getElementById("clr");
+    var comboCap = document.getElementById("comboCap");
+    var comboJoint = document.getElementById("comboJoint");
+
+    var ll = document.getElementById("ll");
+    var lg = document.getElementById("lg");
+    var lsolid = document.getElementById("lsolid");
+    var ldash = document.getElementById("ldash");
+    lw.onchange = rangeChange;
+    clr.onchange = rangeChange;
+    ll.onchange = rangeChange;
+    lg.onchange = rangeChange;
+    comboCap.onchange = rangeChange;
+    comboJoint.onchange = rangeChange;
+    var c = canvas.getContext("2d");
+
+    function updateCode() {
+      let str = ` c.lineWidth = ${lw.value};
+  c.strokeStyle = ${clr.value};
+  c.lineCap = ${comboCap.value};
+  c.lineJoin = ${comboJoint.value};
+
+  var pattern = [];
+  if (selectedLineStyle == "dash") {
+    var llvalue = parseFloat(${ll.value});
+    var lgvalue = parseFloat(${lg.value});
+    pattern = [llvalue, lgvalue];
+  }
+
+  c.setLineDash(pattern);`;
+      document.getElementById("code").innerHTML = str;
+    }
+    function update() {
+      c.clearRect(0, 0, width, height);
+      updateCode();
+      if (selectedLineStyle == "dash") {
+        document.getElementById("divGap").style.display = "block";
+      } else {
+        document.getElementById("divGap").style.display = "none";
+      }
+      setContext();
+      drawLine();
+      drawArc();
+      drawPath();
+      drawEllipse();
+      drawArcTo();
+      drawQuadraticCurve();
+    }
+    function setContext() {
+      c.lineWidth = lw.value;
+      c.strokeStyle = clr.value;
+      c.lineCap = comboCap.value;
+      c.lineJoin = comboJoint.value;
+
+      var gradient = c.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, clr.value);
+      gradient.addColorStop(0.5, "#ff0000");
+      gradient.addColorStop(1, "#000000");
+      c.strokeStyle = gradient;
+      var pattern = [];
+      if (selectedLineStyle == "dash") {
+        var llvalue = parseFloat(ll.value);
+        var lgvalue = parseFloat(lg.value);
+        pattern = [llvalue, lgvalue];
+      }
+
+      c.setLineDash(pattern);
+    }
+    function drawLine() {
+      c.moveTo(50, 20);
+      c.lineTo(400, 20);
+
+      c.moveTo(30, 200);
+      c.lineTo(30, 300);
+      c.stroke();
+    }
+    function drawArc() {
+      c.beginPath();
+      var gap = 80;
+      var radius = 60;
+      c.arc(width - gap, 2 * radius, radius, 0, 2 * Math.PI, true);
+      c.stroke();
+    }
+    function drawPath() {
+      c.beginPath();
+      var xgap = 50;
+      var ygap = 50;
+      c.moveTo(50, height - ygap);
+      c.lineTo(100, height - ygap);
+      c.lineTo(150, height - 2 * ygap);
+      c.lineTo(150, height - ygap);
+      c.lineTo(200, height - 2 * ygap);
+      c.arcTo(200, height - 3 * ygap, 750, 0, 200);
+      // context.arc(200, height - 2 * ygap, 100, 0, Math.PI, true);
+      c.stroke();
+    }
+    function drawEllipse() {
+      c.beginPath();
+      c.ellipse(400, 100, 50, 75, Math.PI / 4, 0, 2 * Math.PI);
+      c.stroke();
+
+      c.fillStyle = "red";
+      c.beginPath();
+      c.ellipse(60, 75, 50, 30, Math.PI * 0.25, 0, Math.PI * 1.5);
+      c.fill();
+
+      c.fillStyle = "blue";
+      c.beginPath();
+      c.ellipse(150, 75, 50, 30, Math.PI * 0.25, 0, Math.PI);
+      c.fill();
+
+      c.fillStyle = "green";
+      c.beginPath();
+      c.ellipse(240, 75, 50, 30, Math.PI * 0.25, 0, Math.PI, true);
+      c.fill();
+    }
+    function drawQuadraticCurve() {
+      var v = 50;
+      c.beginPath();
+      c.moveTo(cX, cY);
+      c.quadraticCurveTo(cX + v, cY - v, cX + 2 * v, cY);
+      c.quadraticCurveTo(cX + 3 * v, cY + 1 * v, cX + 4 * v, cY);
+      c.stroke();
+    }
+    function drawArcTo() {
+      c.beginPath();
+      var g = 50;
+      var x1 = cX - g;
+      var x2 = cX + g;
+      var y1 = cY + g;
+      var y2 = cY + g;
+      var r = 50;
+      c.moveTo(x1, y1);
+      c.arcTo(cX, cY, x2, y2, r);
+      c.lineTo(x2, y2);
+      // c.fillText(`p1(${x1+","+y1})`,x1-20,y1+15);
+      //  c.fillText(`p2(${x2+","+y2})`,x2-20,y2+15);
+      c.arcTo(cX, cY + 2 * g, x1, y1, r);
+      c.lineTo(x1, y1);
+      c.stroke();
+
+      c.beginPath();
+      c.arc(cX, cY, 5, 0, 2 * Math.PI, true);
+      c.stroke();
+      c.beginPath();
+
+      c.arc(x1, y1, 5, 0, 2 * Math.PI, true);
+      c.stroke();
+      c.beginPath();
+      c.arc(x2, y2, 5, 0, 2 * Math.PI, true);
+      // c.fill();
+      c.stroke();
+    }
+    function rangeChange() {
+      update();
+    }
+    function onRadioChange(myRadio) {
+      if (selectedLineStyle == myRadio.value) {
+        return;
+      }
+      if (myRadio.value == "dash") {
+        document.getElementById("divGap").style.display = "block";
+      } else {
+        document.getElementById("divGap").style.display = "none";
+      }
+      selectedLineStyle = myRadio.value;
+      update();
+    }
+    update();
+  </script>
+</html>

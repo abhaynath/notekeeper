@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title>Animated Solar System</title>
+  </head>
+  <body onload="init();">
+    <canvas
+      id="MyCanvasArea"
+      width="800"
+      height="800"
+      style="border: 2px solid blue"
+    >
+    </canvas>
+  </body>
+  <script>
+    var can;
+    var ctx;
+    var oradius, ocolor, pradius, pcolo, opradius, pcount;
+    var angshift = [
+      0.009, 0.008, 0.007, 0.006, 0.005, 0.009, 0.005, 0.006, 0.007,
+    ];
+    var ang = [60, 80, 100, 120, 140, 160, 180, 200, 220];
+    var colors = [
+      "blue",
+      "brown",
+      "green",
+      "crimson",
+      "olive",
+      "indigo",
+      "purple",
+      "grey",
+      "red",
+    ];
+    var pradius = [3.5, 7, 10, 6, 22, 18, 15, 12, 2.8];
+    var pnames = [
+      "mercury",
+      "venus",
+      "earth",
+      "mars",
+      "jupiter",
+      "saturn",
+      "uranus",
+      "neptune",
+      "pluto",
+    ];
+    function animate() {
+      reqAnimFrame =
+        window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        window.oRequestAnimationFrame;
+      clear();
+      setParams();
+      drawSun();
+      drawOrbits();
+      drawPlanets();
+      reqAnimFrame(animate);
+    }
+    function setParams() {
+      for (pcount = 0; pcount <= 9; pcount++) {
+        ang[pcount] = ang[pcount] + angshift[pcount];
+      }
+    }
+    function init() {
+      can = document.getElementById("MyCanvasArea");
+      ctx = can.getContext("2d");
+      // scale context horizontally
+      ctx.scale(1, 1);
+      animate();
+    }
+    function drawSun() {
+      ctx.beginPath();
+      ctx.fillStyle = "orange";
+      ctx.arc(can.width / 2, can.height / 2, 30, 0, Math.PI * 2, true);
+      ctx.closePath();
+      ctx.fill();
+      ctx.beginPath();
+      ctx.font = "10pt Arial";
+      ctx.fillStyle = "rgb(0,0,0)";
+      ctx.fillText("SUN", can.width / 2 - 15, can.height / 2 + 5);
+      ctx.closePath();
+    }
+    function drawOrbits() {
+      var i;
+      oradius = 15;
+      for (i = 1; i <= 9; i++) {
+        oradius = oradius + 35;
+        ocolor = "black";
+        ctx.beginPath();
+        ctx.strokeStyle = ocolor;
+        ctx.arc(can.width / 2, can.height / 2, oradius, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+    function drawPlanets() {
+      var x;
+      var y;
+      opradius = 15;
+      for (var i = 0; i <= 8; i++) {
+        opradius = opradius + 35;
+        ctx.beginPath();
+        ctx.fillStyle = colors[i];
+        x = can.width / 2 + opradius * Math.cos(ang[i]);
+        y = can.height / 2 + Math.sin(ang[i]) * opradius;
+        ctx.arc(x, y, pradius[i], 0, Math.PI * 2, true);
+        ctx.strokeText(pnames[i], x + 20, y);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+    function clear() {
+      ctx.clearRect(0, 0, can.width, can.height);
+    }
+  </script>
+</html>

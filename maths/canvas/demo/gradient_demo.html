@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gradient</title>
+    <style>
+      body {
+        font-family: "arial";
+        font-size: 0.8em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #canvas {
+        padding: 10px;
+        /* border: 2px solid gray; */
+      }
+      .colors {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .colors div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #cd {
+        padding: 5px;
+        background-color: rgb(72 72 72);
+        color: #adff2e;
+      }
+      .flex {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      input[type="range"] {
+        width: 200px;
+      }
+      label {
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input
+        type="radio"
+        name="gType"
+        value="l"
+        checked
+        onclick="onRadioChange(this);"
+      />Linear
+      <input
+        type="radio"
+        name="gType"
+        value="r"
+        onclick="onRadioChange(this);"
+      />Radial
+    </div>
+    <div class="colors">
+      <div>
+        <input id="cp1" type="color" value="#ff00ff" /><label id="lcp1"></label>
+        <input
+          id="clr1"
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0"
+        /><label id="lc1" for="clr1"></label>
+      </div>
+      <div>
+        <input id="cp2" type="color" value="#0031a3" /><label id="lcp2"></label>
+        <input
+          id="clr2"
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0.5"
+        /><label id="lc2" for="clr2"></label>
+      </div>
+      <div>
+        <input id="cp3" type="color" value="#008a09" /><label id="lcp3"></label>
+        <input
+          id="clr3"
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value="1"
+        /><label id="lc3" for="clr3"></label>
+      </div>
+    </div>
+    <div>
+      <input id="x1" type="range" min="0" max="500" step="1" value="1" /><label
+        id="lx1"
+        for="x1"
+      ></label>
+
+      <input id="y1" type="range" min="0" max="300" step="1" value="1" /><label
+        id="ly1"
+        for="y1"
+      ></label>
+    </div>
+    <div>
+      <input
+        id="x2"
+        type="range"
+        min="0"
+        max="500"
+        step="1"
+        value="500"
+      /><label id="lx2" for="x2"></label>
+
+      <input id="y2" type="range" min="0" max="300" step="1" value="0" /><label
+        id="ly2"
+        for="y2"
+      ></label>
+    </div>
+    <div id="radius">
+      <input type="range" id="r1" min="0" max="300" step="1" value="50" /><label
+        id="lr1"
+      ></label>
+      <input
+        type="range"
+        id="r2"
+        min="0"
+        max="300"
+        step="1"
+        value="200"
+      /><label id="lr2"></label>
+    </div>
+    <div>
+      <button id="btnReset">Reset</button>
+    </div>
+    <div class="flex">
+      <canvas id="canvas"></canvas>
+      <pre id="cd"></pre>
+    </div>
+  </body>
+  <script>
+    var selectedGradient = "l";
+
+    var canvas = document.getElementById("canvas");
+    var width = (canvas.width = 500);
+    var height = (canvas.height = 300);
+    var ctx = canvas.getContext("2d");
+    var clr1 = document.getElementById("clr1");
+    var clr2 = document.getElementById("clr2");
+    var clr3 = document.getElementById("clr3");
+    var x1 = document.getElementById("x1");
+    var y1 = document.getElementById("y1");
+    var x2 = document.getElementById("x2");
+    var y2 = document.getElementById("y2");
+    var cp1 = document.getElementById("cp1");
+    var cp2 = document.getElementById("cp2");
+    var cp3 = document.getElementById("cp3");
+    var r1 = document.getElementById("r1");
+    var r2 = document.getElementById("r2");
+
+    var lc1 = document.getElementById("lc1");
+    var lc2 = document.getElementById("lc2");
+    var lc3 = document.getElementById("lc3");
+    var lx1 = document.getElementById("lx1");
+    var ly1 = document.getElementById("ly1");
+    var lx2 = document.getElementById("lx2");
+    var ly2 = document.getElementById("ly2");
+    var lcp1 = document.getElementById("lcp1");
+    var lcp2 = document.getElementById("lcp2");
+    var lcp3 = document.getElementById("lcp3");
+    var lr1 = document.getElementById("lr1");
+    var lr2 = document.getElementById("lr2");
+    clr1.onchange = onRangeChange;
+    clr2.onchange = onRangeChange;
+    clr3.onchange = onRangeChange;
+    x1.onchange = onRangeChange;
+    y1.onchange = onRangeChange;
+    cp1.onchange = onRangeChange;
+    cp2.onchange = onRangeChange;
+    cp3.onchange = onRangeChange;
+
+    x2.onchange = onRangeChange;
+    y2.onchange = onRangeChange;
+    r1.onchange = onRangeChange;
+    r2.onchange = onRangeChange;
+
+    var btnReset = document.getElementById("btnReset");
+    btnReset.onclick = reset;
+
+    var code = document.getElementById("cd");
+
+    function reset() {
+      cp1.value = "#ff00ff";
+      cp2.value = "#0031a3";
+      cp3.value = "#008a09";
+      clr1.value = 0;
+      clr2.value = 0.5;
+      clr3.value = 1;
+      x1.value = 0;
+      x2.value = 500;
+      y1.value = 0;
+      y2.value = 0;
+      if (selectedGradient == "r") {
+        x1.value = x2.value = width / 2;
+        y1.value = y2.value = height / 2;
+      }
+      update();
+    }
+    function onRangeChange(e) {
+      update();
+    }
+
+    function update() {
+      if (selectedGradient == "l") {
+        document.getElementById("radius").style.display = "none";
+      } else {
+        document.getElementById("radius").style.display = "block";
+      }
+      ctx.clearRect(0, 0, width, height);
+      lcp1.innerHTML = cp1.value;
+      lcp2.innerHTML = cp2.value;
+      lcp3.innerHTML = cp3.value;
+      var c1 = parseFloat(clr1.value);
+      var c2 = parseFloat(clr2.value);
+      var c3 = parseFloat(clr3.value);
+      var px1 = parseFloat(x1.value);
+      var py1 = parseFloat(y1.value);
+      var px2 = parseFloat(x2.value);
+      var py2 = parseFloat(y2.value);
+      var rad1 = parseFloat(r1.value);
+      var rad2 = parseFloat(r2.value);
+      lc1.innerHTML = c1;
+      lc2.innerHTML = c2;
+      lc3.innerHTML = c3;
+
+      lx1.innerHTML = "x1 = " + px1;
+      ly1.innerHTML = "y1 = " + py1;
+      lx2.innerHTML = "x2 = " + px2;
+      ly2.innerHTML = "y2 = " + py2;
+      lr1.innerHTML = "r1 = " + rad1;
+      lr2.innerHTML = "r2 = " + rad2;
+      var gradient;
+      if (selectedGradient == "l") {
+        gradient = ctx.createLinearGradient(px1, py1, px2, py2);
+        code.innerHTML = `var gradient = ctx.createLinearGradient(${px1}, ${py1}, ${px2}, ${py2});
+gradient.addColorStop(${c1}, "${cp1.value}");
+gradient.addColorStop(${c2}, "${cp2.value}");
+gradient.addColorStop(${c3}, "${cp3.value}");
+
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, width, height);`;
+      } else {
+        gradient = ctx.createRadialGradient(px1, py1, rad1, px2, py2, rad2);
+        code.innerHTML = `var gradient = ctx.createRadialGradient(${px1}, ${py1},${rad1}, ${px2}, ${py2},${rad2});
+gradient.addColorStop(${c1}, "${cp1.value}");
+gradient.addColorStop(${c2}, "${cp2.value}");
+gradient.addColorStop(${c3}, "${cp3.value}");
+
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, width, height);`;
+      }
+      gradient.addColorStop(c1, cp1.value);
+      gradient.addColorStop(c2, cp2.value);
+      gradient.addColorStop(c3, cp3.value);
+
+      ctx.fillStyle = gradient;
+
+      ctx.fillRect(0, 0, width, height);
+
+      var gradient2 = ctx.createLinearGradient(px1, py1, px2, py2);
+      gradient2.addColorStop(0, "white");
+      gradient2.addColorStop(1, "black");
+      ctx.strokeStyle = gradient2;
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(px1, py1);
+      ctx.lineTo(px2, py2);
+      ctx.stroke();
+    }
+
+    function onRadioChange(myRadio) {
+      if (myRadio.value == "r") {
+        x1.value = x2.value = width / 2;
+        y1.value = y2.value = height / 2;
+      }
+      selectedGradient = myRadio.value;
+
+      console.log(myRadio.value);
+      update();
+    }
+    reset();
+    update();
+  </script>
+</html>
