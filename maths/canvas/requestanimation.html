@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Request Animation Frame and delta calculation</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="canvas_index.html">Canvas</a>
+      </nav>
+
+      <section id="eventlib">
+        <h4>Request Animation frame</h4>
+        <canvas id="anim" width="700" height="100"></canvas>
+
+        <pre><code class="language-html">   &#x3C;canvas id=&#x22;anim&#x22; width=&#x22;700&#x22; height=&#x22;100&#x22;&#x3E;&#x3C;/canvas&#x3E;
+</code></pre>
+<pre><code class="language-js"> function Ball(radius, color) {
+    this.radius = radius;
+    this.color = color;
+    this.x = 0;
+    this.y = 0;
+    this.vx = 0;
+    this.vy = 0;
+  }
+
+  Ball.prototype.draw = function (context) {
+    context.fillStyle = this.color;
+    context.beginPath();
+    context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
+    context.closePath();
+    context.fill();
+  };
+
+  var canvas = document.getElementById(&#x22;anim&#x22;);
+  canvas.style.background =&#x22;white&#x22;;
+  var context = canvas.getContext(&#x22;2d&#x22;);
+  var ball;
+  var t0; // time at last call
+  var dt; // elapsed time between calls
+
+  window.onload = init;
+
+  function init() {
+    ball = new Ball(20, &#x22;#0000ff&#x22;);
+    ball.x = 50;
+    ball.y = 50;
+    ball.vx = 200;
+    ball.draw(context);
+    t0 = new Date().getTime(); // initialize value of t0
+    animFrame();
+  }
+
+  function animFrame() {
+    requestAnimationFrame(animFrame, canvas);
+    onEachStep();
+  }
+
+  function onEachStep() {
+    var t1 = new Date().getTime(); // current time in milliseconds since midnight on 1 Jan 1970
+    dt = 0.001 * (t1 - t0); // time elapsed in seconds since last call
+    t0 = t1; // reset t0
+    ball.x += ball.vx * dt;
+    if (ball.x &#x3E;= canvas.width) ball.x = 0;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    ball.draw(context);
+  }</code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+
+  <script>
+    function Ball(radius, color) {
+      this.radius = radius;
+      this.color = color;
+      this.x = 0;
+      this.y = 0;
+      this.vx = 0;
+      this.vy = 0;
+    }
+
+    Ball.prototype.draw = function (context) {
+      context.fillStyle = this.color;
+      context.beginPath();
+      context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
+      context.closePath();
+      context.fill();
+    };
+
+    var canvas = document.getElementById("anim");
+    canvas.style.background ="white";
+    var context = canvas.getContext("2d");
+    var ball;
+    var t0; // time at last call
+    var dt; // elapsed time between calls
+
+    window.onload = init;
+
+    function init() {
+      ball = new Ball(20, "#0000ff");
+      ball.x = 50;
+      ball.y = 50;
+      ball.vx = 200;
+      ball.draw(context);
+      t0 = new Date().getTime(); // initialize value of t0
+      animFrame();
+    }
+
+    function animFrame() {
+      requestAnimationFrame(animFrame, canvas);
+      onEachStep();
+    }
+
+    function onEachStep() {
+      var t1 = new Date().getTime(); // current time in milliseconds since midnight on 1 Jan 1970
+      dt = 0.001 * (t1 - t0); // time elapsed in seconds since last call
+      t0 = t1; // reset t0
+      ball.x += ball.vx * dt;
+      if (ball.x >= canvas.width) ball.x = 0;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      ball.draw(context);
+    }
+  </script>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Request Animation Frame and delta calculation</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="canvas_index.html">Canvas</a>
+      </nav>
+
+      <section id="eventlib">
+        <h4>Grid</h4>
+        <canvas id="anim" width="700" height="400"></canvas>
+
+        <pre><code class="language-html">   &#x3C;canvas id=&#x22;anim&#x22; width=&#x22;700&#x22; height=&#x22;400&#x22;&#x3E;&#x3C;/canvas&#x3E;
+</code></pre>
+        <pre><code class="language-js">
+var canvas = document.getElementById(&#x22;anim&#x22;);
+canvas.style.background = &#x22;white&#x22;;
+var context = canvas.getContext(&#x22;2d&#x22;);
+
+function drawGrid(ctx, xMin, yMin, xMax, yMax, xStep, yStep, color, thickness) {
+    const cols = Math.floor((xMax - xMin) / xStep);
+    const rows = Math.floor((yMax - yMin) / yStep);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = thickness;
+
+    ctx.beginPath();
+    for (var count = 0; count &#x3C;= cols; count++) {
+    ctx.moveTo(xMin + count * xStep, yMin);
+    ctx.lineTo(xMin + count * xStep, yMax);
+    }
+    for (var count = 0; count &#x3C;= rows; count++) {
+    ctx.moveTo(xMin, yMin + count * yStep);
+    ctx.lineTo(xMax, yMin + count * yStep);
+    }
+
+    ctx.stroke();
+}
+drawGrid(context, 10, 10, canvas.width - 10, canvas.height - 10, 10, 10, &#x22;#5288ff&#x22;, 1);
+        </code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+
+  <script>
+    var canvas = document.getElementById("anim");
+    canvas.style.background = "white";
+    var context = canvas.getContext("2d");
+
+    function drawGrid(ctx, xMin, yMin, xMax, yMax, xStep, yStep, color, thickness) {
+      const cols = Math.floor((xMax - xMin) / xStep);
+      const rows = Math.floor((yMax - yMin) / yStep);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = thickness;
+
+      ctx.beginPath();
+      for (var count = 0; count <= cols; count++) {
+        ctx.moveTo(xMin + count * xStep, yMin);
+        ctx.lineTo(xMin + count * xStep, yMax);
+      }
+      for (var count = 0; count <= rows; count++) {
+        ctx.moveTo(xMin, yMin + count * yStep);
+        ctx.lineTo(xMax, yMin + count * yStep);
+      }
+
+      ctx.stroke();
+    }
+    drawGrid(context, 10, 10, canvas.width - 10, canvas.height - 10, 10, 10, "#5288ff", 1);
+  </script>
+</html>

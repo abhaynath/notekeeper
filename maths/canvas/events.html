@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Keyboard and Mouse events</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="canvas_index.html">Canvas</a>
+      </nav>
+
+      <section id="eventlib">
+        <h4>Event library</h4>
+        <pre><code class="language-javascript">
+var Events = (function () {
+  var instance;
+  function createInstance() {
+    var obj = {};
+    var dcEvents = {};
+    var keys = [];
+    var keyBoardCallback;
+    var keyObj = {};
+    function getMouseEventDetails(e) {
+      var x = 0,
+        y = 0;
+      if (
+        e.type == &#x22;touchstart&#x22; ||
+        e.type == &#x22;touchmove&#x22; ||
+        e.type == &#x22;touchend&#x22; ||
+        e.type == &#x22;touchcancel&#x22;
+      ) {
+        var evt = typeof e.originalEvent === &#x22;undefined&#x22; ? e : e.originalEvent;
+        var touch = evt.touches[0] || evt.changedTouches[0];
+        x = touch.pageX;
+        y = touch.pageY;
+      } else if (
+        e.type == &#x22;click&#x22; ||
+        e.type == &#x22;mousedown&#x22; ||
+        e.type == &#x22;mouseup&#x22; ||
+        e.type == &#x22;mousemove&#x22; ||
+        e.type == &#x22;mouseover&#x22; ||
+        e.type == &#x22;mouseout&#x22; ||
+        e.type == &#x22;mouseenter&#x22; ||
+        e.type == &#x22;mouseleave&#x22; ||
+        e.type == &#x22;dblclick&#x22; ||
+        e.type == &#x22;contextmenu&#x22;
+      ) {
+        x = e.clientX;
+        y = e.clientY;
+      }
+
+      var mouseEvent = {};
+      mouseEvent.type = e.type;
+      mouseEvent.x = x;
+      mouseEvent.y = y;
+      mouseEvent.elementId = e.target.id;
+      mouseEvent.shiftKey = e.shiftKey;
+      mouseEvent.altKey = e.altKey;
+      mouseEvent.ctrlKey = e.ctrlKey;
+      mouseEvent.screenX = e.screenX;
+      mouseEvent.screenY = e.screenY;
+      return mouseEvent;
+    }
+    function mouseEventHandler(e) {
+      if (e.type == &#x22;contextmenu&#x22;) {
+        e.preventDefault();
+      }
+      let ev = getMouseEventDetails(e);
+      const id = ev.elementId;
+
+      if (dcEvents[id] != null) {
+        dcEvents[id](ev);
+      }
+    }
+    function keyDownHandler(e) {
+      e.preventDefault();
+      keys[e.keyCode] = true;
+      keyObj.type = &#x22;keydown&#x22;;
+      keyObj.keys = keys;
+      keyBoardCallback(keyObj);
+    }
+    function keyUpHandler(e) {
+      keys[e.keyCode] = false;
+      keyObj.type = &#x22;keyup&#x22;;
+      keyObj.keys = keys;
+      keyBoardCallback(keyObj);
+    }
+    obj.removeMouseEvents = function (elementId) {
+      var el = document.getElementById(elementId);
+      if (el == null || el == undefined) {
+        return;
+      }
+      el.removeEventListener(&#x22;click&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;mouseup&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;mousedown&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;mouseover&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;mouseout&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;mousemove&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;dblclick&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;contextmenu&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;touchstart&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;touchmove&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;touchend&#x22;, mouseEventHandler);
+      el.removeEventListener(&#x22;touchcancel&#x22;, mouseEventHandler);
+    };
+    obj.addMouseEvents = function (elementId, callback) {
+      dcEvents[elementId] = callback;
+
+      var el = document.getElementById(elementId);
+      if (el == null || el == undefined) {
+        return;
+      }
+      el.addEventListener(&#x22;click&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;mouseup&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;mousedown&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;mouseover&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;mouseout&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;mousemove&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;dblclick&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;contextmenu&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;touchstart&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;touchmove&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;touchend&#x22;, mouseEventHandler);
+      el.addEventListener(&#x22;touchcancel&#x22;, mouseEventHandler);
+    };
+
+    obj.addKeyboardEvents = function (callback) {
+      window.addEventListener(&#x22;keydown&#x22;, keyDownHandler, false);
+      window.addEventListener(&#x22;keyup&#x22;, keyUpHandler, false);
+      keyBoardCallback = callback;
+    };
+    return obj;
+  }
+
+  return {
+    getInstance: function () {
+      if (!instance) {
+        instance = createInstance();
+      }
+      return instance;
+    },
+  };
+})();
+</code></pre>
+
+        <pre><code class="language-html">
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang=&#x22;en&#x22;&#x3E;
+  &#x3C;head&#x3E;
+    &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+    &#x3C;meta http-equiv=&#x22;X-UA-Compatible&#x22; content=&#x22;IE=edge&#x22; /&#x3E;
+    &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+    &#x3C;title&#x3E;Event Test&#x3C;/title&#x3E;
+    &#x3C;style&#x3E;
+      body {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      #can1 {
+        background-color: blue;
+      }
+    &#x3C;/style&#x3E;
+  &#x3C;/head&#x3E;
+  &#x3C;body&#x3E;
+      &#x3C;canvas id=&#x22;can1&#x22; width=&#x22;200&#x22; height=&#x22;200&#x22;&#x3E;&#x3C;/canvas&#x3E;
+  &#x3C;/body&#x3E;
+  &#x3C;script src=&#x22;mouselib.js&#x22;&#x3E;&#x3C;/script&#x3E;
+  &#x3C;script&#x3E;
+    var me = Events.getInstance();
+
+    me.addMouseEvents(&#x22;can1&#x22;, getXY);
+    me.addKeyboardEvents(getKey);
+
+    function getXY(e) {
+      console.log(e);
+    }
+    function getKey(obj) {
+      console.log(obj);
+    }
+  &#x3C;/script&#x3E;
+&#x3C;/html&#x3E;</code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
