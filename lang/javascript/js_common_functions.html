@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
+    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
+    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Common functions</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="javascript_index.html">JavaScript</a>
+    </nav>
+
+    <div class="content">
+      <section id="js_05_01">
+        <h4>Generate random Id</h4>
+        <pre><code class="language-js">
+const getRandomId = function () {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};</code></pre>
+      </section>
+
+      <section id="js_05_02">
+        <h4>Generate random colors</h4>
+        <pre><code class="language-js">
+const getRandomColor = function () {
+    var letters = &#x22;0123456789ABCDEF&#x22;;
+    var color = &#x22;#&#x22;;
+    for (var i = 0; i &#x3C; 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+};</code></pre>
+      </section>
+
+
+      <section id="js_05_03">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+      <section id="js_05_04">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+      <section id="js_05_05">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+      <section id="js_05_06">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+
+      <section id="js_05_07">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+
+      <section id="js_05_08">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+
+      <section id="js_05_09">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+      <section id="js_05_10">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+
+
+      <section id="js_05_11">
+        <h4></h4>
+        <pre><code class="language-js"></code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
