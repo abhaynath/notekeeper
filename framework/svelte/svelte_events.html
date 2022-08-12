@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title></title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
+    </nav>
+    <div class="content">
+      <section id="sv_08_01">
+        <h4>DOM Events</h4>
+        <pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  let m = { x: 0, y: 0 };
+  const handleMouseMove = (e: MouseEvent) =&#x3E; {
+    m.x = e.clientX;
+    m.y = e.clientY;
+  };
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;box&#x22; on:mousemove={handleMouseMove}&#x3E;
+  &#x3C;div&#x3E;{m.x}px {m.y}px&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .box {
+    margin: 10px;
+    background-color: violet;
+    height: 200px;
+  }
+&#x3C;/style&#x3E;</code></pre>
+
+
+<h4>Canvas Mouse Drawing example</h4>
+<pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  import { afterUpdate, beforeUpdate, onDestroy, onMount } from &#x22;svelte&#x22;;
+
+  let canvas: HTMLCanvasElement;
+  let context: CanvasRenderingContext2D;
+  let isDrawing = false;
+  let prevX = 0,
+    prevY = 0;
+  let isShow = true;
+
+  onMount(() =&#x3E; {});
+  beforeUpdate(() =&#x3E; {});
+  afterUpdate(() =&#x3E; {
+    if (isShow) {
+      context = canvas.getContext(&#x22;2d&#x22;);
+      canvas.addEventListener(&#x22;mousedown&#x22;, mouseDown, false);
+      canvas.addEventListener(&#x22;mouseup&#x22;, mouseUp, false);
+      canvas.addEventListener(&#x22;mousemove&#x22;, mouseMove, false);
+    }
+  });
+  const getMousePos = (e: MouseEvent) =&#x3E; {
+    let rect = canvas.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  };
+  const mouseMove = (e: MouseEvent) =&#x3E; {
+    const obj = getMousePos(e);
+    let x = obj.x;
+    let y = obj.y;
+    context.lineWidth = 0.5;
+    if (isDrawing) {
+      context.beginPath();
+      context.moveTo(prevX, prevY);
+      context.lineTo(x, y);
+      context.stroke();
+      prevX = x;
+      prevY = y;
+    }
+  };
+  const mouseDown = (e: MouseEvent) =&#x3E; {
+    isDrawing = true;
+    const obj = getMousePos(e);
+    prevX = obj.x;
+    prevY = obj.y;
+  };
+  const mouseUp = (e: MouseEvent) =&#x3E; {
+    isDrawing = false;
+  };
+
+  onDestroy(() =&#x3E; {
+    canvas.removeEventListener(&#x22;mousedown&#x22;, mouseDown, false);
+    canvas.removeEventListener(&#x22;mouseup&#x22;, mouseUp, false);
+    canvas.removeEventListener(&#x22;mousemove&#x22;, mouseMove, false);
+});
+&#x3C;/script&#x3E;
+
+&#x3C;button
+  on:click={() =&#x3E; {
+    isShow = !isShow;
+  }}&#x3E;Toggle&#x3C;/button
+&#x3E;
+{#if isShow}
+  &#x3C;div class=&#x22;container&#x22;&#x3E;
+    &#x3C;canvas width=&#x22;500&#x22; height=&#x22;500&#x22; bind:this={canvas} /&#x3E;
+  &#x3C;/div&#x3E;
+{/if}
+
+&#x3C;style&#x3E;
+  .container {
+    padding: 10px;
+    margin: 10px;
+    background-color: gray;
+  }
+  canvas {
+    background-color: white;
+    border: 1px solid black;
+  }
+&#x3C;/style&#x3E;</code></pre>
+      </section>
+
+      <section id="sv_08_02">
+        <h4></h4>
+        <pre><code class="language-html"></code></pre>
+      </section>
+
+      <section id="sv_08_03">
+        <h4></h4>
+        <pre><code class="language-html"></code></pre>
+      </section>
+
+      <section id="sv_08_04">
+        <h4></h4>
+        <pre><code class="language-html"></code></pre>
+      </section>
+
+      <section id="sv_08_05">
+        <h4></h4>
+        <pre><code class="language-html"></code></pre>
+      </section>
+
+      <section id="sv_08_06">
+        <h4></h4>
+        <pre><code class="language-html"></code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
