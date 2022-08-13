@@ -1,73 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!-- <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/prettify.css">
-    <link rel="stylesheet" type="text/css" href="../../js/libs/google-code-prettify/skins/sons-of-obsidian.css">
-    <script type="text/javascript" src="../../js/libs/google-code-prettify/prettify.js"></script> -->
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+   
     <script src="../../js/libs/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
-    <title>Hello World Svelte </title>
+    <title>Hello World Svelte</title>
+    <style>
+      .flex {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="svelte_index.html">Svelte</a>
-
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
+      <section id="sv_01_00">
+        <h4>Installation using Vite</h4>
+        <ol>
+          <li>
+            <pre class="shell">npm create vite@latest</pre>
+          </li>
+        </ol>
+      </section>
 
-        <section id="sv_01_01">
-            <h4>Simple hello world application in Svelte</h4>
-            <ol>
-               
-                <li>Run following command to create Svelte App
+      <section>
+        <h4>Using Font-Awesome</h4>
+        <div class="flex">
+          <img src="../../images/frameworks/svelte/fa.jpg" />
+          <div>
+            <pre class="shell">npm install svelte-fa --verbose</pre>
+          </div>
+        </div>
 
-<pre class="shell">
+        <pre class="shell">
+npm install @fortawesome/free-regular-svg-icons
+npm install @fortawesome/free-solid-svg-icons
+npm install @fortawesome/free-brands-svg-icons</pre
+        >
+
+        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  import Fa from &#x22;svelte-fa&#x22;;
+  import { faFolder } from &#x22;@fortawesome/free-regular-svg-icons&#x22;;
+  import { faFlag } from &#x22;@fortawesome/free-solid-svg-icons&#x22;;
+  import { faGithub } from &#x22;@fortawesome/free-brands-svg-icons&#x22;;
+
+  const iconClick = (id: string) =&#x3E; {
+    console.log(&#x60;iconclick = ${id}&#x60;);
+  };
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;list&#x22;&#x3E;
+  &#x3C;span
+    class=&#x22;icon&#x22;
+    on:click={() =&#x3E; {
+      iconClick(&#x22;flag&#x22;);
+    }}
+    &#x3E;&#x3C;Fa icon={faFlag} size=&#x22;2x&#x22; /&#x3E;
+  &#x3C;/span&#x3E;
+  &#x3C;Fa icon={faFolder} color=&#x22;#0000ff&#x22; /&#x3E;
+  &#x3C;Fa icon={faGithub} color=&#x22;#00ff00&#x22; size=&#x22;3x&#x22; rotate={90} /&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .list {
+    padding: 10px;
+  }
+  .icon {
+    color: rgb(0, 58, 145);
+  }
+  .icon:hover {
+    color: rgb(245, 78, 0);
+    cursor: pointer;
+  }
+&#x3C;/style&#x3E;
+</code></pre>
+      </section>
+
+      <section id="sv_01_01">
+        <h4>Simple hello world application in Svelte</h4>
+        <ol>
+          <li>
+            Run following command to create Svelte App
+
+            <pre class="shell">
     npx degit sveltejs/template my-app
     cd my-app
 </pre>
-                   
-                </li>
-                <li>To use TypeScript run following command.
+          </li>
+          <li>
+            To use TypeScript run following command.
 
-                    <pre class="shell">node scripts/setupTypeScript.js</pre>
-                </li>
-              
-                <li>Install all packages
-                    <pre class="shell">npm install --verbose</pre>
-                </li>
-                <li>
-                    To run the development server,
-                    <pre class="shell">npm run dev</pre>
+            <pre class="shell">node scripts/setupTypeScript.js</pre>
+          </li>
 
-                    To change the default port, change 'package.json' scripts.dev settings.
-                    <pre class="shell"> "dev": "SET PORT=5474 && rollup -c -w",</pre>
-                </li>
-                <li>
-                    To build the project
-                    <pre class="shell">npm run build</pre>
-                </li>
-               
-            </ol>
+          <li>
+            Install all packages
+            <pre class="shell">npm install --verbose</pre>
+          </li>
+          <li>
+            To run the development server,
+            <pre class="shell">npm run dev</pre>
 
-        </section>
-        <section>
-            <h3>Using Props</h3>
+            To change the default port, change 'package.json' scripts.dev settings.
+            <pre class="shell"> "dev": "SET PORT=5474 && rollup -c -w",</pre>
+          </li>
+          <li>
+            To build the project
+            <pre class="shell">npm run build</pre>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h3>Using Props</h3>
 
-            <h4>App.svelte</h4>
-            <pre><code class="language-html">
+        <h4>App.svelte</h4>
+        <pre><code class="language-html">
 &#x3C;script&#x3E;
 import TestFile from &#x22;./components/TestFile.svelte&#x22;;
 
@@ -98,8 +158,8 @@ players = players;
   }
 &#x3C;/style&#x3E;</code></pre>
 
-<h4>TestFile.svelte</h4>
-<pre><code class="language-html">
+        <h4>TestFile.svelte</h4>
+        <pre><code class="language-html">
 &#x3C;script&#x3E;
 export let title = &#x22;&#x22;;
 
@@ -129,15 +189,11 @@ playerName = &#x22;&#x22;;
     font-size: 18px;
   }
 &#x3C;/style&#x3E;</code></pre>
-        </section>
-
-
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>hljs.highlightAll();</script>
-
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
