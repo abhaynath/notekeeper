@@ -205,18 +205,150 @@ div {
       </section>
 
       <section id="sv_10_03">
-        <h4></h4>
-        <p></p>
-        <pre><code class="language-html"></code></pre>
+        <h4>svelte:element</h4>
+        <p>Sometimes we don&#x27;t know in advance what kind of DOM element to render. &#x3C;svelte:element&#x3E; comes in handy here.</p>
+        <pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  const options = [&#x22;h1&#x22;, &#x22;h3&#x22;, &#x22;p&#x22;];
+  let selected = options[0];
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;select bind:value={selected}&#x3E;
+    {#each options as option}
+      &#x3C;option value={option}&#x3E;{option}&#x3C;/option&#x3E;
+    {/each}
+  &#x3C;/select&#x3E;
+
+  &#x3C;svelte:element this={selected} &#x3E;
+  Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+    &#x3C;/svelte:element&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  div {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+  }
+&#x3C;/style&#x3E;</code></pre>
       </section>
 
       <section id="sv_10_04">
+        <h4>svelte:window</h4>
+        <p>Just as you can add event listeners to any DOM element, you can add event listeners to the window object with &#x3C;svelte:window&#x3E;</p>
+        <pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  let key: string;
+  let keyCode: number;
+  const handleKeyDown = (event: KeyboardEvent) =&#x3E; {
+    key = event.key;
+    keyCode = event.keyCode;
+  };
+&#x3C;/script&#x3E;
+
+&#x3C;svelte:window on:keydown={handleKeyDown} /&#x3E;
+&#x3C;div style=&#x22;text-align: center&#x22;&#x3E;
+  {#if key}
+    &#x3C;kbd&#x3E;{key === &#x22; &#x22; ? &#x22;Space&#x22; : key}&#x3C;/kbd&#x3E;
+    &#x3C;p&#x3E;{keyCode}&#x3C;/p&#x3E;
+  {:else}
+    &#x3C;p&#x3E;Focus this window and press any key&#x3C;/p&#x3E;
+  {/if}
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  div {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  kbd {
+    background-color: #eee;
+    border-radius: 4px;
+    font-size: 6em;
+    padding: 0.2em 0.5em;
+    border-top: 5px solid rgba(255, 255, 255, 0.5);
+    border-left: 5px solid rgba(255, 255, 255, 0.5);
+    border-right: 5px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 5px solid rgba(0, 0, 0, 0.2);
+    color: #555;
+  }
+&#x3C;/style&#x3E;</code></pre>
+      </section>
+
+      <section id="sv_10_05">
+        <h4>svelte:window bindings</h4>
+        <p>We can also bind to certain properties of window, such as scrollY</p>
+        <img src="../../images/frameworks/svelte/windowbinding.JPG" />
+        <pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  let innerWidth = 0,
+    innerHeight = 0,
+    outerWidth = 0,
+    outerHeight = 0,
+    scrollX: number,
+    scrollY: number,
+    online: boolean;
+&#x3C;/script&#x3E;
+
+&#x3C;svelte:window bind:innerWidth bind:innerHeight bind:outerWidth bind:outerHeight bind:scrollX bind:scrollY bind:online /&#x3E;
+
+&#x3C;table&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;&#x3C;b&#x3E;Property&#x3C;/b&#x3E;&#x3C;/td&#x3E;&#x3C;td&#x3E;&#x3C;b&#x3E;Value&#x3C;/b&#x3E;&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;innerWidth&#x3C;/td&#x3E;&#x3C;td&#x3E;{innerWidth}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;innerHeight&#x3C;/td&#x3E;&#x3C;td&#x3E;{innerHeight}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;outerWidth&#x3C;/td&#x3E;&#x3C;td&#x3E;{outerWidth}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;outerHeight&#x3C;/td&#x3E;&#x3C;td&#x3E;{outerHeight}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;scrollX&#x3C;/td&#x3E;&#x3C;td&#x3E;{scrollX}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;scrollY&#x3C;/td&#x3E;&#x3C;td&#x3E;{scrollY}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+  &#x3C;tr&#x3E;&#x3C;td&#x3E;online&#x3C;/td&#x3E;&#x3C;td&#x3E;{online}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+&#x3C;/table&#x3E;
+
+&#x3C;style&#x3E;
+  table {
+    margin: 10px;
+    border: 1px solid gray;
+    border-collapse: collapse;
+  }
+  table td {
+    border: 1px solid gray;
+    text-align: center;
+    padding: 5px;
+  }
+&#x3C;/style&#x3E;</code></pre>
+        <p>
+          Similar to &#x3C;svelte:window&#x3E;, the &#x3C;svelte:body&#x3E; element allows you to listen for events that fire on document.body. This is useful
+          with the mouseenter and mouseleave events, which don&#x27;t fire on window.
+        </p>
+      </section>
+
+      <section id="sv_10_06">
+        <h4>svelte:head</h4>
+        <p>The &#x3C;svelte:head&#x3E; element allows you to insert elements inside the &#x3C;head&#x3E; of your document</p>
+        <pre><code class="language-html">&#x3C;svelte:head&#x3E;
+&#x9;&#x3C;link rel=&#x22;stylesheet&#x22; href=&#x22;/tutorial/dark-theme.css&#x22; /&#x3E;
+&#x3C;/svelte:head&#x3E;
+
+&#x3C;h1&#x3E;Hello world!&#x3C;/h1&#x3E;</code></pre>
+      </section>
+
+      <section id="sv_10_07">
         <h4></h4>
         <p></p>
         <pre><code class="language-html"></code></pre>
       </section>
 
-      <section id="sv_10_05">
+      <section id="sv_10_08">
+        <h4></h4>
+        <p></p>
+        <pre><code class="language-html"></code></pre>
+      </section>
+
+      <section id="sv_10_09">
         <h4></h4>
         <p></p>
         <pre><code class="language-html"></code></pre>
