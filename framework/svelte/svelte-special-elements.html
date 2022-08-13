@@ -150,6 +150,77 @@
 
     </code></pre>
       </section>
+
+      <section id="sv_10_02">
+        <h4>svelte:component</h4>
+        <p>A component can change its category altogether with &#x3C;svelte:component&#x3E;</p>
+        <h5>SvelteComponent.svelte</h5>
+        <pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+    import Green from &#x22;./Green.svelte&#x22;;
+    import Blue from &#x22;./Blue.svelte&#x22;;
+    import Red from &#x22;./Red.svelte&#x22;;
+    
+    const options = [
+        { color: &#x22;red&#x22;, component: Red },
+        { color: &#x22;green&#x22;, component: Green },
+        { color: &#x22;blue&#x22;, component: Blue },
+    ];
+    
+    let selected = options[0];
+&#x3C;/script&#x3E;
+    
+&#x3C;div class=&#x22;wrap&#x22;&#x3E;
+    &#x3C;select bind:value={selected}&#x3E;
+        {#each options as option}
+        &#x3C;option value={option}&#x3E;{option.color}&#x3C;/option&#x3E;
+        {/each}
+    &#x3C;/select&#x3E;
+    
+    &#x3C;svelte:component this={selected.component} /&#x3E;
+&#x3C;/div&#x3E;
+    
+&#x3C;style&#x3E;
+    .wrap {
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid black;
+    }
+&#x3C;/style&#x3E;</code></pre>
+
+        <h5>Red.svelte / Green.svelte / Blue.svelte</h5>
+        <pre><code class="language-html">&#x3C;div&#x3E;
+    &#x3C;h1&#x3E;Red&#x3C;/h1&#x3E;
+&#x3C;/div&#x3E;
+  
+&#x3C;style&#x3E;
+div {
+    background-color: red;
+    margin: 10px;
+    color: white;
+    padding:10px;
+    text-align: center;
+}
+&#x3C;/style&#x3E;</code></pre>
+      </section>
+
+      <section id="sv_10_03">
+        <h4></h4>
+        <p></p>
+        <pre><code class="language-html"></code></pre>
+      </section>
+
+      <section id="sv_10_04">
+        <h4></h4>
+        <p></p>
+        <pre><code class="language-html"></code></pre>
+      </section>
+
+      <section id="sv_10_05">
+        <h4></h4>
+        <p></p>
+        <pre><code class="language-html"></code></pre>
+      </section>
     </div>
   </body>
 
