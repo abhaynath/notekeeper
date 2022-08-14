@@ -337,21 +337,226 @@ div {
       </section>
 
       <section id="sv_10_07">
-        <h4></h4>
-        <p></p>
-        <pre><code class="language-html"></code></pre>
+        <h4>svelte:fragment</h4>
+        <p>
+          The &#x3C;svelte:fragment&#x3E; element allows you to place content in a named slot without wrapping it in a container DOM element. This keeps the
+          flow layout of your document intact.
+        </p>
+        <img src="../../images/frameworks/svelte/fragment.jpg" />
+        <h5>SvelteFragment.svelte</h5>
+        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  import Box from &#x22;./Box.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;h3&#x3E;Fragment test&#x3C;/h3&#x3E;
+  &#x3C;Box&#x3E;
+    &#x3C;svelte:fragment slot=&#x22;footer&#x22;&#x3E;
+      &#x3C;p&#x3E;copyright abhaynath@gmail.com&#x3C;/p&#x3E;
+    &#x3C;/svelte:fragment&#x3E;
+  &#x3C;/Box&#x3E;
+
+  &#x3C;Box&#x3E;
+    &#x3C;svelte:fragment slot=&#x22;header&#x22;&#x3E;
+      &#x3C;h4&#x3E;Google&#x3C;/h4&#x3E;
+    &#x3C;/svelte:fragment&#x3E;
+  &#x3C;/Box&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+        <h5>Box.svelte</h5>
+        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div class=&#x22;box&#x22;&#x3E;
+    &#x3C;slot name=&#x22;header&#x22;&#x3E;No header provided&#x3C;/slot&#x3E;
+    &#x3C;div&#x3E;some content between header and footer&#x3C;/div&#x3E;
+    &#x3C;slot name=&#x22;footer&#x22;&#x3E;default footer text&#x3C;/slot&#x3E;
+  &#x3C;/div&#x3E;
+  
+  &#x3C;style&#x3E;
+    .box {
+      width: 300px;
+      border: 1px solid #aaa;
+      border-radius: 2px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 1em;
+      margin: 0 0 1em 0;
+      display: flex;
+      flex-direction: column;
+    }
+  &#x3C;/style&#x3E;</code></pre>
       </section>
 
       <section id="sv_10_08">
-        <h4></h4>
-        <p></p>
-        <pre><code class="language-html"></code></pre>
+        <h4>svelte:context</h4>
+        <p>
+          In all the examples we&#x27;ve seen so far, the &#x3C;script&#x3E; block contains code that runs when each component instance is initialised. For the
+          vast majority of components, that&#x27;s all you&#x27;ll ever need.
+        </p>
+        <p>
+          Very occasionally, you&#x27;ll need to run some code outside of an individual component instance. For example, you can play all five of these audio
+          players simultaneously; it would be better if playing one stopped all the others.
+        </p>
+        <p>
+          We can do that by declaring a &#x3C;script context=&#x22;module&#x22;&#x3E; block. Code contained inside it will run once, when the module first
+          evaluates, rather than when a component is instantiated. Place this at the top of AudioPlayer.svelte
+        </p>
+
+        <img src="../../images/frameworks/svelte/context.jpg" />
+        <h5>SvelteContext.svelte</h5>
+        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  import AudioPlayer from &#x22;./AudioPlayer.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;!-- https://musopen.org/music/9862-the-blue-danube-op-314/ --&#x3E;
+  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/strauss.mp3&#x22; title=&#x22;The Blue Danube Waltz&#x22; composer=&#x22;Johann Strauss&#x22; performer=&#x22;European Archive&#x22; /&#x3E;
+
+  &#x3C;!-- https://musopen.org/music/43775-the-planets-op-32/ --&#x3E;
+  &#x3C;AudioPlayer
+    src=&#x22;https://sveltejs.github.io/assets/music/holst.mp3&#x22;
+    title=&#x22;Mars, the Bringer of War&#x22;
+    composer=&#x22;Gustav Holst&#x22;
+    performer=&#x22;USAF Heritage of America Band&#x22;
+  /&#x3E;
+
+  &#x3C;!-- https://musopen.org/music/8010-3-gymnopedies/ --&#x3E;
+  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/satie.mp3&#x22; title=&#x22;Gymnop&#xE9;die no. 1&#x22; composer=&#x22;Erik Satie&#x22; performer=&#x22;Prodigal Procrastinator&#x22; /&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+
+        <h5>AudioPlayer.svelte</h5>
+        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22; context=&#x22;module&#x22;&#x3E;
+  let current: HTMLAudioElement;
+&#x3C;/script&#x3E;
+
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  export let src: string;
+  export let title: string;
+  export let composer: string;
+  export let performer: string;
+
+  let audio: HTMLAudioElement;
+  let paused = true;
+
+  function stopOthers() {
+    if (current &#x26;&#x26; current !== audio) current.pause();
+    current = audio;
+  }
+&#x3C;/script&#x3E;
+
+&#x3C;article class:playing={!paused}&#x3E;
+  &#x3C;h2&#x3E;{title}&#x3C;/h2&#x3E;
+  &#x3C;p&#x3E;&#x3C;strong&#x3E;{composer}&#x3C;/strong&#x3E; / performed by {performer}&#x3C;/p&#x3E;
+
+  &#x3C;audio bind:this={audio} bind:paused on:play={stopOthers} controls {src} /&#x3E;
+&#x3C;/article&#x3E;
+
+&#x3C;style&#x3E;
+  article {
+    margin: 0 0 1em 0;
+    max-width: 800px;
+  }
+  h2,
+  p {
+    margin: 0 0 0.3em 0;
+  }
+  audio {
+    width: 100%;
+    margin: 0.5em 0 1em 0;
+  }
+  .playing {
+    color: #ff3e00;
+  }
+&#x3C;/style&#x3E;</code></pre>
+
+        <p>It&#x27;s now possible for the components to &#x27;talk&#x27; to each other without any state management</p>
       </section>
 
       <section id="sv_10_09">
-        <h4></h4>
-        <p></p>
-        <pre><code class="language-html"></code></pre>
+        <h4>svelte:context export</h4>
+        <p>Anything exported from a context=&#x22;module&#x22; script block becomes an export from the module itself.</p>
+        <h5>SvelteContextExport.svelte</h5>
+        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  import AudioPlayer, { stopAll } from &#x22;./AudioPlayer.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;button on:click={stopAll}&#x3E; stop all audio &#x3C;/button&#x3E;
+&#x3C;div&#x3E;
+  &#x3C;!-- https://musopen.org/music/9862-the-blue-danube-op-314/ --&#x3E;
+  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/strauss.mp3&#x22; title=&#x22;The Blue Danube Waltz&#x22; composer=&#x22;Johann Strauss&#x22; performer=&#x22;European Archive&#x22; /&#x3E;
+
+  &#x3C;!-- https://musopen.org/music/43775-the-planets-op-32/ --&#x3E;
+  &#x3C;AudioPlayer
+    src=&#x22;https://sveltejs.github.io/assets/music/holst.mp3&#x22;
+    title=&#x22;Mars, the Bringer of War&#x22;
+    composer=&#x22;Gustav Holst&#x22;
+    performer=&#x22;USAF Heritage of America Band&#x22;
+  /&#x3E;
+
+  &#x3C;!-- https://musopen.org/music/8010-3-gymnopedies/ --&#x3E;
+  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/satie.mp3&#x22; title=&#x22;Gymnop&#xE9;die no. 1&#x22; composer=&#x22;Erik Satie&#x22; performer=&#x22;Prodigal Procrastinator&#x22; /&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+
+        <h5>AudioPlayer.svelte</h5>
+        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22; context=&#x22;module&#x22;&#x3E;
+  const elements = new Set();
+
+  export function stopAll() {
+    elements.forEach((element: HTMLAudioElement) =&#x3E; {
+      element.pause();
+    });
+  }
+&#x3C;/script&#x3E;
+
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  import { onMount } from &#x22;svelte&#x22;;
+  export let src: string;
+  export let title: string;
+  export let composer: string;
+  export let performer: string;
+
+  let audio: HTMLAudioElement;
+  let paused = true;
+
+  onMount(() =&#x3E; {
+    elements.add(audio);
+    return () =&#x3E; elements.delete(audio);
+  });
+
+  function stopOthers() {
+    elements.forEach((element: HTMLAudioElement) =&#x3E; {
+      if (element !== audio) element.pause();
+    });
+  }
+&#x3C;/script&#x3E;
+
+&#x3C;article class:playing={!paused}&#x3E;
+&#x9;&#x3C;h2&#x3E;{title}&#x3C;/h2&#x3E;
+&#x9;&#x3C;p&#x3E;&#x3C;strong&#x3E;{composer}&#x3C;/strong&#x3E; / performed by {performer}&#x3C;/p&#x3E;
+
+&#x9;&#x3C;audio
+&#x9;&#x9;bind:this={audio}
+&#x9;&#x9;bind:paused
+&#x9;&#x9;on:play={stopOthers}
+&#x9;&#x9;controls
+&#x9;&#x9;{src}
+&#x9;&#x3E;&#x3C;/audio&#x3E;
+&#x3C;/article&#x3E;
+
+&#x3C;style&#x3E;
+&#x9;article {
+&#x9;&#x9;margin: 0 0 1em 0; max-width: 800px;
+&#x9;}
+&#x9;h2, p {
+&#x9;&#x9;margin: 0 0 0.3em 0;
+&#x9;}
+&#x9;audio {
+&#x9;&#x9;width: 100%; margin: 0.5em 0 1em 0;
+&#x9;}
+&#x9;.playing {
+&#x9;&#x9;color: #ff3e00;
+&#x9;}
+&#x3C;/style&#x3E;</code></pre>
+<img src="../../images/frameworks/svelte/context_export.jpg" />
       </section>
     </div>
   </body>
