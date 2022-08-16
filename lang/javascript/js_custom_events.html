@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>JavaScript Custom Events</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="javascript_index.html">JavaScript</a>
+    </nav>
+
+    <div class="content">
+      <section id="js_05_01">
+        <h4>Custom Events</h4>
+        <p>
+          Creating custom events using the CustomEvent interface has an advantage as it can send custom data. The below steps are followed in order to create a
+          new CustomEvent
+        </p>
+        <ul>
+          <li>We create a custom event using the CustomEvent constructor.</li>
+          <li>
+            This takes two arguments, the first is the name of the event and the second is an object that contains the data. <b>The property name inside the object
+            name should be named detail otherwise it won&#x2019;t work</b>
+          </li>
+          <li>We create a listener for this event.</li>
+          <li>We trigger or dispatch the event.</li>
+          <li>A custom event that contains data has been created.</li>
+        </ul>
+        <pre><code class="language-html">
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang=&#x22;en&#x22;&#x3E;
+  &#x3C;head&#x3E;
+    &#x3C;meta charset=&#x22;UTF-8&#x22; /&#x3E;
+    &#x3C;meta http-equiv=&#x22;X-UA-Compatible&#x22; content=&#x22;IE=edge&#x22; /&#x3E;
+    &#x3C;meta name=&#x22;viewport&#x22; content=&#x22;width=device-width, initial-scale=1.0&#x22; /&#x3E;
+    &#x3C;title&#x3E;Custom Event&#x3C;/title&#x3E;
+  &#x3C;/head&#x3E;
+  &#x3C;body&#x3E;
+    &#x3C;button id=&#x22;btnCounter&#x22;&#x3E;Counter&#x3C;/button&#x3E;
+    &#x3C;div id=&#x22;data&#x22;&#x3E;&#x3C;/div&#x3E;
+  &#x3C;/body&#x3E;
+  &#x3C;script&#x3E;
+    let count = 0;
+    let div = document.getElementById(&#x22;data&#x22;);
+
+    document.getElementById(&#x22;btnCounter&#x22;).onclick = function () {
+      count++;
+      if (count % 2 == 0) {
+        const payload = {
+          count: count,
+          name: &#x22;Sachin Tendulkar&#x22;,
+          runs: Math.floor(Math.random() * 1000),
+          team: &#x22;India&#x22;,
+        };
+        const e = new CustomEvent(&#x22;even&#x22;, { detail: payload });
+        div.dispatchEvent(e);
+      }
+    };
+
+    div.addEventListener(&#x22;even&#x22;, (e) =&#x3E; {
+      div.innerHTML = JSON.stringify(e.detail);
+    });
+  &#x3C;/script&#x3E;
+&#x3C;/html&#x3E;</code></pre>
+      </section>
+
+      <section id="js_03_02">
+        <h4></h4>
+        <pre><code class="language-javascript">
+ </code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
