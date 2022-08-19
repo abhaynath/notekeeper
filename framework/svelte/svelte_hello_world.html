@@ -45,7 +45,7 @@
         </ol>
       </section>
 
-      <section>
+      <section id="sv_01_01">
         <h4>Using Font-Awesome</h4>
         <div class="">
           <img src="../../images/frameworks/svelte/fa.jpg" />
@@ -98,13 +98,14 @@ npm install @fortawesome/free-brands-svg-icons</pre
 </code></pre>
       </section>
 
-      <section>
+      <section id="sv_01_02">
         <h4>TypeDoc in Vite Svelte</h4>
         <ol>
           <li>
             Install typedoc as development dependency.
             <pre class="shell">npm install --save-dev typedoc --verbose</pre>
           </li>
+          <li>Add <b>docs</b> entry in .gitignore file.</li>
           <li>
             Add <b>typedoc.json</b> file in your root directory where package.json is located.
             <pre><code class="language-json">{
@@ -132,8 +133,46 @@ npm install @fortawesome/free-brands-svg-icons</pre
           </li>
         </ol>
       </section>
+      <section id="sv_01_03">
+        <h4>Deploy Svelte Vite app to github pages.</h4>
+        <ol>
+          <li>Publish the source as public repository on github. Private repository is not allowed.</li>
+          <li>
+            Add <b>gh-pages</b> as development dependency.
+            <pre class="shell">npm install --save-dev gh-pages --verbose</pre>
+          </li>
+          <li>
+            Add <b>base</b> attribute in vite.config.js
 
-      <section>
+            <pre><code class="language-js">
+import { defineConfig } from &#x22;vite&#x22;;
+import { svelte } from &#x22;@sveltejs/vite-plugin-svelte&#x22;;
+
+export default defineConfig({
+  base: &#x22;/circuit-app/&#x22;,
+  plugins: [svelte()],
+});</code></pre>
+          </li>
+          <li>
+            In package.json, add <b>deploy</b> command in <b>package.json</b>
+
+            <pre><code class="language-json">
+&#x22;scripts&#x22;: {
+  &#x22;dev&#x22;: &#x22;vite&#x22;,
+  &#x22;build&#x22;: &#x22;vite build&#x22;,
+  &#x22;preview&#x22;: &#x22;vite preview&#x22;,
+  &#x22;check&#x22;: &#x22;svelte-check --tsconfig ./tsconfig.json&#x22;,
+  &#x22;docs&#x22;: &#x22;typedoc --entryPointStrategy expand ./src&#x22;,
+  &#x22;deploy&#x22;:&#x22;npx gh-pages -d dist&#x22;
+}</code></pre>
+          </li>
+          <li>
+            To deploy the app, run following command
+            <pre class="shell">npm run deploy</pre>
+          </li>
+        </ol>
+      </section>
+      <section id="sv_01_04">
         <h3>Using Props</h3>
 
         <h4>App.svelte</h4>
