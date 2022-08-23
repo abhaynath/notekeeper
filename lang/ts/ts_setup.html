@@ -264,20 +264,36 @@
                 In <b>src</b> folder, add <b>common.ts</b> file with following content.
                 <pre><code class="language-ts">export const sum = (a: number, b: number) =&#x3E; {
   return a + b;
+};
+export const multiply = (a: number, b: number) =&#x3E; {
+  return a * b;
 };</code></pre>
               </li>
               <li>
                 Create <b>tests</b> folder, add <b>common.test.ts</b>. Add following code.
-                <pre><code class="language-json">import { sum } from &#x22;../src/common&#x22;;
+                <pre><code class="language-ts">import { multiply, sum } from &#x22;../src/common&#x22;;
 
-test(&#x22;add 1+3&#x22;, () =&#x3E; {
-  expect(sum(5, 6)).toBe(11);
+describe(&#x22;addition&#x22;, () =&#x3E; {
+  it(&#x22;checking 2+5&#x22;, () =&#x3E; {
+    expect(sum(2, 5)).toBe(7);
+  });
+
+  it(&#x22;testing 56+3&#x22;, () =&#x3E; {
+    expect(sum(56, 3)).toBe(59);
+  });
 });
-</code></pre>
+
+describe(&#x22;multiply&#x22;, () =&#x3E; {
+  it(&#x22;56 x 3 = 168&#x22;, () =&#x3E; {
+    expect(multiply(56, 3)).toBe(168);
+  });
+});</code></pre>
               </li>
               <li>
                 To test application, run following command.
                 <pre class="shell">npm run test</pre>
+                You will see output similar to this,
+                <img src="../../images/lang/ts/jest_output.jpg" />
               </li>
               <li>Add <b>coverage</b> folder entry in <b>.gitignore</b> file.</li>
             </ol>
