@@ -173,6 +173,70 @@ export default defineConfig({
         </ol>
       </section>
       <section id="sv_01_04">
+        <h3>Vite Svelte Typescript Path Mapping</h3>
+        <ul>
+          <li>
+            Install <b>vite-tsconfig-paths</b> as dev dependency.
+            <pre class="shell">npm install --save-dev vite-tsconfig-paths --verbose</pre>
+          </li>
+          <li>
+            Add plugin in <b>vite.config.ts</b>
+            <pre><code class="language-ts">import { defineConfig } from &#x22;vite&#x22;;
+import { svelte } from &#x22;@sveltejs/vite-plugin-svelte&#x22;;
+import tsconfigPaths from &#x22;vite-tsconfig-paths&#x22;;
+
+export default defineConfig({
+  base: &#x22;/snake/&#x22;,
+  plugins: [svelte(), tsconfigPaths()],
+});</code></pre>
+          </li>
+          <li>
+            Add paths array in <b>tsconfig.json</b>
+            <pre><code class="language-json">
+{
+  &#x22;extends&#x22;: &#x22;@tsconfig/svelte/tsconfig.json&#x22;,
+  &#x22;compilerOptions&#x22;: {
+    &#x22;target&#x22;: &#x22;ESNext&#x22;,
+    &#x22;useDefineForClassFields&#x22;: true,
+    &#x22;module&#x22;: &#x22;ESNext&#x22;,
+    &#x22;resolveJsonModule&#x22;: true,
+    &#x22;baseUrl&#x22;: &#x22;.&#x22;,
+    &#x22;paths&#x22;: {
+      &#x22;$stores/*&#x22;: [&#x22;src/stores/*&#x22;],
+      &#x22;$models/*&#x22;: [&#x22;src/models/*&#x22;],
+      &#x22;$helpers/*&#x22;: [&#x22;src/helpers/*&#x22;],
+      &#x22;$components/*&#x22;: [&#x22;src/components/*&#x22;],
+      &#x22;$screens/*&#x22;: [&#x22;src/components/screens/*&#x22;],
+      &#x22;$gameItems/*&#x22;: [&#x22;src/components/game-items/*&#x22;]
+    },
+    &#x22;allowJs&#x22;: true,
+    &#x22;checkJs&#x22;: true,
+    &#x22;isolatedModules&#x22;: true
+  },
+  &#x22;include&#x22;: [&#x22;src/**/*.d.ts&#x22;, &#x22;src/**/*.ts&#x22;, &#x22;src/**/*.js&#x22;, &#x22;src/**/*.svelte&#x22;],
+  &#x22;references&#x22;: [{ &#x22;path&#x22;: &#x22;./tsconfig.node.json&#x22; }]
+}</code></pre>
+          </li>
+          <li>
+            You can use path mapping in svelte files.
+            <pre><code class="language-ts"> 
+import { swipe } from &#x22;svelte-gestures&#x22;;
+import { scoreStore } from &#x22;$stores/scoreStore&#x22;;
+import { screenStore } from &#x22;$stores/screenStore&#x22;;
+import type { ScoreInfo, ScreenStatus } from &#x22;$models/gameState&#x22;;
+import { Directions, Config, KeyMap, EnumMessages } from &#x22;$helpers/constants&#x22;;
+import Food from &#x22;$gameItems/Food.svelte&#x22;;
+import Snake from &#x22;$gameItems/Snake.svelte&#x22;;
+import { Levels } from &#x22;$models/level&#x22;;
+import Bonus from &#x22;$gameItems/Bonus.svelte&#x22;;
+import { getId } from &#x22;$helpers/common&#x22;;
+import MessageBox from &#x22;$gameItems/MessageBox.svelte&#x22;;
+import Wall from &#x22;$gameItems/Wall.svelte&#x22;;
+import { FoodTypes, type BonusItem, type FoodItem, type SnakeItem } from &#x22;$models/play-screen&#x22;;</code></pre>
+          </li>
+        </ul>
+      </section>
+      <section id="sv_01_05">
         <h3>Using Props</h3>
 
         <h4>App.svelte</h4>
