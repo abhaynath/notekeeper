@@ -22,22 +22,45 @@
       </nav>
 
       <section id="sec01">
-        <h3>Data Types</h3>
+        <h3>Variables</h3>
 
-        <p></p>
+        <p><span class="keyword">const</span> must be declared in global scope.</p>
 
         <details>
           <summary>Code</summary>
           <pre><code>
-extends Sprite
+const TEAM_NAME: String = &#x22;India&#x22;
 
-var speed = 400
-var angular_speed = PI
 
-func _process(delta):
-&#x9;rotation += angular_speed * delta
-&#x9;var velocity = Vector2.UP.rotated(rotation) * speed
-&#x9;position += velocity * delta
+func _ready():
+&#x9;var first_name = &#x22;Sachin&#x22;
+&#x9;var last_name := &#x22;Tendulkar&#x22;
+&#x9;var full_name = first_name + &#x22; &#x22; + last_name
+&#x9;print(full_name + &#x22; --&#x3E; &#x22; + TEAM_NAME)
+
+&#x9;var runs = 18426
+&#x9;var innings = 411
+&#x9;var balls_faced = 21367
+&#x9;var average = runs / innings as float
+&#x9;var strike_rate = runs / balls_faced as float * 100
+&#x9;print(average)
+&#x9;print(strike_rate)
+
+&#x9;var radius := 5.5
+&#x9;var diameter = 2 * radius
+&#x9;var cirucumference = PI * diameter
+&#x9;print(diameter)
+&#x9;print(cirucumference)
+&#x9;
+&#x9;match typeof(cirucumference):
+&#x9;&#x9;TYPE_NIL:
+&#x9;&#x9;&#x9;print(&#x22;its null&#x22;)
+&#x9;&#x9;TYPE_INT:
+&#x9;&#x9;&#x9;print(&#x22;Integer&#x22;)
+&#x9;&#x9;TYPE_REAL:
+&#x9;&#x9;&#x9;print(&#x22;float number&#x22;)
+&#x9;&#x9;_:
+&#x9;&#x9;&#x9;print(&#x22;No idea about the datatype&#x22;)
 
 </code></pre>
         </details>
