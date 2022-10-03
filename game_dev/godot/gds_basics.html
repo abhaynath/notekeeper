@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GDScript basics</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/highlight/languages/gdscript.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="gd_index.html">GD Script Basics</a>
+      </nav>
+
+      <section id="sec01">
+        <h3>Data Types</h3>
+
+        <p></p>
+
+        <details>
+          <summary>Code</summary>
+          <pre><code>
+extends Sprite
+
+var speed = 400
+var angular_speed = PI
+
+func _process(delta):
+&#x9;rotation += angular_speed * delta
+&#x9;var velocity = Vector2.UP.rotated(rotation) * speed
+&#x9;position += velocity * delta
+
+</code></pre>
+        </details>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
