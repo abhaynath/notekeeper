@@ -55,7 +55,7 @@
 
         <details open="true">
           <summary>Code</summary>
-          <pre><code>
+          <pre><code class="language-godot">
 const TEAM_NAME: String = &#x22;India&#x22;
 
 
@@ -167,7 +167,7 @@ func _ready():
         </p>
         <p>Also, the return type may be specified to add extra bug resistance.</p>
         <pre>
-          <code>
+          <code class="language-godot">
 extends Node2D
 
 # Called when the node enters the scene tree for the first time.
@@ -226,7 +226,7 @@ func move_x(node: Node2D, dx = 1.5):
           If you were wondering &#x201C;where is the entry point to my code?&#x201D;, then you can see that it is via the built-in functions that we may
           override. They get called by the Engine at times of initialization, input events, and during traversal of the game loop.
         </p>
-        <pre><code>
+        <pre><code class="language-godot">
   extends Node2D
 
   # Declare member variables here.
@@ -275,7 +275,7 @@ func move_x(node: Node2D, dx = 1.5):
           Here are some GDScript code examples:
         </p>
         <pre>
-          <code>
+          <code class="language-godot">
 extends Node2D
 
 func _ready():
@@ -322,7 +322,7 @@ func _ready():
           A match statement is used to branch execution of a program. It&#x27;s the equivalent of the switch statement found in many other languages, but offers
           some additional features.
         </p>
-        <pre><code>
+        <pre><code class="language-godot">
 match [expression]:
   [pattern](s):
       [block]
@@ -349,7 +349,7 @@ match [expression]:
             <h4>Constant pattern</h4>
             <p>Constant primitives, like numbers and strings:</p>
             <pre>
-              <code>
+              <code class="language-godot">
 match x:
   1:
       print(&#x22;We are number one!&#x22;)
@@ -365,7 +365,7 @@ match x:
             <h4>Variable pattern</h4>
             <p>Matches the contents of a variable/enum:</p>
             <pre>
-              <code>
+              <code class="language-godot">
   match typeof(x):
     TYPE_REAL:
         print(&#x22;float&#x22;)
@@ -382,7 +382,7 @@ match x:
             <p>This pattern matches everything. It&#x27;s written as a single underscore.</p>
             <p>It can be used as the equivalent of the default in a switch statement in other languages:</p>
             <pre>
-              <code>
+              <code class="language-godot">
 match x:
     1:
         print(&#x22;It&#x27;s one!&#x22;)
@@ -401,7 +401,7 @@ match x:
               especially useful in array and dictionary patterns:
             </p>
             <pre>
-              <code>
+              <code class="language-godot">
 match x:
     1:
         print(&#x22;It&#x27;s one!&#x22;)
@@ -409,8 +409,7 @@ match x:
         print(&#x22;It&#x27;s one times two!&#x22;)
     var new_var:
         print(&#x22;It&#x27;s not 1 or 2, it&#x27;s &#x22;, new_var)
-                
-              </code>
+</code>
             </pre>
           </li>
 
@@ -421,7 +420,7 @@ match x:
             <p>Open-ended array: An array can be bigger than the pattern by making the last subpattern ...</p>
             <p>Every subpattern has to be comma-separated.</p>
             <pre>
-              <code>
+              <code class="language-godot">
 match x:
     []:
         print(&#x22;Empty array&#x22;)
@@ -431,8 +430,7 @@ match x:
         print(&#x22;First element is &#x22;, start, &#x22;, and the last is \&#x22;test\&#x22;&#x22;)
     [42, ..]:
         print(&#x22;Open ended array&#x22;)
-</code>
-            </pre>
+</code></pre>
           </li>
 
           <li>
@@ -444,7 +442,7 @@ match x:
             <p>If you don&#x27;t specify a value, then only the existence of the key is checked.</p>
             <p>A value pattern is separated from the key pattern with a :.</p>
             <pre>
-              <code>
+              <code class="language-godot">
 match x:
     {}:
         print(&#x22;Empty dict&#x22;)
@@ -456,22 +454,20 @@ match x:
         print(&#x22;Has a name and an age, but it&#x27;s not Dennis :(&#x22;)
     {&#x22;key&#x22;: &#x22;godotisawesome&#x22;, ..}:
         print(&#x22;I only checked for one entry and ignored the rest&#x22;)
-</code>
-            </pre>
+</code></pre>
           </li>
 
           <li>
             <h4>Multiple patterns</h4>
             <p>You can also specify multiple patterns separated by a comma. These patterns aren&#x27;t allowed to have any bindings in them.</p>
             <pre>
-              <code>
+              <code class="language-godot">
 match x:
     1, 2, 3:
         print(&#x22;It&#x27;s 1 - 3&#x22;)
     &#x22;Sword&#x22;, &#x22;Splash potion&#x22;, &#x22;Fist&#x22;:
         print(&#x22;Yep, you&#x27;ve taken damage&#x22;)
-              </code>
-            </pre>
+              </code></pre>
           </li>
         </ol>
       </section>
