@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Container Types</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/highlight/languages/gdscript.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="gd_index.html">Godot Index</a>
+      </nav>
+
+      <section id="sec01">
+        <h4>Arrays</h4>
+        <p>
+          Arrays are used to store lists of various elements, such as numbers or objects. Most times they are one dimensional but may be multi-dimensional for
+          storing data related to grids or 3D space.
+        </p>
+        <p>Each element of the array is referenced by an integer index value starting from zero for the first element.</p>
+        <p>
+          An array is an object with various available helper functions to work with it such as for appending new values, getting the size of the array, sorting
+          the values, and shuffling the values etc.
+        </p>
+        <p>
+          Since it is an object, it is passed into functions by reference, so changes made to its elements within a function call are made directly to the array
+          object whose reference was passed to the function.
+        </p>
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+extends Node2D
+
+func _ready():
+&#x9;# Ways to create an array instance
+&#x9;var a = Array()
+&#x9;var b = []
+&#x9;var c = [&#x22;a&#x22;,&#x22;b&#x22;,&#x22;c&#x22;]
+&#x9;
+&#x9;# Add some items to array &#x27;a&#x27;
+&#x9;a.append(&#x22;Item 1&#x22;)
+&#x9;a.append(&#x22;Item 2&#x22;)
+&#x9;
+&#x9;# Pass array by reference to a function
+&#x9;change(a)
+&#x9;# Confirm that changes were made
+&#x9;print(a[0])
+&#x9;
+&#x9;# Print the size of array &#x27;b&#x27;
+&#x9;print(b.size())
+&#x9;
+&#x9;# Shuffle the values of array &#x27;c&#x27;
+&#x9;c.shuffle() # This function doesn&#x27;t return a value
+&#x9;# Check that the element order was changed
+&#x9;print_elements_of(c)
+&#x9;
+func change(a):
+&#x9;a[0] = 1
+
+func print_elements_of(array):
+&#x9;# Here we are using one of the Pool array types
+&#x9;print(PoolStringArray(array).join(&#x22;&#x22;))
+</code></pre>
+        </details>
+        <p>
+          There is also a <b>PoolByteArray</b> Class that is intended for large data sets. This stores an array of a single data type without any fear of splitting the
+          data into chunks in memory. But you probably don&#x2019;t need to concern yourself with this for now.
+        </p>
+        <p>
+          However, there are various Pool Array types that have more advanced features than the basic Array. These allow for joining arrays together, and
+          joining string elements into one single string for example.
+        </p>
+        <p>
+          Most of the time, we have fixed sized arrays, or we append new elements to the end of the array. However, there are advanced uses for arrays such as
+          buffers where we might push a value on to one end of the array and pop a value off the other end. This would be an implementation of a FIFO (First In
+          First Out buffer). Or implement a stack (FILO) (First In Last Out Buffer).
+        </p>
+        <p>
+          So there are array methods that allow us to push, pop, insert, and remove array elements. And, all types of Array have methods to convert from one
+          type to another to access the extra features.
+        </p>
+        <p></p>
+      </section>
+
+      <section id="sec02">
+        <h4>Dictionary</h4>
+        <p>A GDScript Dictionary is used to store data as key: value pairs. Each key and value may be numbers, strings, or objects. Dictionaries are constructed with curly brackets.</p>
+        <p>The data is in no particular order, and we access values using their unique key.</p>
+        <p>The syntax is the same as JSON data format.</p>
+        <p>Another syntax is also supported that makes it slightly easier to manually edit the data.</p>
+        <p>Dictionaries are useful for storing game data.</p>
+        <p></p>
+        <p></p>
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+extends Node2D
+
+# Declare an empty dictionary object
+var game = {}
+
+func _ready():
+&#x9;# Initialize a player dictionary
+&#x9;var player = {
+&#x9;&#x9;&#x22;name&#x22;: &#x22;Thor&#x22;,
+&#x9;&#x9;&#x22;inventory&#x22;: [&#x22;sword&#x22;, &#x22;shield&#x22;, &#x22;map&#x22;],
+&#x9;&#x9;&#x22;location&#x22;: &#x22;Castellion&#x22;,
+&#x9;&#x9;&#x22;energy&#x22;: 67
+&#x9;}
+&#x9;
+&#x9;if game.empty():
+&#x9;&#x9;# Add data to the game dictionary
+&#x9;&#x9;game[&#x22;player&#x22;] = player
+&#x9;&#x9;game[&#x22;score&#x22;] = 0
+&#x9;&#x9;game[&#x22;dummy&#x22;] = null
+&#x9;
+&#x9;if game.has(&#x22;dummy&#x22;):
+&#x9;&#x9;game.erase(&#x22;dummy&#x22;)
+&#x9;
+&#x9;print(game.get(&#x22;dummy&#x22;, &#x22;Key not found!&#x22;))
+&#x9;
+&#x9;if game.has_all([&#x22;player&#x22;, &#x22;score&#x22;]):
+&#x9;&#x9;print(game[&#x22;player&#x22;][&#x22;name&#x22;])
+&#x9;
+&#x9;player[&#x22;energy&#x22;] += 1
+&#x9;
+&#x9;print(game.keys().size())
+&#x9;print(game.size())
+&#x9;print(player.values()[0])
+&#x9;
+&#x9;# Alternative way to initialize a dictionary
+&#x9;var d = {
+&#x9;&#x9;a = {
+&#x9;&#x9;&#x9;a1 = {
+&#x9;&#x9;&#x9;&#x9;a11 = 1, a12 = 2
+&#x9;&#x9;&#x9;},
+&#x9;&#x9;&#x9;a2 = 3
+&#x9;&#x9;},
+&#x9;&#x9;b = 1
+&#x9;}
+&#x9;
+&#x9;# Make copies of the dictionary
+&#x9;var deep_copy = d.duplicate(true)
+&#x9;var shallow_copy = d.duplicate()
+&#x9;print(deep_copy)
+&#x9;# I expected the shallow copy to be truncated
+&#x9;print(shallow_copy)
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec03">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec04">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec05">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec06">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
