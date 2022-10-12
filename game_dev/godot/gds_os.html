@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>System Functions</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/highlight/languages/gdscript.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="gd_index.html">Godot</a>
+      </nav>
+
+      <section id="sec01">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+# Returns a human-readable string from a date and time, date, or time dictionary.
+func datetime_to_string(date):
+&#x9;if (
+&#x9;&#x9;date.has(&#x22;year&#x22;)
+&#x9;&#x9;and date.has(&#x22;month&#x22;)
+&#x9;&#x9;and date.has(&#x22;day&#x22;)
+&#x9;&#x9;and date.has(&#x22;hour&#x22;)
+&#x9;&#x9;and date.has(&#x22;minute&#x22;)
+&#x9;&#x9;and date.has(&#x22;second&#x22;)
+&#x9;):
+&#x9;&#x9;# Date and time.
+&#x9;&#x9;return &#x22;{year}-{month}-{day} {hour}:{minute}:{second}&#x22;.format({
+&#x9;&#x9;&#x9;year = str(date.year).pad_zeros(2),
+&#x9;&#x9;&#x9;month = str(date.month).pad_zeros(2),
+&#x9;&#x9;&#x9;day = str(date.day).pad_zeros(2),
+&#x9;&#x9;&#x9;hour = str(date.hour).pad_zeros(2),
+&#x9;&#x9;&#x9;minute = str(date.minute).pad_zeros(2),
+&#x9;&#x9;&#x9;second = str(date.second).pad_zeros(2),
+&#x9;&#x9;})
+&#x9;elif date.has(&#x22;year&#x22;) and date.has(&#x22;month&#x22;) and date.has(&#x22;day&#x22;):
+&#x9;&#x9;# Date only.
+&#x9;&#x9;return &#x22;{year}-{month}-{day}&#x22;.format({
+&#x9;&#x9;&#x9;year = str(date.year).pad_zeros(2),
+&#x9;&#x9;&#x9;month = str(date.month).pad_zeros(2),
+&#x9;&#x9;&#x9;day = str(date.day).pad_zeros(2),
+&#x9;&#x9;})
+&#x9;else:
+&#x9;&#x9;# Time only.
+&#x9;&#x9;return &#x22;{hour}:{minute}:{second}&#x22;.format({
+&#x9;&#x9;&#x9;hour = str(date.hour).pad_zeros(2),
+&#x9;&#x9;&#x9;minute = str(date.minute).pad_zeros(2),
+&#x9;&#x9;&#x9;second = str(date.second).pad_zeros(2),
+&#x9;&#x9;})
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec02">
+        <h4>Time functions</h4>
+        <table>
+          <tr>
+            <th>function</th>
+            <th>returns</th>
+            <th>details</th>
+            <th>example</th>
+            <th>return value</th>
+          </tr>
+          <tr>
+            <td>Time.get_datetime_dict_from_system</td>
+            <td>Dictionary</td>
+            <td>Returns the current date as a dictionary of keys: year, month, day, weekday, and dst (Daylight Savings Time).</td>
+            <td>var strTime:Dictionary = Time.get_datetime_dict_from_system()</td>
+            <td>{day:12, dst:False, hour:18, minute:39, month:10, second:14, weekday:3, year:2022}</td>
+          </tr>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </section>
+
+      <section id="sec03">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec04">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec05">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+
+      <section id="sec06">
+        <details open="true">
+          <summary>Code</summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </details>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
