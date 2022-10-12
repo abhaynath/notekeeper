@@ -73,11 +73,58 @@ func datetime_to_string(date):
             <th>return value</th>
           </tr>
           <tr>
-            <td>Time.get_datetime_dict_from_system</td>
+            <td>get_date_dict_from_system ( bool utc=false )</td>
             <td>Dictionary</td>
-            <td>Returns the current date as a dictionary of keys: year, month, day, weekday, and dst (Daylight Savings Time).</td>
+            <td>
+              Returns the current date as a dictionary of keys: year, month, day, weekday, and <b>dst (Daylight Savings Time)</b>. The returned values are in
+              the system&#x27;s local time when utc is false, otherwise they are in UTC.
+            </td>
             <td>var strTime:Dictionary = Time.get_datetime_dict_from_system()</td>
             <td>{day:12, dst:False, hour:18, minute:39, month:10, second:14, weekday:3, year:2022}</td>
+          </tr>
+
+          <tr>
+            <td>get_datetime_string_from_system ( bool utc=false, bool use_space=false )</td>
+            <td>String</td>
+            <td>
+              Returns the current date and time as an ISO 8601 date and time string (YYYY-MM-DDTHH:MM:SS). The returned values are in the system&#x27;s local
+              time when utc is false, otherwise they are in UTC. If use_space is true, use a space instead of the letter T in the middle.
+            </td>
+            <td>var strTime:String = Time.get_datetime_string_from_system()</td>
+            <td>2022-10-12T19:26:40</td>
+          </tr>
+
+          <tr>
+            <td>get_datetime_dict_from_datetime_string ( String datetime, bool weekday )</td>
+            <td>Dictionary</td>
+            <td>
+              Converts the given ISO 8601 date and time string (YYYY-MM-DDTHH:MM:SS) to a dictionary of keys: year, month, day, weekday, hour, minute, and
+              second. If weekday is false, then the weekday entry is excluded (the calculation is relatively expensive). Note: Any decimal fraction in the time
+              string will be ignored silently.
+            </td>
+            <td>var dcTime:Dictionary = Time.get_datetime_dict_from_datetime_string(&#x22;2022-10-12T19:31:36&#x22;,true)</td>
+            <td>{day:12, hour:19, minute:31, month:10, second:36, weekday:3, year:2022}</td>
+          </tr>
+
+          <tr>
+            <td>get_datetime_string_from_datetime_dict ( Dictionary datetime, bool use_space )</td>
+            <td>String</td>
+            <td>
+              Converts the given dictionary of keys to an ISO 8601 date and time string (YYYY-MM-DDTHH:MM:SS). The given dictionary can be populated with the
+              following keys: year, month, day, hour, minute, and second. Any other entries (including dst) are ignored. If the dictionary is empty, 0 is
+              returned. If some keys are omitted, they default to the equivalent values for the Unix epoch timestamp 0 (1970-01-01 at 00:00:00). If use_space is
+              true, use a space instead of the letter T in the middle.
+            </td>
+            <td>var strTime:String = Time.get_datetime_string_from_datetime_dict(Time.get_datetime_dict_from_system(),true)</td>
+            <td>2022-10-12 19:43:24</td>
+          </tr>
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
 
           <tr>
@@ -91,11 +138,35 @@ func datetime_to_string(date):
       </section>
 
       <section id="sec03">
-        <details open="true">
-          <summary>Code</summary>
-          <pre><code class="language-godot">
-</code></pre>
-        </details>
+        <h4>Operating functions</h4>
+        <table>
+          <tr>
+            <th>function</th>
+            <th>returns</th>
+            <th>details</th>
+            <th>example</th>
+            <th>return value</th>
+          </tr>
+
+          <tr>
+            <td>get_time_zone_info()</td>
+            <td>Dictionary</td>
+            <td>Returns the current time zone as a dictionary with the keys: bias and name.</td>
+            <td>var timeZone:Dictionary = OS.get_time_zone_info()</td>
+            <td>{bias:330, name:India Standard Time}</td>
+          </tr>
+
+          <tr>
+            <td>get_screen_size(int screen=-1)</td>
+            <td>Vector2</td>
+            <td>
+              2-element structure that can be used to represent positions in 2D space or any other pair of numeric values. Note: In a boolean context, a Vector2
+              will evaluate to false if it&#x27;s equal to Vector2(0, 0). Otherwise, a Vector2 will always evaluate to true.
+            </td>
+            <td>var sSize:Vector2 = OS.get_screen_size()</td>
+            <td>(1366, 768)</td>
+          </tr>
+        </table>
       </section>
 
       <section id="sec04">
