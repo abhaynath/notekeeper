@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <title>Seperate Object Armature</title>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="blender_index.html">Blender</a>
+      </nav>
+
+      <section id="rig_01">
+        <h4>Creating mesh</h4>
+        <p>Add 3 seperate cylinder objects in viewport.</p>
+
+        <img src="../../images/graphics/blender/rigging/seperate/01 Mesh.jpg" />
+      </section>
+
+      <section id="rig_02">
+        <h4>Creating Armature</h4>
+        <p>Press <b>Shift + A</b> and add Armature. Extrude root bone to create 4 bones. Last bone is the controller bone.</p>
+        <p>To make this armature visible on top of mesh, enable <b>In Front</b> in Viewport display.</p>
+
+        <img src="../../images/graphics/blender/rigging/seperate/02 Armature.jpg" />
+      </section>
+
+      <section id="rig_03">
+        <h4>Controller Bone</h4>
+        <p>Select the Controller bone, and press <b>Alt + p</b>. Select <b>Clear Parent</b></p>
+        <img src="../../images/graphics/blender/rigging/seperate/03 Clear parent.jpg" />
+      </section>
+
+      <section id="rig_04">
+        <h4>Inverse Kinematics</h4>
+        <p>Switch to <b>Pose Mode</b>. First select the controller bone, then select the last bone of the armature.</p>
+        <p>Press <b>Shift + i</b>. Select <b>Add IK - To Active bone</b>.Select the last bone of the armature. You should see the bone constraint added.</p>
+        <div>
+          <img src="../../images/graphics/blender/rigging/seperate/04 IK.jpg" />
+          <img src="../../images/graphics/blender/rigging/seperate/05 Bone constraint.jpg" />
+        </div>
+      </section>
+
+      <section>
+        <h4>Parent mesh to bone</h4>
+        <p>Switch to <b>Object Mode</b>. Select the Cylinder first and then bone.</p>
+        <p>Now switch to <b>Pose Mode</b>. Select the Cylinder first and then the corresponding bone.</p>
+        <p>Press <b>Ctrl + p</b>. Select <b>Bone</b>.</p>
+        <p>Repeat this process for remaining cylinders.</p>
+        <img src="../../images/graphics/blender/rigging/seperate/06 Attach mesh to bone.jpg" />
+        <p>Switch to <b>Pose Mode</b>, select the controller bone and do some keyframe animation.</p>
+        <img src="../../images/graphics/blender/rigging/seperate/07 Keyframe animation.jpg" />
+      </section>
+    </div>
+  </body>
+</html>
