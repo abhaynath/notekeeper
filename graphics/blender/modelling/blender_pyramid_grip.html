@@ -6,59 +6,121 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
     <link rel="stylesheet" href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
-    <title>Pyramid Grip</title>
+    <title>Grip</title>
   </head>
 
   <body>
     <div class="content">
       <nav class="nav_main">
         <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="blender_index.html">Blender</a>
+        <a href="../blender_index.html">Blender</a>
       </nav>
 
-      <section id="pyramid">
-        <h4>Pyramid Grip</h4>
-
-        <ol>
-          <li>
-            <p>Add a plane. Subdivide it 20 times horizontally and vertically.</p>
-            <img src="../../../images/graphics/blender/modelling/pyramid_grip/1_subdivide.jpg" />
-          </li>
-          <li>
-            <p>Select all the faces and inset individually twice.</p>
-            <img src="../../../images/graphics/blender/modelling/pyramid_grip/2_inset.jpg" />
-          </li>
-
-          <li>
-            <p>Press <b>Alt + S</b> to shrink flatten</p>
-            <img src="../../../images/graphics/blender/modelling/pyramid_grip/3_shrink_flatten.jpg" />
-          </li>
-
-          <li>
-            <p>Press <b>M</b> and select <b>Collapse</b> to merge the top vertices.</p>
-            <img src="../../../images/graphics/blender/modelling/pyramid_grip/4_merge_collapse.jpg" />
-          </li>
-
-          <li>
-            <p>Add an <b>Empty</b> at the world origin. Make sure Empty and Place are at the same location.</p>
-            <img src="../../../images/graphics/blender/modelling/pyramid_grip/5_geometry.jpg" />
-          </li>
-
-          <li>
-            <p>Apply <b>Simple Deform</b> modifier.</p>
-            <img src="../../../images/graphics/blender/modelling/pyramid_grip/6_simple_deform.jpg" />
-          </li>
-
-          <li>
-            <p>Set rotation of Y axis of Empty object.</p>
-            <img src="../../../images/graphics/blender/modelling/pyramid_grip/7_empty_rotation.jpg" />
-          </li>
-
-          <li>
-            <p>Final image</p>
+      <section id="pyramid1">
+        <details>
+          <summary>
+            <h4>Pyramid Grip</h4>
             <img src="../../../images/graphics/blender/modelling/pyramid_grip/8_final.png" />
-          </li>
-        </ol>
+          </summary>
+          <ol>
+            <li>
+              <p>Add a plane. Subdivide it 20 times horizontally and vertically.</p>
+              <img src="../../../images/graphics/blender/modelling/pyramid_grip/1_subdivide.jpg" />
+            </li>
+            <li>
+              <p>Select all the faces and inset individually twice.</p>
+              <img src="../../../images/graphics/blender/modelling/pyramid_grip/2_inset.jpg" />
+            </li>
+
+            <li>
+              <p>Press <b>Alt + S</b> to shrink flatten</p>
+              <img src="../../../images/graphics/blender/modelling/pyramid_grip/3_shrink_flatten.jpg" />
+            </li>
+
+            <li>
+              <p>Press <b>M</b> and select <b>Collapse</b> to merge the top vertices.</p>
+              <img src="../../../images/graphics/blender/modelling/pyramid_grip/4_merge_collapse.jpg" />
+            </li>
+
+            <li>
+              <p>Add an <b>Empty</b> at the world origin. Make sure Empty and Place are at the same location.</p>
+              <img src="../../../images/graphics/blender/modelling/pyramid_grip/5_geometry.jpg" />
+            </li>
+
+            <li>
+              <p>Apply <b>Simple Deform</b> modifier.</p>
+              <img src="../../../images/graphics/blender/modelling/pyramid_grip/6_simple_deform.jpg" />
+            </li>
+
+            <li>
+              <p>Set rotation of Y axis of Empty object.</p>
+              <img src="../../../images/graphics/blender/modelling/pyramid_grip/7_empty_rotation.jpg" />
+            </li>
+          </ol>
+        </details>
+      </section>
+
+      <section id="pyramid2">
+        <details>
+          <summary>
+            <h4>Diamond Grip</h4>
+            <img src="../../../images/graphics/blender/modelling/diamond_grip/12_final.png" />
+          </summary>
+          <ol>
+            <li>
+              <p>Add a plane. Subdivide it 25 times horizontally and vertically.</p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/1_plane.jpg" />
+            </li>
+
+            <li>
+              <p>Select all faces and poke the faces.</p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/2_poke_face.jpg" />
+            </li>
+
+            <li>
+              <p>Poked faces will look like this</p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/3_poke_result.jpg" />
+            </li>
+
+            <li>
+              <p>Now convert these tris to Quads</p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/4_tries_to_quads.jpg" />
+            </li>
+
+            <li>
+              <p>Deselect all the faces. To select all the tris, click Select faces by sides. Enter 3 in Number of vertices.</p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/5_select_by_poly_count.jpg" />
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/6_select_tries.jpg" />
+            </li>
+
+            <li>
+              <p>To invert the selection, press <b>Ctrl + i</b></p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/7_invert_select.jpg" />
+            </li>
+
+            <li>
+              <p>Inset the faces individually twice</p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/8_inset.jpg" />
+            </li>
+
+            <li>
+              <p>Press <b>Alt + s</b> to <b>Shrink flatten</b></p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/9_shrink_flatten.jpg" />
+            </li>
+
+            <li>
+              <p>Press <b>M</b> and <b>Collapse</b>.</p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/10_pyramids.jpg" />
+            </li>
+
+            <li>
+              <p>
+                Add an empty at the same location of plane. Rotate the Empty by 90 degree in y axis. Select the plane and add <b>Simple Deform</b> modifier.
+              </p>
+              <img src="../../../images/graphics/blender/modelling/diamond_grip/11_simple_deform.jpg" />
+            </li>
+          </ol>
+        </details>
       </section>
     </div>
   </body>
