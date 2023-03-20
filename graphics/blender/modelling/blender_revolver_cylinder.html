@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
     <link rel="stylesheet" href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
-    <title>Pyramid Grip</title>
+    <title>Revolver Cylinder</title>
   </head>
 
   <body>
@@ -17,22 +17,28 @@
       </nav>
 
       <section id="array1">
-        <h4></h4>
+        <h4>Revolver - Radial Geometry</h4>
 
-        <div>
-          <h3></h3>
-          <ol>
-            <li></li>
-          </ol>
-        </div>
-      </section>
-
-      <section id="array2">
-        <h4></h4>
-
-        <div>
-          <h3></h3>
-        </div>
+        <ol>
+          <li>
+            <p>Add a plane and make the required changes in the mesh. Apply rotation and scale. Set object origin to Geometry.</p>
+            <img src="../../../images/graphics/blender/modelling/revolver/base mesh.jpg" />
+          </li>
+          <li>
+            <p>Add an empty at the plane origin location. Make sure object origin and empty should be at same location without any rotation and scale.</p>
+            <img src="../../../images/graphics/blender/modelling/revolver/empty_settings.jpg" />
+          </li>
+          <li>
+            <p>Add an array modifier and set the count as per requirement.</p>
+            <p>Add <b>Simple Deform</b> modifier. Select the <b>Bend</b> option and set empty as origin object. Set angle to 360.</p>
+            <p>Rotate the empty in the required axis by 90 degrees.</p>
+            <img src="../../../images/graphics/blender/modelling/revolver/deform_settings.jpg" />
+          </li>
+          <li>
+            <p></p>
+            <img src="../../../images/graphics/blender/modelling/revolver/final.jpg" />
+          </li>
+        </ol>
       </section>
     </div>
   </body>
