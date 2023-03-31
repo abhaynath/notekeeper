@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
+    <link rel="stylesheet" href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <title>Engine</title>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../../index.html"><i class="fa fa-home"></i></a>
+        <a href="../blender_index.html">Blender</a>
+      </nav>
+
+      <section id="engine">
+        <h4>Piston Rigging</h4>
+
+        <ol>
+          <li>
+            <p>We need 2 seperate Armatures to rig the engine. <b>Piston Rig</b> and <b>Crank Rig</b></p>
+            <img src="../../../images/graphics/blender/rigging/mech_rig/engine/1.jpg" />
+            <img src="../../../images/graphics/blender/rigging/mech_rig/engine/5.jpg" />
+          </li>
+
+          <li>
+            <p>Piston Rig consists of 3 bones. Stretch bone, piston bone and Shaft bone.</p>
+            <p><b>IK Stretch</b> should be set to 1.</p>
+            <img src="../../../images/graphics/blender/rigging/mech_rig/engine/2.jpg" />
+          </li>
+
+          <li>
+            <p>Add <b>IK Constraint</b> on Shaft Bone.</p>
+            <img src="../../../images/graphics/blender/rigging/mech_rig/engine/3.jpg" />
+          </li>
+
+          <li>
+            <p>
+              We need shaft bone because if we add IK constraint to crack bone, crank bone will rotate around its center. And Shaft will always point to Crank.
+              Since Crank will always stationary, we wont be able to see and animation. Thats why we need one extra bone <b>Shaft IK</b> which will rotate
+              around the circumference of the Crank bone.
+            </p>
+            <img src="../../../images/graphics/blender/rigging/mech_rig/engine/4.jpg" />
+          </li>
+
+          <li>
+            <p>This is how it will animate after rigging its done.</p>
+            <img src="../../../images/graphics/blender/rigging/mech_rig/engine/6.jpg" />
+            <img src="../../../images/graphics/blender/rigging/mech_rig/engine/7.jpg" />
+          </li>
+        </ol>
+      </section>
+    </div>
+  </body>
+</html>
