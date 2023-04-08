@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>List</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="python_index.html">Python</a>
+    </nav>
+    <div class="content">
+      <p>
+        A list stores a series of items in a particular order. Lists allow you to store sets of information in one place, whether you have just a few items or
+        millions of items
+      </p>
+      <section id="list1">
+        <h4>List with initial values</h4>
+        <p>
+          Use square brackets to define a list, and use commas to separate individual items in the list. Use plural names for lists, to make your code easier to
+          read.
+        </p>
+        <pre><code class="language-py">
+# list with initial values
+players = [&#x22;Sachin&#x22;, &#x22;Virender&#x22;, &#x22;Saurav&#x22;, &#x22;Rahul&#x22;]
+
+# print the list
+print(players)                      # [&#x27;Sachin&#x27;, &#x27;Virender&#x27;, &#x27;Saurav&#x27;, &#x27;Rahul&#x27;]
+
+# access first element
+print(players[0])                   # Sachin
+
+# access last element
+print(players[-1])                  # Rahul
+
+# loop through the list
+for p in players:
+    print(p)</code></pre>
+
+        <p>
+          Individual elements in a list are accessed according to their position, called the index. The index of the first element is 0, the index of the second
+          element is 1, and so forth. Negative indices refer to items at the end of the list. To get a particular element, write the name of the list and then
+          the index of the element in square brackets.
+        </p>
+      </section>
+
+      <section id="list2">
+        <h4></h4>
+        <pre><code class="language-py">
+# Creating empty list
+india = []
+
+# append element
+india.append(&#x22;Rohit&#x22;)
+india.append(&#x22;Virat&#x22;)
+
+# insert element at particular position
+india.insert(1, &#x22;Shikhar&#x22;)
+india.insert(0, &#x22;Dhoni&#x22;)                    # [&#x27;Dhoni&#x27;, &#x27;Rohit&#x27;, &#x27;Shikhar&#x27;, &#x27;Virat&#x27;]
+print(india)
+
+# remove element at index
+del india[-1]
+
+# remove element by value
+india.remove(&#x22;Shikhar&#x22;)
+print(india)                                # [&#x27;Dhoni&#x27;, &#x27;Rohit&#x27;]</code></pre>
+      </section>
+
+      <section id="list3">
+        <h4>pop() elements</h4>
+        <pre><code class="language-py">
+users = [&#x22;Virat&#x22;, &#x22;Rohit&#x22;, &#x22;Mahendra&#x22;, &#x22;Surya&#x22;]
+print(users)                                    # [&#x27;Virat&#x27;, &#x27;Rohit&#x27;, &#x27;Mahendra&#x27;, &#x27;Surya&#x27;]
+
+users.pop()
+print(users)                                    # [&#x27;Virat&#x27;, &#x27;Rohit&#x27;, &#x27;Mahendra&#x27;]
+
+dhoni = users.pop()
+print(dhoni)                                    # Mahendra</code></pre>
+      </section>
+
+      <section id="list4">
+        <h4>len, sorting, reverse</h4>
+        <pre><code class="language-py">
+teams = [&#x22;MI&#x22;, &#x22;RCB&#x22;, &#x22;KKR&#x22;, &#x22;CSK&#x22;]
+
+# length of list
+print(len(teams))                   # 4
+
+# temporary sorted list
+print(sorted(teams))                # [&#x27;CSK&#x27;, &#x27;KKR&#x27;, &#x27;MI&#x27;, &#x27;RCB&#x27;]
+
+# permanently sorting list
+teams.sort()
+print(teams)                        # [&#x27;CSK&#x27;, &#x27;KKR&#x27;, &#x27;MI&#x27;, &#x27;RCB&#x27;]
+
+# reverse list
+teams.reverse()
+print(teams)                        # [&#x27;RCB&#x27;, &#x27;MI&#x27;, &#x27;KKR&#x27;, &#x27;CSK&#x27;]</code></pre>
+      </section>
+
+      <section id="list5">
+        <h4>Range</h4>
+        <p>
+          You can use the <b>range()</b> function to work with a set of numbers efficiently. The <b>range()</b> function starts at 0 by default, and stops one
+          number below the number passed to it. You can use the <b>list()</b> function to efficiently generate a large list of numbers.
+        </p>
+        <pre><code class="language-py">
+for num in range(10):
+  print(num)</code></pre>
+        <pre><code class="language-py">
+for num in range(5, 10):
+  print(num)</code></pre>
+
+        <p>Generate list from range</p>
+        <pre><code class="language-py">
+my_nums = list(range(20, 30))
+print(my_nums)                  # [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]</code></pre>
+      </section>
+
+      <section id="list6">
+        <h4>min, max and sum</h4>
+        <pre><code class="language-py">
+ages = [45, 42, 67, 21, 65, 12, 78, 34]
+
+youngest = min(ages)
+print(youngest)             # 12
+
+oldest = max(ages)
+print(oldest)               # 78
+
+sumOfAges = sum(ages)
+print(sumOfAges)            # 364
+           </code></pre>
+      </section>
+
+      <section id="list7">
+        <h4>Slicing the list</h4>
+        <p>
+          You can work with any set of elements from a list. A portion of a list is called a slice. To slice a list start with the index of the first item you
+          want, then add a colon and the index after the last item you want. Leave off the first index to start at the beginning of the list, and leave off the
+          last index to slice through the end of the list.
+        </p>
+        <pre><code class="language-py">
+roaster = [&#x22;HHH&#x22;, &#x22;John Cena&#x22;, &#x22;The Undertaker&#x22;, &#x22;Batista&#x22;, &#x22;Khali&#x22;, &#x22;Mark Henry&#x22;, &#x22;Shawn Michaels&#x22;]
+
+first_three = roaster[:3]
+print(first_three)                  # [&#x27;HHH&#x27;, &#x27;John Cena&#x27;, &#x27;The Undertaker&#x27;]
+
+last_three = roaster[-3:]
+print(last_three)                   # [&#x27;Khali&#x27;, &#x27;Mark Henry&#x27;, &#x27;Shawn Michaels&#x27;]
+
+middle_three = roaster[2:5]
+print(middle_three)                 # [&#x27;The Undertaker&#x27;, &#x27;Batista&#x27;, &#x27;Khali&#x27;]</code></pre>
+      </section>
+
+      <section id="list8">
+        <h4>Copying the list</h4>
+        <p>
+          To copy a list make a slice that starts at the first item and ends at the last item. If you try to copy a list without using this approach, whatever
+          you do to the copied list will affect the original list as well.
+        </p>
+        <pre><code class="language-py">
+roaster = [&#x22;HHH&#x22;, &#x22;John Cena&#x22;, &#x22;The Undertaker&#x22;]
+wrestlers = roaster[:]
+print(wrestlers)</code></pre>
+      </section>
+
+      <section id="list9">
+        <h4></h4>
+        <pre><code class="language-py">
+        </code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
