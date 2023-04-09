@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Condition Checking</title>
   </head>
 
   <body>
@@ -18,10 +18,66 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
-        <h4></h4>
+      <p>
+        If statements allow you to examine the current state of a program and respond appropriately to that state.You can write a simple if statement that
+        checks one condition, or you can create a complex series of if statements that identify the exact conditions you&#x27;re looking for.
+      </p>
+      <p>While loops run as long as certain conditions remain true. You can use while loops to let your programs run as long as your users want them to.</p>
+      <section id="if">
+        <h4>simple if</h4>
+        <p>
+          A conditional test is an expression that can be evaluated as <span class="keyword">True</span> or <span class="keyword">False</span>. Python uses the
+          values <span class="keyword">True</span> and <span class="keyword">False</span> to decide whether the code in an if statement should be executed.
+        </p>
         <pre><code class="language-py">
-           </code></pre>
+age = 25
+
+if age &#x3E;=18:
+    print(&#x22;You are old enough to vote&#x22;)</code></pre>
+      </section>
+
+      <section id="ifelse">
+        <h4>if else</h4>
+        <pre><code class="language-py">
+marks = 57
+
+if marks &#x3E;= 35:
+    print(&#x22;Pass&#x22;)
+else:
+    print(&#x22;Fail&#x22;)</code></pre>
+      </section>
+
+      <section id="elif">
+        <h4>elif</h4>
+        <pre><code class="language-py">
+marks = 85
+
+if marks &#x3E;= 75:
+    print(&#x22;Distinction&#x22;)
+elif marks &#x3E;= 60:
+    print(&#x22;First Class&#x22;)
+elif marks &#x3E;= 35:
+    print(&#x22;Second class&#x22;)
+else:
+    print(&#x22;Fail&#x22;)</code></pre>
+      </section>
+
+      <section id="and">
+        <h4>and operator</h4>
+        <pre><code class="language-py">
+isLoggedIn = False
+userId = &#x27;A1040&#x27;
+if userId == &#x27;A1040&#x27; and isLoggedIn == False:
+    print(&#x22;Logged in&#x22;)</code></pre>
+      </section>
+
+      <section id="or">
+        <h4>or operator</h4>
+        <pre><code class="language-py">
+isLoggedIn = False
+userId = &#x27;A1040&#x27;
+if userId == &#x27;A1040&#x27; or isLoggedIn == False:
+    print(&#x22;Logged in&#x22;)</code></pre>
       </section>
     </div>
   </body>
