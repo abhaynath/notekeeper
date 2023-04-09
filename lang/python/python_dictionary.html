@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Dictionary</title>
   </head>
 
   <body>
@@ -18,10 +18,67 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
-        <h4></h4>
+      <p>
+        Python&#x27;s dictionaries allow you to connect pieces of related information. Each piece of information in a dictionary is stored as a key-value pair.
+        When you provide a key, Python returns the value associated with that key. You can loop through all the key-value pairs, all the keys, or all the
+        values.
+      </p>
+      <section id="dic1">
+        <h4>Dictionary</h4>
         <pre><code class="language-py">
-           </code></pre>
+# creating a dictionary with key pair values
+player = {&#x27;first_name&#x27;: &#x27;Sachin&#x27;, &#x27;last_name&#x27;: &#x27;Tendulkar&#x27;,&#x27;
+  runs&#x27;: 18426, &#x27;matches&#x27;: 463, &#x27;innings&#x27;: 452, &#x27;not_out&#x27;: 41, &#x27;balls_faced&#x27;: 21367, &#x27;dob&#x27;: &#x27;24 April 1973&#x27;}
+
+# create new property average
+player[&#x27;avg&#x27;] = round(player[&#x27;runs&#x27;]/(player[&#x27;innings&#x27;]-player[&#x27;not_out&#x27;]), 2)
+player[&#x27;strike_rate&#x27;] = round(player[&#x27;runs&#x27;]*100/player[&#x27;balls_faced&#x27;], 2)
+
+# deleting key-value pair
+del player[&#x27;dob&#x27;]
+print(player)</code></pre>
+      </section>
+
+      <section id="dic2">
+        <h4>Accessing elements of dictionary</h4>
+        <p>
+          To access the value associated with an individual key give the name of the dictionary and then place the key in a set of square brackets. If the key
+          you&#x27;re asking for is not in the dictionary, an error will occur.
+        </p>
+        <p>
+          You can also use the get() method, which returns None instead of an error if the key doesn&#x27;t exist. You can also specify a default value to use
+          if the key is not in the dictionary.
+        </p>
+        <pre><code class="language-py">
+# accessing values with get()
+print(player.get(&#x27;avg&#x27;))
+
+# get returns the default value if value not found
+print(player.get(&#x27;strike_rate&#x27;, 0))</code></pre>
+      </section>
+
+      <section id="dic2">
+        <h4>Iterating dictionary</h4>
+        <pre><code class="language-py">
+# looping through the dictionary
+for prop in player:
+    print(f&#x22;{prop} ******  {player[prop]}&#x22;)
+
+
+# looping through items
+for key, value in player.items():
+    print(f&#x22;{key} {value}&#x22;)
+
+# looping through keys
+for k in player.keys():
+    print(f&#x22;key = {k}&#x22;)
+
+# looping through values
+for v in player.values():
+    print(f&#x22;values = {v}&#x22;)
+
+# length of the dictionary
+print(len(player))</code></pre>
       </section>
     </div>
   </body>
