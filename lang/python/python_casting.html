@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Casting</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="python_index.html">Python</a>
+    </nav>
+    <div class="content">
+      <section id="c1">
+        <h4></h4>
+        <p>
+          There may be times when you want to specify a type on to a variable. This can be done with casting. Python is an object-orientated language, and as
+          such it uses classes to define data types, including its primitive types.
+        </p>
+        <p>Casting in python is therefore done using constructor functions:</p>
+        <ol>
+          <li>
+            <span class="keyword">int()</span> - constructs an integer number from an integer literal, a float literal (by removing all decimals), or a string
+            literal (providing the string represents a whole number)
+          </li>
+          <li>
+            <span class="keyword">float()</span> - constructs a float number from an integer literal, a float literal or a string literal (providing the string
+            represents a float or an integer)
+          </li>
+          <li>
+            <span class="keyword">str()</span> - constructs a string from a wide variety of data types, including strings, integer literals and float literals
+          </li>
+        </ol>
+        <pre><code class="language-py">
+a = int(1)
+b = int(2.4)
+c = int(&#x22;3&#x22;)
+
+d = float(4)
+e = float(5.7)
+f = float(&#x22;6&#x22;)
+g = float(&#x22;7.54&#x22;)
+
+h = str(8)
+i = str(9.56)
+j = str(&#x22;10.45&#x22;)</code></pre>
+      </section>
+
+      <section id="c2">
+        <h4></h4>
+        <pre><code class="language-py">
+           </code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
