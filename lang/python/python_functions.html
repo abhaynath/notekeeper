@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Functions</title>
   </head>
 
   <body>
@@ -18,7 +18,103 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
+      <section id="f1">
+        <h4>Functions</h4>
+        <p>A function is a block of code which only runs when it is called.</p>
+        <p>You can pass data, known as parameters, into a function.</p>
+        <p>A function can return data as a result.</p>
+        <pre><code class="language-py">
+def get_full_name(first_name, m_name, last_name):
+    full_name = first_name + &#x22; &#x22; + m_name[0] + &#x22;. &#x22; + last_name
+    return full_name
+
+
+print(get_full_name(&#x22;Abhay&#x22;, &#x22;Kiran&#x22;, &#x22;Nath&#x22;))
+
+# Abhay K. Nath</code></pre>
+      </section>
+
+      <section id="args">
+        <h4>Arbitrary Arguments, *args</h4>
+        <p>If you do not know how many arguments that will be passed into your function, add a * before the parameter name in the function definition.</p>
+        <p>This way the function will receive a tuple of arguments, and can access the items accordingly:</p>
+        <pre><code class="language-py">
+def get_sum(*nums):
+    sum = 0
+    for n in nums:
+        sum += n
+    return sum
+
+
+total = get_sum(10, 35, 66, 21, 52, 31)
+print(total)</code></pre>
+      </section>
+
+      <section id="keyarg">
+        <h4>Keyword Arguments</h4>
+
+        <p>You can also send arguments with the key = value syntax. This way the order of the arguments does not matter.</p>
+        <pre><code class="language-py">
+def get_user(f_name, m_name, l_name):
+    user = {&#x22;first_name&#x22;: f_name, &#x22;middle_name&#x22;: m_name, &#x22;last_name&#x22;: l_name}
+    return user
+
+
+u1 = get_user(&#x22;Abhay&#x22;, &#x22;Kiran&#x22;, &#x22;Nath&#x22;)
+u2 = get_user(m_name=&#x22;Ramesh&#x22;, f_name=&#x22;Sachin&#x22;, l_name=&#x22;Tendulkar&#x22;)
+
+print(u1)
+print(u2)
+
+# {&#x27;first_name&#x27;: &#x27;Abhay&#x27;, &#x27;middle_name&#x27;: &#x27;Kiran&#x27;, &#x27;last_name&#x27;: &#x27;Nath&#x27;}
+# {&#x27;first_name&#x27;: &#x27;Sachin&#x27;, &#x27;middle_name&#x27;: &#x27;Ramesh&#x27;, &#x27;last_name&#x27;: &#x27;Tendulkar&#x27;}</code></pre>
+      </section>
+
+      <section id="argskey">
+        <h4>Arbitrary Keyword Arguments, **kwargs</h4>
+        <p>
+          If you do not know how many keyword arguments that will be passed into your function, add two asterisk: ** before the parameter name in the function
+          definition.
+        </p>
+        <p>This way the function will receive a dictionary of arguments, and can access the items accordingly:</p>
+        <pre><code class="language-py">
+def get_user(**data):
+  print(data[&#x22;email&#x22;])
+
+
+get_user(first_name=&#x22;Abhay&#x22;, email=&#x22;abhaynath@gmail.com&#x22;)</code></pre>
+      </section>
+
+      <section id="defvalue">
+        <h4>Default Values</h4>
+        <p>If we call the function without argument, it uses the default value</p>
+        <pre><code class="language-py">
+def get_data(x, num=5):
+  return x * num
+
+
+a = get_data(5)
+b = get_data(35, 10)</code></pre>
+      </section>
+
+      <section id="rec">
+        <h4>Recursion</h4>
+        <p>Python also accepts function recursion, which means a defined function can call itself.</p>
+        <p>
+          Recursion is a common mathematical and programming concept. It means that a function calls itself. This has the benefit of meaning that you can loop
+          through data to reach a result.
+        </p>
+        <pre><code class="language-py">
+def factorial(num):
+    if num == 1:
+        return num
+    return num * factorial(num-1)
+
+
+print(factorial(5))</code></pre>
+      </section>
+
+      <section id="gg">
         <h4></h4>
         <pre><code class="language-py">
            </code></pre>
