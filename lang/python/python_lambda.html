@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Lamda</title>
   </head>
 
   <body>
@@ -18,7 +18,45 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
+      <section id="aa">
+        <h4>Lambda expression</h4>
+        <p>A lambda function is a small anonymous function.</p>
+        <p>A lambda function can take any number of arguments, but can only have one expression.</p>
+        <pre><code class="language-py">
+x = lambda a:a+10
+print(x(5))     # 15</code></pre>
+      </section>
+
+      <section id="a2">
+        <h4>Multiple arguments in lambda</h4>
+        <pre><code class="language-py">
+x = lambda a,b:a*b
+print(x(5,12))     # 60</code></pre>
+      </section>
+
+      <section id="a3">
+        <h4>Lamda usages</h4>
+        <p>The power of lambda is better shown when you use them as an anonymous function inside another function.</p>
+        <p>Say you have a function definition that takes one argument, and that argument will be multiplied with an unknown number</p>
+        <pre><code class="language-py">
+def myFunction(n):
+    return lambda a: a*n
+
+
+myDoubler = myFunction(2)
+myTripler = myFunction(3)
+
+print(myDoubler(100))   # 200
+print(myTripler(100))   # 300</code></pre>
+      </section>
+
+      <section id="a4">
+        <h4></h4>
+        <pre><code class="language-py">
+           </code></pre>
+      </section>
+
+      <section id="a5">
         <h4></h4>
         <pre><code class="language-py">
            </code></pre>
