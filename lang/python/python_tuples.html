@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Tuples</title>
   </head>
 
   <body>
@@ -18,10 +18,155 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
-        <h4></h4>
+      <section id="tuples">
+        <h4>Tuples</h4>
+        <p>Tuples are used to store multiple items in a single variable.</p>
+        <p>
+          Tuple is one of 4 built-in data types in Python used to store collections of data, the other 3 are List, Set, and Dictionary, all with different
+          qualities and usage.
+        </p>
+        <p>A tuple is a collection which is <b>ordered</b> and <b>unchangeable</b>.</p>
+        <p>Tuples are written with round brackets.</p>
         <pre><code class="language-py">
-           </code></pre>
+# Tuple with all elements of same type
+fruits = (&#x22;Apple&#x22;, &#x22;Orange&#x22;, &#x22;Banana&#x22;)
+
+# Tuple with mixed data types
+computer = (&#x22;Dell&#x22;, 30000, 512, &#x22;1920x1080&#x22;)
+
+# Print Tuple items
+print(fruits)
+print(computer)
+
+# Access individual Tuple item
+print(fruits[0])                    # Apple
+print(computer[3])                  # 1920x1080
+
+# Iterate all items in tuple
+for f in fruits:
+    print(f)
+
+# Iterate range in tuples
+for c in computer[1:3]:
+    print(c)
+
+# get tuple type
+print(type(fruits))
+
+# get length of tuple
+print(len(fruits))
+print(len(computer))
+
+# Check if item exists
+if &#x22;Dell&#x22; in computer:
+    print(&#x22;Dell is present&#x22;)
+else:
+    print(&#x22;Not found&#x22;)</code></pre>
+      </section>
+
+      <section id="change">
+        <h4>Change Tuple values</h4>
+        <p>Once a tuple is created, you cannot change its values. Tuples are unchangeable, or immutable as it also is called.</p>
+        <p>But there is a workaround. You can convert the tuple into a list, change the list, and convert the list back into a tuple.</p>
+        <pre><code class="language-py">
+player = (&#x22;Rohit Sharma&#x22;, &#x22;India&#x22;, &#x22;Mumbai Indians&#x22;)
+print(player)           # (&#x27;Rohit Sharma&#x27;, &#x27;India&#x27;, &#x27;Mumbai Indians&#x27;)
+
+temp = list(player)
+temp[0] = &#x22;Virat Kohli&#x22;
+
+player = tuple(temp)
+print(player)           # (&#x27;Virat Kohli&#x27;, &#x27;India&#x27;, &#x27;Mumbai Indians&#x27;)</code></pre>
+      </section>
+
+      <section id="add">
+        <h4>Add Item</h4>
+        <p>Since tuples are immutable, they do not have a build-in append() method, but there are other ways to add items to a tuple.</p>
+        <p>
+          <b>Convert into a list:</b> Just like the workaround for changing a tuple, you can convert it into a list, add your item(s), and convert it back into
+          a tuple.
+        </p>
+        <pre><code class="language-py">
+india = (&#x22;Rohit&#x22;, &#x22;Shikhar&#x22;, &#x22;Virat&#x22;)
+temp = list(india)
+temp.append(&#x22;Hardik&#x22;)
+india = tuple(temp)
+print(india)                # (&#x27;Rohit&#x27;, &#x27;Shikhar&#x27;, &#x27;Virat&#x27;, &#x27;Hardik&#x27;)</code></pre>
+        <p>
+          <b>Add tuple to a tuple:</b> You are allowed to add tuples to tuples, so if you want to add one item, (or many), create a new tuple with the item(s),
+          and add it to the existing tuple
+        </p>
+        <pre><code class="language-py">
+india = (&#x22;Rohit&#x22;, &#x22;Shikhar&#x22;, &#x22;Virat&#x22;)
+temp = (&#x22;Hardik&#x22;,)
+india += temp
+print(india)                            # (&#x27;Rohit&#x27;, &#x27;Shikhar&#x27;, &#x27;Virat&#x27;, &#x27;Hardik&#x27;)</code></pre>
+      </section>
+
+      <section id="remove">
+        <h4>Remove items from Tuple</h4>
+        <p>Items in Tuple cannot be removed directly.</p>
+        <p>Tuples are unchangeable, so you cannot remove items from it, but you can use the same workaround as we used for changing and adding tuple items</p>
+        <pre><code class="language-py">
+india = (&#x22;Rohit&#x22;, &#x22;Shikhar&#x22;, &#x22;Virat&#x22;)
+temp = list(india)
+temp.remove(&#x22;Shikhar&#x22;)
+india = tuple(temp)                     # (&#x27;Rohit&#x27;, &#x27;Virat&#x27;)</code></pre>
+      </section>
+
+      <section id="unpack">
+        <h4>Unpacking Tuple</h4>
+        <p>When we create a tuple, we normally assign values to it. This is called &#x22;packing&#x22; a tuple.</p>
+        <p>We are also allowed to extract the values back into variables. This is called &#x22;unpacking&#x22;.</p>
+        <pre><code class="language-py">
+india = (&#x22;Rohit&#x22;, &#x22;Shikhar&#x22;, &#x22;Virat&#x22;)
+(hitman, gabbar, chiku) = india
+
+print(hitman, gabbar, chiku)            # Rohit Shikhar Virat</code></pre>
+
+        <h4>Using Asterisk*</h4>
+        <p>
+          If the number of variables is less than the number of values, you can add an * to the variable name and the values will be assigned to the variable as
+          a list
+        </p>
+
+        <pre><code class="language-py">
+fruits = (&#x22;apple&#x22;, &#x22;banana&#x22;, &#x22;cherry&#x22;, &#x22;strawberry&#x22;, &#x22;raspberry&#x22;)
+
+(green, yellow, *red) = fruits
+
+print(green)                        # apple
+print(yellow)                       # banana
+print(red)                          # [&#x27;cherry&#x27;, &#x27;strawberry&#x27;, &#x27;raspberry&#x27;]
+
+
+(first, *middle, last) = fruits
+print(first)                        # apple
+print(middle)                       # [&#x27;banana&#x27;, &#x27;cherry&#x27;, &#x27;strawberry&#x27;]
+print(last)                         # raspberry
+</code></pre>
+      </section>
+
+      <section id="join">
+        <h4>Join Tuples</h4>
+        <p>To join two or more tuples you can use the + operator</p>
+        <pre><code class="language-py">
+tuple1 = (&#x22;a&#x22;, &#x22;b&#x22;, &#x22;c&#x22;)
+tuple2 = (1, 2, 3)
+
+tuple3 = tuple1 + tuple2
+print(tuple3)
+</code></pre>
+      </section>
+
+      <section id="find">
+        <h4>Search Item in Tuple</h4>
+        <pre><code class="language-py">
+players = (&#x22;sachin&#x22;, &#x22;abhay&#x22;, &#x22;virat&#x22;, &#x22;shikhar&#x22;)
+
+if &#x22;virat&#x22; in players:
+    print(players.index(&#x22;virat&#x22;))
+</code></pre>
       </section>
     </div>
   </body>
