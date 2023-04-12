@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>for loop</title>
   </head>
 
   <body>
@@ -18,9 +18,83 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
-        <h4></h4>
+      <section id="while">
+        <h4>while</h4>
         <pre><code class="language-py">
+i = 1
+
+while i &#x3C; 6:
+    print(i)
+    i += 1</code></pre>
+      </section>
+
+      <section id="for">
+        <h4>for</h4>
+        <p>A <span class="keyword">for</span> is used for iterating over a sequence (that is either a list, a tuple, a dictionary, a set, or a string).</p>
+        <p>
+          This is less like the <span class="keyword">for</span> keyword in other programming languages, and works more like an iterator method as found in
+          other object-orientated programming languages.
+        </p>
+        <p>With the <span class="keyword">for</span> loop we can execute a set of statements, once for each item in a list, tuple, set etc.</p>
+        <pre><code class="language-py">
+fruits = [&#x22;apple&#x22;, &#x22;mango&#x22;, &#x22;orange&#x22;]
+
+for f in fruits:
+    print(f)</code></pre>
+      </section>
+
+      <section id="str">
+        <h4>Looping Through a String</h4>
+        <pre><code class="language-py">
+myString = &#x22;Dhoni is the best captain.&#x22;
+
+for x in myString:
+    print(x)</code></pre>
+      </section>
+
+      <section id="range">
+        <h4>range() function</h4>
+        <p>To loop through a set of code a specified number of times, we can use the <b>range()</b> function</p>
+        <p>
+          The <b>range()</b> function returns a sequence of numbers, starting from 0 by default, and increments by 1 (by default), and ends at a specified
+          number.
+        </p>
+        <pre><code class="language-py">
+for x in range(6):
+    print(x)
+
+for i in range(25, 30):
+    print(i)</code></pre>
+
+        <p>
+          The range() function defaults to increment the sequence by 1, however it is possible to specify the increment value by adding a third parameter:
+          range(2, 30, 3)
+        </p>
+        <pre><code class="language-py">
+for x in range(2, 30, 3):
+  print(x)</code></pre>
+      </section>
+
+      <section id="else">
+        <h4>else keyword</h4>
+        <p>The keyword in a for loop specifies a block of code to be executed when the loop is finished.</p>
+        <p>The <span class="keyword">else</span> block will NOT be executed if the loop is stopped by a break statement.</p>
+        <pre><code class="language-py">
+for x in range(6):
+    print(x)
+else:
+    print(&#x22;Loop is over&#x22;)</code></pre>
+      </section>
+
+      <section id="nested">
+        <h4>Nested loops</h4>
+        <pre><code class="language-py">
+colors = [&#x22;red&#x22;, &#x22;yellow&#x22;, &#x22;green&#x22;]
+fruits = [&#x22;apple&#x22;, &#x22;mango&#x22;, &#x22;watermelon&#x22;]
+
+for c in colors:
+    for f in fruits:
+        print(c, f)
            </code></pre>
       </section>
     </div>

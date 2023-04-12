@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Classes</title>
   </head>
 
   <body>
@@ -19,6 +19,67 @@
     </nav>
     <div class="content">
       <section id="js_04_01">
+        <h4>Basics of Class</h4>
+        <p>Almost everything in Python is an object, with its properties and methods.</p>
+        <p>A Class is like an object constructor, or a &#x22;blueprint&#x22; for creating objects.</p>
+        <p>All classes have a function called <span class="keyword">__init__()</span>, which is always executed when the class is being initiated.</p>
+        <pre><code class="language-py">
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def display(self):
+        print(f&#x22;Name = {self.name} Age = {self.age}&#x22;)
+
+
+sachin = Person(&#x22;Sachin Tendulkar&#x22;, 50)
+sachin.display()                                      # Name = Sachin Tendulkar Age = 50</code></pre>
+      </section>
+
+      <section id="a4">
+        <h4>__str__() Function</h4>
+        <p>The <span class="keyword">__str__()</span> function controls what should be returned when the class object is represented as a string.</p>
+        <p>If the <span class="keyword">__str__()</span> function is not set, the string representation of the object is returned</p>
+        <pre><code class="language-py">
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self) -&#x3E; str:
+        return f&#x22;{self.name} ({self.age})&#x22;
+
+
+sachin = Person(&#x22;Sachin Tendulkar&#x22;, 50)
+print(sachin)                               # Sachin Tendulkar (50)</code></pre>
+      </section>
+
+      <section id="a5">
+        <h4>self Parameter</h4>
+        <p>The self parameter is a reference to the current instance of the class, and is used to access variables that belongs to the class.</p>
+        <p>It does not have to be named self , you can call it whatever you like, but it has to be the first parameter of any function in the class</p>
+        <pre><code class="language-py">
+class Person:
+    def __init__(abhay, name, age) -&#x3E; None:
+        abhay.name = name
+        abhay.age = age
+
+    def show(abc):
+        print(f&#x22;Name = {abc.name} Age = {abc.age}&#x22;)
+
+
+sachin = Person(&#x22;Sachin Tendulkar&#x22;, 50)
+sachin.show()                               # Name = Sachin Tendulkar Age = 50</code></pre>
+      </section>
+
+      <section id="a4">
+        <h4></h4>
+        <pre><code class="language-py">
+           </code></pre>
+      </section>
+
+      <section id="a5">
         <h4></h4>
         <pre><code class="language-py">
            </code></pre>

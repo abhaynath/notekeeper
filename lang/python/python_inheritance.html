@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Inheritance</title>
   </head>
 
   <body>
@@ -18,10 +18,32 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
-        <h4></h4>
+      <section id="aa">
+        <h4>Inheritance</h4>
+        <p>Python has a <span class="keyword">super()</span> function that will make the child class inherit all the methods and properties from its parent</p>
         <pre><code class="language-py">
-           </code></pre>
+class Person:
+    def __init__(self, name, age) -&#x3E; None:
+        self.name = name
+        self.age = age
+
+    def show(self):
+        print(f&#x22;Name = {self.name} Age = {self.age}&#x22;)
+
+
+class Student(Person):
+    def __init__(self, name, age) -&#x3E; None:
+        super().__init__(name, age)
+        self.graduationYear = 2005
+
+    def showStudent(self):
+        print(
+            f&#x22;Name = {self.name} Age = {self.age} Graduation Year = {self.graduationYear}&#x22;)
+
+
+abhay = Student(&#x22;Abhay&#x22;, 35)
+abhay.show()                        # Name = Abhay Age = 35
+abhay.showStudent()                 # Name = Abhay Age = 35 Graduation Year = 2005</code></pre>
       </section>
     </div>
   </body>
