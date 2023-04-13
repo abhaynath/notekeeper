@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Set</title>
   </head>
 
   <body>
@@ -18,10 +18,133 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
-        <h4></h4>
+      <section id="set">
+        <h4>Sets</h4>
+        <p>Sets are used to store multiple items in a single variable.</p>
+        <p>A set is a collection which is unordered, unchangeable, and unindexed.</p>
         <pre><code class="language-py">
-           </code></pre>
+players = {&#x22;sachin&#x22;, &#x22;virender&#x22;, &#x22;saurav&#x22;}
+user = {&#x22;Abhay&#x22;, 150, True}
+
+# iterate set
+for p in players:
+    print(p)
+
+# add item in set
+players.add(&#x22;mahendra&#x22;)
+user.add(&#x22;Mumbai&#x22;)
+
+# remove item from set
+players.remove(&#x22;saurav&#x22;)
+user.remove(150)
+
+print(players)
+print(user)
+
+# Add user set in player set
+players.update(user)
+print(players)
+
+# add list to set
+rcb = [&#x22;virat&#x22;, &#x22;gayle&#x22;, &#x22;deVilliers&#x22;]
+players.update(rcb)
+print(players)
+
+# join two set
+playersAndUser = players.union(user)
+print(playersAndUser)
+
+# clear the set
+user.clear()
+print(user)</code></pre>
+      </section>
+
+      <section id="methods">
+        <h4>Set methods</h4>
+        <ol>
+          <li>
+            <h3>union()</h3>
+            <p>
+              You can use the <span class="keyword">union()</span> method that returns a new set containing all items from both sets, or the update() method
+              that inserts all the items from one set into another.
+            </p>
+            <p>The union() method returns a new set with all items from both sets.</p>
+            <pre><code class="language-py">
+set1 = {&#x22;a&#x22;, &#x22;b&#x22; , &#x22;c&#x22;}
+set2 = {1, 2, 3}
+
+set3 = set1.union(set2)
+
+print(set3)                 # {1, 2, &#x27;a&#x27;, 3, &#x27;b&#x27;, &#x27;c&#x27;}</code></pre>
+          </li>
+
+          <li>
+            <h3>update()</h3>
+            <p>The <span class="keyword">update()</span> method inserts the items in set2 into set1</p>
+            <pre><code class="language-py">
+set1 = {&#x22;a&#x22;, &#x22;b&#x22; , &#x22;c&#x22;}
+set2 = {1, 2, 3}
+
+set1.update(set2)
+
+print(set1)             # {1, &#x27;b&#x27;, 2, 3, &#x27;a&#x27;, &#x27;c&#x27;}</code></pre>
+            <b>Both union() and update() will exclude any duplicate items.</b>
+          </li>
+
+          <li>
+            <h3>intersection()</h3>
+            <p>The <span class="keyword">intersection()</span> method will return a new set, that only contains the items that are present in both sets</p>
+            <pre><code class="language-py">
+fruit = {&#x22;apple&#x22;, &#x22;banana&#x22;, &#x22;cherry&#x22;}
+company = {&#x22;google&#x22;, &#x22;microsoft&#x22;, &#x22;apple&#x22;}
+
+common = fruit.intersection(company)
+
+print(common)                               # {&#x27;apple&#x27;}</code></pre>
+          </li>
+
+          <li>
+            <h3>intersection_update()</h3>
+            <p>Keep the items that exist in both set x, and set y</p>
+            <pre><code class="language-py">
+fruits = {&#x22;apple&#x22;, &#x22;banana&#x22;, &#x22;cherry&#x22;}
+company = {&#x22;google&#x22;, &#x22;microsoft&#x22;, &#x22;apple&#x22;}
+
+fruits.intersection_update(company)
+
+print(fruits)                               # {&#x27;apple&#x27;}</code></pre>
+          </li>
+
+          <li>
+            <h3>symmetric_difference()</h3>
+            <p>
+              The <span class="keyword">symmetric_difference()</span> method will return a new set, that contains only the elements that are NOT present in both
+              sets.
+            </p>
+            <p>Return a set that contains all items from both sets, except items that are present in both</p>
+            <pre><code class="language-py">
+fruit = {&#x22;apple&#x22;, &#x22;banana&#x22;, &#x22;cherry&#x22;}
+company = {&#x22;google&#x22;, &#x22;microsoft&#x22;, &#x22;apple&#x22;}
+
+not_commmon = fruit.symmetric_difference(company)
+
+
+print(not_commmon)                                  # {&#x27;cherry&#x27;, &#x27;microsoft&#x27;, &#x27;google&#x27;, &#x27;banana&#x27;}</code></pre>
+          </li>
+
+          <li>
+            <h3>symmetric_difference_update()</h3>
+            <p>The <span class="keyword">symmetric_difference_update()</span> method will keep only the elements that are NOT present in both sets.</p>
+            <p>Keep the items that are not present in both sets</p>
+            <pre><code class="language-py">
+fruits = {&#x22;apple&#x22;, &#x22;banana&#x22;, &#x22;cherry&#x22;}
+companies = {&#x22;google&#x22;, &#x22;microsoft&#x22;, &#x22;apple&#x22;}
+
+fruits.symmetric_difference_update(companies)
+
+print(fruits)                                   # {&#x27;microsoft&#x27;, &#x27;banana&#x27;, &#x27;cherry&#x27;, &#x27;google&#x27;}</code></pre>
+          </li>
+        </ol>
       </section>
     </div>
   </body>
