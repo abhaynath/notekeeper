@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>JSON</title>
   </head>
 
   <body>
@@ -18,10 +18,93 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="js_04_01">
-        <h4></h4>
+      <section id="json">
+        <h4>string to JSON</h4>
+        <p>Python has a built-in package called json, which can be used to work with JSON data.</p>
+        <p>You can convert string into JSON object using <span class="keyword">loads()</span> method.</p>
         <pre><code class="language-py">
-           </code></pre>
+import json
+
+# some JSON:
+str = &#x27;{ &#x22;name&#x22;:&#x22;John&#x22;, &#x22;age&#x22;:30, &#x22;city&#x22;:&#x22;New York&#x22;}&#x27;
+
+# parse x:
+person = json.loads(str)
+
+print(person)
+
+# the result is a Python dictionary:
+print(person[&#x22;age&#x22;])</code></pre>
+      </section>
+
+      <section id="str">
+        <h4>Object to JSON string</h4>
+        <p>If you have a Python object, you can convert it into a JSON string by using the <span class="keyword">json.dumps()</span> method.</p>
+        <pre><code class="language-py">
+import json
+
+# a Python object (dict):
+personObj = {
+    &#x22;name&#x22;: &#x22;Abhay&#x22;,
+    &#x22;age&#x22;: 35,
+    &#x22;city&#x22;: &#x22;Mumbai&#x22;
+}
+
+# convert into JSON string:
+str = json.dumps(personObj)
+
+# the result is a JSON string:
+
+print(str)                          # {&#x22;name&#x22;: &#x22;John&#x22;, &#x22;age&#x22;: 30, &#x22;city&#x22;: &#x22;New York&#x22;}
+print(type(str))                    # &#x3C;class &#x27;str&#x27;&#x3E;</code></pre>
+      </section>
+
+      <section id="sample">
+        <h4>Python to JSON type conversion</h4>
+        <p>When you convert from Python to JSON, Python objects are converted into the JSON (JavaScript) equivalent</p>
+        <pre><code class="language-py">
+import json
+
+x = {
+    &#x22;name&#x22;: &#x22;John&#x22;,
+    &#x22;age&#x22;: 30,
+    &#x22;married&#x22;: True,
+    &#x22;divorced&#x22;: False,
+    &#x22;children&#x22;: (&#x22;Ann&#x22;, &#x22;Billy&#x22;),
+    &#x22;pets&#x22;: None,
+    &#x22;cars&#x22;: [
+        {&#x22;model&#x22;: &#x22;BMW 230&#x22;, &#x22;mpg&#x22;: 27.5},
+        {&#x22;model&#x22;: &#x22;Ford Edge&#x22;, &#x22;mpg&#x22;: 24.1}
+    ]
+}
+
+str = json.dumps(x)
+
+print(str)
+
+&#x22;&#x22;&#x22;
+{
+   &#x22;name&#x22;: &#x22;John&#x22;,
+   &#x22;age&#x22;: 30,
+   &#x22;married&#x22;: true,
+   &#x22;divorced&#x22;: false,
+   &#x22;children&#x22;: [
+      &#x22;Ann&#x22;,
+      &#x22;Billy&#x22;
+   ],
+   &#x22;pets&#x22;: null,
+   &#x22;cars&#x22;: [
+      {
+         &#x22;model&#x22;: &#x22;BMW 230&#x22;,
+         &#x22;mpg&#x22;: 27.5
+      },
+      {
+         &#x22;model&#x22;: &#x22;Ford Edge&#x22;,
+         &#x22;mpg&#x22;: 24.1
+      }
+   ]
+}
+&#x22;&#x22;&#x22;</code></pre>
       </section>
     </div>
   </body>
