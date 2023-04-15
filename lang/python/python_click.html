@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Click</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="python_index.html">Python</a>
+    </nav>
+    <div class="content">
+      <section id="basic">
+        <h4>Greeting utility with <b>click</b></h4>
+        <pre><code class="language-py">
+import click
+
+CONTEXT_SETTINGS = dict(help_option_names=[&#x27;-h&#x27;, &#x27;--help&#x27;])
+
+
+def greeter(**kwargs):
+    output = &#x27;{0}, {1}!&#x27;.format(kwargs[&#x27;greeting&#x27;],
+                                kwargs[&#x27;name&#x27;])
+    if kwargs[&#x27;caps&#x27;]:
+        output = output.upper()
+    print(output)
+
+
+@click.group(context_settings=CONTEXT_SETTINGS)
+@click.version_option(version=&#x27;1.0.0&#x27;)
+def greet():
+    pass
+
+
+@greet.command()
+@click.argument(&#x27;name&#x27;)
+@click.option(&#x27;--greeting&#x27;, default=&#x27;Hello&#x27;, help=&#x27;word to use for the greeting&#x27;)
+@click.option(&#x27;--caps&#x27;, is_flag=True, help=&#x27;uppercase the output&#x27;)
+def hello(**kwargs):
+    greeter(**kwargs)
+
+
+@greet.command()
+@click.argument(&#x27;name&#x27;)
+@click.option(&#x27;--greeting&#x27;, default=&#x27;Goodbye&#x27;, help=&#x27;word to use for the greeting&#x27;)
+@click.option(&#x27;--caps&#x27;, is_flag=True, help=&#x27;uppercase the output&#x27;)
+def goodbye(**kwargs):
+    greeter(**kwargs)
+
+
+if __name__ == &#x27;__main__&#x27;:
+    greet()</code></pre>
+        <h3>Usages</h3>
+
+        <b>getting help</b>
+        <pre class="shell">
+F:\command-line-apps\argparse&#x3E;python click_hello.py -h       
+Usage: click_hello.py [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --version   Show the version and exit.
+  -h, --help  Show this message and exit.        
+
+Commands:
+  goodbye
+  hello</pre
+        >
+
+        <b>Default value</b>
+        <pre class="shell">
+F:\command-line-apps\click&#x3E;python click_hello.py hello Abhay 
+Hello, Abhay!</pre
+        >
+        <b>With flag</b>
+        <pre class="shell">
+F:\command-line-apps\click&#x3E;python click_hello.py hello --greeting Hi  Abhay      
+Hi, Abhay!</pre
+        >
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
