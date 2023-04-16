@@ -18,234 +18,446 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
-      <section id="basic">
-        <h4>Flags</h4>
-        <p>The key function for working with files in Python is the <span class="keyword">open()</span> function.</p>
-        <p>The <span class="keyword">open()</span> function takes two parameters; filename, and mode.</p>
-        <p>There are four different methods (modes) for opening a file</p>
+      <details>
+        <summary>Flags in file operations</summary>
+        <section id="flag">
+          <h4>Flags</h4>
+          <p>The key function for working with files in Python is the <span class="keyword">open()</span> function.</p>
+          <p>The <span class="keyword">open()</span> function takes two parameters; filename, and mode.</p>
+          <p>There are four different methods (modes) for opening a file</p>
 
-        <table>
-          <tr>
-            <th>Flag</th>
-            <th>Mode</th>
-            <th>Details</th>
-          </tr>
-          <tr>
-            <td>r</td>
-            <td>Read</td>
-            <td>Default value. Opens a file for reading, error if the file does not exist</td>
-          </tr>
+          <table>
+            <tr>
+              <th>Flag</th>
+              <th>Mode</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>r</td>
+              <td>Read</td>
+              <td>Default value. Opens a file for reading, error if the file does not exist</td>
+            </tr>
 
-          <tr>
-            <td>a</td>
-            <td>Append</td>
-            <td>Opens a file for appending, creates the file if it does not exist</td>
-          </tr>
+            <tr>
+              <td>a</td>
+              <td>Append</td>
+              <td>Opens a file for appending, creates the file if it does not exist</td>
+            </tr>
 
-          <tr>
-            <td>w</td>
-            <td>Write</td>
-            <td>Opens a file for writing, creates the file if it does not exist</td>
-          </tr>
+            <tr>
+              <td>w</td>
+              <td>Write</td>
+              <td>Opens a file for writing, creates the file if it does not exist</td>
+            </tr>
 
-          <tr>
-            <td>x</td>
-            <td>Create</td>
-            <td>Creates the specified file, returns an error if the file exists</td>
-          </tr>
-        </table>
-        <p>In addition you can specify if the file should be handled as binary or text mode</p>
+            <tr>
+              <td>x</td>
+              <td>Create</td>
+              <td>Creates the specified file, returns an error if the file exists</td>
+            </tr>
+          </table>
+          <p>In addition you can specify if the file should be handled as binary or text mode</p>
 
-        <table>
-          <tr>
-            <th>Flag</th>
-            <th>Mode</th>
-            <th>Details</th>
-          </tr>
-          <tr>
-            <td>t</td>
-            <td>Text</td>
-            <td>Default value. Text mode</td>
-          </tr>
+          <table>
+            <tr>
+              <th>Flag</th>
+              <th>Mode</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>t</td>
+              <td>Text</td>
+              <td>Default value. Text mode</td>
+            </tr>
 
-          <tr>
-            <td>b</td>
-            <td>Binary</td>
-            <td>Binary mode (e.g. images)</td>
-          </tr>
-        </table>
-      </section>
+            <tr>
+              <td>b</td>
+              <td>Binary</td>
+              <td>Binary mode (e.g. images)</td>
+            </tr>
+          </table>
+        </section>
+      </details>
 
-      <section id="">
-        <h4>Reading file</h4>
-        <p>The <span class="keyword">open()</span> function returns a file object, which has a read() method for reading the content of the file</p>
+      <details>
+        <summary>Reading files</summary>
+        <section id="reading">
+          <h4>Reading file</h4>
+          <p>The <span class="keyword">open()</span> function returns a file object, which has a read() method for reading the content of the file</p>
 
-        <pre><code class="language-py">
-f = open(&#x22;F:\\test.txt&#x22;, &#x22;r&#x22;)
-print(f.read())
-f.close()</code></pre>
+          <pre><code class="language-py">
+  f = open(&#x22;F:\\test.txt&#x22;, &#x22;r&#x22;)
+  print(f.read())
+  f.close()</code></pre>
 
-        <h4>Read only part of file</h4>
+          <h4>Read only part of file</h4>
 
-        <p>By default the read() method returns the whole text, but you can also specify how many characters you want to return</p>
-        <pre><code class="language-py">
-f = open(&#x22;F:\\test.txt&#x22;, &#x22;r&#x22;)
-print(f.read(5))
-f.close()</code></pre>
+          <p>By default the read() method returns the whole text, but you can also specify how many characters you want to return</p>
+          <pre><code class="language-py">
+  f = open(&#x22;F:\\test.txt&#x22;, &#x22;r&#x22;)
+  print(f.read(5))
+  f.close()</code></pre>
 
-        <h4>Reading lines</h4>
-        <p>You can return one line by using the readline() method</p>
-        <pre><code class="language-py">
-f = open(&#x22;F:\\test.txt&#x22;, &#x22;r&#x22;)
-print(f.readline())
-f.close()</code></pre>
-      </section>
+          <h4>Reading lines</h4>
+          <p>You can return one line by using the readline() method</p>
+          <pre><code class="language-py">
+  f = open(&#x22;F:\\test.txt&#x22;, &#x22;r&#x22;)
+  print(f.readline())
+  f.close()</code></pre>
 
-      <section id="file">
-        <h4>Read the file line by line</h4>
-        <p>By looping through the lines of the file, you can read the whole file, line by line</p>
-        <pre><code class="language-py">
+          <h4>Read the file line by line</h4>
+          <p>By looping through the lines of the file, you can read the whole file, line by line</p>
+          <pre><code class="language-py">
 f = open(&#x22;F:\\test.txt&#x22;, &#x22;r&#x22;)
 for line in f:
-    print(line)
+print(line)
 
 f.close()</code></pre>
-      </section>
+        </section>
+      </details>
 
-      <section id="writetofile">
-        <h4>Write to an Existing File</h4>
-        <p>To write to an existing file, you must add a parameter to the <span class="keyword">open()</span> function</p>
-        <table>
-          <tr>
-            <th>Flag</th>
-            <th>Mode</th>
-            <th>Details</th>
-          </tr>
-          <tr>
-            <td>a</td>
-            <td>Append</td>
-            <td>will append to the end of the file</td>
-          </tr>
-          <tr>
-            <td>w</td>
-            <td>Write</td>
-            <td>will overwrite any existing content</td>
-          </tr>
-        </table>
-        <p>Following code appends timestamps in the file.</p>
-        <pre><code class="language-py">
-import datetime
+      <details>
+        <summary>Writing to file</summary>
+        <section id="writetofile">
+          <h4>Write to an Existing File</h4>
+          <p>To write to an existing file, you must add a parameter to the <span class="keyword">open()</span> function</p>
+          <table>
+            <tr>
+              <th>Flag</th>
+              <th>Mode</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>a</td>
+              <td>Append</td>
+              <td>will append to the end of the file</td>
+            </tr>
+            <tr>
+              <td>w</td>
+              <td>Write</td>
+              <td>will overwrite any existing content</td>
+            </tr>
+          </table>
+          <p>Following code appends timestamps in the file.</p>
+          <pre><code class="language-py">
+  import datetime
+  
+  current_time = datetime.datetime.now()
+  timestamp = str(current_time)
+  
+  f = open(&#x22;F:\\test.txt&#x22;, &#x22;a&#x22;)
+  f.write(timestamp+&#x22;\n&#x22;)
+  f.close()</code></pre>
+        </section>
+      </details>
 
-current_time = datetime.datetime.now()
-timestamp = str(current_time)
+      <details>
+        <summary>Write and Read a JSON Configuration file</summary>
+        <section id="newfile">
+          <h4>Create new file</h4>
+          <p>To create a new file in Python, use the <span class="keyword">open()</span> method, with one of the following parameters</p>
 
-f = open(&#x22;F:\\test.txt&#x22;, &#x22;a&#x22;)
-f.write(timestamp+&#x22;\n&#x22;)
-f.close()</code></pre>
-      </section>
+          <table>
+            <tr>
+              <th>Flag</th>
+              <th>Mode</th>
+              <th>Details</th>
+            </tr>
+            <tr>
+              <td>x</td>
+              <td>Create</td>
+              <td>will create a file, returns an error if the file exist</td>
+            </tr>
 
-      <section id="newfile">
-        <h4>Create new file</h4>
-        <p>To create a new file in Python, use the <span class="keyword">open()</span> method, with one of the following parameters</p>
+            <tr>
+              <td>a</td>
+              <td>Append</td>
+              <td>will create a file if the specified file does not exist</td>
+            </tr>
 
-        <table>
-          <tr>
-            <th>Flag</th>
-            <th>Mode</th>
-            <th>Details</th>
-          </tr>
-          <tr>
-            <td>x</td>
-            <td>Create</td>
-            <td>will create a file, returns an error if the file exist</td>
-          </tr>
-
-          <tr>
-            <td>a</td>
-            <td>Append</td>
-            <td>will create a file if the specified file does not exist</td>
-          </tr>
-
-          <tr>
-            <td>w</td>
-            <td>Write</td>
-            <td>will create a file if the specified file does not exist</td>
-          </tr>
-        </table>
-        <p>Following program creates the python object, writes it to the json file and then it reads it again.</p>
-        <pre><code class="language-py">
-import json
-import datetime
-
-
-config = {
-    &#x27;userId&#x27;: &#x22;A101G&#x22;,
-    &#x27;password&#x27;: &#x22;abc123&#x22;,
-    &#x27;ip&#x27;: &#x27;172.31.16.71&#x27;,
-    &#x27;max_connections&#x27;: 1000,
-    &#x27;domain&#x27;: &#x27;software.com&#x27;,
-    &#x27;isActive&#x27;: True,
-    &#x27;users_list&#x27;: [&#x22;abhay&#x22;, &#x22;sachin&#x22;, &#x22;nazma&#x22;],
-    &#x27;server_details&#x27;: None
-}
-
-# get current timestamp
-current_time = datetime.datetime.now()
-timestamp = str(current_time)
-
-# set last modified timestamp
-config[&#x27;last_modified&#x27;] = timestamp
-print(config)
-
-# convert object to json string
-strJson = json.dumps(config)
-print(strJson)
-
-# writes the json string to file
-filePath = &#x22;F:\\config.json&#x22;
-f = open(filePath, &#x22;w&#x22;)
-f.write(strJson)
-f.close()
-
-
-# read the contents of the file
-f = open(filePath, &#x22;r&#x22;)
-strConfig = f.read()
-f.close()
-
-# convert the string json to object
-newConfig = json.loads(strConfig)
-print(newConfig)</code></pre>
-      </section>
-
-      <section id="delete">
-        <h4>Delete File</h4>
-        <p>To delete a file, you must import the <b>OS</b> module, and run its <span class="keyword">os.remove()</span> function</p>
-        <pre><code class="language-py">
+            <tr>
+              <td>w</td>
+              <td>Write</td>
+              <td>will create a file if the specified file does not exist</td>
+            </tr>
+          </table>
+          <p>Following program creates the python object, writes it to the json file and then it reads it again.</p>
+          <pre><code class="language-py">
+  import json
+  import datetime
+  
+  
+  config = {
+      &#x27;userId&#x27;: &#x22;A101G&#x22;,
+      &#x27;password&#x27;: &#x22;abc123&#x22;,
+      &#x27;ip&#x27;: &#x27;172.31.16.71&#x27;,
+      &#x27;max_connections&#x27;: 1000,
+      &#x27;domain&#x27;: &#x27;software.com&#x27;,
+      &#x27;isActive&#x27;: True,
+      &#x27;users_list&#x27;: [&#x22;abhay&#x22;, &#x22;sachin&#x22;, &#x22;nazma&#x22;],
+      &#x27;server_details&#x27;: None
+  }
+  
+  # get current timestamp
+  current_time = datetime.datetime.now()
+  timestamp = str(current_time)
+  
+  # set last modified timestamp
+  config[&#x27;last_modified&#x27;] = timestamp
+  print(config)
+  
+  # convert object to json string
+  strJson = json.dumps(config)
+  print(strJson)
+  
+  # writes the json string to file
+  filePath = &#x22;F:\\config.json&#x22;
+  f = open(filePath, &#x22;w&#x22;)
+  f.write(strJson)
+  f.close()
+  
+  
+  # read the contents of the file
+  f = open(filePath, &#x22;r&#x22;)
+  strConfig = f.read()
+  f.close()
+  
+  # convert the string json to object
+  newConfig = json.loads(strConfig)
+  print(newConfig)</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>Delete file</summary>
+        <section id="delete">
+          <h4>Delete File</h4>
+          <p>To delete a file, you must import the <b>OS</b> module, and run its <span class="keyword">os.remove()</span> function</p>
+          <pre><code class="language-py">
 import os
 
 filePath = &#x22;F:\\test.txt&#x22;
 if os.path.exists(filePath):
-    os.remove(filePath)
-    print(&#x22;File deleted&#x22;)
+os.remove(filePath)
+print(&#x22;File deleted&#x22;)
 else:
-    print(&#x22;The file does not exist&#x22;)</code></pre>
-      </section>
+print(&#x22;The file does not exist&#x22;)</code></pre>
+        </section>
+      </details>
 
-      <section id="deleteFolder">
-        <h4>Delete Folder</h4>
-        <b>You can only remove empty folders.</b>
-        <pre><code class="language-py">
+      <details>
+        <summary>Delete Folder</summary>
+        <section id="deleteFolder">
+          <h4>Delete Folder</h4>
+          <b>You can only remove empty folders.</b>
+          <pre><code class="language-py">
 import os
 
 folderPath = &#x22;F:\\myfolder&#x22;
 
 if os.path.exists(folderPath):
-    os.rmdir(folderPath)
-    print(&#x22;Folder deleted successfully&#x22;)
+os.rmdir(folderPath)
+print(&#x22;Folder deleted successfully&#x22;)
 else:
-    print(&#x22;Folder not found&#x22;)</code></pre>
-      </section>
+print(&#x22;Folder not found&#x22;)</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Rename single file</summary>
+        <section id="rename">
+          <h4>Rename single file</h4>
+          <p>
+            Python comes with a built-in function, rename(), as part of the os library. As the name implies, the function is used to rename a file. Before
+            diving into how practical examples, let&#x2019;s take a look at what makes up the function, including its various parameters:
+          </p>
+          <pre><code class="language-py">
+  # Understanding the Python os.rename() Function
+  os.rename(
+     src, 
+     dst, 
+     *, 
+     src_dir_fd=None, 
+     dst_dir_fd=None
+  )</code></pre>
+          <table>
+            <tr>
+              <th>Parameter</th>
+              <th>Description</th>
+              <th>Default Argument</th>
+              <th>Accepted Values</th>
+            </tr>
+            <tr>
+              <td>src</td>
+              <td>The path for the file that you want to rename</td>
+              <td></td>
+              <td>string or path-like</td>
+            </tr>
+
+            <tr>
+              <td>dst</td>
+              <td>The destination path for the file that you want to use</td>
+              <td></td>
+              <td>string or path-like</td>
+            </tr>
+
+            <tr>
+              <td>src_dir_fd</td>
+              <td>The source file directory</td>
+              <td>None</td>
+              <td>string or path-like</td>
+            </tr>
+
+            <tr>
+              <td>dst_dir_fd</td>
+              <td>The destination file directory</td>
+              <td>None</td>
+              <td>string or path-like</td>
+            </tr>
+          </table>
+          <pre><code class="language-py">
+  import os
+  
+  oldFileName = &#x27;my_file.txt&#x27;
+  newFileName = &#x22;new_file_150.py&#x22;
+  try:
+      os.rename(oldFileName, newFileName)
+  except FileNotFoundError:
+      print(f&#x22;{oldFileName} not found&#x22;)
+  except FileExistsError:
+      print(f&#x22;{newFileName} already exists.&#x22;)
+  else:
+      print(&#x22;File renamed successfully.&#x22;)</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Rename multiple files</summary>
+        <section id="rename_multy">
+          <h4>Rename multiple files</h4>
+          <p>
+            To rename multiple files using Python, you can combine the os.rename() function with a Python for loop. A for loop lets you iterate over a list of
+            items, such as a list of file names.
+          </p>
+          <pre><code class="language-py">
+import os
+
+dir = &#x27;files/&#x27;
+
+for file in os.listdir(dir):
+old_filepath = os.path.join(dir, file)
+new_name = &#x27;old_&#x27; + file
+new_filepath = os.path.join(dir, new_name)
+
+os.rename(old_filepath, new_filepath)</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>Copy file</summary>
+        <section id="copyfile">
+          <h3>Copy file to particular path with filename</h3>
+          <p>We can file to copy file to a particular location with specific file name.</p>
+          <pre><code class="language-py">
+import shutil
+
+sourceFile = &#x27;rename.py&#x27;
+destinationFile = &#x27;files/newRename.py&#x27;
+
+shutil.copyfile(sourceFile, destinationFile)</code></pre>
+
+          <h3>Copy file to particular folder</h3>
+          <p>We can directly copy to particular folder (is should exists) without specifying file.</p>
+          <pre><code class="language-py">
+import shutil
+
+sourceFile = &#x27;rename.py&#x27;
+destination_folder = &#x27;files2/&#x27;
+
+shutil.copy(sourceFile, destination_folder)</code></pre>
+
+          <h3>Copy a File as a File Object</h3>
+          <p>
+            You can also copy a file as a file object by using the <span class="keyword">shutil.copyfileobj()</span> method. This method, instead of taking file
+            paths, takes file-like objects as its arguments.
+          </p>
+          <pre><code class="language-py">
+import shutil
+
+source_file_path = &#x27;rename.py&#x27;
+source_file = open(source_file_path, &#x27;rb&#x27;)
+
+destination_file_path = &#x27;files3/rename444.py&#x27;
+destination_file = open(destination_file_path, &#x27;wb&#x27;)
+
+shutil.copyfileobj(source_file, destination_file)</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Move file</summary>
+        <section id="movefile">
+          <h4>Move File</h4>
+          <p>The <span class="keyword">shutil.move()</span> function is a dedicated function for moving files</p>
+          <pre><code class="language-py">
+# Understanding the shutil.move() Function
+shutil.move(
+    src, 
+    dst, 
+    copy_function=copy2
+)</code></pre>
+          <pre><code class="language-py">
+import shutil
+
+source_file = &#x27;files3/rename444.py&#x27;
+
+destination_folder = &#x27;moved_file.py&#x27;
+
+shutil.move(source_file, destination_folder)</code></pre>
+
+          <h4>Move multiple files</h4>
+          <p></p>
+          <pre><code class="language-py">
+import os
+import shutil
+
+source_folder = &#x27;files&#x27;
+
+destination_folder = &#x27;files4&#x27;
+
+for file in os.listdir(source_folder):
+    file_path = os.path.join(source_folder, file)
+    shutil.move(file_path, destination_folder)</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <b></b>
+          <pre><code class="language-py">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <b></b>
+          <pre><code class="language-py">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <b></b>
+          <pre><code class="language-py">
+</code></pre>
+        </section>
+      </details>
     </div>
   </body>
 
