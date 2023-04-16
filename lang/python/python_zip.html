@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Zip</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="python_index.html">Python</a>
+    </nav>
+    <div class="content">
+      <p>
+        Python comes packaged with a module, zipfile, for creating, reading, writing, and appending to a zip file. Because the module is built into Python,
+        there is no need to install anything. In particular, the zipfile module comes with a class, ZipFile, which has many helpful methods to allow you to read
+        and write zip files in Python.
+      </p>
+      <details>
+        <summary>zip folder</summary>
+        <section id="zipfolder">
+          <h4>Zip a folder</h4>
+          <pre><code class="language-py">
+import zipfile
+import os
+
+source_directory = &#x27;files4&#x27;
+files = os.listdir(source_directory)
+
+zip_destination = &#x27;zip_folder.zip&#x27;
+
+with zipfile.ZipFile(zip_destination, &#x27;w&#x27;) as zip:
+    for file in files:
+        file_path = os.path.join(source_directory, file)
+        zip.write(file_path)</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Add Files to an Existing Zip File</summary>
+        <section id="addtozip">
+          <h4>Add Files to an Existing Zip File</h4>
+          <p>
+            Adding files to an exciting zip file is made easy using the Zipfile class. When you instantiate a Zipfile object, you can open it in append mode
+            using the &#x27;a&#x27; mode. From there, the process works in the same way as though you were adding files to a newly created file.
+          </p>
+          <pre><code class="language-py">
+import os
+import zipfile
+
+source_directory = &#x27;files4/&#x27;
+file_name = &#x27;rename.py&#x27;
+zip_path = &#x22;zip_folder.zip&#x22;
+
+with zipfile.ZipFile(zip_path, &#x27;a&#x27;) as zip:
+    file_path = os.path.join(source_directory, file_name)
+    zip.write(filename=file_path, arcname=file_name)</code></pre>
+          <p>
+            Notice that in the code block above that we use a second argument, arcname=. Let&#x2019;s take a look at the difference between these two
+            parameters:
+          </p>
+          <ul>
+            <li><b>filename</b> represents the file that you want to add into your zip file</li>
+            <li><b>arcname</b> represents the path and filename you want to use in the archive itself.</li>
+          </ul>
+          <p>If we were to leave the second argument blank, then it would use the filename value. This would replicate the whole folder structure</p>
+        </section>
+      </details>
+
+      <details>
+        <summary>Extracting Zip file to a folder</summary>
+        <section id="extactzip">
+          <h4>Extract zip files to a folder</h4>
+          <pre><code class="language-py">
+import zipfile
+
+source_zip_path = &#x27;zip_folder.zip&#x27;
+destination_folder = &#x27;extracted_folder&#x27;
+
+with zipfile.ZipFile(source_zip_path, &#x27;r&#x27;) as zip:
+    zip.extractall(destination_folder)</code></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
