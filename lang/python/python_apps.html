@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Apps</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="python_index.html">Python</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>Duplicate files remover</summary>
+        <section id="dupremover">
+         <pre><code class="language-py">
+import pathlib
+import os
+import hashlib
+import time
+
+
+path = pathlib.Path.cwd()
+
+walker = os.walk(path)
+
+uniqueFiles = dict()
+
+timestamp = str(int(str(time.time()).replace(&#x27;.&#x27;, &#x27;&#x27;)))
+removed_files = &#x22;deleted_&#x22;+timestamp+&#x22;.txt&#x22;
+
+
+f = open(removed_files, &#x22;a&#x22;)
+print(&#x22;scanning files.....&#x22;)
+
+for folder, sub_folders, files in walker:
+    for file in files:
+        filePath = os.path.join(folder, file)
+        fileHash = hashlib.md5(open(filePath, &#x22;rb&#x22;).read()).hexdigest()
+
+        if fileHash in uniqueFiles:
+            os.remove(filePath)
+            print(filePath)
+            f.write(filePath+&#x22;\n&#x22;)
+        else:
+            uniqueFiles[fileHash] = filePath
+
+f.close()
+print(f&#x22;Search complete. {removed_files} contains list of all deleted files.&#x22;)</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <pre><code class="language-py">
+                   </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <pre><code class="language-py">
+                   </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <pre><code class="language-py">
+                   </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <pre><code class="language-py">
+                   </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <pre><code class="language-py">
+                   </code></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
