@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>HTTP</title>
   </head>
 
   <body>
@@ -19,12 +19,22 @@
     </nav>
     <div class="content">
       <details>
-        <summary></summary>
-        <section id="">
-          <h4></h4>
+        <summary>Get Request</summary>
+        <section id="get">
+          <h3>Simple Get request</h3>
           <p></p>
           <pre><code class="language-py">
-             </code></pre>
+import requests
+
+url = &#x22;https://jsonplaceholder.typicode.com/posts/1&#x22;
+
+api_response = requests.get(url)
+
+print(f&#x22;Status = {api_response.status_code}&#x22;)       # Status = 200
+text_content = api_response.text
+
+print(type(text_content))                           # &#x3C;class &#x27;str&#x27;&#x3E;
+print(text_content)</code></pre>
         </section>
       </details>
 

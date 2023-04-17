@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title></title>
+    <title>Common utils</title>
   </head>
 
   <body>
@@ -19,12 +19,47 @@
     </nav>
     <div class="content">
       <details>
-        <summary></summary>
-        <section id="">
-          <h4></h4>
-          <p></p>
+        <summary>Generate Unique id string (UUID)</summary>
+        <section id="uuid">
+          <h3>uuid.uuid4() method</h3>
+          <p>To create a random id, you call the uuid4 () method and it will automatically generate a unique id.</p>
           <pre><code class="language-py">
-             </code></pre>
+import uuid
+
+id2 = str(uuid.uuid4())
+
+print(id2)</code></pre>
+
+          <h3>Creating unique Id in constructor</h3>
+          
+          <pre><code class="language-py">
+import uuid
+
+
+class Player:
+    def __init__(self, name) -&#x3E; None:
+        self.id = str(uuid.uuid4())
+        self.first_name = name
+
+    def display(self):
+        print(f&#x22;{self.id} {self.first_name.title()}&#x22;)
+
+
+names = [&#x22;sachin&#x22;, &#x22;saurav&#x22;, &#x22;rahul&#x22;]
+
+team = list()
+
+for name in names:
+    player = Player(name)
+    team.append(player)
+
+
+for p in team:
+    p.display()</code></pre>
+    <pre class="shell">
+3e618e4e-7076-47c5-8740-769c8629d5d7 Sachin
+da23a884-30ed-433f-9968-9bdecd6af8f7 Saurav
+f2a3fd6b-b8ff-47ea-8d07-1418c9385e34 Rahul</pre>
         </section>
       </details>
 
