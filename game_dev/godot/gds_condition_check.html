@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Condition Checking</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/highlight/languages/gdscript.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="gd_index.html">Godot</a>
+      </nav>
+
+      <details>
+        <summary>Condition checking</summary>
+        <section id="if">
+          <h4>Conditional statements</h4>
+          <p>
+            Conditional Statements allow us to control the flow of our program execution. If the code statements only executed one after the other until the end
+            of a function, the functionality would be very limited.
+          </p>
+          <p>
+            The basic conditional statement uses the if / else / elif syntax. We use indentation to define the levels for how deep into the if structure we are.
+            Here are some GDScript code examples:
+          </p>
+          <pre>
+            <code class="language-godot">
+  extends Node2D
+  
+  func _ready():
+  &#x9;var n = 6
+  &#x9;
+  &#x9;# Inline &#x27;if&#x27; statement
+  &#x9;if n == 6: print(&#x22;n is equal to six&#x22;)
+  &#x9;
+  &#x9;n = 4
+  &#x9;# Regular &#x27;if&#x27; statement 
+  &#x9;if n == 4:
+  &#x9;&#x9;print(&#x22;n is equal to four&#x22;)
+  &#x9;
+  &#x9;# &#x27;else/if&#x27; statement
+  &#x9;if n == 6:
+  &#x9;&#x9;print(&#x22;n is equal to six&#x22;)
+  &#x9;else:
+  &#x9;&#x9;print(&#x22;n is not equal to six&#x22;)
+  &#x9;
+  &#x9;# Messy indented &#x27;else/if&#x27; statement
+  &#x9;if n == 6:
+  &#x9;&#x9;print(&#x22;n is equal to six&#x22;)
+  &#x9;else:
+  &#x9;&#x9;if n &#x3C; 6:
+  &#x9;&#x9;&#x9;print(&#x22;n is less than six&#x22;)
+  &#x9;&#x9;else:
+  &#x9;&#x9;&#x9;print(&#x22;n is greater than six&#x22;)
+  &#x9;
+  &#x9;n = 8
+  &#x9;# Tidier &#x27;else/if&#x27; statement using &#x27;elif&#x27;
+  &#x9;if n == 6:
+  &#x9;&#x9;print(&#x22;n is equal to six&#x22;)
+  &#x9;elif n &#x3C; 6:
+  &#x9;&#x9;print(&#x22;n is less than six&#x22;)
+  &#x9;else:
+  &#x9;&#x9;print(&#x22;n is greater than six&#x22;)
+            </code>
+          </pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>match statement</summary>
+        <section id="match">
+          <h4>match statement</h4>
+          <p>
+            A match statement is used to branch execution of a program. It&#x27;s the equivalent of the switch statement found in many other languages, but
+            offers some additional features.
+          </p>
+          <pre><code class="language-godot">
+match [expression]:
+[pattern](s):
+  [block]
+[pattern](s):
+  [block]
+[pattern](s):
+  [block]
+    </code></pre>
+
+          <h4>match vs switch case</h4>
+          <ul>
+            <li>Replace switch with match.</li>
+            <li>Remove case.</li>
+            <li>Remove any breaks. If you don&#x27;t want to break by default, you can use continue for a fallthrough.</li>
+            <li>Change default to a single underscore.</li>
+          </ul>
+          <p>
+            The patterns are matched from top to bottom. If a pattern matches, the first corresponding block will be executed. After that, the execution
+            continues below the match statement. You can use continue to stop execution in the current block and check for an additional match in the patterns
+            below it.
+          </p>
+          <p>There are 6 types of patterns</p>
+          <ol>
+            <li>
+              <h4>Constant pattern</h4>
+              <p>Constant primitives, like numbers and strings:</p>
+              <pre>
+          <code class="language-godot">
+match x:
+1:
+  print(&#x22;We are number one!&#x22;)
+2:
+  print(&#x22;Two are better than one!&#x22;)
+&#x22;test&#x22;:
+  print(&#x22;Oh snap! It&#x27;s a string!&#x22;)
+          </code>
+        </pre>
+            </li>
+
+            <li>
+              <h4>Variable pattern</h4>
+              <p>Matches the contents of a variable/enum:</p>
+              <pre>
+          <code class="language-godot">
+match typeof(x):
+TYPE_REAL:
+    print(&#x22;float&#x22;)
+TYPE_STRING:
+    print(&#x22;text&#x22;)
+TYPE_ARRAY:
+    print(&#x22;array&#x22;)
+</code>
+        </pre>
+            </li>
+
+            <li>
+              <h4>Wildcard pattern</h4>
+              <p>This pattern matches everything. It&#x27;s written as a single underscore.</p>
+              <p>It can be used as the equivalent of the default in a switch statement in other languages:</p>
+              <pre>
+          <code class="language-godot">
+match x:
+1:
+    print(&#x22;It&#x27;s one!&#x22;)
+2:
+    print(&#x22;It&#x27;s one times two!&#x22;)
+_:
+    print(&#x22;It&#x27;s not 1 or 2. I don&#x27;t care to be honest.&#x22;)
+          </code>
+        </pre>
+            </li>
+
+            <li>
+              <h4>Binding pattern</h4>
+              <p>
+                A binding pattern introduces a new variable. Like the wildcard pattern, it matches everything - and also gives that value a name. It&#x27;s
+                especially useful in array and dictionary patterns:
+              </p>
+              <pre>
+          <code class="language-godot">
+match x:
+1:
+    print(&#x22;It&#x27;s one!&#x22;)
+2:
+    print(&#x22;It&#x27;s one times two!&#x22;)
+var new_var:
+    print(&#x22;It&#x27;s not 1 or 2, it&#x27;s &#x22;, new_var)
+</code>
+        </pre>
+            </li>
+
+            <li>
+              <h4>Array pattern</h4>
+              <p>Matches an array. Every single element of the array pattern is a pattern itself, so you can nest them.</p>
+              <p>The length of the array is tested first, it has to be the same size as the pattern, otherwise the pattern doesn&#x27;t match.</p>
+              <p>Open-ended array: An array can be bigger than the pattern by making the last subpattern ...</p>
+              <p>Every subpattern has to be comma-separated.</p>
+              <pre>
+          <code class="language-godot">
+match x:
+[]:
+    print(&#x22;Empty array&#x22;)
+[1, 3, &#x22;test&#x22;, null]:
+    print(&#x22;Very specific array&#x22;)
+[var start, _, &#x22;test&#x22;]:
+    print(&#x22;First element is &#x22;, start, &#x22;, and the last is \&#x22;test\&#x22;&#x22;)
+[42, ..]:
+    print(&#x22;Open ended array&#x22;)
+</code></pre>
+            </li>
+
+            <li>
+              <h4>Dictionary pattern</h4>
+              <p>Works in the same way as the array pattern. Every key has to be a constant pattern.</p>
+              <p>The size of the dictionary is tested first, it has to be the same size as the pattern, otherwise the pattern doesn&#x27;t match.</p>
+              <p>Open-ended dictionary: A dictionary can be bigger than the pattern by making the last subpattern ...</p>
+              <p>Every subpattern has to be comma separated.</p>
+              <p>If you don&#x27;t specify a value, then only the existence of the key is checked.</p>
+              <p>A value pattern is separated from the key pattern with a :.</p>
+              <pre>
+          <code class="language-godot">
+match x:
+{}:
+    print(&#x22;Empty dict&#x22;)
+{&#x22;name&#x22;: &#x22;Dennis&#x22;}:
+    print(&#x22;The name is Dennis&#x22;)
+{&#x22;name&#x22;: &#x22;Dennis&#x22;, &#x22;age&#x22;: var age}:
+    print(&#x22;Dennis is &#x22;, age, &#x22; years old.&#x22;)
+{&#x22;name&#x22;, &#x22;age&#x22;}:
+    print(&#x22;Has a name and an age, but it&#x27;s not Dennis :(&#x22;)
+{&#x22;key&#x22;: &#x22;godotisawesome&#x22;, ..}:
+    print(&#x22;I only checked for one entry and ignored the rest&#x22;)
+</code></pre>
+            </li>
+
+            <li>
+              <h4>Multiple patterns</h4>
+              <p>You can also specify multiple patterns separated by a comma. These patterns aren&#x27;t allowed to have any bindings in them.</p>
+              <pre>
+          <code class="language-godot">
+match x:
+1, 2, 3:
+    print(&#x22;It&#x27;s 1 - 3&#x22;)
+&#x22;Sword&#x22;, &#x22;Splash potion&#x22;, &#x22;Fist&#x22;:
+    print(&#x22;Yep, you&#x27;ve taken damage&#x22;)
+          </code></pre>
+            </li>
+          </ol>
+        </section>
+      </details>
+      <details>
+        <summary></summary>
+        <section id="">
+          <summary></summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <summary></summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <summary></summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <summary></summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <summary></summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <summary></summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <summary></summary>
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

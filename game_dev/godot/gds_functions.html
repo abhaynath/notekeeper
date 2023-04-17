@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Functions</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/highlight/languages/gdscript.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="gd_index.html">Godot</a>
+      </nav>
+      <details>
+        <summary>Function basics</summary>
+        <section id="basic">
+          <h4>Functions</h4>
+          <p>
+            Functions are a way to group together sections of code that perform related actions. They help us to write more readable code and avoid repeating
+            the same code in multiple places.
+          </p>
+          <p>
+            A square root function may be familiar. It has an input and returns an output. Functions may have zero or multiple inputs, and optionally return a
+            result.
+          </p>
+          <p>
+            Functions always belong to a Class which is a container for related functions. So when you extend a Node in Godot, you are creating a Class
+            containing your functions and variables.
+          </p>
+          <p>
+            Your extended class will also inherit the functions and properties of the class that it extends. Properties are member variables that are declared
+            in the top-most scope of the class.
+          </p>
+          <p>
+            <b>Functions returning values :</b>The return keyword is used to return at any point. This means exiting the function with a value or not (returns a
+            null value) to the point in the program code just after where the function was called from.
+          </p>
+          <p>If the return keyword is not used, then the code will run to the end of the function and return a null value.</p>
+          <p>
+            The return value doesn&#x2019;t have to be used, just call the function without capturing it&#x2019;s return value. But this may generate a warning
+            in the error window if the value is not null to alert you to a potential bug in your code logic.
+          </p>
+          <p>Also, the return type may be specified to add extra bug resistance.</p>
+          <pre>
+            <code class="language-godot">
+  extends Node2D
+  
+  # Called when the node enters the scene tree for the first time.
+  func _ready():
+  &#x9;add(5, 6) # Prints 11 to Output window
+  &#x9;var sum = get_sum(2, 4) # Sets sum to 6
+  &#x9;var my_int = add_ints(sum, 4) # Sets my_int to 10
+  &#x9;my_int = times_2(my_int) # sets my_int to 20
+  &#x9;move_x(self, my_int) # Move this node 20 pixels along x axis
+  &#x9;move_x(self) # Move by the default value
+  
+  # This function has no return value
+  func add(a, b):
+  &#x9;print(a + b)
+  
+  # This function returns a value
+  func get_sum(a, b):
+  &#x9;return a + b
+  
+  # This function will only accept integer arguments
+  func add_ints(a: int, b: int):
+  &#x9;return a + b
+  
+  # Generate an error if the return value is not an int
+  func times_2(n) -&#x3E; int:
+  &#x9;return 2 * n
+  
+  # This function modifies an object that is passed by reference
+  func move_x(node: Node2D, dx = 1.5):
+  &#x9;node.position.x += dx
+            </code>
+          </pre>
+          <p>
+            In the above code you can see that the node&#x2019;s property is altered without returning the node value. This works because the node value is a
+            reference number to an object, and the object is said to be passed by reference. Contrast this to a simple number that is passed by value where it
+            has local scope to the function and needs to be returned to make use of the new value.
+          </p>
+          <p>
+            Everything inside a function has to be finished before the next frame can appear on screen (unless you are using <span class="keyword">yield</span>,
+            which would turn your function into a coroutine).
+          </p>
+        </section>
+      </details>
+      <details>
+        <summary></summary>
+        <section id="">
+          <details>
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+    </code></pre>
+          </details>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <details>
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+    </code></pre>
+          </details>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <details>
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+    </code></pre>
+          </details>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <details>
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+    </code></pre>
+          </details>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <details>
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+    </code></pre>
+          </details>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <details>
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+    </code></pre>
+          </details>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <details>
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+    </code></pre>
+          </details>
+        </section>
+      </details>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

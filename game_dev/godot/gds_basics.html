@@ -21,456 +21,189 @@
         <a href="gd_index.html">Godot Index</a>
       </nav>
 
-      <section id="sec01">
-        <h4>Variables</h4>
-        <table>
-          <caption>
-            Data Types
-          </caption>
-          <tbody>
-            <tr>
-              <th>Type</th>
-              <th>Details</th>
-            </tr>
-            <tr>
-              <td>int</td>
-              <td>A 64bit signed number</td>
-            </tr>
-            <tr>
-              <td>float</td>
-              <td>Floating point number</td>
-            </tr>
-            <tr>
-              <td>bool</td>
-              <td>true or false</td>
-            </tr>
-            <tr>
-              <td>String</td>
-              <td>For words and character sequences</td>
-            </tr>
-          </tbody>
-        </table>
+      <details>
+        <summary>Variables and Data Types</summary>
+        <section id="sec01">
+          <h4>Variables</h4>
+          <table>
+            <caption>
+              Data Types
+            </caption>
+            <tbody>
+              <tr>
+                <th>Type</th>
+                <th>Details</th>
+              </tr>
+              <tr>
+                <td>int</td>
+                <td>A 64bit signed number</td>
+              </tr>
+              <tr>
+                <td>float</td>
+                <td>Floating point number</td>
+              </tr>
+              <tr>
+                <td>bool</td>
+                <td>true or false</td>
+              </tr>
+              <tr>
+                <td>String</td>
+                <td>For words and character sequences</td>
+              </tr>
+            </tbody>
+          </table>
 
-        <p><span class="keyword">const</span> must be declared in global scope.</p>
+          <p><span class="keyword">const</span> must be declared in global scope.</p>
 
-        <details open="true">
-          <summary>Code</summary>
-          <pre><code class="language-godot">
-const TEAM_NAME: String = &#x22;India&#x22;
-
-
-func _ready():
-&#x9;var first_name = &#x22;Sachin&#x22;
-&#x9;var last_name := &#x22;Tendulkar&#x22;
-&#x9;var full_name = first_name + &#x22; &#x22; + last_name
-&#x9;print(full_name + &#x22; --&#x3E; &#x22; + TEAM_NAME)
-
-&#x9;var runs = 18426
-&#x9;var innings = 411
-&#x9;var balls_faced = 21367
-&#x9;var average = runs / innings as float
-&#x9;var strike_rate = runs / balls_faced as float * 100
-&#x9;print(average)
-&#x9;print(strike_rate)
-
-&#x9;var radius := 5.5
-&#x9;var diameter = 2 * radius
-&#x9;var cirucumference = PI * diameter
-&#x9;print(diameter)
-&#x9;print(cirucumference)
-&#x9;
-&#x9;match typeof(cirucumference):
-&#x9;&#x9;TYPE_NIL:
-&#x9;&#x9;&#x9;print(&#x22;its null&#x22;)
-&#x9;&#x9;TYPE_INT:
-&#x9;&#x9;&#x9;print(&#x22;Integer&#x22;)
-&#x9;&#x9;TYPE_REAL:
-&#x9;&#x9;&#x9;print(&#x22;float number&#x22;)
-&#x9;&#x9;_:
-&#x9;&#x9;&#x9;print(&#x22;No idea about the datatype&#x22;)
-
-</code></pre>
-        </details>
-      </section>
-      <section id="sec02">
-        <h4>Variable scope</h4>
-        <p>
-          Scope is the area of the program code where the variable is accessible. Text indentation levels are used to define scope in the editor, and the
-          various regions may be expanded and collapsed.
-        </p>
-        <p>
-          Global scope is where the variable is available everywhere such as when it is declared in an Autoload file. And local scope is the area within a
-          function containing the variable after it&#x2019;s declaration.
-        </p>
-        <p>
-          It is good practice to keep the scope of a variable as small as possible to reduce bugs and make self-contained chunks of functionality that
-          don&#x2019;t depend on external variables.
-        </p>
-      </section>
-      <section id="sec03">
-        <h4>Operators</h4>
-        <table>
-          <tbody>
-            <tr>
-              <th>Operator</th>
-              <th>Details</th>
-            </tr>
-            <tr>
-              <td>&#x3C; == &#x3E; != &#x3E;= &#x3C;=</td>
-              <td>Comparison operators</td>
-            </tr>
-
-            <tr>
-              <td>! not</td>
-              <td>NOT</td>
-            </tr>
-
-            <tr>
-              <td>&#x26;&#x26; and</td>
-              <td>AND</td>
-            </tr>
-
-            <tr>
-              <td>|| or</td>
-              <td>OR</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section id="sec04">
-        <h4>Functions</h4>
-        <p>
-          Functions are a way to group together sections of code that perform related actions. They help us to write more readable code and avoid repeating the
-          same code in multiple places.
-        </p>
-        <p>
-          A square root function may be familiar. It has an input and returns an output. Functions may have zero or multiple inputs, and optionally return a
-          result.
-        </p>
-        <p>
-          Functions always belong to a Class which is a container for related functions. So when you extend a Node in Godot, you are creating a Class containing
-          your functions and variables.
-        </p>
-        <p>
-          Your extended class will also inherit the functions and properties of the class that it extends. Properties are member variables that are declared in
-          the top-most scope of the class.
-        </p>
-        <p>
-          <b>Functions returning values :</b>The return keyword is used to return at any point. This means exiting the function with a value or not (returns a
-          null value) to the point in the program code just after where the function was called from.
-        </p>
-        <p>If the return keyword is not used, then the code will run to the end of the function and return a null value.</p>
-        <p>
-          The return value doesn&#x2019;t have to be used, just call the function without capturing it&#x2019;s return value. But this may generate a warning in
-          the error window if the value is not null to alert you to a potential bug in your code logic.
-        </p>
-        <p>Also, the return type may be specified to add extra bug resistance.</p>
-        <pre>
-          <code class="language-godot">
-extends Node2D
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-&#x9;add(5, 6) # Prints 11 to Output window
-&#x9;var sum = get_sum(2, 4) # Sets sum to 6
-&#x9;var my_int = add_ints(sum, 4) # Sets my_int to 10
-&#x9;my_int = times_2(my_int) # sets my_int to 20
-&#x9;move_x(self, my_int) # Move this node 20 pixels along x axis
-&#x9;move_x(self) # Move by the default value
-
-# This function has no return value
-func add(a, b):
-&#x9;print(a + b)
-
-# This function returns a value
-func get_sum(a, b):
-&#x9;return a + b
-
-# This function will only accept integer arguments
-func add_ints(a: int, b: int):
-&#x9;return a + b
-
-# Generate an error if the return value is not an int
-func times_2(n) -&#x3E; int:
-&#x9;return 2 * n
-
-# This function modifies an object that is passed by reference
-func move_x(node: Node2D, dx = 1.5):
-&#x9;node.position.x += dx
-          </code>
-        </pre>
-        <p>
-          In the above code you can see that the node&#x2019;s property is altered without returning the node value. This works because the node value is a
-          reference number to an object, and the object is said to be passed by reference. Contrast this to a simple number that is passed by value where it has
-          local scope to the function and needs to be returned to make use of the new value.
-        </p>
-        <p>
-          Everything inside a function has to be finished before the next frame can appear on screen (unless you are using <span class="keyword">yield</span>,
-          which would turn your function into a coroutine).
-        </p>
-      </section>
-
-      <section id="sec05">
-        <h4>Code entry points</h4>
-        <p>
-          One of the inherited functions is the <b>_ready</b> function. This is called by the Engine for each Node that enters the scene tree. We are able to
-          override this function in order to have it run our initialization code.
-        </p>
-        <p>
-          Another inherited function that we may override is the <b>_process(delta)</b> function. This is called by the Engine for every frame of video. The
-          delta input value is the elapsed time since the previous frame. In this function, we may insert code that drives the activity of our game.
-        </p>
-        <p>These built-in functions have an underscore prefix in the names. For our custom functions, we will likely name them in the same way as variables.</p>
-        <p>
-          If you were wondering &#x201C;where is the entry point to my code?&#x201D;, then you can see that it is via the built-in functions that we may
-          override. They get called by the Engine at times of initialization, input events, and during traversal of the game loop.
-        </p>
-        <pre><code class="language-godot">
-  extends Node2D
-
-  # Declare member variables here.
-  var player
-  var enemies
-  var score
+          <details open="true">
+            <summary>Code</summary>
+            <pre><code class="language-godot">
+  const TEAM_NAME: String = &#x22;India&#x22;
   
-  # Called when the node enters the scene tree for the first time.
+  
   func _ready():
-  &#x9;add_enemies()
-  &#x9;get_player_details()
+  &#x9;var first_name = &#x22;Sachin&#x22;
+  &#x9;var last_name := &#x22;Tendulkar&#x22;
+  &#x9;var full_name = first_name + &#x22; &#x22; + last_name
+  &#x9;print(full_name + &#x22; --&#x3E; &#x22; + TEAM_NAME)
   
-  func add_enemies():
-  &#x9;pass # Add code to do this later
+  &#x9;var runs = 18426
+  &#x9;var innings = 411
+  &#x9;var balls_faced = 21367
+  &#x9;var average = runs / innings as float
+  &#x9;var strike_rate = runs / balls_faced as float * 100
+  &#x9;print(average)
+  &#x9;print(strike_rate)
   
-  func get_player_details():
-  &#x9;pass # Add the code later
+  &#x9;var radius := 5.5
+  &#x9;var diameter = 2 * radius
+  &#x9;var cirucumference = PI * diameter
+  &#x9;print(diameter)
+  &#x9;print(cirucumference)
+  &#x9;
+  &#x9;match typeof(cirucumference):
+  &#x9;&#x9;TYPE_NIL:
+  &#x9;&#x9;&#x9;print(&#x22;its null&#x22;)
+  &#x9;&#x9;TYPE_INT:
+  &#x9;&#x9;&#x9;print(&#x22;Integer&#x22;)
+  &#x9;&#x9;TYPE_REAL:
+  &#x9;&#x9;&#x9;print(&#x22;float number&#x22;)
+  &#x9;&#x9;_:
+  &#x9;&#x9;&#x9;print(&#x22;No idea about the datatype&#x22;)
   
-  # Called every frame.
-  func _process(delta):
-  &#x9;process_inputs(delta)
-  &#x9;process_enemy_activity(delta)
-  &#x9;update_score()
+  </code></pre>
+          </details>
+        </section>
+      </details>
+
+      <details>
+        <summary>Variable Scope</summary>
+        <section id="sec02">
+          <h4>Variable scope</h4>
+          <p>
+            Scope is the area of the program code where the variable is accessible. Text indentation levels are used to define scope in the editor, and the
+            various regions may be expanded and collapsed.
+          </p>
+          <p>
+            Global scope is where the variable is available everywhere such as when it is declared in an Autoload file. And local scope is the area within a
+            function containing the variable after it&#x2019;s declaration.
+          </p>
+          <p>
+            It is good practice to keep the scope of a variable as small as possible to reduce bugs and make self-contained chunks of functionality that
+            don&#x2019;t depend on external variables.
+          </p>
+        </section>
+      </details>
+
+      <details>
+        <summary>Operators</summary>
+        <section id="sec03">
+          <h4>Operators</h4>
+          <table>
+            <tbody>
+              <tr>
+                <th>Operator</th>
+                <th>Details</th>
+              </tr>
+              <tr>
+                <td>&#x3C; == &#x3E; != &#x3E;= &#x3C;=</td>
+                <td>Comparison operators</td>
+              </tr>
+
+              <tr>
+                <td>! not</td>
+                <td>NOT</td>
+              </tr>
+
+              <tr>
+                <td>&#x26;&#x26; and</td>
+                <td>AND</td>
+              </tr>
+
+              <tr>
+                <td>|| or</td>
+                <td>OR</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </details>
+
+      <details>
+        <summary>Code entry points</summary>
+        <section id="sec05">
+          <h4>Code entry points</h4>
+          <p>
+            One of the inherited functions is the <b>_ready</b> function. This is called by the Engine for each Node that enters the scene tree. We are able to
+            override this function in order to have it run our initialization code.
+          </p>
+          <p>
+            Another inherited function that we may override is the <b>_process(delta)</b> function. This is called by the Engine for every frame of video. The
+            delta input value is the elapsed time since the previous frame. In this function, we may insert code that drives the activity of our game.
+          </p>
+          <p>
+            These built-in functions have an underscore prefix in the names. For our custom functions, we will likely name them in the same way as variables.
+          </p>
+          <p>
+            If you were wondering &#x201C;where is the entry point to my code?&#x201D;, then you can see that it is via the built-in functions that we may
+            override. They get called by the Engine at times of initialization, input events, and during traversal of the game loop.
+          </p>
+          <pre><code class="language-godot">
+    extends Node2D
   
-  func process_inputs(delta):
-  &#x9;pass
-  
-  func process_enemy_activity(delta):
-  &#x9;pass
-  
-  func update_score():
-  &#x9;pass
-          </code></pre>
-        <p></p>
-        <p></p>
-      </section>
-
-      <section id="sec06">
-        <h4>Conditional statements</h4>
-        <p>
-          Conditional Statements allow us to control the flow of our program execution. If the code statements only executed one after the other until the end
-          of a function, the functionality would be very limited.
-        </p>
-        <p>
-          The basic conditional statement uses the if / else / elif syntax. We use indentation to define the levels for how deep into the if structure we are.
-          Here are some GDScript code examples:
-        </p>
-        <pre>
-          <code class="language-godot">
-extends Node2D
-
-func _ready():
-&#x9;var n = 6
-&#x9;
-&#x9;# Inline &#x27;if&#x27; statement
-&#x9;if n == 6: print(&#x22;n is equal to six&#x22;)
-&#x9;
-&#x9;n = 4
-&#x9;# Regular &#x27;if&#x27; statement 
-&#x9;if n == 4:
-&#x9;&#x9;print(&#x22;n is equal to four&#x22;)
-&#x9;
-&#x9;# &#x27;else/if&#x27; statement
-&#x9;if n == 6:
-&#x9;&#x9;print(&#x22;n is equal to six&#x22;)
-&#x9;else:
-&#x9;&#x9;print(&#x22;n is not equal to six&#x22;)
-&#x9;
-&#x9;# Messy indented &#x27;else/if&#x27; statement
-&#x9;if n == 6:
-&#x9;&#x9;print(&#x22;n is equal to six&#x22;)
-&#x9;else:
-&#x9;&#x9;if n &#x3C; 6:
-&#x9;&#x9;&#x9;print(&#x22;n is less than six&#x22;)
-&#x9;&#x9;else:
-&#x9;&#x9;&#x9;print(&#x22;n is greater than six&#x22;)
-&#x9;
-&#x9;n = 8
-&#x9;# Tidier &#x27;else/if&#x27; statement using &#x27;elif&#x27;
-&#x9;if n == 6:
-&#x9;&#x9;print(&#x22;n is equal to six&#x22;)
-&#x9;elif n &#x3C; 6:
-&#x9;&#x9;print(&#x22;n is less than six&#x22;)
-&#x9;else:
-&#x9;&#x9;print(&#x22;n is greater than six&#x22;)
-          </code>
-        </pre>
-      </section>
-
-      <section id="sec07">
-        <h4>match statement</h4>
-        <p>
-          A match statement is used to branch execution of a program. It&#x27;s the equivalent of the switch statement found in many other languages, but offers
-          some additional features.
-        </p>
-        <pre><code class="language-godot">
-match [expression]:
-  [pattern](s):
-      [block]
-  [pattern](s):
-      [block]
-  [pattern](s):
-      [block]
-        </code></pre>
-
-        <h4>match vs switch case</h4>
-        <ul>
-          <li>Replace switch with match.</li>
-          <li>Remove case.</li>
-          <li>Remove any breaks. If you don&#x27;t want to break by default, you can use continue for a fallthrough.</li>
-          <li>Change default to a single underscore.</li>
-        </ul>
-        <p>
-          The patterns are matched from top to bottom. If a pattern matches, the first corresponding block will be executed. After that, the execution continues
-          below the match statement. You can use continue to stop execution in the current block and check for an additional match in the patterns below it.
-        </p>
-        <p>There are 6 types of patterns</p>
-        <ol>
-          <li>
-            <h4>Constant pattern</h4>
-            <p>Constant primitives, like numbers and strings:</p>
-            <pre>
-              <code class="language-godot">
-match x:
-  1:
-      print(&#x22;We are number one!&#x22;)
-  2:
-      print(&#x22;Two are better than one!&#x22;)
-&#x22;test&#x22;:
-      print(&#x22;Oh snap! It&#x27;s a string!&#x22;)
-              </code>
-            </pre>
-          </li>
-
-          <li>
-            <h4>Variable pattern</h4>
-            <p>Matches the contents of a variable/enum:</p>
-            <pre>
-              <code class="language-godot">
-  match typeof(x):
-    TYPE_REAL:
-        print(&#x22;float&#x22;)
-    TYPE_STRING:
-        print(&#x22;text&#x22;)
-    TYPE_ARRAY:
-        print(&#x22;array&#x22;)
-</code>
-            </pre>
-          </li>
-
-          <li>
-            <h4>Wildcard pattern</h4>
-            <p>This pattern matches everything. It&#x27;s written as a single underscore.</p>
-            <p>It can be used as the equivalent of the default in a switch statement in other languages:</p>
-            <pre>
-              <code class="language-godot">
-match x:
-    1:
-        print(&#x22;It&#x27;s one!&#x22;)
-    2:
-        print(&#x22;It&#x27;s one times two!&#x22;)
-    _:
-        print(&#x22;It&#x27;s not 1 or 2. I don&#x27;t care to be honest.&#x22;)
-              </code>
-            </pre>
-          </li>
-
-          <li>
-            <h4>Binding pattern</h4>
-            <p>
-              A binding pattern introduces a new variable. Like the wildcard pattern, it matches everything - and also gives that value a name. It&#x27;s
-              especially useful in array and dictionary patterns:
-            </p>
-            <pre>
-              <code class="language-godot">
-match x:
-    1:
-        print(&#x22;It&#x27;s one!&#x22;)
-    2:
-        print(&#x22;It&#x27;s one times two!&#x22;)
-    var new_var:
-        print(&#x22;It&#x27;s not 1 or 2, it&#x27;s &#x22;, new_var)
-</code>
-            </pre>
-          </li>
-
-          <li>
-            <h4>Array pattern</h4>
-            <p>Matches an array. Every single element of the array pattern is a pattern itself, so you can nest them.</p>
-            <p>The length of the array is tested first, it has to be the same size as the pattern, otherwise the pattern doesn&#x27;t match.</p>
-            <p>Open-ended array: An array can be bigger than the pattern by making the last subpattern ...</p>
-            <p>Every subpattern has to be comma-separated.</p>
-            <pre>
-              <code class="language-godot">
-match x:
-    []:
-        print(&#x22;Empty array&#x22;)
-    [1, 3, &#x22;test&#x22;, null]:
-        print(&#x22;Very specific array&#x22;)
-    [var start, _, &#x22;test&#x22;]:
-        print(&#x22;First element is &#x22;, start, &#x22;, and the last is \&#x22;test\&#x22;&#x22;)
-    [42, ..]:
-        print(&#x22;Open ended array&#x22;)
-</code></pre>
-          </li>
-
-          <li>
-            <h4>Dictionary pattern</h4>
-            <p>Works in the same way as the array pattern. Every key has to be a constant pattern.</p>
-            <p>The size of the dictionary is tested first, it has to be the same size as the pattern, otherwise the pattern doesn&#x27;t match.</p>
-            <p>Open-ended dictionary: A dictionary can be bigger than the pattern by making the last subpattern ...</p>
-            <p>Every subpattern has to be comma separated.</p>
-            <p>If you don&#x27;t specify a value, then only the existence of the key is checked.</p>
-            <p>A value pattern is separated from the key pattern with a :.</p>
-            <pre>
-              <code class="language-godot">
-match x:
-    {}:
-        print(&#x22;Empty dict&#x22;)
-    {&#x22;name&#x22;: &#x22;Dennis&#x22;}:
-        print(&#x22;The name is Dennis&#x22;)
-    {&#x22;name&#x22;: &#x22;Dennis&#x22;, &#x22;age&#x22;: var age}:
-        print(&#x22;Dennis is &#x22;, age, &#x22; years old.&#x22;)
-    {&#x22;name&#x22;, &#x22;age&#x22;}:
-        print(&#x22;Has a name and an age, but it&#x27;s not Dennis :(&#x22;)
-    {&#x22;key&#x22;: &#x22;godotisawesome&#x22;, ..}:
-        print(&#x22;I only checked for one entry and ignored the rest&#x22;)
-</code></pre>
-          </li>
-
-          <li>
-            <h4>Multiple patterns</h4>
-            <p>You can also specify multiple patterns separated by a comma. These patterns aren&#x27;t allowed to have any bindings in them.</p>
-            <pre>
-              <code class="language-godot">
-match x:
-    1, 2, 3:
-        print(&#x22;It&#x27;s 1 - 3&#x22;)
-    &#x22;Sword&#x22;, &#x22;Splash potion&#x22;, &#x22;Fist&#x22;:
-        print(&#x22;Yep, you&#x27;ve taken damage&#x22;)
-              </code></pre>
-          </li>
-        </ol>
-      </section>
+    # Declare member variables here.
+    var player
+    var enemies
+    var score
+    
+    # Called when the node enters the scene tree for the first time.
+    func _ready():
+    &#x9;add_enemies()
+    &#x9;get_player_details()
+    
+    func add_enemies():
+    &#x9;pass # Add code to do this later
+    
+    func get_player_details():
+    &#x9;pass # Add the code later
+    
+    # Called every frame.
+    func _process(delta):
+    &#x9;process_inputs(delta)
+    &#x9;process_enemy_activity(delta)
+    &#x9;update_score()
+    
+    func process_inputs(delta):
+    &#x9;pass
+    
+    func process_enemy_activity(delta):
+    &#x9;pass
+    
+    func update_score():
+    &#x9;pass
+            </code></pre>
+        </section>
+      </details>
     </div>
   </body>
   <script>
