@@ -20,14 +20,99 @@
         <a href="../../index.html"><i class="fa fa-home"></i></a>
         <a href="gd_index.html">Godot</a>
       </nav>
+      <p>
+        Signals are a delegation mechanism built into Godot that allows one game object to react to a change in another without them referencing one another.
+        Using signals limits coupling and keeps your code flexible.
+      </p>
+      <p>
+        For example, you might have a life bar on the screen that represents the player&#x2019;s health. When the player takes damage or uses a healing potion,
+        you want the bar to reflect the change. To do so, in Godot, you would use signals.
+      </p>
 
       <details>
-        <summary></summary>
-        <section id="">
+        <summary>Using Signals</summary>
+        <section id="usesignal">
+          <p>In this example, we will see how we can pass data around the sibling scenes through common parent.</p>
+          <p>We will create 3 scenes. (SignalTester, Login and Dashboard)</p>
+          <h3>SignalTester</h3>
+          <p>
+            It is the main container scene. It loads the instances of Login and Dashboard Scenes. It receives the data from login instance signal and passes it
+            to dashboard instance.
+          </p>
           <details>
-            <summary>Code</summary>
+            <summary><b>SignalTester.gd</b></summary>
             <pre><code class="language-godot">
-    </code></pre>
+  extends Node2D
+  
+  const LoginScreen = preload(&#x22;res://scenes/SignalTest/Login.tscn&#x22;)
+  const DashboardScreen = preload(&#x22;res://scenes/SignalTest/Dashboard.tscn&#x22;)
+  
+  var dashboard
+  func _ready():
+  &#x9;print(&#x22;Signal Tester Ready !&#x22;)
+  &#x9;LoginTest()
+  &#x9;
+  ## Test application for using Signals
+  func LoginTest():
+  &#x9;var login = LoginScreen.instantiate()
+  &#x9;add_child(login)
+  &#x9;
+  &#x9;dashboard = DashboardScreen.instantiate()
+  &#x9;dashboard.position = Vector2(50,200)
+  &#x9;add_child(dashboard)
+  &#x9;
+  &#x9;# Way 1 : Directly connect to signal object
+  &#x9;login.login_request.connect(login_request_handler_1) 
+  &#x9;
+  &#x9;# Way 2 : Using the name of the signal
+  &#x9;login.connect(&#x22;login_request&#x22;,login_request_handler_2)
+  &#x9;
+  &#x9;# Way 3 : Using lambda
+  &#x9;login.login_request.connect(func(d):print(&#x22;Using lambda &#x22;+d.userId))
+  &#x9;
+  func login_request_handler_1(f: Dictionary):
+  &#x9;print(&#x22;login_request_handler_1&#x22;)
+  &#x9;f.info = &#x22;This is information sent from main scene&#x22;
+  &#x9;dashboard.updateDashboard(f)
+  &#x9;
+  func login_request_handler_2(g:Dictionary):
+  &#x9;print(&#x22;login_request_handler_2&#x22;)
+  &#x9;print(g)</code></pre>
+          </details>
+          <h3>Login</h3>
+          <p>
+            It consists of 2 TextEdit fields for inputting userId and password. It has 1 Button which will emit the signal with the userId and password
+            dictionary.
+            <img src="../../images/game_dev/godot/signals/login.jpg" />
+            <details>
+              <summary><b>Login.gd</b></summary>
+              <pre><code class="language-godot">
+extends Node2D
+
+signal login_request(userInfo:Dictionary)
+
+func _on_btn_submit_pressed():
+&#x9;var userName = $txtUserID.text
+&#x9;var password = $txtPassword.text
+&#x9;var user : Dictionary = {&#x22;userId&#x22;:userName, &#x22;password&#x22;:password}
+&#x9;login_request.emit(user)</code></pre>
+            </details>
+          </p>
+          <h3>Dashboard</h3>
+          <p>
+            It constists of 2 Labels to show User Id and User information. It has method to update the lable text which will be called from
+            <span class="keyword">SignalTester.gd</span>
+
+            <img src="../../images/game_dev/godot/signals/dashboard.jpg" />
+          </p>
+          <details>
+            <summary><b>Dashboard.gd</b></summary>
+            <pre><code class="language-godot">
+extends Node2D
+
+func updateDashboard(userInfo:Dictionary):
+&#x9;$lblUserID.text = userInfo.userId
+&#x9;$lblUserInfo.text = userInfo.info</code></pre>
           </details>
         </section>
       </details>
@@ -35,66 +120,24 @@
       <details>
         <summary></summary>
         <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
+          <pre><code class="language-godot">
+          </code></pre>
         </section>
       </details>
 
       <details>
         <summary></summary>
         <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
+          <pre><code class="language-godot">
+          </code></pre>
         </section>
       </details>
 
       <details>
         <summary></summary>
         <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
-        </section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
-        </section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
-        </section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
+          <pre><code class="language-godot">
+          </code></pre>
         </section>
       </details>
     </div>
