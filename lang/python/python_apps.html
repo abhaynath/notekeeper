@@ -18,10 +18,12 @@
       <a href="python_index.html">Python</a>
     </nav>
     <div class="content">
+      <h4>Converting script file to executable</h4>
+      <pre class="shell">pyinstaller --onefile file_name.py</pre>
       <details>
         <summary>Duplicate files remover</summary>
         <section id="dupremover">
-         <pre><code class="language-py">
+          <pre><code class="language-py">
 import pathlib
 import os
 import hashlib
@@ -59,11 +61,38 @@ print(f&#x22;Search complete. {removed_files} contains list of all deleted files
       </details>
 
       <details>
-        <summary></summary>
-        <section id="">
-          <h4></h4>
+        <summary>Long file names (more than 100 characters) renamer</summary>
+        <section id="longfile">
+          <h4>longfile.py</h4>
+          <p>Following script get the current directory and iterates through all files and renames the files which has filename longer than 100 characters.</p>
           <pre><code class="language-py">
-                   </code></pre>
+import pathlib
+import os
+import uuid
+# path = &#x22;F:\System Folders\Pictures\Game Develoment&#x22;
+path = pathlib.Path.cwd()
+walker = os.walk(path)
+
+for folder, subfolder, files in walker:
+    for file in files:
+        file_name_length = len(file)
+        if file_name_length &#x3E;= 100:
+            extension = os.path.splitext(file)[1]
+            new_file_name = str(uuid.uuid4())+extension
+            old_file_path = os.path.join(folder, file)
+            new_file_path = os.path.join(folder, new_file_name)
+
+            try:
+                os.rename(old_file_path, new_file_path)
+            except FileNotFoundError:
+                print(f&#x22;{old_file_path} not found&#x22;)
+            except FileExistsError:
+                print(f&#x22;{new_file_path} already exists.&#x22;)
+            else:
+                print(f&#x22;{file} ------ {new_file_name}&#x22;)</code></pre>
+
+          <p>To compile the file, use following command</p>
+          <pre class="shell">pyinstaller --onefile longfile.py</pre>
         </section>
       </details>
 
