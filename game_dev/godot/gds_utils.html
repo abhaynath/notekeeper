@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Utility methods</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/highlight/languages/gdscript.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="gd_index.html">Godot</a>
+      </nav>
+      <details>
+        <summary>Random number generation</summary>
+        <h4>Random integer</h4>
+        <section id="randi">
+          <p>
+            To get a random number, we first need to use the predefined function, <span class="keyword">randomize()</span>, along with another function specific
+            to the type of random number we want.
+          </p>
+          <pre><code class="language-godot">randomize()
+var my_random_int = randi()
+print(my_random_int)</code></pre>
+        </section>
+
+        <h4>Random integer within specified range</h4>
+        <section id="">
+          <pre><code class="language-godot">
+var rand_gen = RandomNumberGenerator.new()
+
+func _ready():
+&#x9;rand_gen.randomize()
+&#x9;var my_random_int = rand_gen.randi_range(45,75)
+&#x9;print(my_random_int)</code></pre>
+        </section>
+
+        <h4>Random float</h4>
+        <p>The <span class="keyword">randf()</span> function generates a random float between 0 and 1.</p>
+        <pre><code class="language-godot">
+func _ready():
+&#x9;randomize()
+&#x9;var my_random_float = randf()
+&#x9;print(my_random_float)</code></pre>
+
+        <h4>Random float within specified range</h4>
+        <pre><code class="language-godot">
+var rand_gen = RandomNumberGenerator.new()
+
+func _ready():
+&#x9;rand_gen.randomize()
+&#x9;var my_random_float = rand_gen.randf_range(45.5,75.34)
+&#x9;print(my_random_float)</code></pre>
+      </details>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>

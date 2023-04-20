@@ -204,6 +204,30 @@
             </code></pre>
         </section>
       </details>
+
+      <details>
+        <summary>Enums</summary>
+        <section id="enum">
+          <pre><code class="language-godot">
+
+enum game_states  {WELCOME_SCREEN, LEVEL_SELECTION, RUNNING, PAUSED, GAME_OVER}
+enum player_states {IDLE=0, ATTACK=1, DEFENCE=5, DIE=-1}
+
+func _ready():
+&#x9;print(game_states)
+&#x9;print(player_states)
+&#x9;
+&#x9;var current_state = game_states.PAUSED
+&#x9;
+&#x9;if current_state == game_states.PAUSED:
+&#x9;&#x9;print(&#x22;game is paused.&#x22;)</code></pre>
+
+<pre class="shell">
+{ &#x22;WELCOME_SCREEN&#x22;: 0, &#x22;LEVEL_SELECTION&#x22;: 1, &#x22;RUNNING&#x22;: 2, &#x22;PAUSED&#x22;: 3, &#x22;GAME_OVER&#x22;: 4 }
+{ &#x22;IDLE&#x22;: 0, &#x22;ATTACK&#x22;: 1, &#x22;DEFENCE&#x22;: 5, &#x22;DIE&#x22;: -1 }
+game is paused.</pre>
+        </section>
+      </details>
     </div>
   </body>
   <script>

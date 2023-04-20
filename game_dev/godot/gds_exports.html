@@ -22,79 +22,59 @@
       </nav>
 
       <details>
-        <summary></summary>
-        <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
+        <summary>export basics</summary>
+        <section id="export">
+          <img src="../../images/game_dev/godot/export/exort_ui.jpg" />
+          <pre><code class="language-godot">
+# define group 1
+@export_group(&#x22;Match Details&#x22;)
+@export_enum(&#x22;NOT_STARTED&#x22;, &#x22;STARTED&#x22;, &#x22;DELAYED&#x22;, &#x22;INNINGS_BREAK&#x22;, &#x22;STOPPED&#x22;, &#x22;FINISHED&#x22;) var matchStatus:int
+@export_enum(&#x22;T20:20&#x22;,&#x22;ODI:50&#x22;,&#x22;Test:90&#x22;) var match_format:int = 50
+
+# subgroup within Group
+@export_subgroup(&#x22;India&#x22;)
+@export var Team = &#x22;India&#x22;
+@export var score = 341
+@export_enum(&#x22;Dhoni&#x22;,&#x22;Kohli&#x22;) var captain:String =&#x22;Dhoni&#x22;
+
+@export_group(&#x22;Player Details&#x22;)
+@export_enum(&#x22;Rohit Sharma&#x22;,&#x22;Shikhar Dhawan&#x22;,&#x22;Virat Kohli&#x22;) var playerName:String = &#x22;Virat Kohli&#x22;
+@export var runs:int = 50
+
+@export_group(&#x22;Ranges&#x22;)
+@export_range(0, 6) var balls:int
+@export_range(-10, 20, 0.2) var strikeRate: float
+
+@export_range(0, 100, 1, &#x22;or_greater&#x22;) var power_percent
+@export_range(0, 100, 1, &#x22;or_greater&#x22;, &#x22;or_less&#x22;) var health_delta
+
+@export_range(-3.14, 3.14, 0.001, &#x22;radians&#x22;) var angle_radians
+@export_range(0, 360, 1, &#x22;degrees&#x22;) var angle_degrees
+@export_range(-8, 8, 2, &#x22;suffix:px&#x22;) var target_offset</code></pre>
         </section>
       </details>
 
       <details>
         <summary></summary>
         <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
+          <pre><code class="language-godot">
+          </code></pre>
         </section>
       </details>
 
       <details>
         <summary></summary>
         <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
+          <pre><code class="language-godot">
+          </code></pre>
         </section>
       </details>
 
       <details>
         <summary></summary>
         <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
-        </section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
-        </section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
-        </section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section id="">
-          <details>
-            <summary>Code</summary>
-            <pre><code class="language-godot">
-    </code></pre>
-          </details>
+          <pre><code class="language-godot">
+          </code></pre>
         </section>
       </details>
     </div>
