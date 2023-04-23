@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>SQLite</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="python_index.html">Python</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>Simple queries</summary>
+        <section id="basic">
+          <h4></h4>
+         
+          <pre><code class="language-py">
+class Employee:
+
+    def __init__(self, id, first, last, pay) -&#x3E; None:
+        self.id = id
+        self.first = first
+        self.last = last
+        self.pay = pay
+
+    @property
+    def email(self) -&#x3E; str:
+        return f&#x22;{self.first}.{self.last}@email.com&#x22;
+
+    @property
+    def fullname(self) -&#x3E; str:
+        return f&#x22;{self.first} {self.last}&#x22;
+
+    def __repr__(self) -&#x3E; str:
+        return f&#x22;Employee : {self.id} {self.fullname} {self.email} {self.pay}&#x22;</code></pre>
+
+          <pre><code class="language-py">
+import sqlite3
+from employee import Employee
+
+
+EMPLOYEE_TABLE = {&#x22;DB_NAME&#x22;: &#x22;employee.db&#x22;, &#x22;TABLE_NAME&#x22;: &#x22;employee&#x22;, &#x22;ID&#x22;: &#x22;id&#x22;,
+                  &#x22;FIRST_NAME&#x22;: &#x22;first&#x22;, &#x22;LAST_NAME&#x22;: &#x22;last&#x22;, &#x22;PAY&#x22;: &#x22;pay&#x22;}
+
+conn = sqlite3.connect(EMPLOYEE_TABLE[&#x22;DB_NAME&#x22;])
+
+c = conn.cursor()
+
+emp1 = Employee(1, &#x27;sachin&#x27;, &#x27;tendulkar&#x27;, 10000)
+emp2 = Employee(2, &#x27;rohit&#x27;, &#x27;sharma&#x27;, 50000)
+
+# create table
+c.execute(
+    f&#x22;CREATE TABLE IF NOT EXISTS {EMPLOYEE_TABLE[&#x27;TABLE_NAME&#x27;]} ({EMPLOYEE_TABLE[&#x27;ID&#x27;]} integer primary key, {EMPLOYEE_TABLE[&#x27;FIRST_NAME&#x27;]} text, {EMPLOYEE_TABLE[&#x27;LAST_NAME&#x27;]} text,  {EMPLOYEE_TABLE[&#x27;PAY&#x27;]} integer)&#x22;)
+
+
+# insert employee 1 data
+c.execute(f&#x22;INSERT INTO {EMPLOYEE_TABLE[&#x27;TABLE_NAME&#x27;]}({EMPLOYEE_TABLE[&#x27;FIRST_NAME&#x27;]},{EMPLOYEE_TABLE[&#x27;LAST_NAME&#x27;]},{EMPLOYEE_TABLE[&#x27;PAY&#x27;]}) VALUES (?,?,?)&#x22;,
+          (emp1.first, emp1.last, emp1.pay))
+
+# insert employee 2 data
+c.execute(f&#x22;INSERT INTO {EMPLOYEE_TABLE[&#x27;TABLE_NAME&#x27;]}({EMPLOYEE_TABLE[&#x27;FIRST_NAME&#x27;]},{EMPLOYEE_TABLE[&#x27;LAST_NAME&#x27;]},{EMPLOYEE_TABLE[&#x27;PAY&#x27;]}) VALUES (?,?,?)&#x22;,
+          (emp2.first, emp2.last, emp2.pay))
+
+
+# get all employee data
+c.execute(
+    f&#x22;SELECT {EMPLOYEE_TABLE[&#x27;ID&#x27;]}, {EMPLOYEE_TABLE[&#x27;FIRST_NAME&#x27;]}, {EMPLOYEE_TABLE[&#x27;PAY&#x27;]} FROM {EMPLOYEE_TABLE[&#x27;TABLE_NAME&#x27;]}&#x22;)
+
+rows = c.fetchall()
+
+for r in rows:
+    print(r[0], r[1], r[2])
+
+
+conn.commit()
+
+conn.close()</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <p></p>
+          <pre><code class="language-py">
+             </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <p></p>
+          <pre><code class="language-py">
+             </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <p></p>
+          <pre><code class="language-py">
+             </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <p></p>
+          <pre><code class="language-py">
+             </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <h4></h4>
+          <p></p>
+          <pre><code class="language-py">
+             </code></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
