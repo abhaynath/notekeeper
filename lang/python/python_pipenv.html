@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>pipenv</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="python_index.html">Python</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>Create virtual environment</summary>
+        <section id="create">
+          <p>Virtual environment allows us to maintain different versions of packages in each individual projects.</p>
+          <ol>
+            <li>Create a new folder. Name it as <b>env-test</b></li>
+            <li>Create another new folder named <b>.venv</b> in <b>env-test</b> folder.</li>
+            <li>Create a file <b>.env</b> This will contain important key-value pair data.</li>
+            <li>To create a virual environment automatically, we need to install a package using <span class="keyword">pipenv</span></li>
+            <li>
+              Suppose, you want <b>requests</b> package in your project. You need to run following command from the <b>env-test</b> directory.
+              <pre class="shell">pipenv install requests</pre>
+            </li>
+            <li>With this command, virtual environment will be generated. <b>Pipfile</b> and <b>Pipfile.lock</b> will be generated automatically.</li>
+          </ol>
+        </section>
+      </details>
+
+      <details>
+        <summary>Virtual environment actions</summary>
+        <section id="actions">
+          <ul>
+            <li>
+              <h4>Activate environment</h4>
+              <p>When virual environment is activated, it will use local python installation</p>
+              <pre class="shell">pipenv shell</pre>
+            </li>
+
+            <li>
+              <h4>Deactivate environment</h4>
+              <pre class="shell">exit</pre>
+            </li>
+
+            <li>
+              <h4>Create a virtual enviornment with specific python version</h4>
+              <pre class="shell">pipenv --python 3.6</pre>
+            </li>
+
+            <li>
+              <h4>Remove virtual enviornment</h4>
+              <pre class="shell">pipenv --rm</pre>
+            </li>
+
+            <li>
+              <h4>Recreate virtual enviornment from the pipfile</h4>
+              <pre class="shell">pipenv install</pre>
+            </li>
+
+            <li>
+              <h4>Get virual enviornment location</h4>
+              <pre class="shell">pipenv --venv</pre>
+            </li>
+
+            <li>
+              <h4>Checking virtual enviornment status</h4>
+              <pre class="shell">pipenv check</pre>
+            </li>
+
+            <li>
+              <h4>Show dependency graph</h4>
+              <pre class="shell">pipenv graph</pre>
+            </li>
+
+            <li>
+              <h4>Create the lock file</h4>
+              <pre class="shell">pipenv lock</pre>
+            </li>
+
+            <li>
+              <h4>Install the packages in lock file</h4>
+              <pre class="shell">pipenv install --ignore-pipfile</pre>
+            </li>
+
+            <li>
+              <h4></h4>
+              <pre class="shell"></pre>
+            </li>
+
+            <li>
+              <h4></h4>
+              <pre class="shell"></pre>
+            </li>
+
+            <li>
+              <h4></h4>
+              <pre class="shell"></pre>
+            </li>
+
+            <li>
+              <h4></h4>
+              <pre class="shell"></pre>
+            </li>
+          </ul>
+        </section>
+      </details>
+
+      <details>
+        <summary>Package management</summary>
+        <section id="package">
+          <ul>
+            <li>
+              <h4>Install package</h4>
+              <pre class="shell">pipenv install pytube</pre>
+            </li>
+
+            <li>
+              <h4>Install package as a development dependency</h4>
+              <pre class="shell">pipenv install pyinstaller --dev</pre>
+            </li>
+
+            <li>
+              <h4>Uninstall package</h4>
+              <pre class="shell">pipenv uninstall pytube</pre>
+            </li>
+
+            <li>
+              <h4></h4>
+              <pre class="shell"></pre>
+            </li>
+
+            <li>
+              <h4></h4>
+              <pre class="shell"></pre>
+            </li>
+
+            <li>
+              <h4></h4>
+              <pre class="shell"></pre>
+            </li>
+          </ul>
+        </section>
+      </details>
+
+      <details>
+        <summary>Using enviornment variables</summary>
+        <section id="env">
+          <h4></h4>
+          <ul>
+            <li>
+              Create <b>.env</b> file in the root project folder. Add required key-value pairs.
+              <pre>SECRET_KEY = ABHAYS SECRET PASSWORD</pre>
+            </li>
+            <li>
+              Create <b>main.py</b> file in the root folder. Add following snippet which accesses enviornment variables.
+              <pre><code class="language-py">
+import os
+
+passkey = os.environ[&#x27;SECRET_KEY&#x27;]
+
+print(f&#x22;My Passkey is {passkey}&#x22;)</code></pre>
+            </li>
+          </ul>
+        </section>
+      </details>
+
+      <details>
+        <summary>Running custom commands</summary>
+        <section id="custom">
+          <ul>
+            <li>
+              add [scripts] tag in pipfile like this
+
+              <pre class="shell">
+[scripts]
+buildexe = &#x22;pyinstaller --onefile test.py&#x22;</pre
+              >
+            </li>
+            <li>
+              To run <b>buildexe</b> command from virtual enviornment
+
+              <pre class="shell">pipenv run buildexe</pre>
+            </li>
+          </ul>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
