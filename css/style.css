@@ -46,8 +46,11 @@
   --h4Color: #b9e3ff;
 
   --shellBg: black;
-  --shellTextColor: #03b903;
+  --shellTextColor: #03ff03;
   --shellPadding: 10px;
+
+  --fileBg:#1a1a48;
+  --fileTextColor:#d3ddff;
 }
 html,
 body {
@@ -151,7 +154,11 @@ pre.code {
 
   padding: 10px;
 }
-
+pre.file{
+  background: var(--fileBg);
+  color:var(--fileTextColor);
+  padding: var(--shellPadding);
+}
 ol.toc > li > a {
   color: white;
 }

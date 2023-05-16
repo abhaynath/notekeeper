@@ -21,12 +21,189 @@
       </nav>
 
       <section id="dotnet">
-        <h3>Console Apps</h3>
-        <ol class="step">
-            <li></li>
+        <h4>dot net commands</h4>
+        <details>
+          <summary>Common dotnet commands</summary>
+          <ol class="step">
+            <li>
+              display dotnet enviorment information
+              <pre class="shell">dotnet</pre>
+              <pre class="shell">
+F:\My Data\Work\Tech\csharp vscode\demo2&#x3E;dotnet
 
-        </ol>
+Usage: dotnet [options]
+Usage: dotnet [path-to-application]
 
+Options:
+  -h|--help         Display help.
+  --info            Display .NET information.
+  --list-sdks       Display the installed SDKs.
+  --list-runtimes   Display the installed runtimes.
+
+path-to-application:
+  The path to an application .dll file to execute.
+</pre
+              >
+            </li>
+
+            <li>
+              display os, sdks and runtimes installed
+              <pre class="shell">dotnet --info</pre>
+              <pre class="shell">
+F:\My Data\Work\Tech\csharp vscode\demo2&#x3E;dotnet --info
+.NET SDK:
+ Version:   7.0.202     
+ Commit:    6c74320bc3  
+
+Runtime Environment:    
+ OS Name:     Windows   
+ OS Version:  10.0.19045
+ OS Platform: Windows
+ RID:         win10-x64
+ Base Path:   C:\Program Files\dotnet\sdk\7.0.202\
+
+Host:
+  Version:      7.0.4
+  Architecture: x64
+  Commit:       0a396acafe
+
+.NET SDKs installed:
+  6.0.100 [C:\Program Files\dotnet\sdk]
+  7.0.202 [C:\Program Files\dotnet\sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.All 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.All]
+  Microsoft.AspNetCore.App 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+              </pre>
+            </li>
+
+            <li>
+              display project templates available
+              <pre class="shell">dotnet new</pre>
+              <pre class="shell">
+F:\My Data\Work\Tech\csharp vscode\demo2&#x3E;dotnet new
+The &#x27;dotnet new&#x27; command creates a .NET project based on a template.
+
+Common templates are:
+Template Name         Short Name    Language    Tags
+--------------------  ------------  ----------  -------------------
+ASP.NET Core Web App  webapp,razor  [C#]        Web/MVC/Razor Pages
+Blazor Server App     blazorserver  [C#]        Web/Blazor
+Class Library         classlib      [C#],F#,VB  Common/Library     
+Console App           console       [C#],F#,VB  Common/Console     
+Windows Forms App     winforms      [C#],VB     Common/WinForms    
+WPF Application       wpf           [C#],VB     Common/WPF
+
+An example would be:
+    dotnet new console
+
+Display template options with:
+    dotnet new console -h
+Display all installed templates with:
+    dotnet new list
+Display templates available on NuGet.org with:
+    dotnet new search web</pre
+              >
+            </li>
+
+            <li>
+              display template specific help
+              <pre class="shell">dotnet new console -h</pre>
+              <pre class="shell">
+F:\My Data\Work\Tech\csharp vscode\demo2&#x3E;dotnet new console -h
+Console App (C#)
+Author: Microsoft
+Description: A project for creating a command-line application that can run on .NET on Windows, Linux and macOS
+
+Usage:
+  dotnet new console [options] [template options]
+
+Options:
+  -n, --name &#x3C;name&#x3E;       The name for the output being created. If no name is specified, the name of the output directory is 
+                          used.
+  -o, --output &#x3C;output&#x3E;   Location to place the generated output.
+  --dry-run               Displays a summary of what would happen if the given command line were run if it would result in a  
+                          template creation.
+  --force                 Forces content to be generated even if it would change existing files.
+  --no-update-check       Disables checking for the template package updates when instantiating a template.
+  --project &#x3C;project&#x3E;     The project that should be used for context evaluation.
+  -lang, --language &#x3C;C#&#x3E;  Specifies the template language to instantiate.
+  --type &#x3C;project&#x3E;        Specifies the template type to instantiate.
+
+Template options:
+  -f, --framework &#x3C;net6.0|net7.0&#x3E;  The target framework for the project.
+                                   Type: choice
+                                     net7.0  Target net7.0
+                                     net6.0  Target net6.0
+                                   Default: net7.0
+  --langVersion &#x3C;langVersion&#x3E;      Sets the LangVersion property in the created project file
+                                   Type: text
+  --no-restore                     If specified, skips the automatic restore of the project on create.
+                                   Type: bool
+                                   Default: false
+  --use-program-main               Whether to generate an explicit Program class and Main method instead of top-level
+                                   statements.
+                                   Type: bool
+                                   Default: false
+
+To see help for other template languages (F#, VB), use --language option:
+   dotnet new console -h --language F#
+              </pre>
+            </li>
+          </ol>
+        </details>
+      </section>
+
+      <section id="console">
+        <h4>Console App with DLL project reference</h4>
+        <details>
+          <summary>Following steps to create a console application and class library project.</summary>
+          <ol>
+            <li>
+              Create a solution file named <b>MySolution</b> with following command
+              <pre class="shell">dotnet new sln --name MySolution</pre>
+              This will create <b>MySolution.sln</b> file with following content
+              <pre class="file">
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Global
+&#x9;GlobalSection(SolutionConfigurationPlatforms) = preSolution
+&#x9;&#x9;Debug|Any CPU = Debug|Any CPU
+&#x9;&#x9;Release|Any CPU = Release|Any CPU
+&#x9;EndGlobalSection
+&#x9;GlobalSection(SolutionProperties) = preSolution
+&#x9;&#x9;HideSolutionNode = FALSE
+&#x9;EndGlobalSection
+EndGlobal</pre
+              >
+            </li>
+
+            <li>
+              Create a <b>gitignore</b> file
+              <pre class="shell">dotnet new gitignore</pre>
+              This will create a gitignore file.
+            </li>
+
+            <li>
+              To create a console application named <b>TestConsole</b>, run following command
+              <pre class="shell">dotnet new console --name &#x22;TestConsole&#x22;</pre>
+            </li>
+
+            <li>
+              <pre class="shell"></pre>
+            </li>
+
+            <li>
+              <pre class="shell"></pre>
+            </li>
+
+            <li>
+              <pre class="shell"></pre>
+            </li>
+          </ol>
+        </details>
       </section>
     </div>
   </body>
