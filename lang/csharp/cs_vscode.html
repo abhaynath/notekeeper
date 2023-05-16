@@ -21,7 +21,6 @@
       </nav>
 
       <section id="dotnet">
-        <h4>dot net commands</h4>
         <details>
           <summary>Common dotnet commands</summary>
           <ol class="step">
@@ -155,9 +154,8 @@ To see help for other template languages (F#, VB), use --language option:
       </section>
 
       <section id="console">
-        <h4>Console App with DLL project reference</h4>
         <details>
-          <summary>Following steps to create a console application and class library project.</summary>
+          <summary>Console App with DLL project reference</summary>
           <ol>
             <li>
               Create a solution file named <b>MySolution</b> with following command
@@ -192,11 +190,92 @@ EndGlobal</pre
             </li>
 
             <li>
-              <pre class="shell"></pre>
+              To create a class library project named <b>HelperLib</b>, run below command
+              <pre class="shell">dotnet new classlib --name &#x22;HelperLib&#x22;</pre>
             </li>
 
             <li>
-              <pre class="shell"></pre>
+              Add <b>TestConsole</b> project to <b>MySolution</b> solution
+              <pre class="shell">dotnet sln MySolution.sln add TestConsole/TestConsole.csproj</pre>
+              <pre class="file">
+F:\demo2&#x3E;dotnet sln MySolution.sln add TestConsole/TestConsole.csproj
+Project &#x60;TestConsole\TestConsole.csproj&#x60; added to the solution.</pre
+              >
+            </li>
+
+            <li>
+              Add <b>HelperLib</b> project to <b>MySolution</b> solution
+              <pre class="shell">dotnet sln MySolution.sln add HelperLib/HelperLib.csproj</pre>
+              <pre class="file">
+F:\demo2&#x3E;dotnet sln MySolution.sln add HelperLib/HelperLib.csproj    
+Project &#x60;HelperLib\HelperLib.csproj&#x60; added to the solution.</pre
+              >
+            </li>
+
+            <li>
+              Add <b>HelperLib</b> project reference in <b>TestConsole</b> project
+              <pre class="shell">dotnet add TestConsole/TestConsole.csproj reference HelperLib/HelperLib.csproj</pre>
+              <pre class="file">
+F:\demo2&#x3E;dotnet add TestConsole/TestConsole.csproj reference HelperLib/HelperLib.csproj
+Reference &#x60;..\HelperLib\HelperLib.csproj&#x60; added to the project.</pre
+              >
+              <h4>TestConsole.csproj</h4>
+              This will add reference of class library in console application project file.
+              <pre>
+                <code class="language-xml">
+&#x3C;Project Sdk=&#x22;Microsoft.NET.Sdk&#x22;&#x3E;
+
+  &#x3C;ItemGroup&#x3E;
+    &#x3C;ProjectReference Include=&#x22;..\HelperLib\HelperLib.csproj&#x22; /&#x3E;
+  &#x3C;/ItemGroup&#x3E;
+
+  &#x3C;PropertyGroup&#x3E;
+    &#x3C;OutputType&#x3E;Exe&#x3C;/OutputType&#x3E;
+    &#x3C;TargetFramework&#x3E;net7.0&#x3C;/TargetFramework&#x3E;
+    &#x3C;ImplicitUsings&#x3E;enable&#x3C;/ImplicitUsings&#x3E;
+    &#x3C;Nullable&#x3E;enable&#x3C;/Nullable&#x3E;
+  &#x3C;/PropertyGroup&#x3E;
+
+&#x3C;/Project&#x3E;</code></pre>
+            </li>
+
+            <li>
+              To install <b>Nudget</b> package in <b>HelperLib</b> project. Change the current directory to HelperLib.
+              <pre class="shell">cd HelperLib</pre>
+              <p>Run following command to install the NuGet package</p>
+              <pre class="shell">dotnet add package Newtonsoft.Json</pre>
+              <pre>
+                <code class="language-xml">
+&#x3C;Project Sdk=&#x22;Microsoft.NET.Sdk&#x22;&#x3E;
+
+  &#x3C;PropertyGroup&#x3E;
+    &#x3C;TargetFramework&#x3E;net7.0&#x3C;/TargetFramework&#x3E;
+    &#x3C;ImplicitUsings&#x3E;enable&#x3C;/ImplicitUsings&#x3E;
+    &#x3C;Nullable&#x3E;enable&#x3C;/Nullable&#x3E;
+  &#x3C;/PropertyGroup&#x3E;
+
+  &#x3C;ItemGroup&#x3E;
+    &#x3C;PackageReference Include=&#x22;Newtonsoft.Json&#x22; Version=&#x22;13.0.3&#x22; /&#x3E;
+  &#x3C;/ItemGroup&#x3E;
+
+&#x3C;/Project&#x3E;</code></pre>
+            </li>
+
+            <li>
+              <p>
+                Go to <b>Program.cs</b> file in console application and press <span class="keyword">Ctrl+shift+p</span> and select
+                <b>.NET : Generate Assets for Build and Debug</b>
+              </p>
+              <p>
+                This will create a folder <b>.vscode</b>. It will contain <span class="keyword">launch.json</span> and <span class="keyword">tasks.json</span>
+              </p>
+            </li>
+
+            <li>In <span class="keyword">launch.json</span>, set <b>console</b> value to <b>integratedTerminal</b></li>
+
+            <li>
+              To build the solution, 
+              <pre class="shell">dotnet build MySolution.sln</pre>
             </li>
 
             <li>
