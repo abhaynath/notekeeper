@@ -97,11 +97,57 @@ for folder, subfolder, files in walker:
       </details>
 
       <details>
-        <summary></summary>
-        <section id="">
-          <h4></h4>
+        <summary>Read EPUB files meta data and rename it using ebooklib</summary>
+        <section id="ebooklib">
+          <h4>epubrename.py</h4>
           <pre><code class="language-py">
-                   </code></pre>
+import os
+import uuid
+from ebooklib import epub
+
+
+folder_path = r&#x22;F:\\My Data\\Books\\Epub Books\\Gradle\\&#x22;
+
+def get_id():
+    return str(uuid.uuid4())
+
+def rename_epubs(parent_path):
+     walker = os.walk(parent_path)
+     
+     for folder, subfolder, files in walker:
+         for file in files:
+            temp = os.path.splitext(file)
+            extension = &#x22;&#x22;
+            file_name = temp[0]
+            if len(temp) &#x3E; 1:
+                extension = temp[1]
+            
+            if len(file_name) == 36 and extension ==&#x22;.epub&#x22;:
+                old_full_path = os.path.join(folder_path, file)
+                book = epub.read_epub(old_full_path,{&#x22;ignore_ncx&#x22;:True})
+                titleData = book.get_metadata(&#x27;DC&#x27;, &#x27;title&#x27;)
+                new_title = titleData[0][0]
+                
+                if file_name != new_title:
+                    new_title = new_title.replace(&#x27;:&#x27;, &#x27;-&#x27;)
+                    new_title = new_title+extension
+                    new_full_path = os.path.join(folder_path, new_title)
+                    
+                    try:
+                        os.rename(old_full_path, new_full_path)
+                        print(new_full_path)
+                    except FileNotFoundError:
+                        print(f&#x22;File not found {old_full_path}&#x22;)
+                    except FileExistsError:
+                        print(f&#x22;File already exists {old_full_path}&#x22;)
+                    except PermissionError:
+                        print(f&#x22;Permission denied {old_full_path}&#x22;)
+                    else:
+                       pass
+                
+                
+                
+rename_epubs(folder_path)</code></pre>
         </section>
       </details>
 
