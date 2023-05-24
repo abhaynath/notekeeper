@@ -1,82 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
-    <link
-      rel="stylesheet"
-      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
-    />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>C++ project with g++</title>
+  </head>
 
-
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="vscode_index.html">VS Code</a>
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="vscode_index.html">VS Code</a>
     </nav>
 
     <div class="content">
-
       <details>
         <summary>Setup of gcc compiler</summary>
-        <section id="gcc1">
-
-        </section>
+        <section id="gcc1"></section>
       </details>
 
       <details>
-        <summary>C project using gcc</summary>
+        <summary>C++ project using gcc</summary>
         <section id="gcc2">
-            <ol>
-                <li>Create a folder called <span class="keyword">HelloWorld</span></li>
-                <li>Add <span class="keyword">main.c</span>. 
-                <pre><code class="language-c">
-#include &#x3C;stdio.h&#x3E;
-#include &#x22;mymath.c&#x22;
+          <ol>
+            <li>Create a folder called <span class="keyword">HelloWorld</span></li>
+            <li>
+              Add <span class="keyword">main.cpp</span>.
+              <pre><code class="language-cpp">
+#include &#x3C;iostream&#x3E;
+#include &#x22;head.h&#x22;
 
 int main()
 {
-    int a = 197;
-    int b = 40;
-    int c = addition(a, b);
-    printf(&#x22;Sum of %d and %d is %d.&#x22;, a, b, c);
-    return 0;
-}</code></pre>
-                </li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ol>
+    User abhay(&#x22;Abhay&#x22;, 7);
+    abhay.info();
+}
+</code></pre>
+            </li>
 
+            <li>
+              Add <span class="keyword">head.h</span>.
+              <pre><code class="language-cpp">
+#ifndef head_h
+#define head_h
+
+#include &#x3C;iostream&#x3E;
+
+class User
+{
+public:
+    User(std::string nm, int ag);
+    void info();
+    int age;
+    std::string name;
+};
+
+#endif
+</code></pre>
+            </li>
+
+            <li>
+              Add <span class="keyword">source.cpp</span>.
+              <pre><code class="language-cpp">
+#include &#x3C;iostream&#x3E;
+#include &#x22;head.h&#x22;
+
+User::User(std::string nm, int ag)
+{
+    name = nm;
+    age = ag;
+};
+
+void User::info()
+{
+    std::cout &#x3C;&#x3C; &#x22; name = &#x22; &#x3C;&#x3C; name &#x3C;&#x3C; &#x22;\n age = &#x22; &#x3C;&#x3C; age &#x3C;&#x3C; std::endl;
+}
+</code></pre>
+            </li>
+
+            <li>
+              Add <span class="keyword">.gitignore</span>.
+              <pre><code class="language-yaml">
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+</code></pre>
+            </li>
+            <li>To create a <b>tasks.json</b> file, click <b>Terminal </b><i class="fa fa-arrow-circle-o-right"></i> <b>Configure default build task</b></li>
+            <li>
+              Select <b>C/C++: g++.exe build active file</b>
+              <p><img src="../../images/tools/vscode/gpp.jpg" /></p>
+            </li>
+
+            <li>
+              This will create <b>.vscode</b> folder which contain <b>tasks.json</b>. Change the contents of <b>tasks.json</b>
+              <pre><code class="language-json">
+  {
+    &#x22;version&#x22;: &#x22;2.0.0&#x22;,
+    &#x22;tasks&#x22;: [
+      {
+        &#x22;type&#x22;: &#x22;cppbuild&#x22;,
+        &#x22;label&#x22;: &#x22;C/C++: g++.exe build active file&#x22;,
+        &#x22;command&#x22;: &#x22;F:\\Programs\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin\\g++.exe&#x22;,
+        &#x22;args&#x22;: [&#x22;-fdiagnostics-color=always&#x22;, &#x22;-g&#x22;, &#x22;${workspaceFolder}\\*.cpp&#x22;, &#x22;-o&#x22;, &#x22;${fileDirname}\\${fileBasenameNoExtension}.exe&#x22;],
+        &#x22;options&#x22;: {
+          &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+        },
+        &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
+        &#x22;group&#x22;: {
+          &#x22;kind&#x22;: &#x22;build&#x22;,
+          &#x22;isDefault&#x22;: true
+        },
+        &#x22;detail&#x22;: &#x22;compiler: F:\\Programs\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin\\g++.exe&#x22;
+      },
+      {
+        &#x22;type&#x22;: &#x22;shell&#x22;,
+        &#x22;label&#x22;: &#x22;Run Project&#x22;,
+        &#x22;command&#x22;: &#x22;F:\\Programs\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin\\g++.exe -fdiagnostics-color=always -g \&#x22;${workspaceFolder}\\*.cpp\&#x22; -o \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22; &#x26;&#x26; \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22;&#x22;,
+        &#x22;options&#x22;: {
+          &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+        },
+        &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
+        &#x22;detail&#x22;: &#x22;compiler: F:\\Programs\\chocolatey\\lib\\mingw\\tools\\install\\mingw64\\bin\\g++.exe&#x22;
+      }
+    ]
+  }</code></pre>
+              <p>Here we have added custom task <b>Run Project</b> which will first build the project and run the generated exe file.</p>
+            </li>
+            <li>
+              To run the custom task, click <b>Terminal </b> <i class="fa fa-arrow-circle-right"></i> <b>Run task</b>. Select <b>Run Project</b> from dropdown.
+            </li>
+          </ol>
         </section>
       </details>
-
-
-     
-
-
-
-
     </div>
+  </body>
 
-
-</body>
-
-<script>
+  <script>
     hljs.highlightAll();
   </script>
-
 </html>
