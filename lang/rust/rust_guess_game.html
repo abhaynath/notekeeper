@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
-    <title>Rust Hello World</title>
+    <title>Guessing Game</title>
   </head>
 
   <body>
@@ -19,13 +19,12 @@
     </nav>
     <div class="content">
       <section id="js_04_01">
-        <h4>Hello World</h4>
+        <h4>Guessing game</h4>
         <ol>
           <li>
-            Create a new project using following command
+            Create a new project using following command. This will create a folder <b>guess-game</b>.
 
             <pre class="shell">cargo new guess-game</pre>
-            This will create a folder <b>guess-game</b>.
           </li>
           <li>
             In <b>Cargo.toml</b> file, add two new dependencies.
@@ -39,8 +38,7 @@ edition = &#x22;2021&#x22;
 
 [dependencies]
 rand = &#x22;0.8.5&#x22;
-colored = &#x22;2.0.0&#x22;
-            </code></pre>
+colored = &#x22;2.0.0&#x22;</code></pre>
           </li>
           <li>
             To install the dependencies, run following command. Make sure <b>rust-analyser</b> not running.
@@ -52,38 +50,38 @@ colored = &#x22;2.0.0&#x22;
             Add following code in <b>main.rs</b>
             <div>
               <pre><code class="language-rust">
-    use colored::*;
-    use rand::Rng;
-    use std::cmp::Ordering;
-    use std::io;
-    
-    fn main() {
-        println!(&#x22;Guess the number !&#x22;);
-    
-        let secret_number = rand::thread_rng().gen_range(1..100);
-        println!(&#x22;Secret number is {}&#x22;, secret_number);
-    
-        loop {
-            println!(&#x22;Please input your guess.&#x22;);
-    
-            let mut guess = String::new();
-    
-            io::stdin()
-                .read_line(&#x26;mut guess)
-                .expect(&#x22;Failed to read the line&#x22;);
-    
-            let guess: u32 = guess.trim().parse().expect(&#x22;Please enter a number&#x22;);
-            println!(&#x22;You guessed: {}&#x22;, guess);
-            match guess.cmp(&#x26;secret_number) {
-                Ordering::Less =&#x3E; println!(&#x22;{}&#x22;, &#x22;Less&#x22;.red()),
-                Ordering::Greater =&#x3E; println!(&#x22;{}&#x22;, &#x22;Greater&#x22;.red()),
-                Ordering::Equal =&#x3E; {
-                    println!(&#x22;{}&#x22;, &#x22;You Win&#x22;.green());
-                    break;
-                }
+use colored::*;
+use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    println!(&#x22;Guess the number !&#x22;);
+
+    let secret_number = rand::thread_rng().gen_range(1..100);
+    println!(&#x22;Secret number is {}&#x22;, secret_number);
+
+    loop {
+        println!(&#x22;Please input your guess.&#x22;);
+
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&#x26;mut guess)
+            .expect(&#x22;Failed to read the line&#x22;);
+
+        let guess: u32 = guess.trim().parse().expect(&#x22;Please enter a number&#x22;);
+        println!(&#x22;You guessed: {}&#x22;, guess);
+        match guess.cmp(&#x26;secret_number) {
+            Ordering::Less =&#x3E; println!(&#x22;{}&#x22;, &#x22;Less&#x22;.red()),
+            Ordering::Greater =&#x3E; println!(&#x22;{}&#x22;, &#x22;Greater&#x22;.red()),
+            Ordering::Equal =&#x3E; {
+                println!(&#x22;{}&#x22;, &#x22;You Win&#x22;.green());
+                break;
             }
         }
-    }</code></pre>
+    }
+}</code></pre>
             </div>
           </li>
           <li>
@@ -92,9 +90,6 @@ colored = &#x22;2.0.0&#x22;
             <pre class="shell">cargo run</pre>
           </li>
         </ol>
-        <pre><code class="language-html">
-  
-        </code></pre>
       </section>
     </div>
   </body>
