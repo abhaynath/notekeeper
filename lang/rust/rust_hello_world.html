@@ -43,6 +43,53 @@
           </li>
         </ol>
       </section>
+
+      <section id="task">
+        <h4>task.json</h4>
+        <pre><code class="language-json">
+  {
+    &#x22;version&#x22;: &#x22;2.0.0&#x22;,
+    &#x22;tasks&#x22;: [
+      {
+        &#x22;type&#x22;: &#x22;cargo&#x22;,
+        &#x22;command&#x22;: &#x22;build&#x22;,
+        &#x22;problemMatcher&#x22;: [&#x22;$rustc&#x22;, &#x22;$rust-panic&#x22;],
+        &#x22;group&#x22;: {
+          &#x22;kind&#x22;: &#x22;build&#x22;,
+          &#x22;isDefault&#x22;: true
+        },
+        &#x22;label&#x22;: &#x22;Build&#x22;
+      },
+      {
+        &#x22;type&#x22;: &#x22;cargo&#x22;,
+        &#x22;command&#x22;: &#x22;run&#x22;,
+        &#x22;problemMatcher&#x22;: [&#x22;$rustc&#x22;, &#x22;$rust-panic&#x22;],
+        &#x22;group&#x22;: {
+          &#x22;kind&#x22;: &#x22;build&#x22;,
+          &#x22;isDefault&#x22;: true
+        },
+        &#x22;label&#x22;: &#x22;Run Debug&#x22;
+      },
+      {
+        &#x22;type&#x22;: &#x22;cargo&#x22;,
+        &#x22;command&#x22;: &#x22;build&#x22;,
+        &#x22;args&#x22;: [&#x22;--release&#x22;],
+        &#x22;problemMatcher&#x22;: [&#x22;$rustc&#x22;, &#x22;$rust-panic&#x22;],
+        &#x22;group&#x22;: {
+          &#x22;kind&#x22;: &#x22;build&#x22;,
+          &#x22;isDefault&#x22;: true
+        },
+        &#x22;label&#x22;: &#x22;Build Release&#x22;
+      },
+      {
+        &#x22;type&#x22;: &#x22;shell&#x22;,
+        &#x22;label&#x22;: &#x22;Run Release&#x22;,
+        &#x22;command&#x22;: &#x22;cargo build --release &#x26;&#x26; \&#x22;${workspaceFolder}\&#x22;\\target\\release\\\&#x22;${workspaceFolderBasename}\&#x22;.exe&#x22;,
+        &#x22;problemMatcher&#x22;: []
+      }
+    ]
+  }</code></pre>
+      </section>
     </div>
   </body>
 
