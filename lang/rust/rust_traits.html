@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Traits</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="rust_index.html">Rust</a>
+    </nav>
+    <div class="content">
+      <section id="js_04_01">
+        <h4>Shape trait with Rectangle and Circle</h4>
+        <pre><code class="language-rust">
+trait Shape {
+    fn area(&#x26;self) -&#x3E; f64;
+}
+struct Rectangle {
+    width: f64,
+    height: f64,
+}
+struct Circle {
+    radius: f64,
+}
+impl Shape for Rectangle {
+    fn area(&#x26;self) -&#x3E; f64 {
+        self.width * self.height
+    }
+}
+impl Shape for Circle {
+    fn area(&#x26;self) -&#x3E; f64 {
+        std::f64::consts::PI * self.radius * self.radius
+    }
+}
+fn print_area&#x3C;T: Shape&#x3E;(shape: &#x26;T) {
+    println!(&#x22;Area : {}&#x22;, shape.area());
+}
+
+fn main() {
+    let rectangle = Rectangle {
+        width: 5.0,
+        height: 3.0,
+    };
+    print_area(&#x26;rectangle);
+
+    let circle = Circle { radius: 5.0 };
+    print_area(&#x26;circle);
+
+    let shapes: Vec&#x3C;Box&#x3C;dyn Shape&#x3E;&#x3E; = vec![Box::new(rectangle), Box::new(circle)];
+}</code></pre>
+       
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
