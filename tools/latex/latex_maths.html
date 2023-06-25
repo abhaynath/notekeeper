@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Maths</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="latex_index.html">LaTeX</a>
+    </nav>
+    <div class="content">
+      <section id="js_04_01">
+        <h4>Shape trait with Rectangle and Circle</h4>
+        <pre><code class="language-latex">
+\documentclass{article}
+\usepackage{physics}
+\begin{document}
+&#x9;\[ \sin(x) \; \sinh(x) \; \arcsin(x) \]
+&#x9;\[ \cos(\theta) \; \cosh(\theta) \; \arccos(\theta) \]
+&#x9;\[ \tan(x) \; \tanh(x) \; \arctan(x) \]
+&#x9;\[ \csc\theta  \sec\theta \]
+&#x9;
+&#x9;\[ \cos\left( \frac{\pi}{2}-\theta \right)= \sin \theta = \frac{1}{\csc\theta} \]
+&#x9;\[ \sin\left( \frac{\pi}{2}-\theta \right)= \cos \theta = \frac{1}{\sec\theta} \]
+&#x9;\[ \cot\left( \frac{\pi}{2}-\theta \right)= \tan \theta = \frac{\sin\theta}{\cos\theta} \]
+&#x9;\[ \sec\left( \frac{\pi}{2}-\theta \right)= \csc \theta = \frac{1}{\cos\theta} \]
+&#x9;\[ \csc\left( \frac{\pi}{2}-\theta \right)= \sec \theta = \frac{1}{\sin\theta} \]
+&#x9;
+&#x9;\[ \sin^2\alpha = \frac{1-cos(2\alpha)}{2} \]
+&#x9;\[ \tan^2\alpha = \frac{1-cos(2\alpha)}{1+cos(2\alpha)} \]
+&#x9;\[ \int \sec^m(x) \tan^n(x)\,dx, \int \sin^n(x)\,dx \]
+&#x9;\[ \frac{1}{n}cos^{n-1}(x)\sin(x) + \frac{n-1}{n}\int \cos^{n-2}(x\,dx \]
+&#x9;\[ \int\tan^{-1}dx=x\tan^{-1}x-\frac{1}{2}\ln\left(1+x^2\right) +c \] 
+&#x9;
+&#x9;\[ \sin[2](x) + \cos[2](x)=1 \]
+&#x9;\[ \sin[n](e^x)\cdot\cos[m](e^x) \]
+&#x9;\[ \int \tan[n](x)\,dx\;\;\int \cot[n](x)\,dx \]
+&#x9;\[ \sin[-1](x_1)\;\;\tan[-1](x_1)\;\;\csc[-1](x_1) \]
+&#x9;\[ \cos[-1](x_2)\;\;\cot[-1](x_2)\;\;\sec[-1](x_2)\;\;\]
+&#x9;\[ \int \tan[-1](x)\,dx \;\; \int x^n \sec[-1](x)\,dx\]
+&#x9;
+&#x9;\[ \sin^{2}x + \cos^{2}x=1 \]
+&#x9;\[ \sin[2]{x} + \cos[2]{x}=1 \] % Without parenthesis 
+&#x9;\[ \sin[2]\theta + \cos[2]\theta =1 \] % Without parenthesis
+&#x9;\[ \sin[2](x) + \cos[2](x)=1 \] % With parenthesis 
+\end{document}
+</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
