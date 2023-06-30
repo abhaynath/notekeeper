@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Godot Setup</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/highlight/languages/gdscript.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="gd_index.html">Godot</a>
+      </nav>
+      <details>
+        <summary>Godot with VSCode</summary>
+        <section id="sec01">
+          <ol>
+            <li>
+              In Godot installation folder, change the names to <span class="keyword">godot</span> and <span class="keyword">godot_console</span>
+              <img src="../../images/game_dev/godot/godot-vscode/godot_exe.jpg" />
+            </li>
+            <li>
+              Add godot folder in <span class="keyword">Environment Variables</span>
+              <p><img src="../../images/game_dev/godot/godot-vscode/env.jpg" /></p>
+            </li>
+            <li>
+              <p>In Godot, enable external editing and set VSCode path.</p>
+              <p><span class="keyword">Exec Path :</span><b>C:/Program Files/Microsoft VS Code/Code.exe</b></p>
+              <p><span class="keyword">Exec Flags :</span><b>{project} --goto {file}:{line}:{col}</b></p>
+              <img src="../../images/game_dev/godot/godot-vscode/external.png" />
+            </li>
+            <li>
+              <p>
+                In Network section of Editor Settings, note down the <b>Remote Host</b> and <b>Remote Port</b> in
+                <span class="keyword">Language Server</span> protocol.
+              </p>
+
+              <img src="../../images/game_dev/godot/godot-vscode/network.jpg" />
+            </li>
+
+            <li>
+              Open Visual Studio Code. Install
+              <a href="https://marketplace.visualstudio.com/items?itemName=geequlim.godot-tools" target="_blank"><b>godot-tools</b></a> extension.
+            </li>
+            <li>
+              <p>
+                In <b>godot-tools</b> extension settings, set proper values of <span class="keyword">Editor Path,</span
+                ><span class="keyword">LSP server host</span> and <span class="keyword">LSP Server Port</span> respectively.
+              </p>
+              <img src="../../images/game_dev/godot/godot-vscode/godot_tools.jpg" />
+            </li>
+          </ol>
+        </section>
+      </details>
+
+      <details>
+        <summary>Build Godot from source code</summary>
+        <section id="sec02">
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Build Godot Export Template</summary>
+        <section id="sec03">
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section id="">
+          <pre><code class="language-godot">
+</code></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
