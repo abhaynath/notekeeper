@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico">
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>SplashScreen in Avalonia</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>Cancellable splashscreen using AvaloniaReactiveUI</summary>
+        <section id="sec01">
+            <img src="../../images/netcore/avalonia/splashscreen/splashscreen1.jpg" />
+
+            <h4>Splash.axaml</h4>
+<pre><code class="language-html">
+&#x3C;Window xmlns=&#x22;https://github.com/avaloniaui&#x22;
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+        xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+        xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+        mc:Ignorable=&#x22;d&#x22; Width=&#x22;200&#x22; Height=&#x22;130&#x22;
+        x:Class=&#x22;App1Reactive.Views.Splash&#x22;
+        SystemDecorations=&#x22;None&#x22;
+        WindowStartupLocation=&#x22;CenterScreen&#x22;
+        Background=&#x22;Transparent&#x22;
+        TransparencyLevelHint=&#x22;Transparent&#x22;
+        Title=&#x22;Splash&#x22;&#x3E;
+    
+        &#x3C;Border Background=&#x22;#fff&#x22; CornerRadius=&#x22;10&#x22; Padding=&#x22;10&#x22;&#x3E;
+        &#x3C;StackPanel Orientation=&#x22;Vertical&#x22; HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22; Spacing=&#x22;5&#x22;&#x3E;
+            &#x3C;Image Source=&#x22;/Assets/avalonia-logo.ico&#x22; Width=&#x22;50&#x22; Height=&#x22;50&#x22;&#x3E;&#x3C;/Image&#x3E;
+            &#x3C;TextBlock Text=&#x22;{Binding StartupMessage}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+            &#x3C;Button HorizontalAlignment=&#x22;Center&#x22; Command=&#x22;{Binding Cancel}&#x22;&#x3E;Cancel&#x3C;/Button&#x3E;
+        &#x3C;/StackPanel&#x3E;
+        &#x3C;/Border&#x3E;
+        
+&#x3C;/Window&#x3E;</code></pre>
+
+            <h4>SplashViewModel.cs</h4>
+            <pre><code class="language-csharp">
+using ReactiveUI;
+using System.Threading;
+
+namespace App1Reactive.ViewModels
+{
+    internal class SplashViewModel : ViewModelBase
+    {
+        private string _startupMessage = &#x22;Application is loading...&#x22;;
+        public string StartupMessage
+        {
+            get { return _startupMessage; }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _startupMessage, value);
+            }
+        }
+
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+        public CancellationToken CancellationToken =&#x3E; _cts.Token;
+
+        public void Cancel()
+        {
+            _cts.Cancel();
+        }
+    }
+}</code></pre>
+
+<h4>App.axaml.cs</h4>
+<pre><code class="language-csharp">
+using App1Reactive.ViewModels;
+using App1Reactive.Views;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
+using System.Threading.Tasks;
+
+namespace App1Reactive
+{
+    public partial class App : Application
+    {
+        public override void Initialize()
+        {
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        public override async void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var splashWindow = new Splash();
+                var splashViewModel = new SplashViewModel();
+                splashWindow.DataContext = splashViewModel;
+                desktop.MainWindow = splashWindow;
+
+                try
+                {
+                    splashViewModel.StartupMessage = &#x22;Initializing application....&#x22;;
+                    await Task.Delay(2000, cancellationToken: splashViewModel.CancellationToken);
+
+                    splashViewModel.StartupMessage = &#x22;Loading localStorage data...&#x22;;
+                    await Task.Delay(1000, cancellationToken: splashViewModel.CancellationToken);
+
+                    splashViewModel.StartupMessage = &#x22;Getting data from server...&#x22;;
+                    await Task.Delay(1000, cancellationToken: splashViewModel.CancellationToken);
+
+                    splashViewModel.StartupMessage = &#x22;Merging server data with local configuration....&#x22;;
+                    await Task.Delay(3000, cancellationToken: splashViewModel.CancellationToken);
+
+                    splashViewModel.StartupMessage = &#x22;Launching !&#x22;;
+                    await Task.Delay(500, cancellationToken: splashViewModel.CancellationToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    splashWindow.Close();
+                    return;
+                }
+
+                var mainWindow = new MainWindow();
+                var mainWindowViewModel = new MainWindowViewModel();
+                mainWindow.DataContext = mainWindowViewModel;
+                mainWindow.Show();
+                splashWindow.Close();
+                
+            }
+
+            base.OnFrameworkInitializationCompleted();
+        }
+    }
+}</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
