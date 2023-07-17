@@ -31,7 +31,10 @@
 
       <details>
         <summary>Creating Publish Profile</summary>
+
         <section id="sec02">
+          <p>It is VERY important to build the project in release mode and publish project before creating setup project.</p>
+          <p>Without publish profile successful build process, setup will not work properly.</p>
           <ol>
             <li><img src="../../images/netcore/avalonia/setup/03publish.jpg" /></li>
             <li><img src="../../images/netcore/avalonia/setup/04publish.jpg" /></li>
@@ -73,6 +76,13 @@
             <li><img src="../../images/netcore/avalonia/setup/23setup.jpg" /></li>
             <li><img src="../../images/netcore/avalonia/setup/24setup.jpg" /></li>
           </ol>
+          <h4>Trouble shooting</h4>
+          <p>In case setup is not building properly, make sure following points.</p>
+          <ul>
+            <li>Before adding setup project in solution, the main project must be built and published in release mode.</li>
+            <li>Publish profile must be selected in setup project output properties.</li>
+            <li>Setup <b>TargetPlatform</b> must be same as <b>Target Runtime</b> setting in publish profile.</li>
+          </ul>
         </section>
       </details>
     </div>
