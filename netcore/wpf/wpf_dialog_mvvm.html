@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Dialog manager with MVVM</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="wpf_index.html">WPF</a>
+    </nav>
+    <div class="content">
+      <section>
+        <h3>Dialog Service Files</h3>
+        <details>
+          <summary>IDialog.cs</summary>
+          <pre><code class="language-csharp">
+  using System;
+  using System.Windows;
+  
+  namespace DialogTester.DialogService;
+  
+  public partial interface IDialog
+  {
+      object DataContext { get; set; }
+      bool? DialogResult { get; set; }
+      Window Owner { get; set; }
+      void Close();
+      bool? ShowDialog();
+  
+  }
+  public interface IDialogService
+  {
+      void Register&#x3C;TViewModel, TView&#x3E;() where TViewModel : IDialogRequestClose
+                                          where TView : IDialog;
+      bool? ShowDialog&#x3C;TViewModel&#x3E;(TViewModel viewModel) where TViewModel : IDialogRequestClose;
+  }
+  public interface IDialogRequestClose
+  {
+      event EventHandler&#x3C;DialogCloseRequestedEventArgs&#x3E; CloseRequested;
+  }
+  public class DialogCloseRequestedEventArgs : EventArgs
+  {
+      public bool? DialogResult { get; }
+      public DialogCloseRequestedEventArgs(bool? dialogResult)
+      {
+          DialogResult = dialogResult;
+      }
+  
+  }</code></pre>
+        </details>
+        <details>
+          <summary>DialogService.cs</summary>
+          <pre><code class="language-csharp">
+using System;
+using System.Collections.Generic;
+using System.Windows;
+
+namespace DialogTester.DialogService;
+
+public class DialogService : IDialogService
+{
+    private readonly Window _owner;
+    public IDictionary&#x3C;Type, Type&#x3E; Mappings { get; }
+    public DialogService(Window Owner)
+    {
+        _owner = Owner;
+        Mappings = new Dictionary&#x3C;Type, Type&#x3E;();
+    }
+    public void Register&#x3C;TViewModel, TView&#x3E;()
+        where TViewModel : IDialogRequestClose
+        where TView : IDialog
+    {
+        if (Mappings.ContainsKey(typeof(TViewModel)))
+        {
+            throw new ArgumentException($&#x22;Type {typeof(TViewModel)} is already mapped.&#x22;);
+        }
+        Mappings.Add(typeof(TViewModel), typeof(TView));
+    }
+
+    public bool? ShowDialog&#x3C;TViewModel&#x3E;(TViewModel viewModel) where TViewModel : IDialogRequestClose
+    {
+        Type viewType = Mappings[typeof(TViewModel)];
+        IDialog dialog = (IDialog)Activator.CreateInstance(viewType);
+        EventHandler&#x3C;DialogCloseRequestedEventArgs&#x3E; handler = null;
+        handler = (sender, e) =&#x3E;
+        {
+            viewModel.CloseRequested -= handler;
+            if (e.DialogResult.HasValue)
+            {
+                dialog.DialogResult = e.DialogResult;
+            }
+            else
+            {
+                dialog.Close();
+            }
+        };
+        viewModel.CloseRequested += handler;
+
+        dialog.DataContext = viewModel;
+        dialog.Owner = _owner;
+        return dialog.ShowDialog();
+
+    }
+
+
+}</code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h3>App.xaml</h3>
+        <p>We need to remove <b>StartupUri</b> from the App.xaml</p>
+        <details>
+          <summary>App.xaml</summary>
+          <pre><code class="language-xml">
+&#x3C;Application x:Class=&#x22;DialogTester.App&#x22;
+             xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+             xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+             xmlns:local=&#x22;clr-namespace:DialogTester&#x22;
+             &#x3E;
+    &#x3C;Application.Resources&#x3E;
+         
+    &#x3C;/Application.Resources&#x3E;
+&#x3C;/Application&#x3E;</code></pre>
+        </details>
+
+        <details>
+          <summary>App.xaml.cs</summary>
+          <pre><code class="language-csharp">
+using DialogTester.DialogService;
+using DialogTester.ViewModels;
+using DialogTester.Views.Popups;
+using System.Windows;
+
+namespace DialogTester;
+
+public partial class App : Application
+{
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
+        IDialogService dialogService = new DialogService.DialogService(MainWindow);
+        dialogService.Register&#x3C;BuyStockViewModel, BuyStock&#x3E;();
+
+        var view = new MainWindow();
+        var vm = new MainWindowViewModel(dialogService);
+        view.DataContext = vm;
+        view.Show();
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h3>MainWindow</h3>
+        <details>
+          <summary>MainWindow.xaml</summary>
+          <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;DialogTester.MainWindow&#x22;
+            xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+            xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+            xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+            xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+            
+            xmlns:local=&#x22;clr-namespace:DialogTester&#x22;
+            xmlns:vm=&#x22;clr-namespace:DialogTester.ViewModels&#x22;
+            mc:Ignorable=&#x22;d&#x22;
+            d:DataContext=&#x22;{d:DesignInstance vm:MainWindowViewModel}&#x22;
+            Title=&#x22;Dialog Tester&#x22; Width=&#x22;500&#x22; Height=&#x22;300&#x22; WindowState=&#x22;Maximized&#x22;&#x3E;
+        &#x3C;StackPanel Margin=&#x22;20&#x22;&#x3E;
+            &#x3C;TextBlock Text=&#x22;{Binding StockName}&#x22;&#x3E;&#x3C;/TextBlock&#x3E;
+            &#x3C;Button Padding=&#x22;10&#x22; Width=&#x22;50&#x22; Command=&#x22;{Binding ShowBuyCommand}&#x22;&#x3E;Buy&#x3C;/Button&#x3E;
+        &#x3C;/StackPanel&#x3E;
+  &#x3C;/Window&#x3E;</code></pre>
+        </details>
+    
+        <details>
+          <summary>MainWindowViewModel.cs</summary>
+          <pre><code class="language-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DialogTester.DialogService;
+
+namespace DialogTester.ViewModels;
+
+public partial class MainWindowViewModel : ViewModelBase
+{
+    private readonly IDialogService _dialogService;
+    [ObservableProperty]
+    private string _stockName;
+
+   
+    public MainWindowViewModel(IDialogService _service)
+    {
+        _dialogService = _service;
+        StockName = string.Empty;
+    
+    }
+    [RelayCommand]
+    private void ShowBuy()
+    {
+        var vm =new BuyStockViewModel();
+       
+        bool? result = _dialogService.ShowDialog(vm);
+        if (result.HasValue)
+        {
+            if (result.Value)
+            {
+                StockName = vm.CompanyName;
+            }
+            else
+            {
+                StockName = &#x22;Nothing selected&#x22;;
+            }
+        }
+    }
+}</code></pre>
+        </details>
+      </section>
+
+      <section>
+        <h3>BuyStock</h3>
+        <details>
+          <summary>BuyStock.xaml</summary>
+          <pre><code class="language-xml">&#x3C;Window x:Class=&#x22;DialogTester.Views.Popups.BuyStock&#x22;
+            xmlns=&#x22;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#x22;
+            xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+            xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+            xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+            xmlns:vm=&#x22;clr-namespace:DialogTester.ViewModels&#x22;
+            xmlns:local=&#x22;clr-namespace:DialogTester.Views.Popups&#x22;
+            mc:Ignorable=&#x22;d&#x22;
+           d:DataContext=&#x22;{d:DesignInstance vm:BuyStockViewModel}&#x22;
+            Title=&#x22;BuyStock&#x22; Height=&#x22;200&#x22; Width=&#x22;300&#x22; WindowStartupLocation=&#x22;CenterScreen&#x22; ResizeMode=&#x22;NoResize&#x22;&#x3E;
+        &#x3C;StackPanel Orientation=&#x22;Vertical&#x22; Margin=&#x22;10&#x22; HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;
+            &#x3C;TextBox Padding=&#x22;5&#x22; Width=&#x22;200&#x22; Text=&#x22;{Binding CompanyName,UpdateSourceTrigger=PropertyChanged}&#x22;&#x3E;&#x3C;/TextBox&#x3E;
+    
+            &#x3C;StackPanel Orientation=&#x22;Horizontal&#x22; Margin=&#x22;10&#x22; HorizontalAlignment=&#x22;Center&#x22;&#x3E;
+                &#x3C;Button Margin=&#x22;0 0 10 0&#x22; Padding=&#x22;10&#x22; Command=&#x22;{Binding PlaceOrderCommand}&#x22;&#x3E;Buy&#x3C;/Button&#x3E;
+                &#x3C;Button Padding=&#x22;10&#x22; Command=&#x22;{Binding CancelOrderCommand}&#x22;&#x3E;Cancel&#x3C;/Button&#x3E;
+            &#x3C;/StackPanel&#x3E;
+        &#x3C;/StackPanel&#x3E;
+  &#x3C;/Window&#x3E;
+    </code></pre>
+        </details>
+        <details>
+          <summary>BuyStockViewModel.cs</summary>
+          <pre><code class="language-csharp">
+  using CommunityToolkit.Mvvm.ComponentModel;
+  using CommunityToolkit.Mvvm.Input;
+  using DialogTester.DialogService;
+  using System;
+  
+  namespace DialogTester.ViewModels;
+  
+  public partial class BuyStockViewModel : ViewModelBase, IDialogRequestClose
+  {
+      [ObservableProperty]
+      [NotifyCanExecuteChangedFor(nameof(PlaceOrderCommand))]
+      private string _companyName;
+  
+      
+      public event EventHandler&#x3C;DialogCloseRequestedEventArgs&#x3E; CloseRequested;
+  
+      public BuyStockViewModel()
+      {
+          CompanyName = string.Empty;
+      }
+  
+      [RelayCommand(CanExecute = nameof(CanExecuteOrder))]
+        public void PlaceOrder()
+      {
+          CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(true));
+      }
+      [RelayCommand]
+      private void CancelOrder()
+      {
+          CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(false));
+      }
+      private bool CanExecuteOrder()
+      {
+          return CompanyName.Trim().Length &#x3E; 0;
+      }
+  }</code></pre>
+        </details>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
