@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico">
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Local Documentation Setup</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+     <h3>Setting up local Documentation of Avalonia UI</h3>
+     <ol>
+      <li>Go to <a href="https://github.com/AvaloniaUI/avalonia-docs" target="_blank">Avalonia docs repository page</a></li>
+      <li>Copy the repository path which will be like <pre>https://github.com/AvaloniaUI/avalonia-docs.git</pre></li>
+      <li>Create a new folder in which you want to set up documentation. Run following command.
+
+        <pre class="shell">git clone https://github.com/AvaloniaUI/avalonia-docs.git</pre>
+
+        This will download the repository in <b>avalonia-docs</b> folder.
+        <pre class="shell">cd avalonia-docs</pre>
+      </li>
+      <li>To install all the packages needed, run following command.
+
+        <pre class="shell">npm install --verbose</pre>
+      </li>
+      <li style="background-color: rgb(49, 0, 224); padding:10px;">Open <b>docusaurus.config</b> file.
+      <p>Change <span class="keyword">baseUrl</span> value to as per your IIS application name. </p>
+      <p>It should look like this,
+
+        <pre class="language-js">
+const config = {
+    title: &#x27;Avalonia UI&#x27;,
+    tagline: &#x27;Developer Documentation Portal&#x27;,
+    url: &#x27;https://docs.avaloniaui.net&#x27;,
+    baseUrl: &#x27;/avalonia/&#x27;,
+    organizationName: &#x27;avaloniaui&#x27;, // Usually your GitHub org/user name.
+    projectName: &#x27;avalonia&#x27;, // Usually your repo name.
+    onBrokenLinks: &#x27;throw&#x27;,
+    onBrokenMarkdownLinks: &#x27;throw&#x27;,
+    i18n: {
+      defaultLocale: &#x27;en&#x27;,
+      locales: [&#x27;en&#x27;],
+    },
+}</pre>
+      </p>
+      </li>
+      <li>To build the documentation,
+        <pre class="shell">npm run build</pre>
+      </li>
+      <li>Documentation will be generated in <b>build</b> folder.</li>
+    
+     </ol>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
