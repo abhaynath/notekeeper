@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>ContentControl</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+      <h4>Switch Controls dynamically using ContentControl</h4>
+      <img src="../../images/netcore/avalonia/binding/contentcontrol.jpg" />
+      <details>
+        <summary>Source xaml files</summary>
+        <section>
+          <h4>ControlSwitchPage.axaml</h4>
+          <pre><code class="language-xml">
+&#x3C;Window xmlns=&#x22;https://github.com/avaloniaui&#x22;
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+        xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+        xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+        xmlns:vm=&#x22;using:UI.ViewModels&#x22;
+        xmlns:views=&#x22;using:UI.Views.Controls&#x22;
+        mc:Ignorable=&#x22;d&#x22; d:DesignWidth=&#x22;800&#x22; d:DesignHeight=&#x22;450&#x22;
+        xmlns:i=&#x22;https://github.com/projektanker/icons.avalonia&#x22;
+        x:Class=&#x22;UI.Views.Pages.ControlSwitchPage&#x22;
+        x:DataType=&#x22;vm:ControlSwitchViewModel&#x22;
+        WindowState=&#x22;Maximized&#x22;
+        Icon=&#x22;/Assets/Icons/home72.ico&#x22;
+        Title=&#x22;Content Switch Demo&#x22;&#x3E;
+
+  &#x3C;Design.DataContext&#x3E;
+    &#x3C;vm:ControlSwitchViewModel&#x3E;&#x3C;/vm:ControlSwitchViewModel&#x3E;
+  &#x3C;/Design.DataContext&#x3E;
+
+  &#x3C;Window.DataTemplates&#x3E;
+    &#x3C;DataTemplate DataType=&#x22;{x:Type vm:HomeViewModel}&#x22;&#x3E;
+      &#x3C;views:HomeControl&#x3E;&#x3C;/views:HomeControl&#x3E;
+    &#x3C;/DataTemplate&#x3E;
+    &#x3C;DataTemplate DataType=&#x22;{x:Type vm:PorfolioViewModel}&#x22;&#x3E;
+      &#x3C;views:PortfolioControl&#x3E;&#x3C;/views:PortfolioControl&#x3E;
+    &#x3C;/DataTemplate&#x3E;
+    &#x3C;DataTemplate DataType=&#x22;{x:Type vm:TradingViewModel}&#x22;&#x3E;
+      &#x3C;views:TradingControl&#x3E;&#x3C;/views:TradingControl&#x3E;
+    &#x3C;/DataTemplate&#x3E;
+  &#x3C;/Window.DataTemplates&#x3E;
+
+  &#x3C;Window.Styles&#x3E;
+    &#x3C;Style Selector=&#x22;StackPanel Button&#x22;&#x3E;
+      &#x3C;Setter Property=&#x22;Background&#x22; Value=&#x22;Navy&#x22;&#x3E;&#x3C;/Setter&#x3E;
+      &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;White&#x22;&#x3E;&#x3C;/Setter&#x3E;
+      &#x3C;Setter Property=&#x22;HorizontalAlignment&#x22; Value=&#x22;Center&#x22;&#x3E;&#x3C;/Setter&#x3E;
+      &#x3C;Setter Property=&#x22;BorderBrush&#x22; Value=&#x22;White&#x22;&#x3E;&#x3C;/Setter&#x3E;
+      &#x3C;Setter Property=&#x22;Margin&#x22; Value=&#x22;4&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;/Style&#x3E;
+  &#x3C;/Window.Styles&#x3E;
+
+  &#x3C;Grid Margin=&#x22;10&#x22; Background=&#x22;SeaGreen&#x22;&#x3E;
+
+    &#x3C;Grid.ColumnDefinitions&#x3E;
+      &#x3C;ColumnDefinition Width=&#x22;Auto&#x22;&#x3E;&#x3C;/ColumnDefinition&#x3E;
+      &#x3C;ColumnDefinition Width=&#x22;2&#x22;&#x3E;&#x3C;/ColumnDefinition&#x3E;
+      &#x3C;ColumnDefinition Width=&#x22;*&#x22;&#x3E;&#x3C;/ColumnDefinition&#x3E;
+    &#x3C;/Grid.ColumnDefinitions&#x3E;
+
+    &#x3C;Grid.RowDefinitions&#x3E;
+      &#x3C;RowDefinition&#x3E;&#x3C;/RowDefinition&#x3E;
+    &#x3C;/Grid.RowDefinitions&#x3E;
+
+    &#x3C;StackPanel Grid.Column=&#x22;0&#x22; Grid.Row=&#x22;0&#x22; Orientation=&#x22;Vertical&#x22;  Spacing=&#x22;10&#x22; HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;
+      &#x3C;Button Command=&#x22;{Binding GotoHomeViewCommand}&#x22;&#x3E;
+        &#x3C;i:Icon Value=&#x22;fa fa-home&#x22;&#x3E;&#x3C;/i:Icon&#x3E;
+      &#x3C;/Button&#x3E;
+      &#x3C;Button Command=&#x22;{Binding GoToPortfolioViewCommand}&#x22;&#x3E;Portfolio&#x3C;/Button&#x3E;
+      &#x3C;Button Command=&#x22;{Binding GoToTradingViewCommand}&#x22;&#x3E;Trading&#x3C;/Button&#x3E;
+    &#x3C;/StackPanel&#x3E;
+
+    &#x3C;GridSplitter Grid.Column=&#x22;1&#x22; Grid.Row=&#x22;0&#x22; Background=&#x22;Orange&#x22; &#x3E;&#x3C;/GridSplitter&#x3E;
+
+    &#x3C;ContentControl Grid.Column=&#x22;2&#x22; Grid.Row=&#x22;0&#x22; Background=&#x22;AliceBlue&#x22; Content=&#x22;{Binding SelectedView}&#x22; &#x3E;&#x3C;/ContentControl&#x3E;
+
+  &#x3C;/Grid&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+          <h4>PortfolioControl.axaml</h4>
+          <pre><code class="language-xml">
+&#x3C;UserControl xmlns=&#x22;https://github.com/avaloniaui&#x22;
+             xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+             xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+             xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+             mc:Ignorable=&#x22;d&#x22; d:DesignWidth=&#x22;800&#x22; d:DesignHeight=&#x22;450&#x22;
+             x:Class=&#x22;UI.Views.Controls.PortfolioControl&#x22;&#x3E;
+
+  &#x3C;UserControl.Resources&#x3E;
+
+    &#x3C;RadialGradientBrush x:Key=&#x22;radial1&#x22; GradientOrigin=&#x22;100%,50%&#x22;&#x3E;
+      &#x3C;RadialGradientBrush.GradientStops&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;Orange&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0.8&#x22; Color=&#x22;White&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;Green&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+      &#x3C;/RadialGradientBrush.GradientStops&#x3E;
+    &#x3C;/RadialGradientBrush&#x3E;
+
+  &#x3C;/UserControl.Resources&#x3E;
+
+  &#x3C;UserControl.Styles&#x3E;
+    &#x3C;Style Selector=&#x22;TextBlock&#x22;&#x3E;
+      &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;Navy&#x22;&#x3E;&#x3C;/Setter&#x3E;
+      &#x3C;Setter Property=&#x22;FontSize&#x22; Value=&#x22;40&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;/Style&#x3E;
+  &#x3C;/UserControl.Styles&#x3E;
+
+  &#x3C;StackPanel Background=&#x22;{StaticResource radial1}&#x22;&#x3E;
+    &#x3C;TextBlock HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;Portfolio&#x3C;/TextBlock&#x3E;
+  &#x3C;/StackPanel&#x3E;
+
+&#x3C;/UserControl&#x3E;</code></pre>
+          <h4>HomeControl.axaml</h4>
+          <pre><code class="language-xml">
+&#x3C;UserControl xmlns=&#x22;https://github.com/avaloniaui&#x22;
+             xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+             xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+             xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+             mc:Ignorable=&#x22;d&#x22; d:DesignWidth=&#x22;800&#x22; d:DesignHeight=&#x22;450&#x22;
+             x:Class=&#x22;UI.Views.Controls.HomeControl&#x22;&#x3E;
+  &#x3C;UserControl.Resources&#x3E;
+    &#x3C;LinearGradientBrush x:Key=&#x22;tiranga&#x22; StartPoint=&#x22;0%,0%&#x22; EndPoint=&#x22;0%,100%&#x22;&#x3E;
+      &#x3C;LinearGradientBrush.GradientStops&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;Orange&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0.5&#x22; Color=&#x22;White&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;Green&#x22;&#x3E;&#x3C;/GradientStop&#x3E;
+      &#x3C;/LinearGradientBrush.GradientStops&#x3E;
+    &#x3C;/LinearGradientBrush&#x3E;
+  &#x3C;/UserControl.Resources&#x3E;
+
+  &#x3C;UserControl.Styles&#x3E;
+    &#x3C;Style Selector=&#x22;TextBlock&#x22;&#x3E;
+      &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;Red&#x22;&#x3E;&#x3C;/Setter&#x3E;
+      &#x3C;Setter Property=&#x22;FontSize&#x22; Value=&#x22;40&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;/Style&#x3E;
+  &#x3C;/UserControl.Styles&#x3E;
+
+  &#x3C;StackPanel Background=&#x22;{StaticResource tiranga}&#x22;&#x3E;
+    &#x3C;TextBlock HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;Home&#x3C;/TextBlock&#x3E;
+  &#x3C;/StackPanel&#x3E;
+
+&#x3C;/UserControl&#x3E;</code></pre>
+          <h4>TradingControl.axaml</h4>
+          <pre><code class="language-xml">
+&#x3C;UserControl xmlns=&#x22;https://github.com/avaloniaui&#x22;
+             xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+             xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+             xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+             mc:Ignorable=&#x22;d&#x22; d:DesignWidth=&#x22;800&#x22; d:DesignHeight=&#x22;450&#x22;
+             x:Class=&#x22;UI.Views.Controls.TradingControl&#x22;&#x3E;
+
+  &#x3C;UserControl.Styles&#x3E;
+    &#x3C;Style Selector=&#x22;TextBlock&#x22;&#x3E;
+      &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;White&#x22;&#x3E;&#x3C;/Setter&#x3E;
+      &#x3C;Setter Property=&#x22;FontSize&#x22; Value=&#x22;40&#x22;&#x3E;&#x3C;/Setter&#x3E;
+    &#x3C;/Style&#x3E;
+  &#x3C;/UserControl.Styles&#x3E;
+
+  &#x3C;StackPanel Background=&#x22;Green&#x22;&#x3E;
+    &#x3C;TextBlock HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;Trading&#x3C;/TextBlock&#x3E;
+  &#x3C;/StackPanel&#x3E;
+
+&#x3C;/UserControl&#x3E;</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>Source ViewModel files</summary>
+        <section>
+          <h4>ViewModelBase</h4>
+          <pre><code class="langauge-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace UI.ViewModels;
+
+public partial class ViewModelBase : ObservableObject
+{
+}</code></pre>
+
+          <h4>ControlSwitchViewModel.cs</h4>
+          <pre><code class="langauge-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+namespace UI.ViewModels;
+
+public partial class ControlSwitchViewModel:ViewModelBase
+{
+    [ObservableProperty]
+    private ViewModelBase _selectedView;
+    public ControlSwitchViewModel()
+    {
+        SelectedView = new HomeViewModel();
+    }
+
+    [RelayCommand]
+    private void GoToPortfolioView()
+    {
+        SelectedView = new PorfolioViewModel();
+    }
+    [RelayCommand]
+    private void GoToTradingView()
+    {
+        SelectedView = new TradingViewModel();
+    }
+    [RelayCommand]
+    private void GotoHomeView()
+    {
+        SelectedView = new HomeViewModel();
+    }
+}</code></pre>
+
+          <h4>HomeViewModel.cs</h4>
+          <pre><code class="langauge-csharp">
+namespace UI.ViewModels;
+
+public class HomeViewModel:ViewModelBase
+{
+    public HomeViewModel()
+    {
+        
+    }
+}</code></pre>
+
+          <h4>TradingViewModel.cs</h4>
+          <pre><code class="langauge-csharp">
+namespace UI.ViewModels;
+
+public class TradingViewModel:ViewModelBase
+{
+    public TradingViewModel()
+    {
+        
+    }
+}</code></pre>
+
+          <h4>PorfolioViewModel.cs</h4>
+          <pre><code class="langauge-csharp">
+namespace UI.ViewModels;
+
+public class PorfolioViewModel:ViewModelBase
+{
+    public PorfolioViewModel()
+    {
+        
+    }
+}</code></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
