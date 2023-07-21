@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico">
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Control Themes</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>Ellipse Button</summary>
+        <section id="sec1">
+          <pre><code class="language-xml">
+&#x3C;Window xmlns=&#x22;https://github.com/avaloniaui&#x22;
+        xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+        xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+        xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+        mc:Ignorable=&#x22;d&#x22; d:DesignWidth=&#x22;800&#x22; d:DesignHeight=&#x22;450&#x22;
+        x:Class=&#x22;UI.Views.Pages.TemplateTest&#x22;
+        WindowState=&#x22;Maximized&#x22;
+        Icon=&#x22;/Assets/Icons/home72.ico&#x22;
+        Title=&#x22;Template Testing&#x22;&#x3E;
+  
+  &#x3C;Window.Resources&#x3E;
+    &#x3C;ControlTheme x:Key=&#x22;EllipseButton&#x22; TargetType=&#x22;Button&#x22;&#x3E;
+      &#x3C;Setter Property=&#x22;Background&#x22; Value=&#x22;Blue&#x22;/&#x3E;
+      &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;Yellow&#x22;/&#x3E;
+      &#x3C;Setter Property=&#x22;Padding&#x22; Value=&#x22;8&#x22;/&#x3E;
+      &#x3C;Setter Property=&#x22;Template&#x22;&#x3E;
+        &#x3C;ControlTemplate&#x3E;
+          &#x3C;Panel&#x3E;
+            &#x3C;Ellipse Fill=&#x22;{TemplateBinding Background}&#x22; HorizontalAlignment=&#x22;Stretch&#x22; 
+                     VerticalAlignment=&#x22;Stretch&#x22;/&#x3E;
+            
+            &#x3C;ContentPresenter x:Name=&#x22;PART_ContentPresenter&#x22; Content=&#x22;{TemplateBinding Content}&#x22;
+                              Margin=&#x22;{TemplateBinding Padding}&#x22;/&#x3E;
+          &#x3C;/Panel&#x3E;
+        &#x3C;/ControlTemplate&#x3E;
+      &#x3C;/Setter&#x3E;
+
+      &#x3C;Style Selector=&#x22;^:pointerover&#x22;&#x3E;
+        &#x3C;Setter Property=&#x22;Background&#x22; Value=&#x22;Red&#x22;/&#x3E;
+        &#x3C;Setter Property=&#x22;Foreground&#x22; Value=&#x22;White&#x22;/&#x3E;
+      &#x3C;/Style&#x3E;
+      
+    &#x3C;/ControlTheme&#x3E;
+  &#x3C;/Window.Resources&#x3E;
+
+  &#x3C;Button Theme=&#x22;{StaticResource EllipseButton}&#x22; HorizontalAlignment=&#x22;Center&#x22; VerticalAlignment=&#x22;Center&#x22;&#x3E;Hello Abhay&#x3C;/Button&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
