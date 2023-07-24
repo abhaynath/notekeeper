@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Dependency Injection</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="wpf_index.html">WPF</a>
+    </nav>
+    <div class="content">
+      <section id="sec1">
+        <p>Install following packages for dependency injection</p>
+
+        <table>
+          <tr>
+            <td>Microsoft.Extensions.Configuration</td>
+          </tr>
+          <tr>
+            <td>Microsoft.Extensions.DependencyInjection</td>
+          </tr>
+          <tr>
+            <td>Microsoft.Extensions.Hosting</td>
+          </tr>
+          <tr>
+            <td>Microsoft.Extensions.Configuration.EnvironmentVariables</td>
+          </tr>
+          <tr>
+            <td>Microsoft.Extensions.Configuration.FileExtensions</td>
+          </tr>
+          <tr>
+            <td>Microsoft.Extensions.Configuration.Json</td>
+          </tr>
+          <tr>
+            <td>Microsoft.Extensions.Logging.Configuration</td>
+          </tr>
+          <tr>
+            <td>Microsoft.Extensions.Options.ConfigurationExtensions</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h4>App.xaml.cs</h4>
+        <pre><code class="language-csharp">
+using DAL;
+using Mediator;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using RndWPF1.Factory;
+using RndWPF1.ViewModels;
+using RndWPF1.Views.Popups;
+using System;
+using System.IO;
+using System.Windows;
+
+namespace RndWPF1;
+
+public partial class App : Application
+{
+    public static IHost? AppHost { get; private set; }
+    public App()
+    {
+        IConfiguration configuration;
+        configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetParent(AppContext.BaseDirectory)!.FullName)
+            .AddJsonFile(&#x22;appsettings.json&#x22;)
+            .Build();
+
+        AppHost = Host.CreateDefaultBuilder()
+            .ConfigureServices((hostContext, services) =&#x3E;
+            {
+                services.AddSingleton&#x3C;IConfiguration&#x3E;(configuration);
+                services.AddSingleton&#x3C;MessageService&#x3E;();
+                services.AddSingleton&#x3C;MainWindow&#x3E;();
+                services.AddSingleton&#x3C;MainViewModel&#x3E;();
+                services.AddTransient&#x3C;OrderEntryViewModel&#x3E;();
+                services.AddPopupFactory&#x3C;OrderEntryPopup&#x3E;();
+                services.AddTransient&#x3C;IDataAccess,DataAccess&#x3E;();
+            }).Build();
+    }
+    protected override async void OnStartup(StartupEventArgs e)
+    {
+        await AppHost!.StartAsync();
+
+        var startupForm = AppHost.Services.GetRequiredService&#x3C;MainWindow&#x3E;();
+        var vm = AppHost.Services.GetRequiredService&#x3C;MainViewModel&#x3E;();
+        startupForm.DataContext = vm;
+        startupForm.Show();
+        base.OnStartup(e);
+    }
+    protected override async void OnExit(ExitEventArgs e)
+    {
+        await AppHost!.StopAsync();
+        base.OnExit(e);
+    }
+}</code></pre>
+<h4>IAbstractFactory.cs</h4>
+<pre><code class="language-csharp">
+namespace RndWPF1.Factory
+{
+    public interface IAbstractFactory&#x3C;T&#x3E;
+    {
+        T Create();
+    }
+}</code></pre>
+<h4>AbstractFactory.cs</h4>
+<pre><code class="language-csharp">
+using System;
+
+namespace RndWPF1.Factory;
+
+public class AbstractFactory&#x3C;T&#x3E; : IAbstractFactory&#x3C;T&#x3E;
+{
+    private readonly Func&#x3C;T&#x3E; _factory;
+
+    public AbstractFactory(Func&#x3C;T&#x3E; factory)
+    {
+        _factory = factory;
+    }
+    public T Create()
+    {
+        return _factory();
+    }
+}</code></pre>
+<h4>ServiceExtensions.cs</h4>
+<pre><code class="language-csharp">
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Windows;
+
+namespace RndWPF1.Factory;
+
+public static class ServiceExtensions
+{
+    public static void AddPopupFactory&#x3C;TPopup&#x3E;(this IServiceCollection services) where TPopup : Window
+    {
+        services.AddTransient&#x3C;TPopup&#x3E;();
+        services.AddSingleton&#x3C;Func&#x3C;TPopup&#x3E;&#x3E;(x =&#x3E; () =&#x3E; x.GetService&#x3C;TPopup&#x3E;()!);
+        services.AddSingleton&#x3C;IAbstractFactory&#x3C;TPopup&#x3E;, AbstractFactory&#x3C;TPopup&#x3E;&#x3E;();
+    }
+}</code></pre>
+<h4>MainViewModel.cs</h4>
+<pre><code class="language-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DAL;
+using Microsoft.Extensions.Configuration;
+using RndWPF1.Factory;
+using RndWPF1.Views.Popups;
+
+namespace RndWPF1.ViewModels;
+
+public partial class MainViewModel : ViewModelBase
+{
+    private readonly IConfiguration _config;
+    private readonly IDataAccess _dataAccess;
+    private OrderEntryPopup _popup;
+
+    private readonly IAbstractFactory&#x3C;OrderEntryPopup&#x3E; _factory;
+    private readonly OrderEntryViewModel _orderEntryViewModel;
+
+    [ObservableProperty]
+    private string _myLabel;
+
+    [ObservableProperty]
+    private string _author;
+
+    public MainViewModel(IConfiguration config, IDataAccess dataAccess, IAbstractFactory&#x3C;OrderEntryPopup&#x3E; factory, OrderEntryViewModel orderEntryViewModel)
+    {
+        _config = config;
+        _dataAccess = dataAccess;
+        _factory = factory;
+        _orderEntryViewModel = orderEntryViewModel;
+
+        MyLabel = string.Empty;
+        Author = _config.GetSection(&#x22;author&#x22;).Value.ToString();
+    }
+
+    [RelayCommand]
+    private void GetData()
+    {
+        MyLabel = _dataAccess.GetData();
+    }
+    [RelayCommand]
+    private void OpenOrderEntry()
+    {
+        _popup = _factory.Create();
+        _popup.DataContext = _orderEntryViewModel;
+        _popup.Show();
+    }
+}</code></pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
