@@ -15,7 +15,7 @@
       href="../../js/libs/highlight/styles/devibeans.min.css"
     />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
-    <title></title>
+    <title>FontAwesome</title>
   </head>
 
   <body>
@@ -24,7 +24,19 @@
       <a href="wpf_index.html">WPF</a>
     </nav>
     <div class="content">
-     
+     <ol>
+      <li>Install <b>Meziantou.WpfFontAwesome</b></li>
+      <li>Add XAML namepace <pre class="shell">xmlns:fa=&#x22;clr-namespace:Meziantou.WpfFontAwesome;assembly=Meziantou.WpfFontAwesome&#x22;</pre></li>
+      <li>Use the custom control
+        <pre><code class="language-xml">&#x3C;fa:FontAwesomeIcon SolidIcon=&#x22;AddressBook&#x22; FontSize=&#x22;60&#x22; /&#x3E;
+&#x3C;fa:FontAwesomeIcon RegularIcon=&#x22;AddressBook&#x22; FontSize=&#x22;60&#x22; /&#x3E;
+&#x3C;fa:FontAwesomeIcon BrandIcon=&#x22;Microsoft&#x22; FontSize=&#x22;60&#x22; /&#x3E;
+&#x3C;fa:FontAwesomeIcon SolidIcon=&#x22;Spinner&#x22; AnimationType=&#x22;Spin&#x22; FontSize=&#x22;60&#x22; /&#x3E;
+&#x3C;fa:FontAwesomeIcon SolidIcon=&#x22;Spinner&#x22; AnimationType=&#x22;Pulse&#x22; FontSize=&#x22;60&#x22; /&#x3E;</code>
+</pre>
+      </li>
+   
+     </ol>
     </div>
   </body>
 
