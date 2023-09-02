@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico">
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Converters</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>StringToDoubleConverter</summary>
+        <section id="stringtodouble">
+          <h4>StringToDoubleConverter.cs</h4>
+          <pre><code class="language-csharp">
+using Avalonia.Data.Converters;
+using System;
+using System.Globalization;
+
+namespace Avalonia_Master.Converters;
+
+public class StringToDoubleConverter : IValueConverter
+{
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        string? num = string.Empty;
+        num = value?.ToString();
+        return num;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        string? stringNumber = value as string;
+        double.TryParse(stringNumber, out double val);
+        return val;
+    }
+}</code></pre>
+<h4>xaml namespace</h4>
+<pre><code class="language-xml">
+&lt;UserControl xmlns=&quot;https://github.com/avaloniaui&quot;
+                xmlns:vm=&quot;using:Avalonia_Master.Domain.ViewModels&quot;
+
+                xmlns:cnv=&quot;using:Avalonia_Master.Converters&quot;
+
+                x:Class=&quot;Avalonia_Master.Views.UserControls.CreateProductControl&quot;
+                x:DataType=&quot;vm:CreateProductViewModel&quot;
+                &gt;
+
+&lt;UserControl.Resources&gt;
+  &lt;cnv:StringToDoubleConverter x:Key=&quot;stringtodouble&quot;&gt;&lt;/cnv:StringToDoubleConverter&gt;
+&lt;/UserControl.Resources&gt;</code></pre>
+
+             <h4>Using in control</h4>
+             <pre><code class="language-xml"> &lt;TextBox Grid.Row=&quot;1&quot; Grid.Column=&quot;1&quot; Watermark=&quot;Price&quot;  Text=&quot;{Binding Price,Converter={StaticResource stringtodouble}}&quot;&gt;&lt;/TextBox&gt;</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section></section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
