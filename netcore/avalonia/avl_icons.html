@@ -26,14 +26,20 @@
             Install following packagse from nuget.
 
             <table>
-              <tr><td>Projektanker.Icons.Avalonia</td></tr>
-              <tr><td>Projektanker.Icons.Avalonia.FontAwesome</td></tr>
-              <tr><td>Projektanker.Icons.Avalonia.MaterialDesign</td></tr>
+              <tr>
+                <td>Projektanker.Icons.Avalonia</td>
+              </tr>
+              <tr>
+                <td>Projektanker.Icons.Avalonia.FontAwesome</td>
+              </tr>
+              <tr>
+                <td>Projektanker.Icons.Avalonia.MaterialDesign</td>
+              </tr>
             </table>
-          
           </li>
-          <li>Add the package Depedency in <b>Program.cs</b> as follows
-          <pre><code class="language-csharp">
+          <li>
+            Add the package Depedency in <b>Program.cs</b> as follows
+            <pre><code class="language-csharp">
 using Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
 using Projektanker.Icons.Avalonia.MaterialDesign;
@@ -64,9 +70,10 @@ namespace UI
     }
 }</code></pre>
           </li>
-          <li>In Window markup, add the xmlns path to icon package as follows.
+          <li>
+            In Window markup, add the xmlns path to icon package as follows.
 
-        <pre><code class="language-xml">
+            <pre><code class="language-xml">
 &#x3C;Window xmlns=&#x22;https://github.com/avaloniaui&#x22;
           xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
           xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
@@ -236,6 +243,195 @@ namespace UI
 &#x9;&#x9;&#x3C;/Grid&#x3E;
 &#x9;&#x3C;/DockPanel&#x3E;
 &#x3C;/Window&#x3E;
+            </code></pre>
+          </li>
+
+          <li>
+            <img src="../../images/netcore/avalonia/icons/faicons.jpg" />
+            <pre><code class="language-xml">
+&lt;ResourceDictionary xmlns=&quot;https://github.com/avaloniaui&quot;
+                    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+                    xmlns:i=&quot;https://github.com/projektanker/icons.avalonia&quot;
+                    xmlns:sys=&quot;clr-namespace:System;assembly=System.Runtime&quot;
+                    &gt;
+  &lt;Design.PreviewWith&gt;
+    &lt;Border Padding=&quot;10&quot;&gt;
+      &lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
+
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faAlignCenter}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faAlignJustify}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faAlignLeft}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faAlignRight}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faBold}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faItalic}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faUnderline}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faStrikethrough}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faParagraph}&quot;&gt;&lt;/i:Icon&gt;
+
+        &lt;/StackPanel&gt;
+
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faHashtag}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faIndent}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;fa-calendar-check&quot;&gt;&lt;/i:Icon&gt;
+        &lt;/StackPanel&gt;
+
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronRight}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronLeft}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronUp}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronDown}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronCircleRight}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronCircleLeft}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronCircleUp}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faChevronCircleDown}&quot;&gt;&lt;/i:Icon&gt;
+
+        &lt;/StackPanel&gt;
+
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faList}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faListAlt}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faListOl}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faListUl}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faQuoteLeft}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faQuoteRight}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faSave}&quot;&gt;&lt;/i:Icon&gt;
+        &lt;/StackPanel&gt;
+
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faSearch}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faCopy}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faPaste}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faPaperclip}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faLink}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faSearchMinus}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faSearchPlus}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faShareAlt}&quot;&gt;&lt;/i:Icon&gt;
+        &lt;/StackPanel&gt;
+
+
+
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faUser}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faAdd}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faAddCircle}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faDelete}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faEdit}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faClose}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faCopy}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faKnight}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faPawn}&quot;&gt;&lt;/i:Icon&gt;
+        &lt;/StackPanel&gt;
+
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faPowerOff}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faSpotify}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faMusic}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faGlobe}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faBook}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faQuestion}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faQuestionCircle}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faRecycle}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faSync}&quot;&gt;&lt;/i:Icon&gt;
+
+        &lt;/StackPanel&gt;
+        &lt;StackPanel Orientation=&quot;Horizontal&quot; Spacing=&quot;10&quot;&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faCheck}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faCheckCircle}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faCheckSquare}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faEllipsisH}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faEllipsisV}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faExchange}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faFilter}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faFolder}&quot;&gt;&lt;/i:Icon&gt;
+          &lt;i:Icon Value=&quot;{StaticResource faFolderOpen}&quot;&gt;&lt;/i:Icon&gt;
+        &lt;/StackPanel&gt;
+      &lt;/StackPanel&gt;
+    &lt;/Border&gt;
+  &lt;/Design.PreviewWith&gt;
+
+  &lt;sys:String x:Key=&quot;faUser&quot;&gt;fa-user&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faAdd&quot;&gt;fa-plus&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faAddCircle&quot;&gt;fa-plus-circle&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faDelete&quot;&gt;fa-trash&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faEdit&quot;&gt;fa-edit&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faClose&quot;&gt;fa-times&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faCopy&quot;&gt;fa-copy&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faKnight&quot;&gt;fa-chess-knight&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faPawn&quot;&gt;fa-chess-pawn&lt;/sys:String&gt;
+
+
+
+  &lt;sys:String x:Key=&quot;faSpotify&quot;&gt;fa-spotify&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faMusic&quot;&gt;fa-music&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faGlobe&quot;&gt;fa-globe&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faBook&quot;&gt;fa-book&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faPowerOff&quot;&gt;fa-power-off&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faQuestion&quot;&gt;fa-question&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faQuestionCircle&quot;&gt;fa-question-circle&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faRecycle&quot;&gt;fa-recycle&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faSync&quot;&gt;fa-sync&lt;/sys:String&gt;
+
+
+
+  &lt;sys:String x:Key=&quot;faCheck&quot;&gt;fa-check&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faCheckCircle&quot;&gt;fa-check-circle&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faCheckSquare&quot;&gt;fa-check-square&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faEllipsisH&quot;&gt;fa-ellipsis-h&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faEllipsisV&quot;&gt;fa-ellipsis-v&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faExchange&quot;&gt;fa-exchange&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faFilter&quot;&gt;fa-filter&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faFolder&quot;&gt;fa-folder&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faFolderOpen&quot;&gt;fa-folder-open&lt;/sys:String&gt;
+
+  &lt;sys:String x:Key=&quot;faAlignCenter&quot;&gt;fa-align-center&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faAlignJustify&quot;&gt;fa-align-justify&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faAlignLeft&quot;&gt;fa-align-left&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faAlignRight&quot;&gt;fa-align-right&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faBold&quot;&gt;fa-bold&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faItalic&quot;&gt;fa-italic&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faUnderline&quot;&gt;fa-underline&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faStrikethrough&quot;&gt;fa-strikethrough&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faParagraph&quot;&gt;fa-paragraph&lt;/sys:String&gt;
+
+
+  &lt;sys:String x:Key=&quot;faList&quot;&gt;fa-list&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faListAlt&quot;&gt;fa-list-alt&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faListOl&quot;&gt;fa-list-ol&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faListUl&quot;&gt;fa-list-ul&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faQuoteLeft&quot;&gt;fa-quote-left&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faQuoteRight&quot;&gt;fa-quote-right&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faSave&quot;&gt;fa-save&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faHashtag&quot;&gt;fa-hashtag&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faIndent&quot;&gt;fa-indent&lt;/sys:String&gt;
+
+
+  &lt;sys:String x:Key=&quot;faSearch&quot;&gt;fa-search&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faSearchMinus&quot;&gt;fa-search-minus&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faSearchPlus&quot;&gt;fa-search-plus&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faPaste&quot;&gt;fa-paste&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faPaperclip&quot;&gt;fa-paperclip&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faLink&quot;&gt;fa-link&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faShareAlt&quot;&gt;fa-share-alt&lt;/sys:String&gt;
+
+
+
+  &lt;sys:String x:Key=&quot;faChevronRight&quot;&gt;fa-chevron-right&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faChevronLeft&quot;&gt;fa-chevron-left&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faChevronUp&quot;&gt;fa-chevron-up&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faChevronDown&quot;&gt;fa-chevron-down&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faChevronCircleRight&quot;&gt;fa-chevron-circle-right&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faChevronCircleLeft&quot;&gt;fa-chevron-circle-left&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faChevronCircleUp&quot;&gt;fa-chevron-circle-up&lt;/sys:String&gt;
+  &lt;sys:String x:Key=&quot;faChevronCircleDown&quot;&gt;fa-chevron-circle-down&lt;/sys:String&gt;
+
+
+
+
+
+&lt;/ResourceDictionary&gt;
+
             </code></pre>
           </li>
         </ol>
