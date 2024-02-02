@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
-    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Depedency Injection</title>
   </head>
@@ -19,40 +19,106 @@
       <a href="avl_index.html">Avalonia</a>
     </nav>
     <div class="content">
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
+      <section>
+        <h3>Depedency injection</h3>
+        <ol>
+          <li>
+            Install following packages to use Depedency injection
+            <br />
+            <table>
+              <tr>
+                <td>Microsoft.Extensions.DependencyInjection</td>
+              </tr>
+              <tr>
+                <td>Microsoft.Extensions.Hosting</td>
+              </tr>
+            </table>
+          </li>
+          <li>
+            <h4>App.axaml.cs</h4>
+            <pre><code class="language-csharp">
+  using Avalonia;
+  using Avalonia.Controls.ApplicationLifetimes;
+  using Avalonia.Markup.Xaml;
+  using CommunityToolkit.Mvvm.DependencyInjection;
+  using HanumanInstitute.MvvmDialogs;
+  using HanumanInstitute.MvvmDialogs.Avalonia;
+  using Microsoft.Extensions.DependencyInjection;
+  using Microsoft.Extensions.Hosting;
+  using System.Globalization;
+  using UI.Domain.ViewModels;
+  namespace UI;
+  
+  public partial class App : Application
+  {
+      public static IHost? AppHost { get; private set; }
+      public static IDialogService DialogService =&#x3E; Ioc.Default.GetService&#x3C;IDialogService&#x3E;()!;
+  
+      public override void Initialize()
+      {
+          BuildAppHost();
+          AvaloniaXamlLoader.Load(this);
+      }
+  
+      public override void OnFrameworkInitializationCompleted()
+      {
+          Assets.Languages.Strings.Culture = new CultureInfo(&#x22;hi-IN&#x22;);
+        
+          if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+          {
+              MainWindow mainWindow = new MainWindow();
+              MainViewModel vm = AppHost!.Services.GetService&#x3C;MainViewModel&#x3E;()!;
+              mainWindow.DataContext = vm;
+              mainWindow.Show();
+              mainWindow.Focus();
+              desktop.MainWindow = mainWindow;
+          }
+  
+          base.OnFrameworkInitializationCompleted();
+      }
+  
+      private static void BuildAppHost()
+      {
+          IDialogFactory dialogFactory = new DialogFactory().AddMessageBox();
+  
+          DialogManager dialogManager = new DialogManager(new ViewLocator(), dialogFactory);
+          IDialogService dialogService = new DialogService(dialogManager, viewModelFactory: x =&#x3E; AppHost!.Services.GetService(x));
+          
+          AppHost = Host.CreateDefaultBuilder()
+              .ConfigureServices((hostContext, services) =&#x3E;
+              {
+                  services.AddSingleton&#x3C;IDialogService&#x3E;(dialogService);
+                  services.AddSingleton&#x3C;MainViewModel&#x3E;();
+                  services.AddTransient&#x3C;OrderEntryViewModel&#x3E;();
+              })
+              .Build();
+      }
+  
+  
+  }</code></pre>
+          </li>
+          <li>
+            <h4>MainViewModel.cs</h4>
+            <pre><code class="language-csharp">
+using HanumanInstitute.MvvmDialogs;
+using UI.Helpers;
 
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
+namespace UI.Domain.ViewModels;
 
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
-
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
+public partial class MainViewModel : ViewModelBase
+{
+    private readonly IDialogService _dialogService;
+     
+    public MainViewModel(IDialogService dialogService)
+    {
+        this._dialogService = dialogService;
+        PopupHelper.InitPopupHelper(_dialogService, this);
+     
+    }
+}</code></pre>
+          </li>
+        </ol>
+      </section>
     </div>
   </body>
 
