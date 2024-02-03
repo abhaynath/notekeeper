@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>HanumanInstitute.MvvmDialogs</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+      <section>
+        <h4>Nuget packages</h4>
+        <table>
+          <tr>
+            <td>HanumanInstitute.MvvmDialogs</td>
+          </tr>
+          <tr>
+            <td>HanumanInstitute.MvvmDialogs.Avalonia</td>
+          </tr>
+          <tr>
+            <td>HanumanInstitute.MvvmDialogs.Avalonia.MessageBox</td>
+          </tr>
+        </table>
+      </section>
+
+      <img src="../../images/netcore/avalonia/dialog/popups.JPG" alt="dialog" />
+      <details>
+        <summary>App.axaml.cs</summary>
+        <section>
+          <pre><code class="language-csharp">
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
+using HanumanInstitute.MvvmDialogs;
+using HanumanInstitute.MvvmDialogs.Avalonia;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System.Globalization;
+using UI.Domain.ViewModels;
+namespace UI;
+
+public partial class App : Application
+{
+    public static IHost? AppHost { get; private set; }
+    public static IDialogService DialogService =&#x3E; AppHost!.Services.GetService&#x3C;IDialogService&#x3E;()!;
+
+    public override void Initialize()
+    {
+        BuildAppHost();
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    public override void OnFrameworkInitializationCompleted()
+    {
+        Assets.Languages.Strings.Culture = new CultureInfo(&#x22;hi-IN&#x22;);
+
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            MainWindow mainWindow = new MainWindow();
+            MainViewModel vm = AppHost!.Services.GetService&#x3C;MainViewModel&#x3E;()!;
+            mainWindow.DataContext = vm;
+            mainWindow.Show();
+            mainWindow.Focus();
+            desktop.MainWindow = mainWindow;
+        }
+
+        base.OnFrameworkInitializationCompleted();
+    }
+
+    private static void BuildAppHost()
+    {
+        IDialogFactory dialogFactory = new DialogFactory().AddMessageBox();
+
+        DialogManager dialogManager = new DialogManager(new ViewLocator(), dialogFactory);
+        IDialogService dialogService = new DialogService(dialogManager, viewModelFactory: x =&#x3E; AppHost!.Services.GetService(x));
+        AppHost = Host.CreateDefaultBuilder()
+            .ConfigureServices((hostContext, services) =&#x3E;
+            {
+                services.AddSingleton&#x3C;IDialogService&#x3E;(dialogService);
+                services.AddSingleton&#x3C;MainViewModel&#x3E;();
+                services.AddTransient&#x3C;OrderEntryViewModel&#x3E;();
+            })
+            .Build();
+    }
+
+
+}</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>ViewLocator.cs</summary>
+        <section>
+          <pre><code class="language-csharp">
+using HanumanInstitute.MvvmDialogs.Avalonia;
+using UI.Domain.ViewModels;
+using UI.UserControls;
+
+namespace UI;
+
+public class ViewLocator : StrongViewLocator
+{
+    public ViewLocator()
+    {
+        Register&#x3C;MainViewModel, MainWindow&#x3E;();
+        Register&#x3C;OrderEntryViewModel, OrderEntryWindow&#x3E;();
+    }
+}</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>MainViewModel.cs</summary>
+        <section>
+          <pre><code class="language-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+using HanumanInstitute.MvvmDialogs;
+using UI.Helpers;
+
+namespace UI.Domain.ViewModels;
+
+public partial class MainViewModel : ViewModelBase
+{
+    private readonly IDialogService _dialogService;
+
+    [ObservableProperty]
+    private HanumanDialogViewModel _dgVm;
+     
+    public MainViewModel(IDialogService dialogService)
+    {
+        this._dialogService = dialogService;
+        PopupHelper.InitPopupHelper(_dialogService, this);
+        DgVm = new HanumanDialogViewModel();
+    }
+}</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>PopupViewModelBase.cs</summary>
+        <section>
+          <pre><code class="language-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+using HanumanInstitute.MvvmDialogs;
+using System;
+
+namespace UI.Domain.ViewModels;
+
+public partial class PopupViewModelBase : ViewModelBase, IModalDialogViewModel, ICloseable
+{
+    public event EventHandler? RequestClose;
+
+    [ObservableProperty]
+    private bool? _dialogResult;
+
+    public void Submit(PopupViewModelBase vm, EventArgs e)
+    {
+        RequestClose?.Invoke(vm, e);
+    }
+}</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>PopupHelper.cs</summary>
+        <section>
+          <pre><code class="language-csharp">
+using HanumanInstitute.MvvmDialogs;
+using HanumanInstitute.MvvmDialogs.FileSystem;
+using HanumanInstitute.MvvmDialogs.FrameworkDialogs;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
+using UI.Domain.ViewModels;
+
+namespace UI.Helpers;
+
+public class PopupResponse&#x3C;T&#x3E; where T : PopupViewModelBase
+{
+    public bool? Ok;
+    public T? Data;
+    public PopupResponse(bool? flag, T t)
+    {
+        Ok = flag;
+        Data = t;
+    }
+}
+public static class PopupHelper
+{
+    private static IDialogService? _dialogService;
+    private static MainViewModel? _mainViewModel;
+
+    public static void InitPopupHelper(IDialogService dialogService, MainViewModel mainViewModel)
+    {
+        _dialogService = dialogService;
+        _mainViewModel = mainViewModel;
+    }
+    public static Task&#x3C;PopupResponse&#x3C;T&#x3E;&#x3E; ShowCustomPopup&#x3C;T&#x3E;() where T : PopupViewModelBase
+    {
+        var dialogViewModel = _dialogService!.CreateViewModel&#x3C;T&#x3E;();
+        var result = Task.Run(async () =&#x3E;
+        {
+            var dResult = await _dialogService.ShowDialogAsync&#x3C;T&#x3E;(_mainViewModel!, dialogViewModel);
+            var resp = new PopupResponse&#x3C;T&#x3E;(dResult, dialogViewModel);
+            return resp;
+        });
+        return result;
+    }
+
+
+    public static async Task&#x3C;bool?&#x3E; ShowMessageBox(string message)
+    {
+        var result = await _dialogService!.ShowMessageBoxAsync(_mainViewModel, message);
+        return result;
+    }
+    public static async Task&#x3C;bool?&#x3E; ShowCaptionMessageBox(string message, string caption)
+    {
+        var result = await _dialogService!.ShowMessageBoxAsync(_mainViewModel, message, caption);
+        return result;
+    }
+    public static async Task&#x3C;bool?&#x3E; ShowMessageOkCancel(string message, string caption)
+    {
+        var result = await _dialogService!.ShowMessageBoxAsync(_mainViewModel, message, caption, MessageBoxButton.OkCancel);
+        return result;
+    }
+    public static async Task&#x3C;bool?&#x3E; ShowMessageOkCancelImage(string message, string caption, MessageBoxImage img)
+    {
+        var result = await _dialogService!.ShowMessageBoxAsync(_mainViewModel, message, caption, MessageBoxButton.OkCancel, img);
+        return result;
+    }
+    public static async Task&#x3C;bool?&#x3E; ShowMessageOkCancelDefaultValue(string message, string caption, MessageBoxImage img, bool? defaultVal)
+    {
+        var result = await _dialogService!.ShowMessageBoxAsync(_mainViewModel, message, caption, MessageBoxButton.OkCancel, img, defaultVal);
+        return result;
+    }
+
+    public static async Task&#x3C;IDialogStorageFile?&#x3E; OpenSingleFile(string title)
+    {
+        var settings = GetSettings(title);
+        var result = await _dialogService!.ShowOpenFileDialogAsync(_mainViewModel, settings);
+        return result;
+    }
+    public static async Task&#x3C;IReadOnlyList&#x3C;IDialogStorageFile&#x3E;&#x3E; OpenMultipleFiles(string title)
+    {
+        var settings = GetSettings(title);
+        var result = await _dialogService!.ShowOpenFilesDialogAsync(_mainViewModel, settings);
+        return result;
+    }
+    public static async Task&#x3C;IDialogStorageFolder?&#x3E; OpenFolder(string title)
+    {
+        var settings = new OpenFolderDialogSettings
+        {
+            Title = title,
+            SuggestedStartLocation = new DesktopDialogStorageFolder(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!),
+        };
+
+        var result = await _dialogService!.ShowOpenFolderDialogAsync(_mainViewModel, settings);
+        return result;
+    }
+    public static async Task&#x3C;IDialogStorageFile?&#x3E; SaveFile(string title, string suggestedFileName)
+    {
+        var settings = new SaveFileDialogSettings
+        {
+            Title = title,
+            SuggestedStartLocation = new DesktopDialogStorageFolder(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!),
+            SuggestedFileName = suggestedFileName,
+            Filters = new List&#x3C;FileFilter&#x3E;()
+            {
+                new(&#x22;Text Documents&#x22;, new[] { &#x22;txt&#x22;, &#x22;md&#x22; }),
+                new(&#x22;MP3&#x22;, new[] { &#x22;mp3&#x22; }),
+                new(&#x22;All Files&#x22;, &#x22;*&#x22;)
+            },
+            DefaultExtension = &#x22;mp3&#x22;
+        };
+
+        var result = await _dialogService!.ShowSaveFileDialogAsync(_mainViewModel, settings);
+        return result;
+    }
+    public static OpenFileDialogSettings GetSettings(string title)
+    {
+        var settings = new OpenFileDialogSettings
+        {
+            Title = title,
+            SuggestedStartLocation = new DesktopDialogStorageFolder(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!),
+            Filters = new List&#x3C;FileFilter&#x3E;()
+        {
+            new(
+                &#x22;Text Documents&#x22;,
+                new[]
+                {
+                    &#x22;txt&#x22;, &#x22;md&#x22;
+                }),
+            new(
+                &#x22;Binaries&#x22;,
+                new[]
+                {
+                    &#x22;.exe&#x22;, &#x22;.dll&#x22;
+                }),
+            new(&#x22;All Files&#x22;, &#x22;*&#x22;)
+        }
+        };
+
+        return settings;
+
+    }
+}</code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>HanumanDialogViewModel.cs</summary>
+        <section>
+          <pre><code class="language-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using HanumanInstitute.MvvmDialogs.FrameworkDialogs;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
+using UI.Helpers;
+
+namespace UI.Domain.ViewModels;
+
+public partial class HanumanDialogViewModel : PopupViewModelBase
+{
+
+    [ObservableProperty]
+    private string _title;
+
+    [ObservableProperty]
+    private string _messageText;
+
+    [ObservableProperty]
+    private ObservableCollection&#x3C;string&#x3E; _paths;
+
+
+    [ObservableProperty]
+    private string _folderPath;
+
+    [ObservableProperty]
+    private string _saveFilePath;
+
+    [ObservableProperty]
+    private string _fileContent;
+
+    [ObservableProperty]
+    private string _fileSaveContent;
+    public HanumanDialogViewModel()
+    {
+
+        Title = &#x22;Content from popup&#x22;;
+        MessageText = string.Empty;
+        Paths = new ObservableCollection&#x3C;string&#x3E;();
+        SaveFilePath = string.Empty;
+        FileContent = string.Empty;
+        FileSaveContent = string.Empty;
+        FolderPath = string.Empty;
+    }
+    [RelayCommand]
+    private async Task ShowGenericPopup()
+    {
+        var result = await PopupHelper.ShowCustomPopup&#x3C;OrderEntryViewModel&#x3E;();
+        if (result.Ok == true)
+        {
+            Title = result.Data.StockName;
+        }
+    }
+
+
+    [RelayCommand]
+    private async Task ShowSimpleMessageBox()
+    {
+        var result = await PopupHelper.ShowMessageBox(&#x22;This is from Popup Helper&#x22;);
+
+        UpdateMessage(result);
+
+    }
+    [RelayCommand]
+    private async Task ShowMessageWithCaption()
+    {
+        var result = await PopupHelper.ShowCaptionMessageBox(&#x22;My message from viewmodel&#x22;, &#x22;this is caption&#x22;);
+        UpdateMessage(result);
+    }
+    [RelayCommand]
+    private async Task ShowMessageWithButtons()
+    {
+        var result = await PopupHelper.ShowMessageOkCancel(&#x22;You you want to learn Avalonia ?&#x22;, &#x22;Be careful what you wish for&#x22;);
+        UpdateMessage(result);
+    }
+
+    [RelayCommand]
+    private async Task ShowMessageWithIcon()
+    {
+        var result = await PopupHelper.ShowMessageOkCancelImage(&#x22;Jai Shree Ram !&#x22;, &#x22;Shiva&#x22;, MessageBoxImage.Exclamation);
+        UpdateMessage(result);
+    }
+
+    [RelayCommand]
+    private async Task ShowMessageWithDefaultValue()
+    {
+        var result = await PopupHelper.ShowMessageOkCancelDefaultValue(&#x22;Message with default value&#x22;, &#x22;Caption&#x22;, MessageBoxImage.Warning, null);
+        UpdateMessage(result);
+    }
+    private void UpdateMessage(bool? result)
+    {
+        MessageText = result == true ? &#x22;Yes !&#x22; : &#x22;No... :(&#x22;;
+    }
+
+    [RelayCommand]
+    private async Task OpenSingleFile()
+    {
+        var result = await PopupHelper.OpenSingleFile(&#x22;Select single file&#x22;);
+        Paths.Clear();
+        if (result?.Path != null)
+        {
+            string filePath = result.Path.LocalPath;
+            Paths.Add(filePath);
+            FileContent = File.ReadAllText(filePath);
+        }
+    }
+    [RelayCommand]
+    private async Task OpenMultipleFiles()
+    {
+        var result = await PopupHelper.OpenMultipleFiles(&#x22;Select multiple files&#x22;);
+        Paths.Clear();
+        foreach (var item in result)
+        {
+            Paths.Add(item?.Path?.LocalPath ?? string.Empty);
+        }
+    }
+
+    [RelayCommand]
+    private async Task OpenFolder()
+    {
+        var result = await PopupHelper.OpenFolder(&#x22;Select folder to delete&#x22;);
+        FolderPath = result?.Path?.LocalPath;
+    }
+    [RelayCommand]
+    private async Task SaveFile()
+    {
+        var result = await PopupHelper.SaveFile(&#x22;Save current file&#x22;, &#x22;angel broking&#x22;);
+
+        if (result?.Path?.LocalPath != null)
+        {
+            SaveFilePath = result?.Path?.LocalPath;
+            File.WriteAllText(SaveFilePath, FileSaveContent);
+        }
+
+    }
+}</code></pre>
+        </section>
+      </details>
+
+      
+
+      <details>
+        <summary>HanumanDialogDemo.axaml</summary>
+        <section>
+          <h4>HanumanDialogDemo</h4>
+          <pre><code class="language-xml">
+&#x3C;UserControl
+    x:Class=&#x22;UI.DemoControls.HanumanDialogDemo&#x22;
+    xmlns=&#x22;https://github.com/avaloniaui&#x22;
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+    xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+    xmlns:vm=&#x22;using:UI.Domain.ViewModels&#x22;
+    d:DesignHeight=&#x22;450&#x22;
+    d:DesignWidth=&#x22;800&#x22;
+    x:DataType=&#x22;vm:HanumanDialogViewModel&#x22;
+    mc:Ignorable=&#x22;d&#x22;&#x3E;
+
+    &#x3C;StackPanel Margin=&#x22;10&#x22; Spacing=&#x22;10&#x22;&#x3E;
+        &#x3C;StackPanel Orientation=&#x22;Horizontal&#x22; Spacing=&#x22;10&#x22;&#x3E;
+            &#x3C;TextBlock Text=&#x22;{Binding Title}&#x22;&#x3E;
+            &#x3C;/TextBlock&#x3E;
+            &#x3C;Button Command=&#x22;{Binding ShowGenericPopupCommand}&#x22;&#x3E;Open dialog from control&#x3C;/Button&#x3E;
+        &#x3C;/StackPanel&#x3E;
+        &#x3C;StackPanel Orientation=&#x22;Horizontal&#x22; Spacing=&#x22;10&#x22;&#x3E;
+            &#x3C;TextBlock Text=&#x22;{Binding MessageText}&#x22;&#x3E;
+            &#x3C;/TextBlock&#x3E;
+            &#x3C;Button Command=&#x22;{Binding ShowSimpleMessageBoxCommand}&#x22;&#x3E;Simple Message&#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding ShowMessageWithCaptionCommand}&#x22;&#x3E;Message with Caption&#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding ShowMessageWithButtonsCommand}&#x22;&#x3E;Message with Buttons&#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding ShowMessageWithIconCommand}&#x22;&#x3E;Message Icon&#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding ShowMessageWithDefaultValueCommand}&#x22;&#x3E;Message Default Result&#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding ShowGenericPopupCommand}&#x22;&#x3E;Generic Popup&#x3C;/Button&#x3E;
+        &#x3C;/StackPanel&#x3E;
+        &#x3C;Grid&#x3E;
+            &#x3C;Grid.RowDefinitions&#x3E;
+                &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;
+                &#x3C;/RowDefinition&#x3E;
+            &#x3C;/Grid.RowDefinitions&#x3E;
+            &#x3C;Grid.ColumnDefinitions&#x3E;
+                &#x3C;ColumnDefinition Width=&#x22;*&#x22;&#x3E;
+                &#x3C;/ColumnDefinition&#x3E;
+                &#x3C;ColumnDefinition Width=&#x22;Auto&#x22;&#x3E;
+                &#x3C;/ColumnDefinition&#x3E;
+            &#x3C;/Grid.ColumnDefinitions&#x3E;
+            &#x3C;ListBox
+                Grid.Row=&#x22;0&#x22;
+                Grid.Column=&#x22;0&#x22;
+                ItemsSource=&#x22;{Binding Paths}&#x22;&#x3E;
+            &#x3C;/ListBox&#x3E;
+            &#x3C;StackPanel
+                Grid.Row=&#x22;0&#x22;
+                Grid.Column=&#x22;1&#x22;
+                Orientation=&#x22;Vertical&#x22;&#x3E;
+                &#x3C;Button Command=&#x22;{Binding OpenSingleFileCommand}&#x22;&#x3E;Open Text File&#x3C;/Button&#x3E;
+                &#x3C;Button Command=&#x22;{Binding OpenMultipleFilesCommand}&#x22;&#x3E;Open Multiple Text files&#x3C;/Button&#x3E;
+            &#x3C;/StackPanel&#x3E;
+        &#x3C;/Grid&#x3E;
+        &#x3C;Grid VerticalAlignment=&#x22;Center&#x22;&#x3E;
+            &#x3C;Grid.ColumnDefinitions&#x3E;
+                &#x3C;ColumnDefinition /&#x3E;
+                &#x3C;ColumnDefinition Width=&#x22;Auto&#x22; /&#x3E;
+            &#x3C;/Grid.ColumnDefinitions&#x3E;
+
+            &#x3C;TextBox
+                IsReadOnly=&#x22;True&#x22;
+                Text=&#x22;{Binding FolderPath, Mode=OneWay}&#x22;
+                Watermark=&#x22;Folder open location&#x22; /&#x3E;
+            &#x3C;Button
+                Grid.Column=&#x22;1&#x22;
+                Command=&#x22;{Binding OpenFolderCommand}&#x22;
+                Content=&#x22;Open Folder&#x22; /&#x3E;
+        &#x3C;/Grid&#x3E;
+        &#x3C;Grid VerticalAlignment=&#x22;Center&#x22;&#x3E;
+            &#x3C;Grid.ColumnDefinitions&#x3E;
+                &#x3C;ColumnDefinition /&#x3E;
+                &#x3C;ColumnDefinition Width=&#x22;Auto&#x22; /&#x3E;
+            &#x3C;/Grid.ColumnDefinitions&#x3E;
+            &#x3C;StackPanel Orientation=&#x22;Vertical&#x22; Spacing=&#x22;10&#x22;&#x3E;
+                &#x3C;TextBox Text=&#x22;{Binding FileSaveContent}&#x22; Watermark=&#x22;Text to be saved&#x22;&#x3E;
+                &#x3C;/TextBox&#x3E;
+                &#x3C;StackPanel Orientation=&#x22;Horizontal&#x22; Spacing=&#x22;10&#x22;&#x3E;
+                    &#x3C;TextBlock Width=&#x22;400&#x22; Text=&#x22;{Binding SaveFilePath}&#x22; /&#x3E;
+                    &#x3C;Button
+                        Grid.Column=&#x22;1&#x22;
+                        Command=&#x22;{Binding SaveFileCommand}&#x22;
+                        Content=&#x22;Save File&#x22; /&#x3E;
+                &#x3C;/StackPanel&#x3E;
+            &#x3C;/StackPanel&#x3E;
+
+
+        &#x3C;/Grid&#x3E;
+        &#x3C;ScrollViewer MaxWidth=&#x22;400&#x22; MaxHeight=&#x22;200&#x22;&#x3E;
+            &#x3C;TextBlock
+                ScrollViewer.HorizontalScrollBarVisibility=&#x22;Auto&#x22;
+                ScrollViewer.VerticalScrollBarVisibility=&#x22;Auto&#x22;
+                Text=&#x22;{Binding FileContent}&#x22;
+                TextWrapping=&#x22;Wrap&#x22;&#x3E;
+            &#x3C;/TextBlock&#x3E;
+        &#x3C;/ScrollViewer&#x3E;
+
+    &#x3C;/StackPanel&#x3E;
+&#x3C;/UserControl&#x3E;
+</code></pre>
+          <h4>using it in MainWindow</h4>
+          <pre><code class="language-xml">   &#x3C;democontrols:HanumanDialogDemo DataContext=&#x22;{Binding DgVm}&#x22;&#x3E;
+    &#x3C;/democontrols:HanumanDialogDemo&#x3E;</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>OrderEntryViewModel.cs</summary>
+        <section>
+          <pre><code class="language-csharp">
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
+
+namespace UI.Domain.ViewModels;
+
+public partial class OrderEntryViewModel : PopupViewModelBase
+{
+    [ObservableProperty]
+    private string _stockName;
+
+    public OrderEntryViewModel()
+    {
+        StockName = &#x22;Microsoft&#x22;;
+        
+    }
+
+    [RelayCommand]
+    private void SubmitOrder()
+    {
+        if (!string.IsNullOrEmpty(StockName))
+        {
+            DialogResult = true;
+            Submit(this, EventArgs.Empty);
+
+        }
+    }
+    [RelayCommand]
+    private void CancelOrder()
+    {
+        DialogResult = false;
+        Submit(this, EventArgs.Empty);
+    }
+
+}</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>OrderEntryWindow.axaml</summary>
+        <section>
+          <pre><code class="language-xml">
+&#x3C;Window
+    x:Class=&#x22;UI.UserControls.OrderEntryWindow&#x22;
+    xmlns=&#x22;https://github.com/avaloniaui&#x22;
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+    xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+    xmlns:vm=&#x22;using:UI.Domain.ViewModels&#x22;
+    Title=&#x22;OrderEntryWindow&#x22;
+    Width=&#x22;300&#x22;
+    Height=&#x22;150&#x22;
+    x:DataType=&#x22;vm:OrderEntryViewModel&#x22;
+    CanResize=&#x22;False&#x22;
+    WindowStartupLocation=&#x22;CenterOwner&#x22;
+    mc:Ignorable=&#x22;d&#x22;&#x3E;
+    &#x3C;StackPanel
+        Margin=&#x22;10&#x22;
+        HorizontalAlignment=&#x22;Center&#x22;
+        VerticalAlignment=&#x22;Center&#x22;
+        Spacing=&#x22;10&#x22;&#x3E;
+        &#x3C;TextBox Text=&#x22;{Binding StockName}&#x22;&#x3E;
+        &#x3C;/TextBox&#x3E;
+        &#x3C;StackPanel Orientation=&#x22;Horizontal&#x22; Spacing=&#x22;5&#x22;&#x3E;
+            &#x3C;Button Command=&#x22;{Binding SubmitOrderCommand}&#x22;&#x3E;
+                OK
+            &#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding CancelOrderCommand}&#x22;&#x3E;Cancel&#x3C;/Button&#x3E;
+        &#x3C;/StackPanel&#x3E;
+
+    &#x3C;/StackPanel&#x3E;
+&#x3C;/Window&#x3E;</code></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
