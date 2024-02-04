@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Fonts</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+      <section>
+        <img src="../../images/netcore/avalonia/fonts/fonts2.JPG" />
+        <ol>
+          <li>Add a folder <b>Assets</b></li>
+          <li>Add another empty folder <b>Fonts</b></li>
+          <li>Add all the fonts in <b>Fonts</b> folders.</li>
+          <li><img src="../../images/netcore/avalonia/fonts/fonts.JPG" /></li>
+          <li>Add <b>Resources</b> folder inside Assets folder.</li>
+          <li>Add <b>Fonts.axaml</b> ResourceDictionary in <b>Fonts</b> folder</li>
+          <li>
+            Add all required fonts in the dictionary file.
+
+            <pre><code class="languange-xml">
+&#x3C;ResourceDictionary xmlns=&#x22;https://github.com/avaloniaui&#x22; xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;&#x3E;
+    &#x3C;FontFamily x:Key=&#x22;noto_devnagari&#x22;&#x3E;avares://UI/Assets/Fonts/NotoSerifDevanagari#Noto Serif Devanagari&#x3C;/FontFamily&#x3E;
+    &#x3C;FontFamily x:Key=&#x22;seven_segment&#x22;&#x3E;avares://UI/Assets/Fonts/SevenSegment#Seven Segment&#x3C;/FontFamily&#x3E;
+    &#x3C;FontFamily x:Key=&#x22;orbitron&#x22;&#x3E;avares://UI/Assets/Fonts/Orbitron#Orbitron&#x3C;/FontFamily&#x3E;
+&#x3C;/ResourceDictionary&#x3E;</code></pre>
+          </li>
+          <li>
+            Include this dictionary in App.axaml
+
+            <pre><code class="languange-xml">
+&#x3C;Application.Resources&#x3E;
+    &#x3C;ResourceDictionary&#x3E;
+        &#x3C;ResourceDictionary.MergedDictionaries&#x3E;
+            &#x3C;ResourceInclude Source=&#x22;/Assets/Resources/Fonts.axaml&#x22;&#x3E;
+            &#x3C;/ResourceInclude&#x3E;
+        &#x3C;/ResourceDictionary.MergedDictionaries&#x3E;
+    &#x3C;/ResourceDictionary&#x3E;
+&#x3C;/Application.Resources&#x3E;</code></pre>
+          </li>
+          <li>
+            Now, we can use the font-family as static resource in views
+
+            <pre><code class="language-xml">
+&#x3C;StackPanel Margin=&#x22;10&#x22;&#x3E;
+    &#x3C;TextBlock FontFamily=&#x22;{StaticResource noto_devnagari}&#x22; Text=&#x22;{x:Static langstring:Strings.greeting}&#x22;&#x3E;
+    &#x3C;/TextBlock&#x3E;
+    &#x3C;TextBlock
+        FontFamily=&#x22;{StaticResource noto_devnagari}&#x22;
+        Foreground=&#x22;Red&#x22;
+        Text=&#x22;&#x927;&#x930;&#x94D;&#x92E;&#x915;&#x94D;&#x937;&#x947;&#x924;&#x94D;&#x930;&#x947; &#x915;&#x941;&#x930;&#x941;&#x915;&#x94D;&#x937;&#x947;&#x924;&#x94D;&#x930;&#x947; &#x938;&#x92E;&#x935;&#x947;&#x924;&#x93E; &#x92F;&#x941;&#x92F;&#x941;&#x924;&#x94D;&#x938;&#x935;&#x903;&#x964; &#x92E;&#x93E;&#x92E;&#x915;&#x93E;&#x903; &#x92A;&#x93E;&#x923;&#x94D;&#x921;&#x935;&#x93E;&#x936;&#x94D;&#x91A;&#x948;&#x935; &#x915;&#x93F;&#x92E;&#x915;&#x941;&#x930;&#x94D;&#x935;&#x924; &#x938;&#x91E;&#x94D;&#x91C;&#x92F;&#x964;&#x964;&#x22;&#x3E;
+    &#x3C;/TextBlock&#x3E;
+
+    &#x3C;TextBlock
+        FontFamily=&#x22;{StaticResource orbitron}&#x22;
+        FontSize=&#x22;20&#x22;
+        FontWeight=&#x22;Bold&#x22;
+        Text=&#x22;jai shree ram jai mahakal&#x22;&#x3E;
+    &#x3C;/TextBlock&#x3E;
+    &#x3C;TextBlock
+        FontFamily=&#x22;{StaticResource seven_segment}&#x22;
+        FontSize=&#x22;40&#x22;
+        Text=&#x22;97687686868&#x22;&#x3E;
+    &#x3C;/TextBlock&#x3E;
+&#x3C;/StackPanel&#x3E;
+</code></pre>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
