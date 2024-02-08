@@ -76,8 +76,124 @@
       </details>
 
       <details>
-        <summary></summary>
-        <section></section>
+        <summary>CombinedGeometry</summary>
+        <section id="CombinedGeometry">
+          <h4>Exclude</h4>
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_excludes.JPG"  />
+          <pre><code class="language-xml">
+  &#x3C;Path
+      Fill=&#x22;Orange&#x22;
+      Stroke=&#x22;Black&#x22;
+      StrokeThickness=&#x22;2&#x22;&#x3E;
+      &#x3C;Path.Data&#x3E;
+          &#x3C;CombinedGeometry GeometryCombineMode=&#x22;Exclude&#x22;&#x3E;
+              &#x3C;CombinedGeometry.Geometry1&#x3E;
+                  &#x3C;EllipseGeometry
+                      Center=&#x22;380,75&#x22;
+                      RadiusX=&#x22;40&#x22;
+                      RadiusY=&#x22;40&#x22;&#x3E;
+                  &#x3C;/EllipseGeometry&#x3E;
+              &#x3C;/CombinedGeometry.Geometry1&#x3E;
+              &#x3C;CombinedGeometry.Geometry2&#x3E;
+                  &#x3C;EllipseGeometry
+                      Center=&#x22;395,75&#x22;
+                      RadiusX=&#x22;30&#x22;
+                      RadiusY=&#x22;30&#x22;&#x3E;
+                  &#x3C;/EllipseGeometry&#x3E;
+              &#x3C;/CombinedGeometry.Geometry2&#x3E;
+          &#x3C;/CombinedGeometry&#x3E;
+      &#x3C;/Path.Data&#x3E;
+  &#x3C;/Path&#x3E;
+          </code></pre>
+
+
+          <h4>Union</h4>
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_union.JPG"  />
+          <pre><code class="language-xml">
+&#x3C;Path
+    Fill=&#x22;Orange&#x22;
+    Stroke=&#x22;Black&#x22;
+    StrokeThickness=&#x22;2&#x22;&#x3E;
+    &#x3C;Path.Data&#x3E;
+        &#x3C;CombinedGeometry GeometryCombineMode=&#x22;Union&#x22;&#x3E;
+            &#x3C;CombinedGeometry.Geometry1&#x3E;
+                &#x3C;EllipseGeometry
+                    Center=&#x22;380,75&#x22;
+                    RadiusX=&#x22;40&#x22;
+                    RadiusY=&#x22;40&#x22;&#x3E;
+                &#x3C;/EllipseGeometry&#x3E;
+            &#x3C;/CombinedGeometry.Geometry1&#x3E;
+            &#x3C;CombinedGeometry.Geometry2&#x3E;
+                &#x3C;EllipseGeometry
+                    Center=&#x22;440,75&#x22;
+                    RadiusX=&#x22;30&#x22;
+                    RadiusY=&#x22;30&#x22;&#x3E;
+                &#x3C;/EllipseGeometry&#x3E;
+            &#x3C;/CombinedGeometry.Geometry2&#x3E;
+        &#x3C;/CombinedGeometry&#x3E;
+    &#x3C;/Path.Data&#x3E;
+&#x3C;/Path&#x3E;
+          </code></pre>
+
+
+
+          <h4>Intersect</h4>
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_intersects.JPG"  />
+          <pre><code class="language-xml">
+  &#x3C;Path
+      Fill=&#x22;Orange&#x22;
+      Stroke=&#x22;Black&#x22;
+      StrokeThickness=&#x22;2&#x22;&#x3E;
+      &#x3C;Path.Data&#x3E;
+          &#x3C;CombinedGeometry GeometryCombineMode=&#x22;Intersect&#x22;&#x3E;
+              &#x3C;CombinedGeometry.Geometry1&#x3E;
+                  &#x3C;EllipseGeometry
+                      Center=&#x22;380,75&#x22;
+                      RadiusX=&#x22;40&#x22;
+                      RadiusY=&#x22;40&#x22;&#x3E;
+                  &#x3C;/EllipseGeometry&#x3E;
+              &#x3C;/CombinedGeometry.Geometry1&#x3E;
+              &#x3C;CombinedGeometry.Geometry2&#x3E;
+                  &#x3C;EllipseGeometry
+                      Center=&#x22;400,75&#x22;
+                      RadiusX=&#x22;70&#x22;
+                      RadiusY=&#x22;30&#x22;&#x3E;
+                  &#x3C;/EllipseGeometry&#x3E;
+              &#x3C;/CombinedGeometry.Geometry2&#x3E;
+          &#x3C;/CombinedGeometry&#x3E;
+      &#x3C;/Path.Data&#x3E;
+  &#x3C;/Path&#x3E;
+          </code></pre>
+
+
+          <h4>Xor</h4>
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_xor.JPG"  />
+          <pre><code class="language-xml">
+  &#x3C;Path
+      Fill=&#x22;Orange&#x22;
+      Stroke=&#x22;Black&#x22;
+      StrokeThickness=&#x22;2&#x22;&#x3E;
+      &#x3C;Path.Data&#x3E;
+          &#x3C;CombinedGeometry GeometryCombineMode=&#x22;Xor&#x22;&#x3E;
+              &#x3C;CombinedGeometry.Geometry1&#x3E;
+                  &#x3C;EllipseGeometry
+                      Center=&#x22;380,75&#x22;
+                      RadiusX=&#x22;40&#x22;
+                      RadiusY=&#x22;40&#x22;&#x3E;
+                  &#x3C;/EllipseGeometry&#x3E;
+              &#x3C;/CombinedGeometry.Geometry1&#x3E;
+              &#x3C;CombinedGeometry.Geometry2&#x3E;
+                  &#x3C;EllipseGeometry
+                      Center=&#x22;400,75&#x22;
+                      RadiusX=&#x22;70&#x22;
+                      RadiusY=&#x22;30&#x22;&#x3E;
+                  &#x3C;/EllipseGeometry&#x3E;
+              &#x3C;/CombinedGeometry.Geometry2&#x3E;
+          &#x3C;/CombinedGeometry&#x3E;
+      &#x3C;/Path.Data&#x3E;
+  &#x3C;/Path&#x3E;
+          </code></pre>
+        </section>
       </details>
 
       <details>
