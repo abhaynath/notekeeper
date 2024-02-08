@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
-    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Graphics</title>
   </head>
@@ -19,12 +19,12 @@
       <a href="avl_index.html">Avalonia</a>
     </nav>
     <div class="content">
-      <details>
-        <summary>Paths</summary>
-        <section id="paths">
-            <h4>EvenOdd</h4>
-            <img src="../../images/netcore/avalonia/graphics/path_evenodd.JPG"  />
-            <pre><code class="language-xml">
+      <details id="GeometryGroup">
+        <summary>GeometryGroup</summary>
+        <section>
+          <h4>EvenOdd</h4>
+          <img src="../../images/netcore/avalonia/graphics/path_evenodd.JPG" />
+          <pre><code class="language-xml">
 &#x3C;Path
     Fill=&#x22;Orange&#x22;
     Stroke=&#x22;Black&#x22;
@@ -47,10 +47,9 @@
 &#x3C;/Path&#x3E;
             </code></pre>
 
-
-            <h4>NonZero</h4>
-            <img src="../../images/netcore/avalonia/graphics/path_nonzero.JPG"  />
-            <pre><code class="language-xml">
+          <h4>NonZero</h4>
+          <img src="../../images/netcore/avalonia/graphics/path_nonzero.JPG" />
+          <pre><code class="language-xml">
 &#x3C;Path
     Fill=&#x22;Orange&#x22;
     Stroke=&#x22;Black&#x22;
@@ -75,11 +74,11 @@
         </section>
       </details>
 
-      <details>
+      <details id="CombinedGeometry">
         <summary>CombinedGeometry</summary>
-        <section id="CombinedGeometry">
+        <section>
           <h4>Exclude</h4>
-          <img src="../../images/netcore/avalonia/graphics/combined_geometry_excludes.JPG"  />
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_excludes.JPG" />
           <pre><code class="language-xml">
   &#x3C;Path
       Fill=&#x22;Orange&#x22;
@@ -106,9 +105,8 @@
   &#x3C;/Path&#x3E;
           </code></pre>
 
-
           <h4>Union</h4>
-          <img src="../../images/netcore/avalonia/graphics/combined_geometry_union.JPG"  />
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_union.JPG" />
           <pre><code class="language-xml">
 &#x3C;Path
     Fill=&#x22;Orange&#x22;
@@ -135,10 +133,8 @@
 &#x3C;/Path&#x3E;
           </code></pre>
 
-
-
           <h4>Intersect</h4>
-          <img src="../../images/netcore/avalonia/graphics/combined_geometry_intersects.JPG"  />
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_intersects.JPG" />
           <pre><code class="language-xml">
   &#x3C;Path
       Fill=&#x22;Orange&#x22;
@@ -165,9 +161,8 @@
   &#x3C;/Path&#x3E;
           </code></pre>
 
-
           <h4>Xor</h4>
-          <img src="../../images/netcore/avalonia/graphics/combined_geometry_xor.JPG"  />
+          <img src="../../images/netcore/avalonia/graphics/combined_geometry_xor.JPG" />
           <pre><code class="language-xml">
   &#x3C;Path
       Fill=&#x22;Orange&#x22;
@@ -196,29 +191,135 @@
         </section>
       </details>
 
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
+      <details id="PathGeometry">
+        <summary>PathGeometry</summary>
+        <section>
+          <h4>PathGeometry.Figures</h4>
+          <img src="../../images/netcore/avalonia/graphics/pathgeometry_figure.JPG" />
+          <pre><code class="language-xml">
+&#x3C;Path
+    Fill=&#x22;Orange&#x22;
+    Stroke=&#x22;Black&#x22;
+    StrokeThickness=&#x22;2&#x22;&#x3E;
+    &#x3C;Path.Data&#x3E;
+        &#x3C;PathGeometry&#x3E;
+            &#x3C;PathGeometry.Figures&#x3E;
+                &#x3C;PathFigure StartPoint=&#x22;10,80&#x22;&#x3E;
+                    &#x3C;ArcSegment
+                        Point=&#x22;110,80&#x22;
+                        Size=&#x22;20,20&#x22;
+                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                    &#x3C;ArcSegment
+                        Point=&#x22;210,80&#x22;
+                        Size=&#x22;20,20&#x22;
+                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                    &#x3C;LineSegment Point=&#x22;110,180&#x22;&#x3E;
+                    &#x3C;/LineSegment&#x3E;
+                &#x3C;/PathFigure&#x3E;
+            &#x3C;/PathGeometry.Figures&#x3E;
+        &#x3C;/PathGeometry&#x3E;
+    &#x3C;/Path.Data&#x3E;
+&#x3C;/Path&#x3E;
+          </code></pre>
 
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
+          <h4>Image Clipping</h4>
+          <img src="../../images/netcore/avalonia/graphics/pathgeometry_image_clip.JPG" />
+          <pre><code class="language-xml">
+&#x3C;Image Width=&#x22;500&#x22; Source=&#x22;/Assets/Images/bg_10.jpg&#x22;&#x3E;
+    &#x3C;Image.Clip&#x3E;
+        &#x3C;PathGeometry&#x3E;
+            &#x3C;PathGeometry.Figures&#x3E;
+                &#x3C;PathFigure StartPoint=&#x22;10,80&#x22;&#x3E;
+                    &#x3C;ArcSegment
+                        Point=&#x22;110,80&#x22;
+                        Size=&#x22;20,20&#x22;
+                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                    &#x3C;ArcSegment
+                        Point=&#x22;210,80&#x22;
+                        Size=&#x22;20,20&#x22;
+                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                    &#x3C;LineSegment Point=&#x22;110,180&#x22;&#x3E;
+                    &#x3C;/LineSegment&#x3E;
+                &#x3C;/PathFigure&#x3E;
+            &#x3C;/PathGeometry.Figures&#x3E;
+        &#x3C;/PathGeometry&#x3E;
+    &#x3C;/Image.Clip&#x3E;
+&#x3C;/Image&#x3E;
+          </code></pre>
 
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
+          <h4>Button Clipping</h4>
+          <img src="../../images/netcore/avalonia/graphics/pathgeometry_button_clip.JPG" />
+          <pre><code class="language-xml">
+&#x3C;Button
+    Width=&#x22;400&#x22;
+    Height=&#x22;400&#x22;
+    Background=&#x22;Green&#x22;&#x3E;
+    &#x3C;Button.Clip&#x3E;
+        &#x3C;PathGeometry&#x3E;
+            &#x3C;PathGeometry.Figures&#x3E;
+                &#x3C;PathFigure StartPoint=&#x22;10,80&#x22;&#x3E;
+                    &#x3C;ArcSegment
+                        Point=&#x22;110,80&#x22;
+                        Size=&#x22;20,20&#x22;
+                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                    &#x3C;ArcSegment
+                        Point=&#x22;210,80&#x22;
+                        Size=&#x22;20,20&#x22;
+                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                    &#x3C;LineSegment Point=&#x22;110,180&#x22;&#x3E;
+                    &#x3C;/LineSegment&#x3E;
+                &#x3C;/PathFigure&#x3E;
+            &#x3C;/PathGeometry.Figures&#x3E;
+        &#x3C;/PathGeometry&#x3E;
+    &#x3C;/Button.Clip&#x3E;
+&#x3C;/Button&#x3E;
+          </code></pre>
 
-      <details>
-        <summary></summary>
-        <section></section>
-      </details>
+          <h4>Tile</h4>
+          <img src="../../images/netcore/avalonia/graphics/pathgeometry_tile.JPG" />
+          <pre><code class="language-xml">
+&#x3C;Rectangle Width=&#x22;400&#x22; Height=&#x22;400&#x22;&#x3E;
+    &#x3C;Rectangle.Resources&#x3E;
+        &#x3C;LinearGradientBrush x:Key=&#x22;heart&#x22; StartPoint=&#x22;0%,0%&#x22; EndPoint=&#x22;0%,100%&#x22;&#x3E;
+            &#x3C;LinearGradientBrush.GradientStops&#x3E;
+                &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;#903&#x22; /&#x3E;
+                &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;#f06&#x22; /&#x3E;
+            &#x3C;/LinearGradientBrush.GradientStops&#x3E;
+        &#x3C;/LinearGradientBrush&#x3E;
+    &#x3C;/Rectangle.Resources&#x3E;
+    &#x3C;Rectangle.Fill&#x3E;
+        &#x3C;DrawingBrush
+            DestinationRect=&#x22;0 0 40 30&#x22;
+            Stretch=&#x22;Uniform&#x22;
+            TileMode=&#x22;Tile&#x22;&#x3E;
+            &#x3C;DrawingBrush.Drawing&#x3E;
+                &#x3C;GeometryDrawing Brush=&#x22;{StaticResource heart}&#x22;&#x3E;
+                    &#x3C;GeometryDrawing.Geometry&#x3E;
+                        &#x3C;PathGeometry&#x3E;
+                            &#x3C;PathGeometry.Figures&#x3E;
+                                &#x3C;PathFigure StartPoint=&#x22;10,80&#x22;&#x3E;
+                                    &#x3C;ArcSegment
+                                        Point=&#x22;110,80&#x22;
+                                        Size=&#x22;20,20&#x22;
+                                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                                    &#x3C;ArcSegment
+                                        Point=&#x22;210,80&#x22;
+                                        Size=&#x22;20,20&#x22;
+                                        SweepDirection=&#x22;Clockwise&#x22; /&#x3E;
+                                    &#x3C;LineSegment Point=&#x22;110,180&#x22;&#x3E;
+                                    &#x3C;/LineSegment&#x3E;
+                                &#x3C;/PathFigure&#x3E;
+                            &#x3C;/PathGeometry.Figures&#x3E;
+                        &#x3C;/PathGeometry&#x3E;
+                    &#x3C;/GeometryDrawing.Geometry&#x3E;
+                &#x3C;/GeometryDrawing&#x3E;
+            &#x3C;/DrawingBrush.Drawing&#x3E;
 
-      <details>
-        <summary></summary>
-        <section></section>
+        &#x3C;/DrawingBrush&#x3E;
+    &#x3C;/Rectangle.Fill&#x3E;
+&#x3C;/Rectangle&#x3E;
+          </code></pre>
+        </section>
       </details>
     </div>
   </body>
