@@ -321,6 +321,75 @@
           </code></pre>
         </section>
       </details>
+
+
+      <details id="DrawingImage">
+        <summary>DrawingImage</summary>
+        <section>
+          <h4>DrawingImage Geometry</h4>
+          <img src="../../images/netcore/avalonia/graphics/drawingimage_geometry.JPG" />
+          <pre><code class="language-xml">
+&#x3C;Canvas Background=&#x22;White&#x22;&#x3E;
+
+    &#x3C;Image Canvas.Left=&#x22;20&#x22; Canvas.Top=&#x22;20&#x22;&#x3E;
+        &#x3C;Image.Source&#x3E;
+            &#x3C;DrawingImage&#x3E;
+                &#x3C;DrawingImage.Drawing&#x3E;
+                    &#x3C;GeometryDrawing Brush=&#x22;Orange&#x22;&#x3E;
+                        &#x3C;GeometryDrawing.Geometry&#x3E;
+                            &#x3C;GeometryGroup&#x3E;
+                                &#x3C;EllipseGeometry
+                                    Center=&#x22;150,150&#x22;
+                                    RadiusX=&#x22;50&#x22;
+                                    RadiusY=&#x22;50&#x22;&#x3E;
+                                &#x3C;/EllipseGeometry&#x3E;
+                                &#x3C;EllipseGeometry
+                                    Center=&#x22;200,150&#x22;
+                                    RadiusX=&#x22;50&#x22;
+                                    RadiusY=&#x22;50&#x22;&#x3E;
+                                &#x3C;/EllipseGeometry&#x3E;
+                                &#x3C;RectangleGeometry Rect=&#x22;100,150,150,100&#x22;&#x3E;
+                                &#x3C;/RectangleGeometry&#x3E;
+                            &#x3C;/GeometryGroup&#x3E;
+
+                        &#x3C;/GeometryDrawing.Geometry&#x3E;
+                        &#x3C;GeometryDrawing.Pen&#x3E;
+                            &#x3C;Pen Brush=&#x22;Black&#x22; Thickness=&#x22;2&#x22;&#x3E;
+                            &#x3C;/Pen&#x3E;
+                        &#x3C;/GeometryDrawing.Pen&#x3E;
+                    &#x3C;/GeometryDrawing&#x3E;
+                &#x3C;/DrawingImage.Drawing&#x3E;
+            &#x3C;/DrawingImage&#x3E;
+        &#x3C;/Image.Source&#x3E;
+    &#x3C;/Image&#x3E;
+
+&#x3C;/Canvas&#x3E;
+            </code></pre>
+
+          <h4>Using Image</h4>
+          <img src="../../images/netcore/avalonia/graphics/drawingimage_imagebrush.JPG" />
+          <pre><code class="language-xml">
+&#x3C;Canvas Background=&#x22;White&#x22;&#x3E;
+
+    &#x3C;Ellipse
+        Canvas.Left=&#x22;20&#x22;
+        Canvas.Top=&#x22;20&#x22;
+        Width=&#x22;100&#x22;
+        Height=&#x22;100&#x22;&#x3E;
+        &#x3C;Ellipse.Fill&#x3E;
+            &#x3C;DrawingBrush&#x3E;
+                &#x3C;DrawingBrush.Drawing&#x3E;
+                    &#x3C;ImageDrawing ImageSource=&#x22;/Assets/Images/bg_10.jpg&#x22; Rect=&#x22;100,100,200,200&#x22;&#x3E;
+                    &#x3C;/ImageDrawing&#x3E;
+                &#x3C;/DrawingBrush.Drawing&#x3E;
+            &#x3C;/DrawingBrush&#x3E;
+        &#x3C;/Ellipse.Fill&#x3E;
+    &#x3C;/Ellipse&#x3E;
+
+&#x3C;/Canvas&#x3E;
+            </code></pre>
+        </section>
+      </details>
     </div>
   </body>
 
