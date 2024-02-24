@@ -118,30 +118,36 @@ public override void OnFrameworkInitializationCompleted()
         <section>
           <pre><code class="language-csharp">
 using System.Globalization;
+using MyApp;
 
-namespace Localization;
 
-internal class Program
+namespace MyApp;
+
+
+public class Program
 {
+
     static void Main(string[] args)
     {
-        List&#x3C;string&#x3E; list = new List&#x3C;string&#x3E;();
+        string filePath = @&#x22;F:\Mix\all_langs.html&#x22;;
+
+        string str = string.Empty;
+        str += &#x22;&#x3C;!DOCTYPE html&#x3E;&#x3C;html lang=&#x27;en&#x27;&#x3E;&#x3C;head&#x3E;&#x3C;meta charset=&#x27;UTF-8&#x27;&#x3E;&#x3C;title&#x3E;All Supported Cultures&#x3C;/title&#x3E;&#x3C;/head&#x3E;&#x3C;body&#x3E;&#x3C;table&#x3E;&#x3C;tr&#x3E;&#x3C;th&#x3E;Culture&#x3C;/th&#x3E;&#x3C;th&#x3E;Specific Culture&#x3C;/th&#x3E;&#x3C;th&#x3E;Name&#x3C;/th&#x3E;&#x3C;/tr&#x3E;&#x22;;
         foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.AllCultures))
         {
             string specName = &#x22;(none)&#x22;;
             try { specName = CultureInfo.CreateSpecificCulture(ci.Name).Name; } catch { }
-            list.Add(String.Format(&#x22;{0,-12}{1,-12}{2}&#x22;, ci.Name, specName, ci.EnglishName));
+
+
+            str += $&#x22;&#x3C;tr&#x3E;&#x3C;td&#x3E;{ci.Name}&#x3C;/td&#x3E;&#x3C;td&#x3E;{specName}&#x3C;/td&#x3E;&#x3C;td&#x3E;{ci.EnglishName}&#x3C;/td&#x3E;&#x3C;/tr&#x3E;&#x22;;
         }
+        str += &#x22;&#x3C;/table&#x3E;&#x3C;/body&#x3E;&#x3C;/html&#x3E;&#x22;;
 
-        list.Sort(); 
-
-        
-        Console.WriteLine(&#x22;CULTURE   SPEC.CULTURE  ENGLISH NAME&#x22;);
-        Console.WriteLine(&#x22;--------------------------------------------------------------&#x22;);
-        foreach (string str in list)
-            Console.WriteLine(str);
+        File.WriteAllText(filePath, str);
+        Console.WriteLine(&#x22;File is created&#x22;);
     }
-}</code></pre>
+}
+</code></pre>
         </section>
       </details>
 
@@ -185,31 +191,9 @@ internal class Program
           <td>zh-CN</td>
           <td>Chinese (People's Republic of China)</td>
         </tr>
-
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
       </table>
+
+      <h3><a href="avl_all_cultures.html" target="_blank">List of all Supported languages</a></h3>
     </div>
   </body>
 
