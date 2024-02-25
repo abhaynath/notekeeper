@@ -141,6 +141,64 @@ public class HexToColorConverter : IValueConverter
       </details>
 
       <details>
+        <summary>UInt32ToColorConverter</summary>
+        <section id="UInt32ToColorConverter">
+          <h4>UInt32ToColorConverter</h4>
+          <pre><code class="language-csharp">
+using System;
+using System.Globalization;
+using Avalonia;
+using Avalonia.Data.Converters;
+using Avalonia.Media;
+
+namespace Core2D.Converters;
+
+public class UInt32ToColorConverter : IValueConverter
+{
+    public static UInt32ToColorConverter Instance = new();
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is uint c &#x26;&#x26; (targetType == typeof(Color?) || targetType == typeof(Color)))
+        {
+            try
+            {
+                return Color.FromUInt32(c);
+            }
+            catch (Exception)
+            {
+                return AvaloniaProperty.UnsetValue;
+            }
+        }
+        return AvaloniaProperty.UnsetValue;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is Color c2 &#x26;&#x26; targetType == typeof(uint))
+        {
+            try
+            {
+                return c2.ToUInt32();
+            }
+            catch (Exception)
+            {
+                return AvaloniaProperty.UnsetValue;
+            }
+        }
+        return AvaloniaProperty.UnsetValue;
+    }
+}</code></pre>
+          <h4>xaml namespace</h4>
+          <pre><code class="language-xml">
+</code></pre>
+
+          <h4>Using in control</h4>
+          <pre><code class="language-xml">
+</code></pre>
+        </section>
+      </details>
+      <details>
         <summary></summary>
         <section></section>
       </details>
