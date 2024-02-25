@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
-    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Converters</title>
   </head>
@@ -46,8 +46,8 @@ public class StringToDoubleConverter : IValueConverter
         return val;
     }
 }</code></pre>
-<h4>xaml namespace</h4>
-<pre><code class="language-xml">
+          <h4>xaml namespace</h4>
+          <pre><code class="language-xml">
 &lt;UserControl xmlns=&quot;https://github.com/avaloniaui&quot;
                 xmlns:vm=&quot;using:Avalonia_Master.Domain.ViewModels&quot;
 
@@ -61,14 +61,83 @@ public class StringToDoubleConverter : IValueConverter
   &lt;cnv:StringToDoubleConverter x:Key=&quot;stringtodouble&quot;&gt;&lt;/cnv:StringToDoubleConverter&gt;
 &lt;/UserControl.Resources&gt;</code></pre>
 
-             <h4>Using in control</h4>
-             <pre><code class="language-xml"> &lt;TextBox Grid.Row=&quot;1&quot; Grid.Column=&quot;1&quot; Watermark=&quot;Price&quot;  Text=&quot;{Binding Price,Converter={StaticResource stringtodouble}}&quot;&gt;&lt;/TextBox&gt;</code></pre>
+          <h4>Using in control</h4>
+          <pre><code class="language-xml"> &lt;TextBox Grid.Row=&quot;1&quot; Grid.Column=&quot;1&quot; Watermark=&quot;Price&quot;  Text=&quot;{Binding Price,Converter={StaticResource stringtodouble}}&quot;&gt;&lt;/TextBox&gt;</code></pre>
         </section>
       </details>
 
       <details>
-        <summary></summary>
-        <section></section>
+        <summary>HexToColorConverter</summary>
+        <section id="HexToColorConverter">
+          <h4>HexToColorConverter</h4>
+          <pre><code class="language-csharp">
+using Avalonia;
+using Avalonia.Data.Converters;
+using Avalonia.Media;
+using System.Globalization;
+
+namespace Converters;
+
+public class HexToColorConverter : IValueConverter
+{
+    public static HexToColorConverter Instance = new();
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is string s &#x26;&#x26; (targetType == typeof(Color?) || targetType == typeof(Color)))
+        {
+            try
+            {
+                if (Color.TryParse(s, out var color))
+                {
+                    return color;
+                }
+            }
+            catch (Exception)
+            {
+                return AvaloniaProperty.UnsetValue;
+            }
+        }
+        return AvaloniaProperty.UnsetValue;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is Color c &#x26;&#x26; targetType == typeof(string))
+        {
+            try
+            {
+                return $&#x22;#{c.ToUInt32():x8}&#x22;;
+            }
+            catch (Exception)
+            {
+                return AvaloniaProperty.UnsetValue;
+            }
+        }
+        return AvaloniaProperty.UnsetValue;
+    }
+}</code></pre>
+          <h4>xaml namespace</h4>
+          <pre><code class="language-xml">
+&#x3C;Window
+    x:Class=&#x22;UI.SettingsManagerWindow&#x22;
+    xmlns=&#x22;https://github.com/avaloniaui&#x22;
+    xmlns:cnv=&#x22;clr-namespace:Converters;assembly=Converters&#x22;
+    xmlns:i=&#x22;https://github.com/projektanker/icons.avalonia&#x22;
+    xmlns:vm=&#x22;using:UI.Domain.ViewModels&#x22;
+    Title=&#x22;Settings Manager&#x22;
+    x:DataType=&#x22;vm:SettingsManagerViewModel&#x22;
+    CanResize=&#x22;False&#x22;
+    Icon=&#x22;/Assets/Images/logo.ico&#x22;
+    mc:Ignorable=&#x22;d&#x22;&#x3E;
+            </code></pre>
+
+          <h4>Using in control</h4>
+          <pre><code class="language-xml">
+&#x3C;ColorPicker
+    Color=&#x22;{Binding SelectedTextColor, Mode=TwoWay, Converter={x:Static cnv:HexToColorConverter.Instance}}&#x22;&#x3E;
+&#x3C;/ColorPicker&#x3E;</code></pre>
+        </section>
       </details>
 
       <details>
