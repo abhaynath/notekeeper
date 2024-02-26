@@ -199,13 +199,241 @@ public class UInt32ToColorConverter : IValueConverter
         </section>
       </details>
       <details>
-        <summary></summary>
-        <section></section>
+        <summary>DoubleToWordsConverter</summary>
+        <section id="DoubleToWordsConverter">
+          <h4>DoubleToWordsConverter</h4>
+          <pre><code class="language-csharp">
+using Avalonia.Data.Converters;
+using System;
+using System.Globalization;
+
+namespace Avalonia_Master.Converters;
+
+public class DoubleToWordsConverter : IValueConverter
+{
+    public static DoubleToWordsConverter Instance = new();
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        double amount = (double)value;
+        try
+        {
+            long amount_int = (long)amount;
+            long amount_dec = (long)Math.Round((amount - (double)(amount_int)) * 100);
+            if (amount_dec == 0)
+            {
+                return DoubleToWord(amount_int);
+            }
+            else
+            {
+                return DoubleToWord(amount_int) + &#x22; Point &#x22; + DoubleToWord(amount_dec);
+            }
+        }
+        catch (Exception)
+        {
+            return string.Empty;
+        }
+
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+    private string DoubleToWord(long i)
+    {
+        string[] units = [&#x22;Zero&#x22;,
+            &#x22;One&#x22;,
+            &#x22;Two&#x22;,
+            &#x22;Three&#x22;,
+            &#x22;Four&#x22;,
+            &#x22;Five&#x22;,
+            &#x22;Six&#x22;,
+            &#x22;Seven&#x22;,
+            &#x22;Eight&#x22;,
+            &#x22;Nine&#x22;,
+            &#x22;Ten&#x22;,
+            &#x22;Eleven&#x22;,
+            &#x22;Twelve&#x22;,
+            &#x22;Thirteen&#x22;,
+            &#x22;Fourteen&#x22;,
+            &#x22;Fifteen&#x22;,
+            &#x22;Sixteen&#x22;,
+            &#x22;Seventeen&#x22;,
+            &#x22;Eighteen&#x22;,
+            &#x22;Nineteen&#x22;];
+
+        string[] tens = [&#x22;&#x22;,
+            &#x22;&#x22;,
+            &#x22;Twenty&#x22;,
+            &#x22;Thirty&#x22;,
+            &#x22;Forty&#x22;,
+            &#x22;Fifty&#x22;,
+            &#x22;Sixty&#x22;,
+            &#x22;Seventy&#x22;,
+            &#x22;Eighty&#x22;,
+            &#x22;Ninety&#x22;];
+        if (i &#x3C; 20)
+        {
+            return units[i];
+        }
+        if (i &#x3C; 100)
+        {
+            return tens[i / 10] + ((i % 10 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 10) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 1000)
+        {
+            return units[i / 100] + &#x22; Hundred&#x22;
+                    + ((i % 100 &#x3E; 0) ? &#x22; And &#x22; + DoubleToWord(i % 100) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 100000)
+        {
+            return DoubleToWord(i / 1000) + &#x22; Thousand &#x22;
+                    + ((i % 1000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 1000) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 10000000)
+        {
+            return DoubleToWord(i / 100000) + &#x22; Lakh &#x22;
+                    + ((i % 100000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 100000) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 1000000000)
+        {
+            return DoubleToWord(i / 10000000) + &#x22; Crore &#x22;
+                    + ((i % 10000000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 10000000) : &#x22;&#x22;);
+        }
+        return DoubleToWord(i / 1000000000) + &#x22; Arab &#x22;
+                + ((i % 1000000000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 1000000000) : &#x22;&#x22;);
+    }
+}</code></pre>
+          <h4>xaml usages</h4>
+          <pre><code class="language-xml">
+&#x3C;Label Content=&#x22;{Binding DTest1, Converter={x:Static cnv:DoubleToWordsConverter.Instance}}&#x22; /&#x3E;
+</code></pre>
+        </section>
       </details>
 
       <details>
-        <summary></summary>
-        <section></section>
+        <summary>DoubleStringToWordsConverter</summary>
+        <section id="DoubleStringToWordsConverter">
+          <h4>DoubleStringToWordsConverter</h4>
+          <pre><code class="language-csharp">
+using Avalonia.Data.Converters;
+using System;
+using System.Globalization;
+
+namespace Avalonia_Master.Converters;
+
+public class DoubleStringToWordsConverter : IValueConverter
+{
+    public static DoubleStringToWordsConverter Instance = new();
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        string? num = value as string;
+        if (num != null)
+        {
+            double amount;
+            if (double.TryParse(num, out amount))
+            {
+                try
+                {
+                    long amount_int = (long)amount;
+                    long amount_dec = (long)Math.Round((amount - (double)(amount_int)) * 100);
+                    if (amount_dec == 0)
+                    {
+                        return DoubleToWord(amount_int);
+                    }
+                    else
+                    {
+                        return DoubleToWord(amount_int) + &#x22; Point &#x22; + DoubleToWord(amount_dec);
+                    }
+                }
+                catch (Exception e)
+                {
+                    return e.Message;
+                }
+            }
+
+            return string.Empty;
+        }
+        return string.Empty;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+    private string DoubleToWord(long i)
+    {
+        string[] units = [&#x22;Zero&#x22;,
+            &#x22;One&#x22;,
+            &#x22;Two&#x22;,
+            &#x22;Three&#x22;,
+            &#x22;Four&#x22;,
+            &#x22;Five&#x22;,
+            &#x22;Six&#x22;,
+            &#x22;Seven&#x22;,
+            &#x22;Eight&#x22;,
+            &#x22;Nine&#x22;,
+            &#x22;Ten&#x22;,
+            &#x22;Eleven&#x22;,
+            &#x22;Twelve&#x22;,
+            &#x22;Thirteen&#x22;,
+            &#x22;Fourteen&#x22;,
+            &#x22;Fifteen&#x22;,
+            &#x22;Sixteen&#x22;,
+            &#x22;Seventeen&#x22;,
+            &#x22;Eighteen&#x22;,
+            &#x22;Nineteen&#x22;];
+
+        string[] tens = [&#x22;&#x22;,
+            &#x22;&#x22;,
+            &#x22;Twenty&#x22;,
+            &#x22;Thirty&#x22;,
+            &#x22;Forty&#x22;,
+            &#x22;Fifty&#x22;,
+            &#x22;Sixty&#x22;,
+            &#x22;Seventy&#x22;,
+            &#x22;Eighty&#x22;,
+            &#x22;Ninety&#x22;];
+        if (i &#x3C; 20)
+        {
+            return units[i];
+        }
+        if (i &#x3C; 100)
+        {
+            return tens[i / 10] + ((i % 10 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 10) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 1000)
+        {
+            return units[i / 100] + &#x22; Hundred&#x22;
+                    + ((i % 100 &#x3E; 0) ? &#x22; And &#x22; + DoubleToWord(i % 100) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 100000)
+        {
+            return DoubleToWord(i / 1000) + &#x22; Thousand &#x22;
+                    + ((i % 1000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 1000) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 10000000)
+        {
+            return DoubleToWord(i / 100000) + &#x22; Lakh &#x22;
+                    + ((i % 100000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 100000) : &#x22;&#x22;);
+        }
+        if (i &#x3C; 1000000000)
+        {
+            return DoubleToWord(i / 10000000) + &#x22; Crore &#x22;
+                    + ((i % 10000000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 10000000) : &#x22;&#x22;);
+        }
+        return DoubleToWord(i / 1000000000) + &#x22; Arab &#x22;
+                + ((i % 1000000000 &#x3E; 0) ? &#x22; &#x22; + DoubleToWord(i % 1000000000) : &#x22;&#x22;);
+    }
+}</code></pre>
+          <h4>xaml usages</h4>
+          <pre><code class="language-xml">
+&#x3C;StackPanel Orientation=&#x22;Vertical&#x22;&#x3E;
+  &#x3C;TextBox Text=&#x22;{Binding StrAmount}&#x22; Watermark=&#x22;Amount string&#x22; /&#x3E;
+  &#x3C;Label Content=&#x22;{Binding StrAmount, Converter={x:Static cnv:DoubleStringToWordsConverter.Instance}}&#x22; /&#x3E;
+&#x3C;/StackPanel&#x3E;
+</code></pre>
+        </section>
       </details>
 
       <details>
