@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Colors</title>
+    <style>
+      .color-block {
+        margin-top: 10px;
+        height: 30px;
+      }
+      .flag1 {
+        background: #046a38;
+        background: linear-gradient(0deg, #046a38 0%, #ffffff 50%, #ff671f 100%);
+      }
+      .rad1 {
+        background: #ff671f;
+        background: radial-gradient(circle, #ff671f 0%, #ffffff 50%, #046a38 100%);
+      }
+      .vital_ocean {
+        background: linear-gradient(0deg, #000851 0%, #1cb5e0 100%);
+      }
+      .og {
+        background: linear-gradient(90deg, #0700b8 0%, #00ff88 100%);
+      }
+      .conic1 {
+        display: block;
+        width: 100px;
+        height: 100px;
+        background-image: conic-gradient(#ff671f, #ffffff, #046a38);
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="avl_index.html">Avalonia</a>
+    </nav>
+    <div class="content">
+      <h4>Usages</h4>
+      <pre><code class="language-xml">&#x3C;Rectangle Width=&#x22;30&#x22; Height=&#x22;30&#x22; Fill=&#x22;{StaticResource vital_ocean}&#x22;&#x3E; &#x3C;/Rectangle&#x3E;</code></pre>
+      <details>
+        <summary>SolidColorBrush</summary>
+        <section>
+          <h4>SolidColorBrush</h4>
+          <div>
+            <div class="color-block" style="background-color: #006cbe"></div>
+            <pre><code class="language-xml">&#x3C;SolidColorBrush x:Key=&#x22;BgPrimary&#x22; Color=&#x22;#006CBE&#x22;&#x3E; &#x3C;/SolidColorBrush&#x3E;</code></pre>
+          </div>
+        </section>
+      </details>
+
+      <details>
+        <summary>LinearGradientBrush</summary>
+        <section>
+          <h4>LinearGradientBrush</h4>
+          <div>
+            <div class="color-block flag1"></div>
+            <pre><code class="language-xml">
+&#x3C;LinearGradientBrush x:Key=&#x22;flag1&#x22; StartPoint=&#x22;0%,0%&#x22; EndPoint=&#x22;0%,100%&#x22;&#x3E;
+    &#x3C;LinearGradientBrush.GradientStops&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;#ff671f&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0.5&#x22; Color=&#x22;#ffffff&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;#046a38&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+    &#x3C;/LinearGradientBrush.GradientStops&#x3E;
+&#x3C;/LinearGradientBrush&#x3E;
+                </code></pre>
+          </div>
+
+          <div>
+            <div class="color-block vital_ocean"></div>
+            <pre><code class="language-xml">
+&#x3C;LinearGradientBrush x:Key=&#x22;vital_ocean&#x22; StartPoint=&#x22;0%,0%&#x22; EndPoint=&#x22;0%,100%&#x22;&#x3E;
+    &#x3C;LinearGradientBrush.GradientStops&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;#1CB5E0&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+
+        &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;#000851&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+    &#x3C;/LinearGradientBrush.GradientStops&#x3E;
+&#x3C;/LinearGradientBrush&#x3E;
+                </code></pre>
+          </div>
+
+          <div>
+            <div class="color-block og"></div>
+            <pre><code class="language-xml">
+&#x3C;LinearGradientBrush x:Key=&#x22;og&#x22; StartPoint=&#x22;0%,0%&#x22; EndPoint=&#x22;100%,0%&#x22;&#x3E;
+    &#x3C;LinearGradientBrush.GradientStops&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;#0700b8&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;#00ff88&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+    &#x3C;/LinearGradientBrush.GradientStops&#x3E;
+&#x3C;/LinearGradientBrush&#x3E;
+                </code></pre>
+          </div>
+        </section>
+      </details>
+
+      <details>
+        <summary>RadialGradientBrush</summary>
+        <section>
+          <h4>RadialGradientBrush</h4>
+          <div>
+            <div class="color-block rad1"></div>
+            <pre><code class="language-xml">
+&#x3C;RadialGradientBrush x:Key=&#x22;rad1&#x22; GradientOrigin=&#x22;50%,50%&#x22;&#x3E;
+    &#x3C;RadialGradientBrush.GradientStops&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;#ff671f&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;0.5&#x22; Color=&#x22;#ffffff&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+        &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;#046a38&#x22;&#x3E;
+        &#x3C;/GradientStop&#x3E;
+    &#x3C;/RadialGradientBrush.GradientStops&#x3E;
+&#x3C;/RadialGradientBrush&#x3E;
+                </code></pre>
+          </div>
+
+          <div>
+            <div class="color-block"></div>
+            <pre><code class="language-xml">
+                    
+                </code></pre>
+          </div>
+
+          <div>
+            <div class="color-block"></div>
+            <pre><code class="language-xml">
+                    
+                </code></pre>
+          </div>
+        </section>
+      </details>
+
+      <details>
+        <summary>ConicGradientBrush</summary>
+        <section>
+          <h4>ConicGradientBrush</h4>
+          <div>
+            <div class="color-block conic1"></div>
+            <pre><code class="language-xml">
+&#x3C;ConicGradientBrush x:Key=&#x22;conic1&#x22; Angle=&#x22;0&#x22; Center=&#x22;50%,50%&#x22;&#x3E;
+    &#x3C;GradientStop Offset=&#x22;0&#x22; Color=&#x22;#ff671f&#x22;&#x3E; &#x3C;/GradientStop&#x3E;
+    &#x3C;GradientStop Offset=&#x22;0.5&#x22; Color=&#x22;#ffffff&#x22;&#x3E; &#x3C;/GradientStop&#x3E;
+    &#x3C;GradientStop Offset=&#x22;1&#x22; Color=&#x22;#046a38&#x22;&#x3E; &#x3C;/GradientStop&#x3E;
+&#x3C;/ConicGradientBrush&#x3E;</code></pre>
+          </div>
+
+          <div>
+            <div class="color-block"></div>
+            <pre><code class="language-xml"></code></pre>
+          </div>
+
+          <div>
+            <div class="color-block"></div>
+            <pre><code class="language-xml"></code></pre>
+          </div>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
