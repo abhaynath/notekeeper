@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../css/png/dotnet.png" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Templates</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="dotnet_index.html">dotnet</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>Get List of all installed templates</summary>
+        <section>
+          <pre class="shell">dotnet new list</pre>
+        </section>
+      </details>
+      <details>
+        <summary>Check if template updates are available</summary>
+        <section>
+          <pre class="shell">dotnet new update --check-only</pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Update all installed templates</summary>
+        <section>
+          <pre class="shell">dotnet new update</pre>
+        </section>
+      </details>
+      <details>
+        <summary>Search the templates</summary>
+        <section>
+          <p>Suppose we want to search <span class="keyword">avalonia</span> related templates</p>
+          <pre class="shell">dotnet new search avalonia</pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Display template package metadata</summary>
+        <section>
+          <p>
+            The dotnet new details command displays the metadata of the template package from the package name provided. By default, the command searches for
+            the latest available version. If the package is installed locally or is found on the official NuGet website, it also displays the templates that the
+            package contains, otherwise it only displays basic metadata.
+          </p>
+          <pre class="shell">dotnet new details Avalonia.Templates</pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Uninstall a template package</summary>
+        <section>
+          <pre class="shell">dotnet new uninstall Avalonia.Templates2</pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
