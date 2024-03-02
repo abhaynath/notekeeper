@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="icon" type="image/x-icon" href="../../css/png/dotnet.png" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <title>Basic</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="dotnet_index.html">dotnet</a>
+    </nav>
+    <div class="content">
+      <details>
+        <summary>dotnet</summary>
+        <section>
+          <pre class="shell">
+Usage: dotnet [options]
+Usage: dotnet [path-to-application]
+
+Options:
+  -h|--help         Display help.
+  --info            Display .NET information.
+  --list-sdks       Display the installed SDKs.
+  --list-runtimes   Display the installed runtimes.
+
+path-to-application:
+  The path to an application .dll file to execute.</pre
+          >
+        </section>
+      </details>
+      <details>
+        <summary>dotnet --version</summary>
+        <section>
+          <pre class="shell">8.0.100</pre>
+        </section>
+      </details>
+      <details>
+        <summary>dotnet -h</summary>
+        <section>
+          <pre class="shell">
+Usage: dotnet [runtime-options] [path-to-application] [arguments]
+
+Execute a .NET application.
+
+runtime-options:
+    --additionalprobingpath &#x3C;path&#x3E;   Path containing probing policy and assemblies to probe for.
+    --additional-deps &#x3C;path&#x3E;         Path to additional deps.json file.
+    --depsfile                       Path to &#x3C;application&#x3E;.deps.json file.
+    --fx-version &#x3C;version&#x3E;           Version of the installed Shared Framework to use to run the application.
+    --roll-forward &#x3C;setting&#x3E;         Roll forward to framework version  (LatestPatch, Minor, LatestMinor, Major, LatestMajor, Disable).
+    --runtimeconfig                  Path to &#x3C;application&#x3E;.runtimeconfig.json file.
+
+path-to-application:
+    The path to an application .dll file to execute.
+
+Usage: dotnet [sdk-options] [command] [command-options] [arguments]
+
+Execute a .NET SDK command.
+
+sdk-options:
+    -d|--diagnostics  Enable diagnostic output.
+    -h|--help         Show command line help.
+    --info            Display .NET information.
+    --list-runtimes   Display the installed runtimes.
+    --list-sdks       Display the installed SDKs.
+    --version         Display .NET SDK version in use.
+
+SDK commands:
+    add               Add a package or reference to a .NET project.
+    build             Build a .NET project.
+    build-server      Interact with servers started by a build.
+    clean             Clean build outputs of a .NET project.
+    format            Apply style preferences to a project or solution.
+    help              Show command line help.
+    list              List project references of a .NET project.
+    msbuild           Run Microsoft Build Engine (MSBuild) commands.
+    new               Create a new .NET project or file.
+    nuget             Provides additional NuGet commands.
+    pack              Create a NuGet package.
+    publish           Publish a .NET project for deployment.
+    remove            Remove a package or reference from a .NET project.
+    restore           Restore dependencies specified in a .NET project.
+    run               Build and run a .NET project output.
+    sdk               Manage .NET SDK installation.
+    sln               Modify Visual Studio solution files.
+    store             Store the specified assemblies in the runtime package store.
+    test              Run unit tests using the test runner specified in a .NET project.
+    tool              Install or manage tools that extend the .NET experience.
+    vstest            Run Microsoft Test Engine (VSTest) commands.
+    workload          Manage optional workloads.
+
+Additional commands from bundled tools:
+    dev-certs         Create and manage development certificates.
+    fsi               Start F# Interactive / execute F# scripts.
+    user-jwts         Manage JSON Web Tokens in development.
+    user-secrets      Manage development user secrets.
+    watch             Start a file watcher that runs a command when files change.
+
+Run &#x27;dotnet [command] --help&#x27; for more information on a command.
+            </pre
+          >
+        </section>
+      </details>
+
+      <details>
+        <summary>dotnet --info</summary>
+        <section>
+          <pre class="shell">
+.NET SDK:
+ Version:           8.0.100
+ Commit:            57efcf1350
+ Workload version:  8.0.100-manifests.8d38d0cc
+
+Runtime Environment:
+ OS Name:     Windows
+ OS Version:  10.0.19045
+ OS Platform: Windows
+ RID:         win-x64
+ Base Path:   C:\Program Files\dotnet\sdk\8.0.100\
+
+.NET workloads installed:
+ Workload version: 8.0.100-manifests.8d38d0cc
+There are no installed workloads to display.
+
+Host:
+  Version:      8.0.0
+  Architecture: x64
+  Commit:       5535e31a71
+
+.NET SDKs installed:
+  6.0.100 [C:\Program Files\dotnet\sdk]
+  7.0.202 [C:\Program Files\dotnet\sdk]
+  7.0.402 [C:\Program Files\dotnet\sdk]
+  8.0.100 [C:\Program Files\dotnet\sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.All 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.All]
+  Microsoft.AspNetCore.App 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 6.0.0 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 6.0.25 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 7.0.4 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 7.0.9 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 7.0.12 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 7.0.14 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 5.0.12 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 6.0.0 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 6.0.25 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 7.0.4 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 7.0.9 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 7.0.12 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 7.0.14 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.WindowsDesktop.App 5.0.4 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 5.0.12 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 6.0.0 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 6.0.25 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 7.0.4 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 7.0.12 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 7.0.14 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+
+Other architectures found:
+  x86   [C:\Program Files (x86)\dotnet]
+    registered at [HKLM\SOFTWARE\dotnet\Setup\InstalledVersions\x86\InstallLocation]
+
+Environment variables:
+  Not set
+
+global.json file:
+  Not found
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download
+
+          </pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>dotnet --list-sdks</summary>
+        <section>
+          <pre class="shell">
+6.0.100 [C:\Program Files\dotnet\sdk]
+7.0.202 [C:\Program Files\dotnet\sdk]
+7.0.402 [C:\Program Files\dotnet\sdk]
+8.0.100 [C:\Program Files\dotnet\sdk]</pre
+          >
+        </section>
+      </details>
+
+      <details>
+        <summary>dotnet --list-runtimes</summary>
+        <section>
+          <pre class="shell">
+Microsoft.AspNetCore.All 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.All]
+Microsoft.AspNetCore.App 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 6.0.0 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 6.0.25 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 7.0.4 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 7.0.9 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 7.0.12 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 7.0.14 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 2.1.13 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 5.0.12 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 6.0.0 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 6.0.25 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 7.0.4 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 7.0.9 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 7.0.12 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 7.0.14 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.WindowsDesktop.App 5.0.4 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 5.0.12 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 6.0.0 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 6.0.25 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 7.0.4 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 7.0.12 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 7.0.14 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]</pre
+          >
+        </section>
+      </details>
+
+      <details>
+        <summary>dotnet new -h</summary>
+        <section>
+          <pre class="shell">
+Description:
+  Template Instantiation Commands for .NET CLI.
+
+Usage:
+  dotnet new [&#x3C;template-short-name&#x3E; [&#x3C;template-args&#x3E;...]] [options]
+  dotnet new [command] [options]
+
+Arguments:
+  &#x3C;template-short-name&#x3E;  A short name of the template to create.
+  &#x3C;template-args&#x3E;        Template specific options to use.
+
+Options:
+  -o, --output &#x3C;output&#x3E;    Location to place the generated output.
+  -n, --name &#x3C;name&#x3E;        The name for the output being created. If no name is specified, the name of the output directory is used.
+  --dry-run                Displays a summary of what would happen if the given command line were run if it would result in a 
+                           template creation.
+  --force                  Forces content to be generated even if it would change existing files.
+  --no-update-check        Disables checking for the template package updates when instantiating a template.
+  --project &#x3C;project&#x3E;      The project that should be used for context evaluation.
+  -v, --verbosity &#x3C;LEVEL&#x3E;  Sets the verbosity level. Allowed values are q[uiet], m[inimal], n[ormal], and diag[nostic]. [default: 
+                           normal]
+  -d, --diagnostics        Enables diagnostic output.
+  -?, -h, --help           Show command line help.
+
+Commands:
+  create &#x3C;template-short-name&#x3E; &#x3C;template-args&#x3E;  Instantiates a template with given short name. An alias of &#x27;dotnet new &#x3C;template 
+                                                name&#x3E;&#x27;.
+  install &#x3C;package&#x3E;                             Installs a template package.
+  uninstall &#x3C;package&#x3E;                           Uninstalls a template package.
+  update                                        Checks the currently installed template packages for update, and install the updates.
+  search &#x3C;template-name&#x3E;                        Searches for the templates on NuGet.org.
+  list &#x3C;template-name&#x3E;                          Lists templates containing the specified template name. If no name is specified, 
+                                                lists all templates.
+  details &#x3C;package-identifier&#x3E;                  Provides the details for specified template package.
+                                                      The command checks if the package is installed locally, if it was not found, 
+                                                it searches the configured NuGet feeds.
+
+</pre
+          >
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary></summary>
+        <section>
+          <pre class="shell"></pre>
+        </section>
+      </details>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
