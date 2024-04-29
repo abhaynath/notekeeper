@@ -20,8 +20,281 @@
     </nav>
     <div class="content">
       <details>
-        <summary></summary>
-        <section></section>
+        <summary>Products ItemsRepeater using Casting</summary>
+        <section>
+          <img src="../../images/netcore/avalonia/itemsrepeater/casting.jpg"/>
+          <pre><code class="language-csharp">
+using AvaloniaBaseTemplate.Domain;
+using AvaloniaBaseTemplate.Domain.Models;
+using AvaloniaBaseTemplate.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using DAL.Models;
+using DAL.Repository;
+using Serilog;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+
+
+namespace AvaloniaBaseTemplate.ViewModels;
+
+public partial class ProductDashboardViewModel : ViewModelBase
+{
+    private readonly ILogger _logger;
+
+    [ObservableProperty]
+    private ObservableCollection&#x3C;Product&#x3E; _products;
+
+    private readonly IInventoryRepository _inventoryRepository;
+
+    [ObservableProperty]
+    private AppHealthStatus _appHealth;
+
+    [ObservableProperty]
+    private Product _selectedProduct;
+
+
+    public ProductDashboardViewModel(IInventoryRepository inventoryRepository, ILogger logger)
+    {
+        Products = [];
+        _inventoryRepository = inventoryRepository;
+        _logger = logger;
+        _appHealth = WeakReferenceMessenger.Default.Send&#x3C;AppHealthStatusMessage&#x3E;();
+        SelectedProduct = null;
+        OnActivated();
+    }
+    [RelayCommand]
+    private async Task GetProducts()
+    {
+        var list = await _inventoryRepository.GetAllProductsAsync();
+        Products = new ObservableCollection&#x3C;Product&#x3E;(list);
+    }
+
+    [RelayCommand]
+    private async Task AddProduct()
+    {
+        var result = await PopupService.ShowCustomPopup&#x3C;AddProductViewModel&#x3E;();
+        if (result.Ok == true)
+        {
+          _logger.Information(&#x22;New Product Added&#x22;);
+        }
+    }
+    [RelayCommand]
+    private async Task AddCategory()
+    {
+        var result = await PopupService.ShowCustomPopup&#x3C;AddCategoryViewModel&#x3E;();
+        if (result.Ok == true)
+        {
+           _logger.Information(&#x22;Category  {@category} Added&#x22;, result?.Data?.CategoryName);
+
+            var result2 = await PopupService.ShowMessageBox($&#x22;{result?.Data?.CategoryName} added in Category.&#x22;);
+        }
+    }
+    protected override void OnActivated()
+    {
+        Messenger.Register&#x3C;ProductDashboardViewModel, ProductAddedMessage&#x3E;(this, (r, m) =&#x3E;
+        {
+            Task.Run(() =&#x3E; GetProducts());
+
+        });
+
+    }
+
+    [RelayCommand]
+    private void EditProduct()
+    {
+        _logger.Information(&#x22;EditProduct  {@product} Added&#x22;, SelectedProduct);
+    }
+    [RelayCommand]
+    private async Task DeleteProduct()
+    {
+        if (SelectedProduct != null)
+        {
+            var result = await _inventoryRepository.DeleteProductByIdAsync(SelectedProduct.Id);
+            var res2 = GetProducts();
+            _logger.Information(&#x22;DeleteProduct  {@product} Added&#x22;, SelectedProduct);
+        }
+
+    }
+    [RelayCommand]
+    private async Task DeleteAllProducts()
+    {
+        var result = await _inventoryRepository.DeleteAllProductsAsync();
+        var res2 = GetProducts();
+        _logger.Information(&#x22;Delete All Products&#x22;);
+    }
+
+    [RelayCommand]
+    private async Task DeleteProductItem(long id)
+    {
+        var result = await _inventoryRepository.DeleteProductByIdAsync(id);
+        var res2 = GetProducts();
+        _logger.Information(&#x22;DeleteProductItemRepeater  {@product} Added&#x22;, id);
+    }
+}</code></pre>
+          <pre><code class="language-xml">
+    &#x3C;UserControl
+    x:Class=&#x22;AvaloniaBaseTemplate.Views.UserControls.ProductDashboard&#x22;
+    xmlns=&#x22;https://github.com/avaloniaui&#x22;
+    xmlns:x=&#x22;http://schemas.microsoft.com/winfx/2006/xaml&#x22;
+    xmlns:d=&#x22;http://schemas.microsoft.com/expression/blend/2008&#x22;
+    xmlns:i=&#x22;clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity&#x22;
+    xmlns:iac=&#x22;clr-namespace:Avalonia.Xaml.Interactions.Custom;assembly=Avalonia.Xaml.Interactions.Custom&#x22;
+    xmlns:icon=&#x22;https://github.com/projektanker/icons.avalonia&#x22;
+    xmlns:mc=&#x22;http://schemas.openxmlformats.org/markup-compatibility/2006&#x22;
+    xmlns:vm=&#x22;using:AvaloniaBaseTemplate.ViewModels&#x22;
+    x:DataType=&#x22;vm:ProductDashboardViewModel&#x22;
+    mc:Ignorable=&#x22;d&#x22;&#x3E;
+    &#x3C;DockPanel LastChildFill=&#x22;True&#x22;&#x3E;
+        &#x3C;StackPanel
+            DockPanel.Dock=&#x22;Top&#x22;
+            IsVisible=&#x22;{Binding AppHealth.IsMainDBConnected}&#x22;
+            Orientation=&#x22;Horizontal&#x22;&#x3E;
+            &#x3C;Button Command=&#x22;{Binding GetProductsCommand}&#x22;&#x3E;
+                &#x3C;Button.Content&#x3E;
+                    &#x3C;StackPanel VerticalAlignment=&#x22;Center&#x22; Orientation=&#x22;Horizontal&#x22;&#x3E;
+                        &#x3C;icon:Icon Value=&#x22;{StaticResource faList}&#x22;&#x3E;
+                        &#x3C;/icon:Icon&#x3E;
+                        &#x3C;TextBlock Padding=&#x22;10,0,0,0&#x22;&#x3E;Get Products&#x3C;/TextBlock&#x3E;
+                    &#x3C;/StackPanel&#x3E;
+                &#x3C;/Button.Content&#x3E;
+
+            &#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding AddProductCommand}&#x22;&#x3E;
+                &#x3C;Button.Content&#x3E;
+                    &#x3C;StackPanel VerticalAlignment=&#x22;Center&#x22; Orientation=&#x22;Horizontal&#x22;&#x3E;
+                        &#x3C;icon:Icon Value=&#x22;{StaticResource faAddCircle}&#x22;&#x3E;
+                        &#x3C;/icon:Icon&#x3E;
+                        &#x3C;TextBlock Padding=&#x22;10,0,0,0&#x22;&#x3E;Add Product&#x3C;/TextBlock&#x3E;
+                    &#x3C;/StackPanel&#x3E;
+                &#x3C;/Button.Content&#x3E;
+            &#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding AddCategoryCommand}&#x22;&#x3E;
+                &#x3C;Button.Content&#x3E;
+                    &#x3C;StackPanel VerticalAlignment=&#x22;Center&#x22; Orientation=&#x22;Horizontal&#x22;&#x3E;
+                        &#x3C;icon:Icon Value=&#x22;{StaticResource faAddCircle}&#x22;&#x3E;
+                        &#x3C;/icon:Icon&#x3E;
+                        &#x3C;TextBlock Padding=&#x22;10,0,0,0&#x22;&#x3E;Add Category&#x3C;/TextBlock&#x3E;
+                    &#x3C;/StackPanel&#x3E;
+                &#x3C;/Button.Content&#x3E;
+            &#x3C;/Button&#x3E;
+            &#x3C;Button Command=&#x22;{Binding DeleteAllProductsCommand}&#x22;&#x3E;
+                &#x3C;Button.Content&#x3E;
+                    &#x3C;StackPanel VerticalAlignment=&#x22;Center&#x22; Orientation=&#x22;Horizontal&#x22;&#x3E;
+                        &#x3C;icon:Icon Value=&#x22;{StaticResource faDelete}&#x22;&#x3E;
+                        &#x3C;/icon:Icon&#x3E;
+                        &#x3C;TextBlock Padding=&#x22;10,0,0,0&#x22;&#x3E;Delete All&#x3C;/TextBlock&#x3E;
+                    &#x3C;/StackPanel&#x3E;
+                &#x3C;/Button.Content&#x3E;
+            &#x3C;/Button&#x3E;
+            &#x3C;TextBlock Text=&#x22;{Binding SelectedProduct.Name}&#x22;&#x3E;
+            &#x3C;/TextBlock&#x3E;
+        &#x3C;/StackPanel&#x3E;
+        &#x3C;Grid&#x3E;
+            &#x3C;Grid.RowDefinitions&#x3E;
+                &#x3C;RowDefinition Height=&#x22;*&#x22;&#x3E;
+                &#x3C;/RowDefinition&#x3E;
+            &#x3C;/Grid.RowDefinitions&#x3E;
+            &#x3C;Grid.ColumnDefinitions&#x3E;
+                &#x3C;ColumnDefinition Width=&#x22;*&#x22;&#x3E;
+                &#x3C;/ColumnDefinition&#x3E;
+                &#x3C;ColumnDefinition Width=&#x22;4&#x22;&#x3E;
+                &#x3C;/ColumnDefinition&#x3E;
+                &#x3C;ColumnDefinition Width=&#x22;Auto&#x22; MinWidth=&#x22;300&#x22;&#x3E;
+                &#x3C;/ColumnDefinition&#x3E;
+            &#x3C;/Grid.ColumnDefinitions&#x3E;
+            &#x3C;DataGrid
+                Grid.Row=&#x22;0&#x22;
+                Grid.Column=&#x22;0&#x22;
+                AutoGenerateColumns=&#x22;True&#x22;
+                DockPanel.Dock=&#x22;Bottom&#x22;
+                IsReadOnly=&#x22;True&#x22;
+                IsVisible=&#x22;{Binding AppHealth.IsMainDBConnected}&#x22;
+                ItemsSource=&#x22;{Binding Products}&#x22;
+                SelectedItem=&#x22;{Binding SelectedProduct}&#x22;&#x3E;
+
+                &#x3C;DataGrid.ContextMenu&#x3E;
+                    &#x3C;ContextMenu&#x3E;
+                        &#x3C;MenuItem Header=&#x22;Edit&#x22;&#x3E;
+                            &#x3C;MenuItem.Icon&#x3E;
+                                &#x3C;icon:Icon Value=&#x22;{StaticResource faEdit}&#x22; /&#x3E;
+                            &#x3C;/MenuItem.Icon&#x3E;
+                        &#x3C;/MenuItem&#x3E;
+                        &#x3C;MenuItem Command=&#x22;{Binding DeleteProductCommand}&#x22; Header=&#x22;Delete&#x22;&#x3E;
+                            &#x3C;MenuItem.Icon&#x3E;
+                                &#x3C;icon:Icon Value=&#x22;{StaticResource faDelete}&#x22; /&#x3E;
+                            &#x3C;/MenuItem.Icon&#x3E;
+                        &#x3C;/MenuItem&#x3E;
+
+                    &#x3C;/ContextMenu&#x3E;
+                &#x3C;/DataGrid.ContextMenu&#x3E;
+            &#x3C;/DataGrid&#x3E;
+            &#x3C;GridSplitter
+                Grid.Row=&#x22;0&#x22;
+                Grid.Column=&#x22;1&#x22;
+                Background=&#x22;{StaticResource lg1}&#x22;&#x3E;
+            &#x3C;/GridSplitter&#x3E;
+            &#x3C;ScrollViewer
+                Grid.Row=&#x22;0&#x22;
+                Grid.Column=&#x22;2&#x22;
+                Margin=&#x22;4&#x22;&#x3E;
+                &#x3C;ItemsRepeater ItemsSource=&#x22;{Binding Products}&#x22;&#x3E;
+                    &#x3C;ItemsRepeater.ItemTemplate&#x3E;
+                        &#x3C;DataTemplate&#x3E;
+                            &#x3C;Border
+                                Margin=&#x22;4&#x22;
+                                Padding=&#x22;4&#x22;
+                                BorderBrush=&#x22;Gray&#x22;
+                                BorderThickness=&#x22;1&#x22;
+                                CornerRadius=&#x22;4&#x22;&#x3E;
+                                &#x3C;Grid&#x3E;
+                                    &#x3C;Grid.RowDefinitions&#x3E;
+                                        &#x3C;RowDefinition Height=&#x22;Auto&#x22;&#x3E;
+                                        &#x3C;/RowDefinition&#x3E;
+                                    &#x3C;/Grid.RowDefinitions&#x3E;
+                                    &#x3C;Grid.ColumnDefinitions&#x3E;
+                                        &#x3C;ColumnDefinition Width=&#x22;*&#x22;&#x3E;
+                                        &#x3C;/ColumnDefinition&#x3E;
+                                        &#x3C;ColumnDefinition Width=&#x22;Auto&#x22;&#x3E;
+                                        &#x3C;/ColumnDefinition&#x3E;
+                                    &#x3C;/Grid.ColumnDefinitions&#x3E;
+                                    &#x3C;StackPanel
+                                        Grid.Column=&#x22;0&#x22;
+                                        Margin=&#x22;5&#x22;
+                                        Orientation=&#x22;Horizontal&#x22;&#x3E;
+                                        &#x3C;TextBlock Text=&#x22;{Binding Name}&#x22;&#x3E;
+                                        &#x3C;/TextBlock&#x3E;
+
+                                    &#x3C;/StackPanel&#x3E;
+                                    &#x3C;Button
+                                        Grid.Column=&#x22;1&#x22;
+                                        Command=&#x22;{Binding $parent[ItemsRepeater].((vm:ProductDashboardViewModel)DataContext).DeleteProductItemCommand}&#x22;
+                                        CommandParameter=&#x22;{Binding Id}&#x22;&#x3E;
+                                        &#x3C;Button.Content&#x3E;
+                                            &#x3C;StackPanel VerticalAlignment=&#x22;Center&#x22; Orientation=&#x22;Horizontal&#x22;&#x3E;
+                                                &#x3C;icon:Icon Value=&#x22;{StaticResource faDelete}&#x22;&#x3E;
+                                                &#x3C;/icon:Icon&#x3E;
+
+                                            &#x3C;/StackPanel&#x3E;
+                                        &#x3C;/Button.Content&#x3E;
+                                    &#x3C;/Button&#x3E;
+                                &#x3C;/Grid&#x3E;
+
+                            &#x3C;/Border&#x3E;
+
+                        &#x3C;/DataTemplate&#x3E;
+                    &#x3C;/ItemsRepeater.ItemTemplate&#x3E;
+                &#x3C;/ItemsRepeater&#x3E;
+            &#x3C;/ScrollViewer&#x3E;
+        &#x3C;/Grid&#x3E;
+
+    &#x3C;/DockPanel&#x3E;
+
+&#x3C;/UserControl&#x3E;
+
+          </code></pre>
+        </section>
       </details>
 
       <details>
