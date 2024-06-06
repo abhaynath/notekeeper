@@ -437,8 +437,58 @@ public class DoubleStringToWordsConverter : IValueConverter
       </details>
 
       <details>
-        <summary></summary>
-        <section></section>
+        <summary>EnumToBoolConverter</summary>
+        <section id="EnumToBoolConverter">
+          <h4>EnumToBoolConverter</h4>
+          <pre><code class="language-csharp">
+public enum CustomMessageBoxTypes
+{
+    OK,
+    OK_CANCEL,
+    YES_NO
+}</code></pre>
+          <pre><code class="language-csharp">
+using Avalonia.Data.Converters;
+using AvaloniaBaseTemplate.Enums;
+using System;
+using System.Globalization;
+
+
+namespace AvaloniaBaseTemplate.Converters;
+
+public class EnumToBoolConverter : IValueConverter
+{
+    public static EnumToBoolConverter Instance = new();
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not null and CustomMessageBoxTypes &#x26;&#x26; parameter is CustomMessageBoxTypes)
+        {
+            CustomMessageBoxTypes messageType = (CustomMessageBoxTypes)value;
+            CustomMessageBoxTypes param = (CustomMessageBoxTypes)parameter;
+            if (messageType == param)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}</code></pre>
+          <h4>xaml usages</h4>
+          <pre><code class="language-xml">
+&#x3C;StackPanel
+    HorizontalAlignment=&#x22;Center&#x22;
+    IsVisible=&#x22;{Binding MessageType, Converter={x:Static cnv:EnumToBoolConverter.Instance}, ConverterParameter={x:Static enum:CustomMessageBoxTypes.OK_CANCEL}}&#x22;
+    Orientation=&#x22;Horizontal&#x22;&#x3E;
+    &#x3C;Button Command=&#x22;{Binding SubmitCommand}&#x22;&#x3E;OK&#x3C;/Button&#x3E;
+    &#x3C;Button Command=&#x22;{Binding CancelCommand}&#x22;&#x3E;Cancel&#x3C;/Button&#x3E;
+&#x3C;/StackPanel&#x3E;
+  </code></pre>
+        </section>
       </details>
 
       <details>
