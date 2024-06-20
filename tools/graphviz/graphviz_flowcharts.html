@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>FlowCharts</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="graphviz_index.html">Graphviz basics</a>
+    </nav>
+
+    <div class="content">
+      <section id="gv_01">
+        <h4>Pictionary Flowchart</h4>
+        <svg width="500" viewBox="0 0 506.95 234" xmlns="http://www.w3.org/2000/svg">
+          <g class="graph" transform="translate(4 230)">
+              <path fill="#fff" d="M-4 4v-234h506.95V4H-4z"/>
+              <g class="node">
+                  <path fill="none" stroke="#000" d="M285.15-226h-119.5v36h119.5v-36z"/>
+                  <text text-anchor="middle" x="225.4" y="-202.95" font-family="Handlee" font-size="14">Draw a picture</text>
+              </g>
+              <g class="node">
+                  <path fill="none" stroke="#000" d="m225.4-154-76.75 41 76.75 41 76.75-41-76.75-41z"/>
+                  <text text-anchor="middle" x="225.4" y="-116.2" font-family="Handlee" font-size="14">Did they</text>
+                  <text text-anchor="middle" x="225.4" y="-99.7" font-family="Handlee" font-size="14">guess it?</text>
+              </g>
+              <g class="edge">
+                  <path fill="none" stroke="#000" d="M225.4-189.51v23.7"/>
+                  <path stroke="#000" d="m228.9-166.07-3.5 10-3.5-10h7z"/>
+              </g>
+              <g class="node">
+                  <ellipse fill="none" stroke="#000" cx="53.4" cy="-113" rx="53.4" ry="18"/>
+                  <text text-anchor="middle" x="53.4" y="-107.95" font-family="Handlee" font-size="14">You win!</text>
+              </g>
+              <g class="edge">
+                  <path fill="none" stroke="#000" d="M118.33-113h29.31"/>
+                  <path stroke="#000" d="m118.39-109.5-10-3.5 10-3.5v7z"/>
+                  <text text-anchor="middle" x="127.72" y="-119.2" font-family="Handlee" font-size="14">Yes</text>
+              </g>
+              <g class="node">
+                  <path fill="none" stroke="#000" d="M494.15-133.5h-155.5v41h155.5v-41z"/>
+                  <text text-anchor="middle" x="416.4" y="-116.2" font-family="Handlee" font-size="14">Point repeatedly</text>
+                  <text text-anchor="middle" x="416.4" y="-99.7" font-family="Handlee" font-size="14">to the same picture.</text>
+              </g>
+              <g class="edge">
+                  <path fill="none" stroke="#000" d="M303.09-113h23.58"/>
+                  <path stroke="#000" d="m326.65-116.5 10 3.5-10 3.5v-7z"/>
+                  <text text-anchor="middle" x="320.4" y="-119.2" font-family="Handlee" font-size="14">No</text>
+              </g>
+              <g class="node">
+                  <ellipse fill="none" stroke="#fff" cx="417.4" cy="-18" rx="81.55" ry="18"/>
+                  <text text-anchor="middle" x="417.4" y="-12.95" font-family="Handlee" font-size="14">                       </text>
+              </g>
+              <g class="edge">
+                  <path fill="none" stroke="#000" d="m416.4-91.5 1 55.5"/>
+              </g>
+              <g class="node">
+                  <ellipse fill="none" stroke="#fff" cx="225.4" cy="-18" rx="75.41" ry="18"/>
+                  <text text-anchor="middle" x="225.4" y="-12.95" font-family="Handlee" font-size="14">                     </text>
+              </g>
+              <g class="edge">
+                  <path fill="none" stroke="#000" d="M225.4-36v-24.61"/>
+                  <path stroke="#000" d="m221.9-60.49 3.5-10 3.5 10h-7z"/>
+              </g>
+              <g class="edge">
+                  <path fill="none" stroke="#000" d="m225.4-37.41 192-.06"/>
+              </g>
+          </g>
+      </svg>
+        <pre><code class="language-haskell">
+    digraph G {
+      node [fontname=&#x22;Handlee&#x22;];
+      edge [fontname=&#x22;Handlee&#x22;];
+      splines=&#x22;false&#x22;;
+      draw [label=&#x22;Draw a picture&#x22;, shape=&#x22;rect&#x22;];
+      win [label=&#x22;You win!&#x22;, shape=&#x22;oval&#x22;];
+      guess [label=&#x22;Did they\nguess it?&#x22;, shape=&#x22;diamond&#x22;];
+      point [label=&#x22;Point repeatedly\nto the same picture.&#x22;, shape=&#x22;rect&#x22;];
+      draw -&#x3E; guess;
+      win -&#x3E; guess [label=&#x22;Yes&#x22;, dir=&#x22;back&#x22;];
+      guess -&#x3E; point [label=&#x22;No&#x22;];
+      {
+          rank=&#x22;same&#x22;;
+          guess;
+          point;
+          win;
+      }
+      {
+          rank=&#x22;same&#x22;;
+          guess2;
+          point2;
+      }
+      guess2 [label=&#x22;                     &#x22;, color=&#x22;white&#x22;];
+      point2 [label=&#x22;                       &#x22;, color=&#x22;white&#x22;];
+      point:s -&#x3E; point2:n [arrowhead=&#x22;none&#x22;];
+      guess2:n -&#x3E; point2:n [arrowhead=&#x22;none&#x22;];
+      guess2:n -&#x3E; guess:s;
+  }
+        
+        </code></pre>
+        
+      
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
