@@ -44,7 +44,7 @@
           <li>
             Add following content in the file.
 
-            <pre><code>
+            <pre><code class="language-haskell">
     digraph G {
         Hello -&#x3E; World;
     }</code></pre>
@@ -73,6 +73,55 @@
             </svg>
           </li>
         </ol>
+      </section>
+      <section id="gv_03">
+        <h4>Hello World with styling</h4>
+        <pre><code class="language-haskell">
+  digraph G {
+    node [style = filled;];
+    edge [style = dashed; color = red;];
+    Hello [color = orangered;fontcolor = yellow;];
+    World [fillcolor = white;color = blue;fontcolor = blue;];
+    Abhay [label = &#x22;From Abhay&#x22;;color = green;shape = square;fontcolor = white;];
+    Hello -&#x3E; World;
+    World -&#x3E; Abhay;
+}</code></pre>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="300" viewBox="0 0 95.16 239.16">
+          <g class="graph" data-name="G">
+            <path fill="#fff" d="M10.133 203.019V21.769h72.118v181.25H10.133z" />
+            <g class="node" pointer-events="visible" data-name="Hello" transform="matrix(.75786 0 0 .75786 13.165 199.987)">
+              <ellipse fill="#FF4500" stroke="#FF4500" cx="43.58" cy="-213.16" rx="32.48" ry="18" />
+              <text text-anchor="middle" x="43.58" y="-208.96" font-family="Times,serif" font-size="14" fill="#FF0">Hello</text>
+            </g>
+            <g class="node" pointer-events="visible" data-name="World" transform="matrix(.75786 0 0 .75786 13.165 199.987)">
+              <ellipse fill="#FFF" stroke="#00F" cx="43.58" cy="-141.16" rx="35.92" ry="18" />
+              <text text-anchor="middle" x="43.58" y="-136.96" font-family="Times,serif" font-size="14" fill="#00F">World</text>
+            </g>
+            <g class="edge" data-name="Hello-&gt;World" stroke="red">
+              <path fill="none" d="M46.192 52.311v18.31" stroke-dasharray="3.7893,1.51572" stroke-width=".75786" />
+              <path fill="red" d="m48.845 70.56-2.653 7.579-2.652-7.579h5.305z" stroke-width=".75786" />
+            </g>
+            <g class="node" pointer-events="visible" data-name="Abhay" data-comment="A">
+              <path fill="green" stroke="green" d="M79.28 133.872H13.104v66.176H79.28v-66.176z" stroke-width=".75786" />
+              <text
+                text-anchor="middle"
+                x="43.58"
+                y="-39.38"
+                font-family="Times,serif"
+                font-size="14"
+                fill="#FFF"
+                transform="matrix(.75786 0 0 .75786 13.165 199.987)"
+              >
+                From Abhay
+              </text>
+            </g>
+            <g class="edge" data-name="World-&gt;Abhay" data-comment="World-&gt;A" stroke="red">
+              <path fill="none" d="M46.192 106.718v18.507" stroke-dasharray="3.7893,1.51572" stroke-width=".75786" />
+              <path fill="red" d="m48.845 125.043-2.653 7.578-2.652-7.578h5.305z" stroke-width=".75786" />
+            </g>
+          </g>
+        </svg>
       </section>
     </div>
   </body>
