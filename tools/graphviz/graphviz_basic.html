@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Basic</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="graphviz_index.html">Graphviz basics</a>
+    </nav>
+
+    <div class="content">
+      <section id="gv_01">
+        <h4>Installation</h4>
+        <ol>
+          <li>Download installer from <a href="https://graphviz.org/download/" target="_parent">Graphviz download link</a></li>
+          <li>Install it for all users</li>
+          <li>
+            Make sure that
+            <pre class="shell">C:\Program Files\Graphviz\bin</pre>
+            path is added in system variables.
+          </li>
+          <li>
+            To check the installation is successfull, run following command.
+
+            <pre class="shell">dot --help</pre>
+          </li>
+        </ol>
+      </section>
+
+      <section id="gv_02">
+        <h4>Hello World</h4>
+        <ol>
+          <li>Create a new file <b>g.dot</b></li>
+          <li>
+            Add following content in the file.
+
+            <pre><code>
+    digraph G {
+        Hello -&#x3E; World;
+    }</code></pre>
+          </li>
+          <li>
+            To generate svg file from the source file, run following command.
+
+            <pre class="shell">dot -Tsvg g.dot -o helloworld.svg </pre>
+
+            <svg width="300" viewBox="0 0 77.19 116" xmlns="http://www.w3.org/2000/svg">
+              <g class="graph" transform="translate(4 112)">
+                <path fill="#fff" d="M-4 4v-116h77.19V4H-4z" />
+                <g class="node">
+                  <ellipse fill="none" stroke="#000" cx="34.6" cy="-90" rx="30.11" ry="18" />
+                  <text text-anchor="middle" x="34.6" y="-84.58" font-family="Times New Roman,serif" font-size="14">Hello</text>
+                </g>
+                <g class="node">
+                  <ellipse fill="none" stroke="#000" cx="34.6" cy="-18" rx="34.6" ry="18" />
+                  <text text-anchor="middle" x="34.6" y="-12.57" font-family="Times New Roman,serif" font-size="14">World</text>
+                </g>
+                <g class="edge">
+                  <path fill="none" stroke="#000" d="M34.6-71.7v24.16" />
+                  <path stroke="#000" d="m38.1-47.62-3.5 10-3.5-10h7z" />
+                </g>
+              </g>
+            </svg>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
