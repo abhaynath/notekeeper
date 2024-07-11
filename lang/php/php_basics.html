@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <title>PHP Basics</title>
+    <link
+      rel="stylesheet"
+      href="../../css/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../js/libs/highlight/styles/devibeans.min.css"
+    />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="php_index.html">PHP</a>
+      </nav>
+
+      <section id="cs_01_01">
+        <img src="../../images/lang/php/basic.JPG"/>
+        <pre><code class="language-php">
+&#x3C;body&#x3E;
+    &#x3C;?php
+
+    if (isset($_GET[&#x27;name&#x27;])) {
+        echo &#x27;&#x3C;h1&#x3E;Hello &#x27; . htmlspecialchars($_GET[&#x22;name&#x22;]) . &#x27;!&#x3C;/h1&#x3E;&#x27;;
+    } else {
+        echo &#x27;&#x3C;h1&#x3E;Hello World !&#x3C;/h1&#x3E;&#x27;;
+    }
+    ?&#x3E;
+
+
+
+    &#x3C;?php
+
+
+    if (str_contains($_SERVER[&#x27;HTTP_USER_AGENT&#x27;], &#x27;Mozilla&#x27;)) {
+        echo &#x27;&#x3C;h2&#x3E;You are using Mozilla.&#x3C;/h2&#x3E;&#x27;;
+    }
+
+    echo &#x27;&#x3C;table&#x3E;
+&#x3C;tr&#x3E;&#x3C;td&#x3E;SCRIPT_FILENAME&#x3C;/td&#x3E;&#x3C;td&#x3E;&#x27; . $_SERVER[&#x22;SCRIPT_FILENAME&#x22;] . &#x27;&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+&#x3C;tr&#x3E;&#x3C;td&#x3E;DOCUMENT_ROOT&#x3C;/td&#x3E;&#x3C;td&#x3E;&#x27; . $_SERVER[&#x27;DOCUMENT_ROOT&#x27;] . &#x27;&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+&#x3C;tr&#x3E;&#x3C;td&#x3E;HTTP_HOST&#x3C;/td&#x3E;&#x3C;td&#x3E;&#x27; . $_SERVER[&#x27;HTTP_HOST&#x27;] . &#x27;&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+&#x3C;tr&#x3E;&#x3C;td&#x3E;HTTP_USER_AGENT&#x3C;/td&#x3E;&#x3C;td&#x3E;&#x27; . $_SERVER[&#x27;HTTP_USER_AGENT&#x27;] . &#x27;&#x3C;/td&#x3E;&#x3C;/tr&#x3E;
+
+
+&#x3C;/table&#x3E;&#x27;;
+
+    ?&#x3E;
+&#x3C;/body&#x3E;
+        </code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
