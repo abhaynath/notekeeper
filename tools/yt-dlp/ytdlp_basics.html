@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>yt-dlp Basic Commands</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="ytdlp_index.html">yt-dlp Index</a>
+    </nav>
+
+    <div class="content">
+      <section id="gv_01">
+        <h4>Basic commands</h4>
+
+        <ol>
+          <li>
+            <h4>get list of all available formats</h4>
+            <pre class="shell">yt-dlp -F --list-formats https://www.youtube.com/watch?v=eADDuaim5x4</pre>
+            <details>
+              <summary>Sample output</summary>
+              <pre class="shell">
+[youtube] Extracting URL: https://www.youtube.com/watch?v=eADDuaim5x4
+[youtube] eADDuaim5x4: Downloading webpage
+[youtube] eADDuaim5x4: Downloading ios player API JSON
+[youtube] eADDuaim5x4: Downloading m3u8 information
+[info] Available formats for eADDuaim5x4:
+ID      EXT   RESOLUTION FPS CH |   FILESIZE   TBR PROTO | VCODEC          VBR ACODEC      ABR ASR MORE INFO
+------------------------------------------------------------------------------------------------------------------------------
+sb0     mhtml 48x27       10    |                  mhtml | images                                  storyboard
+233     mp4   audio only        |                  m3u8  | audio only          unknown             [en] Default
+234     mp4   audio only        |                  m3u8  | audio only          unknown             [en] Default
+139-drc m4a   audio only      2 |   61.56KiB   50k https | audio only          mp4a.40.5   50k 22k [en] low, DRC, m4a_dash
+249-drc webm  audio only      2 |   66.34KiB   54k https | audio only          opus        54k 48k [en] low, DRC, webm_dash
+250-drc webm  audio only      2 |   87.56KiB   71k https | audio only          opus        71k 48k [en] low, DRC, webm_dash
+139     m4a   audio only      2 |   61.57KiB   50k https | audio only          mp4a.40.5   50k 22k [en] low, m4a_dash
+249     webm  audio only      2 |   66.62KiB   54k https | audio only          opus        54k 48k [en] low, webm_dash
+250     webm  audio only      2 |   87.72KiB   71k https | audio only          opus        71k 48k [en] low, webm_dash
+140-drc m4a   audio only      2 |  160.67KiB  130k https | audio only          mp4a.40.2  130k 44k [en] medium, DRC, m4a_dash
+251-drc webm  audio only      2 |  165.84KiB  135k https | audio only          opus       135k 48k [en] medium, DRC, webm_dash
+140     m4a   audio only      2 |  160.66KiB  130k https | audio only          mp4a.40.2  130k 44k [en] medium, m4a_dash
+251     webm  audio only      2 |  165.95KiB  135k https | audio only          opus       135k 48k [en] medium, webm_dash
+602     mp4   256x144     15    | ~ 97.37KiB   80k m3u8  | vp09.00.10.08   80k video only
+269     mp4   256x144     30    | ~144.03KiB  118k m3u8  | avc1.4D400C    118k video only
+160     mp4   256x144     30    |   71.96KiB   59k https | avc1.4D400C     59k video only          144p, mp4_dash
+603     mp4   256x144     30    | ~153.84KiB  126k m3u8  | vp09.00.11.08  126k video only
+278     webm  256x144     30    |   76.67KiB   63k https | vp9             63k video only          144p, webm_dash
+229     mp4   426x240     30    | ~228.28KiB  187k m3u8  | avc1.4D4015    187k video only
+133     mp4   426x240     30    |  149.67KiB  122k https | avc1.4D4015    122k video only          240p, mp4_dash
+604     mp4   426x240     30    | ~234.75KiB  192k m3u8  | vp09.00.20.08  192k video only
+242     webm  426x240     30    |  125.98KiB  103k https | vp9            103k video only          240p, webm_dash
+230     mp4   640x360     30    | ~462.66KiB  379k m3u8  | avc1.4D401E    379k video only
+134     mp4   640x360     30    |  278.05KiB  227k https | avc1.4D401E    227k video only          360p, mp4_dash
+18      mp4   640x360     30  2 |  397.44KiB  322k https | avc1.42001E         mp4a.40.2       44k [en] 360p
+605     mp4   640x360     30    | ~455.73KiB  373k m3u8  | vp09.00.21.08  373k video only
+243     webm  640x360     30    |  215.58KiB  176k https | vp9            176k video only          360p, webm_dash
+231     mp4   854x480     30    | ~748.51KiB  613k m3u8  | avc1.4D401F    613k video only
+135     mp4   854x480     30    |  470.39KiB  384k https | avc1.4D401F    384k video only          480p, mp4_dash
+606     mp4   854x480     30    | ~629.37KiB  516k m3u8  | vp09.00.30.08  516k video only
+244     webm  854x480     30    |  346.75KiB  283k https | vp9            283k video only          480p, webm_dash
+232     mp4   1280x720    30    | ~  1.30MiB 1087k m3u8  | avc1.64001F   1087k video only
+136     mp4   1280x720    30    |  927.76KiB  758k https | avc1.64001F    758k video only          720p, mp4_dash
+609     mp4   1280x720    30    | ~964.50KiB  790k m3u8  | vp09.00.31.08  790k video only
+247     webm  1280x720    30    |  615.26KiB  502k https | vp9            502k video only          720p, webm_dash
+270     mp4   1920x1080   30    | ~  2.19MiB 1835k m3u8  | avc1.640028   1835k video only
+137     mp4   1920x1080   30    |    1.64MiB 1370k https | avc1.640028   1370k video only          1080p, mp4_dash
+614     mp4   1920x1080   30    | ~  1.42MiB 1195k m3u8  | vp09.00.40.08 1195k video only
+248     webm  1920x1080   30    |    1.01MiB  846k https | vp9            846k video only          1080p, webm_dash</pre
+              >
+            </details>
+          </li>
+
+          <li>
+            <h4>write file info without downloading video</h4>
+            <pre class="shell">yt-dlp --write-info-json --skip-download https://youtu.be/tHfAxAiT1zs?si=ud7eNSDGq0kZ796M</pre>
+            <details>
+              <summary>Sample output</summary>
+              <pre class="shell">
+[youtube] Extracting URL: https://youtu.be/tHfAxAiT1zs?si=ud7eNSDGq0kZ796M
+[youtube] tHfAxAiT1zs: Downloading webpage
+[youtube] tHfAxAiT1zs: Downloading ios player API JSON
+[youtube] tHfAxAiT1zs: Downloading m3u8 information
+[info] tHfAxAiT1zs: Downloading 1 format(s): 308+251
+[info] Writing video metadata as JSON to: Realistic Eevee Glass Shader for Blender 4.2 (Tutorial) [tHfAxAiT1zs].info.json</pre
+              >
+            </details>
+          </li>
+
+          <li>
+            <h4>download best video quality with MP4 format</h4>
+            <pre class="shell">yt-dlp -f &#x22;bestvideo[ext=mp4]+bestaudio[ext=m4a]&#x22; https://www.youtube.com/watch?v=eADDuaim5x4</pre>
+            <details>
+              <summary>Sample output</summary>
+              <pre class="shell">
+[youtube] Extracting URL: https://www.youtube.com/watch?v=eADDuaim5x4
+[youtube] eADDuaim5x4: Downloading webpage
+[youtube] eADDuaim5x4: Downloading ios player API JSON
+[youtube] eADDuaim5x4: Downloading m3u8 information
+[info] eADDuaim5x4: Downloading 1 format(s): 614+140
+[hlsnative] Downloading m3u8 manifest
+[hlsnative] Total fragments: 2
+[download] Destination: BH, You Think This America [eADDuaim5x4].f614.mp4
+
+[download] 100.0% of ~   712.00B at    123.18B/s ETA 00:00 (frag 0/2)
+[download]  25.0% of ~   2.78KiB at    123.18B/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~   1.70KiB at    326.12B/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~   3.70KiB at    326.12B/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~   7.70KiB at    326.12B/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~  15.70KiB at    326.12B/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~  31.70KiB at    326.12B/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~  63.70KiB at    8.49KiB/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~ 127.70KiB at   21.56KiB/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~ 255.70KiB at   43.31KiB/s ETA 00:00 (frag 1/2)
+[download] 100.0% of ~ 426.02KiB at   74.30KiB/s ETA 00:00 (frag 1/2)
+[download]  50.0% of ~ 851.34KiB at   74.30KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 427.02KiB at  140.03KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 429.02KiB at  140.03KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 433.02KiB at  140.03KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 441.02KiB at  140.03KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 457.02KiB at  140.03KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 489.02KiB at  193.71KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 553.02KiB at  239.55KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 681.02KiB at  284.31KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~ 937.02KiB at  338.35KiB/s ETA 00:00 (frag 2/2)
+[download] 100.0% of ~   1.01MiB at  385.43KiB/s ETA 00:00 (frag 2/2)
+[download]  94.4% of ~   1.07MiB at  385.43KiB/s ETA 00:00 (frag 3/2)
+[download] 100% of    1.01MiB in 00:00:03 at 268.51KiB/s             
+[download] Destination: BH, You Think This America [eADDuaim5x4].f140.m4a
+
+[download]   0.6% of  160.66KiB at  365.13KiB/s ETA 00:00
+[download]   1.9% of  160.66KiB at  492.93KiB/s ETA 00:00
+[download]   4.4% of  160.66KiB at  779.98KiB/s ETA 00:00
+[download]   9.3% of  160.66KiB at    1.18MiB/s ETA 00:00
+[download]  19.3% of  160.66KiB at    1.84MiB/s ETA 00:00
+[download]  39.2% of  160.66KiB at    3.74MiB/s ETA 00:00
+[download]  79.0% of  160.66KiB at    3.14MiB/s ETA 00:00
+[download] 100.0% of  160.66KiB at    2.06MiB/s ETA 00:00
+[download] 100% of  160.66KiB in 00:00:00 at 202.11KiB/s 
+[Merger] Merging formats into &#x22;BH, You Think This America [eADDuaim5x4].mp4&#x22;
+Deleting original file BH, You Think This America [eADDuaim5x4].f140.m4a (pass -k to keep)
+Deleting original file BH, You Think This America [eADDuaim5x4].f614.mp4 (pass -k to keep)</pre
+              >
+            </details>
+          </li>
+
+          <li>
+            <h4>Download MP3 format</h4>
+            <pre class="shell">yt-dlp -x --audio-format mp3 --audio-quality 0 https://www.youtube.com/watch?v=eADDuaim5x4</pre>
+            <details>
+              <summary>Sample output</summary>
+              <pre class="shell">
+[youtube] Extracting URL: https://www.youtube.com/watch?v=eADDuaim5x4
+[youtube] eADDuaim5x4: Downloading webpage
+[youtube] eADDuaim5x4: Downloading ios player API JSON
+[youtube] eADDuaim5x4: Downloading m3u8 information
+[info] eADDuaim5x4: Downloading 1 format(s): 251
+[download] Destination: BH, You Think This America [eADDuaim5x4].webm
+
+[download]   0.6% of  165.95KiB at  260.18KiB/s ETA 00:00
+[download]   1.8% of  165.95KiB at  513.48KiB/s ETA 00:00
+[download]   4.2% of  165.95KiB at  752.92KiB/s ETA 00:00
+[download]   9.0% of  165.95KiB at    1.20MiB/s ETA 00:00
+[download]  18.7% of  165.95KiB at    1.92MiB/s ETA 00:00
+[download]  38.0% of  165.95KiB at  447.42KiB/s ETA 00:00
+[download]  76.5% of  165.95KiB at  315.54KiB/s ETA 00:00
+[download] 100.0% of  165.95KiB at  316.32KiB/s ETA 00:00
+[download] 100% of  165.95KiB in 00:00:01 at 127.42KiB/s 
+[ExtractAudio] Destination: BH, You Think This America [eADDuaim5x4].mp3
+Deleting original file BH, You Think This America [eADDuaim5x4].webm (pass -k to keep)</pre>
+            </details>
+          </li>
+
+          <li>
+            <h4>Download MP4 video with specific resolution</h4>
+            <pre class="shell">yt-dlp -f &#x22;bestvideo[height&#x3C;=720][ext=mp4][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]/best&#x22; https://www.youtube.com/watch?v=eADDuaim5x4</pre>
+            <details>
+              <summary>Sample output</summary>
+              <pre class="shell">
+[youtube] Extracting URL: https://www.youtube.com/watch?v=eADDuaim5x4
+[youtube] eADDuaim5x4: Downloading webpage
+[youtube] eADDuaim5x4: Downloading ios player API JSON
+[youtube] eADDuaim5x4: Downloading m3u8 information
+[info] eADDuaim5x4: Downloading 1 format(s): 136+140
+[download] Destination: BH, You Think This America [eADDuaim5x4].f136.mp4
+
+[download]   0.1% of  927.76KiB at  303.41KiB/s ETA 00:03
+[download]   0.3% of  927.76KiB at  697.96KiB/s ETA 00:01
+[download]   0.8% of  927.76KiB at    1.14MiB/s ETA 00:00
+[download]   1.6% of  927.76KiB at    2.45MiB/s ETA 00:00
+[download]   3.3% of  927.76KiB at  494.88KiB/s ETA 00:01
+[download]   6.8% of  927.76KiB at  428.76KiB/s ETA 00:02
+[download]  13.7% of  927.76KiB at  527.56KiB/s ETA 00:01
+[download]  27.5% of  927.76KiB at  597.10KiB/s ETA 00:01
+[download]  55.1% of  927.76KiB at  704.91KiB/s ETA 00:00
+[download] 100.0% of  927.76KiB at  803.49KiB/s ETA 00:00
+[download] 100% of  927.76KiB in 00:00:02 at 418.09KiB/s 
+[download] Destination: BH, You Think This America [eADDuaim5x4].f140.m4a
+
+[download]   0.6% of  160.66KiB at  503.94KiB/s ETA 00:00
+[download]   1.9% of  160.66KiB at  585.42KiB/s ETA 00:00
+[download]   4.4% of  160.66KiB at    1.12MiB/s ETA 00:00
+[download]   9.3% of  160.66KiB at    1.66MiB/s ETA 00:00
+[download]  19.3% of  160.66KiB at    2.92MiB/s ETA 00:00
+[download]  39.2% of  160.66KiB at    1.53MiB/s ETA 00:00
+[download]  79.0% of  160.66KiB at  824.02KiB/s ETA 00:00
+[download] 100.0% of  160.66KiB at  749.72KiB/s ETA 00:00
+[download] 100% of  160.66KiB in 00:00:00 at 327.40KiB/s 
+[Merger] Merging formats into &#x22;BH, You Think This America [eADDuaim5x4].mp4&#x22;
+Deleting original file BH, You Think This America [eADDuaim5x4].f140.m4a (pass -k to keep)
+Deleting original file BH, You Think This America [eADDuaim5x4].f136.mp4 (pass -k to keep)</pre>
+            </details>
+          </li>
+
+          <li>
+            <h4>Download location, specific format and specific resolution</h4>
+            <pre class="shell">yt-dlp -f &#x22;bestvideo[height&#x3C;=720][ext=mp4][vcodec^=avc]+bestaudio[ext=m4a]/best[ext=mp4]/best&#x22; -o &#x22;F:/System Folders/Downloads/YouTube Downloads\%(title)s.%(ext)s&#x22; https://www.youtube.com/watch?v=eADDuaim5x4</pre>
+            <details>
+              <summary></summary>
+              <pre class="shell"></pre>
+            </details>
+          </li>
+
+          <li>
+            <h4></h4>
+            <pre class="shell"></pre>
+            <details>
+              <summary></summary>
+              <pre class="shell"></pre>
+            </details>
+          </li>
+        </ol>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
