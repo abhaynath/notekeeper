@@ -6,15 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>C# Singleton</title>
     <link rel="stylesheet" type="text/css" href="../../../css/style.css" />
-    <link
-      rel="stylesheet"
-      href="../../../css/font-awesome-4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="../../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="../../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../../js/libs/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="../../../js/libs/highlight/styles/devibeans.min.css"
-    />
     <script src="../../../js/libs/highlight/highlight.min.js"></script>
   </head>
 
@@ -28,46 +22,35 @@
       <section id="cs_01_01">
         <h3>Singleton Design Pattern</h3>
         <h4>Intent</h4>
-        Singleton is a creational design pattern that lets you ensure that a
-        class has only one instance, while providing a global access point to
-        this instance.
+        Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this
+        instance.
 
         <h4>Problem</h4>
-        The Singleton pattern solves two problems at the same time, violating
-        the Single Responsibility Principle:
+        The Singleton pattern solves two problems at the same time, violating the Single Responsibility Principle:
 
         <ul>
           <li>
             <p>
-              <b>Ensure that a class has just a single instance. </b>Why would
-              anyone want to control how many instances a class has? The most
-              common reason for this is to control access to some shared
-              resource&#x2014;for example, a database or a file.
+              <b>Ensure that a class has just a single instance. </b>Why would anyone want to control how many instances a class has? The most common reason for
+              this is to control access to some shared resource&#x2014;for example, a database or a file.
             </p>
             <p>
-              Imagine that you created an object, but after a while decided to
-              create a new one. Instead of receiving a fresh object,
-              you&#x2019;ll get the one you already created.
+              Imagine that you created an object, but after a while decided to create a new one. Instead of receiving a fresh object, you&#x2019;ll get the one
+              you already created.
             </p>
             <p>
-              Note that this behavior is impossible to implement with a regular
-              constructor since a constructor call must always return a new
-              object by design.
+              Note that this behavior is impossible to implement with a regular constructor since a constructor call must always return a new object by design.
             </p>
           </li>
 
           <li>
             <p>
-              <b>Provide a global access point to that instance.</b> Just like a
-              global variable, the Singleton pattern lets you access some object
-              from anywhere in the program. However, it also protects that
-              instance from being overwritten by other code.
+              <b>Provide a global access point to that instance.</b> Just like a global variable, the Singleton pattern lets you access some object from
+              anywhere in the program. However, it also protects that instance from being overwritten by other code.
             </p>
             <p>
-              There&#x2019;s another side to this problem: you don&#x2019;t want
-              the code that solves problem #1 to be scattered all over your
-              program. It&#x2019;s much better to have it within one class,
-              especially if the rest of your code already depends on it.
+              There&#x2019;s another side to this problem: you don&#x2019;t want the code that solves problem #1 to be scattered all over your program.
+              It&#x2019;s much better to have it within one class, especially if the rest of your code already depends on it.
             </p>
           </li>
         </ul>
@@ -76,28 +59,22 @@
 
         <ul>
           <li>
-            Make the default constructor private, to prevent other objects from
-            using the <span class="keyword">new</span> operator with the
-            Singleton class.
+            Make the default constructor private, to prevent other objects from using the <span class="keyword">new</span> operator with the Singleton class.
           </li>
           <li>
-            Create a static creation method that acts as a constructor. Under
-            the hood, this method calls the private constructor to create an
-            object and saves it in a static field. All following calls to this
-            method return the cached object.
+            Create a static creation method that acts as a constructor. Under the hood, this method calls the private constructor to create an object and saves
+            it in a static field. All following calls to this method return the cached object.
 
             <div>
-              <img src="../../../images/design_patterns/dp_singleton.jpg" />
+              <img src="../../../images/design_patterns/dp_singleton.png" />
             </div>
           </li>
         </ul>
 
         <h4>Implementation</h4>
-        It&#x2019;s pretty easy to implement a sloppy Singleton. You just need
-        to hide the constructor and implement a static creation method. The same
-        class behaves incorrectly in a multithreaded environment. Multiple
-        threads can call the creation method simultaneously and get several
-        instances of Singleton class.
+        It&#x2019;s pretty easy to implement a sloppy Singleton. You just need to hide the constructor and implement a static creation method. The same class
+        behaves incorrectly in a multithreaded environment. Multiple threads can call the creation method simultaneously and get several instances of Singleton
+        class.
         <details>
           <summary>Na&#xEF;ve Singleton Implementation</summary>
 
@@ -170,8 +147,7 @@ namespace SingletonTest
         <details>
           <summary>Thread-Safe Singleton</summary>
 
-          To fix the problem, you have to synchronize threads during the first
-          creation of the Singleton object.
+          To fix the problem, you have to synchronize threads during the first creation of the Singleton object.
           <pre><code class="language-csharp">
 using System;
 using System.Threading;
@@ -266,32 +242,19 @@ namespace Singleton
         <h4>Relation with other Design Patterns</h4>
         <ul>
           <li>
-            A <a href="cs_dp_facade.html">Facade</a> class can often be
-            transformed into a Singleton since a single facade object is
-            sufficient in most cases.
+            A <a href="cs_dp_facade.html">Facade</a> class can often be transformed into a Singleton since a single facade object is sufficient in most cases.
           </li>
           <li>
-            <a href="cs_dp_flyweight.html">Flyweight</a> would resemble
-            Singleton if you somehow managed to reduce all shared states of the
-            objects to just one flyweight object. But there are two fundamental
-            differences between these patterns:
+            <a href="cs_dp_flyweight.html">Flyweight</a> would resemble Singleton if you somehow managed to reduce all shared states of the objects to just one
+            flyweight object. But there are two fundamental differences between these patterns:
             <ol>
-              <li>
-                There should be only one Singleton instance, whereas a Flyweight
-                class can have multiple instances with different intrinsic
-                states.
-              </li>
-              <li>
-                The Singleton object can be mutable. Flyweight objects are
-                immutable.
-              </li>
+              <li>There should be only one Singleton instance, whereas a Flyweight class can have multiple instances with different intrinsic states.</li>
+              <li>The Singleton object can be mutable. Flyweight objects are immutable.</li>
             </ol>
           </li>
           <li>
-            <a href="cs_dp_abstract_factory.html">Abstract Factories</a>,
-            <a href="cs_dp_builder.html">Builders</a> and
-            <a href="cs_dp_prototype.html">Prototypes</a> can all be implemented
-            as Singletons.
+            <a href="cs_dp_abstract_factory.html">Abstract Factories</a>, <a href="cs_dp_builder.html">Builders</a> and
+            <a href="cs_dp_prototype.html">Prototypes</a> can all be implemented as Singletons.
           </li>
         </ul>
       </section>
