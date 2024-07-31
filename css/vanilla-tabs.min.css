@@ -39,9 +39,13 @@
   /* background: #eee; */
   display: block;
 }
+.tabs.style__horizontal .tabs__nav .tabs__nav_link::before{
+  content: none;
+}
 .tabs.style__horizontal .tabs__nav .tabs__nav_link.is__active {
   font-weight: bold;
-  background: #ff9100;
+  background: #fc9801;
+  color:white;
 }
 .tabs.style__horizontal .tabs__content.is__active {
   border: 1px solid #ccc;

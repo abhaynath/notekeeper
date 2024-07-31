@@ -6,10 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome-4.7.0/css/font-awesome.min.css" />
-
-    <script src="../../js/libs/jquery.min.js"></script>
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+
     <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
     <title>CSS Variables</title>
   </head>
 
@@ -19,73 +21,212 @@
       <a href="../css/css_index.html">CSS</a>
     </nav>
     <div class="content">
-      <h3>Using CSS Variables</h3>
-      <section id="css_02_01">
-        <h3>Declaring root scope variables</h3>
-        <p>Use -- before the variable name to declare css variable. Variables declared in root scope can be used anywhere in page.</p>
-        <pre><code class="language-css">
-  :root 
-  {
-  --main-bg-color: gray;
-  --main-txt-color: white;
-  --header-bg-color: black;
-  }</code></pre>
-      </section>
+      <details>
+        <summary>Declaring root scope variables</summary>
+        <section id="css_02_01">
+          <p>Use -- before the variable name to declare css variable. Variables declared in root scope can be used anywhere in page.</p>
+          <pre><code class="language-css">
+    :root 
+    {
+    --main-bg-color: gray;
+    --main-txt-color: white;
+    --header-bg-color: black;
+    }</code></pre>
+        </section>
+      </details>
+      <details>
+        <summary>Declaring class scope variables</summary>
+        <section id="css_02_02">
+          <p>Here we are declaring few class scoped varibles which are available only in .box class.</p>
+          <pre><code class="language-css">
+    .box 
+    {
+        --box-bg: #fff;
+        --box-theme-color: rgb(112, 3, 139);
+        --box-padding: 10px;
+    }
+  
+    .box 
+    {
+        border: 3px solid var(--box-theme-color);
+        background-color: var(--box-bg);
+        color: var(--box-theme-color);
+        padding: var(--box-padding);
+        box-shadow: 10px 5px 5px var(--box-theme-color);
+    }
+    </code></pre>
+        </section>
+      </details>
 
-      <section id="css_02_02">
-        <h3>Declaring class scope variables</h3>
-        <p>Here we are declaring few class scoped varibles which are available only in .box class.</p>
-        <pre><code class="language-css">
-  .box 
-  {
-      --box-bg: #fff;
-      --box-theme-color: rgb(112, 3, 139);
-      --box-padding: 10px;
-  }
-
-  .box 
-  {
-      border: 3px solid var(--box-theme-color);
-      background-color: var(--box-bg);
-      color: var(--box-theme-color);
-      padding: var(--box-padding);
-      box-shadow: 10px 5px 5px var(--box-theme-color);
-  }
-  </code></pre>
-      </section>
-
-      <section id="css_02_03">
-        <h3>Using JavaScript to get and set css variables</h3>
-        <p>Header div is using background-color from root scope.</p>
-        <pre><code class="language-css">
-  #myheader 
-  {
-      background-color: var(--header-bg-color);
-      color: white;
-      padding: 5px;
-      text-align: center;
-  }</code></pre>
-        <pre><code class="language-html">
-  &#x3C;div id=&#x22;myheader&#x22;&#x3E;Header with default black background&#x3C;/div&#x3E;
-
-  &#x3C;h1 id=&#x22;txtcolor&#x22;&#x3E;&#x3C;/h1&#x3E;
-        </code></pre>
-
-        <pre>
-          <code class="language-javascript">
-  const box = document.querySelector(&#x22;.box&#x22;);
-  const boxStyles = getComputedStyle(box);
-  const boxThemeColor = boxStyles.getPropertyValue(&#x22;--box-theme-color&#x22;);
-  document.getElementById(&#x22;txtcolor&#x22;).innerHTML = boxThemeColor;
-
-  const header = document.querySelector(&#x22;#myheader&#x22;);
-  header.style.setProperty(&#x22;--header-bg-color&#x22;, boxThemeColor);
+      <details>
+        <summary>Using JavaScript to get and set css variables</summary>
+        <section id="css_02_03">
+          <p>Header div is using background-color from root scope.</p>
+          <pre><code class="language-css">
+    #myheader 
+    {
+        background-color: var(--header-bg-color);
+        color: white;
+        padding: 5px;
+        text-align: center;
+    }</code></pre>
+          <pre><code class="language-html">
+    &#x3C;div id=&#x22;myheader&#x22;&#x3E;Header with default black background&#x3C;/div&#x3E;
+  
+    &#x3C;h1 id=&#x22;txtcolor&#x22;&#x3E;&#x3C;/h1&#x3E;
           </code></pre>
-      </section>
+
+          <pre>
+            <code class="language-javascript">
+    const box = document.querySelector(&#x22;.box&#x22;);
+    const boxStyles = getComputedStyle(box);
+    const boxThemeColor = boxStyles.getPropertyValue(&#x22;--box-theme-color&#x22;);
+    document.getElementById(&#x22;txtcolor&#x22;).innerHTML = boxThemeColor;
+  
+    const header = document.querySelector(&#x22;#myheader&#x22;);
+    header.style.setProperty(&#x22;--header-bg-color&#x22;, boxThemeColor);
+            </code></pre>
+        </section>
+      </details>
+
+      <details>
+        <summary>Using private variables for style variation</summary>
+        <section id="css_02_04">
+          <ul id="tabs-h" class="tabs">
+            <li data-title="Demo">
+              <img src="../../images/lang/css/private_variables.JPG" />
+            </li>
+            <li data-title="HTML">
+              <pre><code class="language-html">
+  &#x3C;div class=&#x22;container&#x22;&#x3E;
+    &#x3C;div class=&#x22;card&#x22;&#x3E;
+      &#x3C;h1&#x3E;Default&#x3C;/h1&#x3E;
+      &#x3C;p&#x3E;
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius dicta aspernatur modi iste odio sit ab id reprehenderit doloribus exercitationem aut
+        laudantium, voluptatem, nihil eaque ducimus adipisci. Natus, ut nesciunt!
+      &#x3C;/p&#x3E;
+  
+      &#x3C;button&#x3E;Register&#x3C;/button&#x3E;
+    &#x3C;/div&#x3E;
+    &#x3C;div class=&#x22;card card--free&#x22;&#x3E;
+      &#x3C;h1&#x3E;Free&#x3C;/h1&#x3E;
+      &#x3C;p&#x3E;
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius dicta aspernatur modi iste odio sit ab id reprehenderit doloribus exercitationem aut
+        laudantium, voluptatem, nihil eaque ducimus adipisci. Natus, ut nesciunt!
+      &#x3C;/p&#x3E;
+  
+      &#x3C;button&#x3E;Register&#x3C;/button&#x3E;
+    &#x3C;/div&#x3E;
+  
+    &#x3C;div class=&#x22;card card--individual&#x22;&#x3E;
+      &#x3C;h1&#x3E;Individual&#x3C;/h1&#x3E;
+      &#x3C;p&#x3E;
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius dicta aspernatur modi iste odio sit ab id reprehenderit doloribus exercitationem aut
+        laudantium, voluptatem, nihil eaque ducimus adipisci. Natus, ut nesciunt!
+      &#x3C;/p&#x3E;
+  
+      &#x3C;button&#x3E;Register&#x3C;/button&#x3E;
+    &#x3C;/div&#x3E;
+  
+    &#x3C;div class=&#x22;card card--enterprise&#x22;&#x3E;
+      &#x3C;h1&#x3E;Enterprise&#x3C;/h1&#x3E;
+      &#x3C;p&#x3E;
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius dicta aspernatur modi iste odio sit ab id reprehenderit doloribus exercitationem aut
+        laudantium, voluptatem, nihil eaque ducimus adipisci. Natus, ut nesciunt!
+      &#x3C;/p&#x3E;
+  
+      &#x3C;button&#x3E;Register&#x3C;/button&#x3E;
+    &#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+              </code></pre>
+            </li>
+            <li data-title="CSS">
+              <pre><code class="language-css">
+    :root {
+      --clr-white: #fff;
+      --clr-black: #000;
+      --clr-yellow: #ffec82;
+      --clr-blue: #b4c5fd;
+      --clr-green: #81ff81;
+    }
+    body {
+      background-color: gray;
+    }
+    .container {
+      display: flex;
+    }
+    .card {
+      --_bg-color: var(--clr-white, red);
+      --_text-color: var(--clr-black, yellow);
+      --_button-hover-bg: var(--clr-white, orange);
+      --_button-hover-text: var(--clr-black, orange);
+      margin: 1em;
+      padding: 1em;
+  
+      border-radius: 10px;
+      border: 1px solid black;
+      box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  
+      background-color: var(--_bg-color);
+      color: var(--_text-color);
+    }
+    .card h1::after {
+      content: &#x22;&#x22;;
+      display: block;
+      width: 100%;
+      height: 0.2em;
+      background-image: linear-gradient(to right, var(--clr-black), var(--_bg-color));
+    }
+    .card button {
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 1.1rem;
+      padding: 0.618rem 1.618rem;
+      cursor: pointer;
+      border: 1px solid var(--clr-black);
+      background-color: var(--clr-black);
+      color: var(--_bg-color);
+    }
+    .card button:hover,
+    .card button:focus {
+      background-image: linear-gradient(var(--_bg-color), var(--clr-black));
+  
+      color: var(--_button-hover-text);
+      text-shadow: 0px 1px 2px var(--_bg-color);
+    }
+    .card--free {
+      --_bg-color: var(--clr-yellow);
+      --_button-hover-bg: var(--clr-yellow);
+    }
+  
+    .card--individual {
+      --_bg-color: var(--clr-green);
+      --_button-hover-bg: var(--clr-green);
+    }
+    .card--enterprise {
+      --_bg-color: var(--clr-blue);
+      --_button-hover-bg: var(--clr-blue);
+    }
+              </code></pre>
+            </li>
+          </ul>
+        </section>
+      </details>
     </div>
   </body>
 
   <script>
     hljs.highlightAll();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // create horizontal tabs
+      new VanillaTabs({
+        selector: "#tabs-h", // default is ".tabs"
+        type: "horizontal", // can be horizontal / vertical / accordion
+        responsiveBreak: 840, // tabs become accordion on this device width
+        activeIndex: 0, // active tab index (starts from 0 ). Can be -1 for accordions.
+      });
+    });
   </script>
 </html>
