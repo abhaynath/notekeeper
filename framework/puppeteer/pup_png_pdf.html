@@ -1,121 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
-    
-    
-    
-
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Puppeteer PNG/PDF</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="puppeteer_index.html">Puppeteer</a>
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="puppeteer_index.html">Puppeteer</a>
     </nav>
     <div class="content">
-        <section id="pup_02_01">
-            <h4>PNG Screenshot</h4>
+      <section id="pup_02_01">
+        <h4>PNG Screenshot</h4>
 
-            <ol class="steps">
-                <li>Create an empty directory 'basicpng'.</li>
-                <li>Create 'package.json' and install puppeteer using following commands from the directory.
-
-                    <pre class="shell">
-    npm init -y
-    npm install puppeteer --verbose
-                </pre>
-                </li>
-                <li>
-                    Create 'png.js' file and add following code snippet.
-
-                    <pre class="prettyprint">
-    const puppeteer = require('puppeteer');
-
-    (async () => {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.setDefaultNavigationTimeout(0);
-        await page.goto('https://www.cricbuzz.com/profiles/25/sachin-tendulkar');
-        await page.screenshot({
-            path: 'sachin_tendulkar.png'
-        });
-
-        await browser.close();
-    })();
-                    </pre>
-                </li>
-                <li>Run following application, using following command
-                    <pre class="shell">node png.js</pre>
-                </li>
-            </ol>
-        </section>
-
-
-
-        <section id="pup_02_02">
-            <h4>PDF Generation</h4>
-
-            <ol class="steps">
-                <li>Create an empty directory 'basicpdf'.</li>
-                <li>Create 'package.json' and install puppeteer using following commands from the directory.
-
-                    <pre class="shell">
-    npm init -y
-    npm install puppeteer --verbose
-                </pre>
-                </li>
-                <li>
-                    Create 'pdf.js' file and add following code snippet.
-
-                    <pre class="prettyprint">
-    const puppeteer = require('puppeteer');
-
-    (async () => {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.setDefaultNavigationTimeout(0);
-        await page.goto('https://www.cricbuzz.com/profiles/25/sachin-tendulkar', {
-            waitUntil: 'networkidle2'
-        });
-        await page.pdf({
-            path: 'sachin_tendulkar.pdf',
-            format: 'A4'
-        });
-    
-        await browser.close();
-    })();
-                    </pre>
-                </li>
-                <li>Run following application, using following command
-                    <pre class="shell">node pdf.js</pre>
-                </li>
-            </ol>
-        </section>
-
-        <section id="pup_02_03">
-            <h4>Crickbuzz scraping the player data and saving in mongo db.</h4>
-
-            Install puppeteer and mongodb via shell.
-
+        <ol class="steps">
+          <li>Create an empty directory 'basicpng'.</li>
+          <li>
+            Create 'package.json' and install puppeteer using following commands from the directory.
 
             <pre class="shell">
+npm init -y
+npm install puppeteer --verbose  </pre
+            >
+          </li>
+          <li>
+            Create 'png.js' file and add following code snippet.
+            <pre><code class="language-js">
+const puppeteer = require('puppeteer');
+
+(async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
+    await page.goto('https://www.cricbuzz.com/profiles/25/sachin-tendulkar');
+    await page.screenshot({
+        path: 'sachin_tendulkar.png'
+    });
+
+    await browser.close();
+})();</code></pre>
+          </li>
+          <li>
+            Run following application, using following command
+            <pre class="shell">node png.js</pre>
+          </li>
+        </ol>
+      </section>
+
+      <section id="pup_02_02">
+        <h4>PDF Generation</h4>
+
+        <ol class="steps">
+          <li>Create an empty directory 'basicpdf'.</li>
+          <li>
+            Create 'package.json' and install puppeteer using following commands from the directory.
+
+            <pre class="shell">
+    npm init -y
+    npm install puppeteer --verbose</pre
+            >
+          </li>
+          <li>
+            Create 'pdf.js' file and add following code snippet.
+            <pre><code class="language-js">
+const puppeteer = require('puppeteer');
+
+(async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
+    await page.goto('https://www.cricbuzz.com/profiles/25/sachin-tendulkar', {
+        waitUntil: 'networkidle2'
+    });
+    await page.pdf({
+        path: 'sachin_tendulkar.pdf',
+        format: 'A4'
+    });
+
+    await browser.close();
+})();</code></pre>
+          </li>
+          <li>
+            Run following application, using following command
+            <pre class="shell">node pdf.js</pre>
+          </li>
+        </ol>
+      </section>
+
+      <section id="pup_02_03">
+        <h4>Crickbuzz scraping the player data and saving in mongo db.</h4>
+
+        Install puppeteer and mongodb via shell.
+
+        <pre class="shell">
     npm install puppeteer --verbose   
     npm install mongodb --verbose    
-</pre>
-            Using MongoDB server, create a database 'cricket'. Create new collection 'players' in the 'cricket'
-            database.
-            <pre class="prettyprint">
-
+</pre
+        >
+        Using MongoDB server, create a database 'cricket'. Create new collection 'players' in the 'cricket' database.
+        <pre><code class="language-js">
     const puppeteer = require('puppeteer');
     var MongoClient = require('mongodb').MongoClient;
     var mongo_url = "mongodb://localhost:27017/";
@@ -396,21 +387,12 @@
     
         await browser.close();
     })();
-
-            </pre>
-        </section>
-
-
-
-
+        </code></pre>
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>
-    
-</script>
-
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>

@@ -8,10 +8,7 @@
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
 
     <script src="../../js/libs/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
-    />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>JWT-Express-Mongo</title>
   </head>
@@ -35,9 +32,7 @@
               <li>
                 <h4>API List</h4>
                 <details>
-                  <summary>
-                    <b>POST : </b>http://localhost:4001/register
-                  </summary>
+                  <summary><b>POST : </b>http://localhost:4001/register</summary>
                   <pre><code class="language-json">{
     &#x22;first_name&#x22;: &#x22;abhay&#x22;,
     &#x22;last_name&#x22;: &#x22;nath&#x22;,
@@ -62,11 +57,7 @@
                 </details>
                 <details>
                   <summary><b>GET : </b>http://localhost:4001/welcome</summary>
-                  <p>
-                    In Headers section, create new key <b>x-access-token</b>.
-                    Its value should be the token received from login api
-                    response.
-                  </p>
+                  <p>In Headers section, create new key <b>x-access-token</b>. Its value should be the token received from login api response.</p>
                 </details>
               </li>
             </ol>
@@ -76,9 +67,7 @@
         <div>
           <details>
             <summary>index.js</summary>
-            <pre
-              class="language-js"
-            ><code>const http = require(&#x22;http&#x22;);
+            <pre class="language-js"><code>const http = require(&#x22;http&#x22;);
 const app = require(&#x22;./app&#x22;);
 const server = http.createServer(app);
 
@@ -264,9 +253,7 @@ TOKEN_KEY=Od4pSRVAb4Z6Q2oOxqgSJnnaCchFJF87mQIlha3g6568av8BiiscmgpSjdFS0uzO
 
           <details>
             <summary>database.js</summary>
-            <pre
-              class="language-js"
-            ><code>const mongoose = require(&#x22;mongoose&#x22;);
+            <pre class="language-js"><code>const mongoose = require(&#x22;mongoose&#x22;);
 
 const { MONGO_URI } = process.env;
 
@@ -294,9 +281,7 @@ exports.connect = () =&#x3E; {
 
           <details>
             <summary>auth.js</summary>
-            <pre
-              class="language-js"
-            ><code>const jwt = require(&#x22;jsonwebtoken&#x22;);
+            <pre class="language-js"><code>const jwt = require(&#x22;jsonwebtoken&#x22;);
 
 const config = process.env;
 
@@ -323,9 +308,7 @@ module.exports = verifyToken;
 
           <details>
             <summary>user.js</summary>
-            <pre
-              class="language-js"
-            ><code>const mongoose = require(&#x22;mongoose&#x22;);
+            <pre class="language-js"><code>const mongoose = require(&#x22;mongoose&#x22;);
 
 const userSchema = new mongoose.Schema({
     first_name: { type: String, default: null },

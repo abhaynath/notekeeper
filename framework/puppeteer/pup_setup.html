@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
-    
-    
-    
-
     <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Puppeteer Setup</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="puppeteer_index.html">Puppeteer</a>
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="puppeteer_index.html">Puppeteer</a>
     </nav>
     <div class="content">
+      <h3>Puppeteer Basic setup</h3>
 
-        <h3>Puppeteer Basic setup</h3>
+      <ol class="steps">
+        <li>Create an empty folder named 'basic'.</li>
+        <li>
+          Create package.json using following command.
 
-        <ol class="steps">
-            <li>Create an empty folder named 'basic'.</li>
-            <li>Create package.json using following command.
-
-                <pre class="shell">npm init -y</pre>
-            </li>
-            <li>Install <b>Puppeteer</b> using following command from the project folder.
-                <pre class="shell">npm install puppeteer --verbose</pre>
-            </li>
-            <li>Create new 'index.js' file and add following code snippet inside the file.
-                <pre class="prettyprint">
+          <pre class="shell">npm init -y</pre>
+        </li>
+        <li>
+          Install <b>Puppeteer</b> using following command from the project folder.
+          <pre class="shell">npm install puppeteer --verbose</pre>
+        </li>
+        <li>
+          Create new 'index.js' file and add following code snippet inside the file.
+          <pre><code class="language-js">
     const puppeteer = require('puppeteer');
 
     (async () => {
@@ -58,28 +55,18 @@
     
         await browser.close();
     })();
+        </code></pre>
+        </li>
+        <li>
+          To run the application, run following command from the directory.
 
-
-                </pre>
-            </li>
-            <li>
-                To run the application, run following command from the directory.
-
-                <pre class="shell">node index.js</pre>
-            </li>
-
-        </ol>
-
-
-
+          <pre class="shell">node index.js</pre>
+        </li>
+      </ol>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>
-    
-</script>
-
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
