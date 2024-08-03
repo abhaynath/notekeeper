@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Postgresql</title>
   </head>
@@ -59,10 +59,8 @@
           <tr>
             <td>float(n)</td>
             <td>
-              n is the number of bits that are used to store the mantissa of the
-              float number in scientific notation and, therefore, dictates the
-              precision and storage size. If n is specified, it must be a value
-              between 1 and 53. The default value of n is 53
+              n is the number of bits that are used to store the mantissa of the float number in scientific notation and, therefore, dictates the precision and
+              storage size. If n is specified, it must be a value between 1 and 53. The default value of n is 53
             </td>
             <td>8 Bytes</td>
           </tr>
@@ -70,18 +68,13 @@
             <td>decimal(p,s)</td>
             <td>
               <div>
-                The maximum total number of decimal digits to be stored. This
-                number includes both the left and the right sides of the decimal
-                point. The precision must be a value from 1 through the maximum
-                precision of 38. The default precision is 18.
+                The maximum total number of decimal digits to be stored. This number includes both the left and the right sides of the decimal point. The
+                precision must be a value from 1 through the maximum precision of 38. The default precision is 18.
               </div>
               <div>
-                The number of decimal digits that are stored to the right of the
-                decimal point. This number is subtracted from p to determine the
-                maximum number of digits to the left of the decimal point. Scale
-                must be a value from 0 through p, and can only be specified if
-                precision is specified. The default scale is 0 and so 0 <= s <=
-                p. Maximum storage sizes vary, based on the precision.
+                The number of decimal digits that are stored to the right of the decimal point. This number is subtracted from p to determine the maximum number
+                of digits to the left of the decimal point. Scale must be a value from 0 through p, and can only be specified if precision is specified. The
+                default scale is 0 and so 0 <= s <= p. Maximum storage sizes vary, based on the precision.
               </div>
             </td>
             <td>17 Bytes</td>
@@ -123,11 +116,9 @@
               <div>nvarchar(n)</div>
             </td>
             <td>
-              Variable-length non-Unicode data in the code page of the server
-              and with a maximum string length of 2^31-1 (2,147,483,647). When
-              the server code page uses double-byte characters, the storage is
-              still 2,147,483,647 bytes. Depending on the character string, the
-              storage size may be less than 2,147,483,647 bytes.
+              Variable-length non-Unicode data in the code page of the server and with a maximum string length of 2^31-1 (2,147,483,647). When the server code
+              page uses double-byte characters, the storage is still 2,147,483,647 bytes. Depending on the character string, the storage size may be less than
+              2,147,483,647 bytes.
             </td>
             <td>n+2 Bytes</td>
           </tr>
@@ -137,11 +128,9 @@
               <div>ntext</div>
             </td>
             <td>
-              Variable-length non-Unicode data in the code page of the server
-              and with a maximum string length of 2^31-1 (2,147,483,647). When
-              the server code page uses double-byte characters, the storage is
-              still 2,147,483,647 bytes. Depending on the character string, the
-              storage size may be less than 2,147,483,647 bytes.
+              Variable-length non-Unicode data in the code page of the server and with a maximum string length of 2^31-1 (2,147,483,647). When the server code
+              page uses double-byte characters, the storage is still 2,147,483,647 bytes. Depending on the character string, the storage size may be less than
+              2,147,483,647 bytes.
             </td>
             <td></td>
           </tr>
@@ -160,11 +149,8 @@
           <tr>
             <td>datetime2</td>
             <td>
-              Defines a date that is combined with a time of day that is based
-              on 24-hour clock. datetime2 can be considered as an extension of
-              the existing datetime type that has a larger date range, a larger
-              default fractional precision, and optional user-specified
-              precision.
+              Defines a date that is combined with a time of day that is based on 24-hour clock. datetime2 can be considered as an extension of the existing
+              datetime type that has a larger date range, a larger default fractional precision, and optional user-specified precision.
             </td>
             <td>8 Bytes</td>
           </tr>
@@ -175,18 +161,14 @@
           </tr>
           <tr>
             <td>time</td>
-            <td>
-              Defines a time of a day. The time is without time zone awareness
-              and is based on a 24-hour clock.
-            </td>
+            <td>Defines a time of a day. The time is without time zone awareness and is based on a 24-hour clock.</td>
             <td>5 Bytes</td>
           </tr>
           <tr>
             <td>datetimeoffset</td>
             <td>
-              Defines a date that is combined with a time of a day based on a
-              24-hour clock like datetime2, and adds time zone awareness based
-              on UTC (Universal Time Coordinate or Greenwich Mean Time).
+              Defines a date that is combined with a time of a day based on a 24-hour clock like datetime2, and adds time zone awareness based on UTC (Universal
+              Time Coordinate or Greenwich Mean Time).
             </td>
             <td>10 Bytes</td>
           </tr>
@@ -195,5 +177,7 @@
     </div>
   </body>
 
-  <script>hljs.highlightAll();</script>
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
