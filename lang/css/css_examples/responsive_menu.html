@@ -11,6 +11,7 @@
         --white: #f9f9f9;
         --black: #36383f;
         --grey: #85888c;
+       
       }
 
       * {
@@ -23,14 +24,15 @@
         font-family: var(--font-roboto);
       }
       .header {
-        position: fixed;
+        position: sticky;
+        /* position: fixed; */
         width: 100%;
         top: 0px;
         /* background-color: var(--black); */
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 50px;
+        /* height: 50px; */
         padding: 0.5rem;
         background-image: url("../../../css/jpg/bg_03.jpg");
         background-repeat: no-repeat;
@@ -46,27 +48,34 @@
           }
         }
         .menu-container {
+          /* background-color: orange; */
+          height: 100%;
           display: flex;
           justify-content: space-between;
           align-items: center;
         }
         .nav {
-          background-color: var(--black);
+          /* background-color: var(--grey); */
 
           .menu {
             list-style: none;
+            display: flex;
+            gap: 1rem;
+            /* background-color: var(--black); */
+            justify-content: space-between;
 
             & li {
-              display: inline-block;
-              height: 100%;
               & a {
+                padding: 0.5rem;
+
                 text-decoration: none;
-                display: inline-block;
+
                 color: var(--white);
-                /* padding: 1em; */
+                text-shadow: black 0px 1px 4px;
               }
               & a:hover {
-                background-color: var(--grey);
+                background-color: var(--white);
+                color: var(--black);
               }
             }
           }
@@ -87,7 +96,7 @@
       }
 
       main {
-        margin-top: 50px;
+        /* margin-top: 50px; */
         padding: 0.5em;
       }
 
@@ -98,9 +107,16 @@
           }
           .nav {
             display: none;
+            /* background-color: var(--black); */
+
+            .menu {
+              flex-direction: column;
+              gap: 0.2rem;
+            }
           }
 
           .side-menu:checked ~ nav {
+            background-color: var(--black);
             position: absolute;
             width: 100%;
             top: 50px;
@@ -108,11 +124,12 @@
             display: block;
 
             & li {
-              width: 100%;
               display: block;
 
               & a {
-                width: 100%;
+                display: block;
+
+                /* width: 100%; */
               }
             }
           }
