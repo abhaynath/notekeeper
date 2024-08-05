@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Menubar Hamburger</title>
+    <link rel="stylesheet" type="text/css" href="base_style.css" />
+
+    <style>
+      :root {
+        --white: #f9f9f9;
+        --black: #36383f;
+        --grey: #85888c;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: var(--white);
+        font-family: var(--font-roboto);
+      }
+      .header {
+        position: fixed;
+        width: 100%;
+        top: 0px;
+        /* background-color: var(--black); */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        padding: 0.5rem;
+        background-image: url("../../../css/jpg/bg_03.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        & .logo-container {
+          .logo {
+            display: inline-block;
+            & img {
+              width: 40px;
+              height: auto;
+            }
+          }
+        }
+        .menu-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .nav {
+          background-color: var(--black);
+
+          .menu {
+            list-style: none;
+
+            & li {
+              display: inline-block;
+              height: 100%;
+              & a {
+                text-decoration: none;
+                display: inline-block;
+                color: var(--white);
+                /* padding: 1em; */
+              }
+              & a:hover {
+                background-color: var(--grey);
+              }
+            }
+          }
+        }
+        .side-menu {
+          display: none;
+        }
+        .side-menu:checked ~ nav {
+          /* background-color: red; */
+        }
+        .hamb {
+          display: none;
+          /* background-color: orange; */
+          cursor: pointer;
+
+          color: var(--white);
+        }
+      }
+
+      main {
+        margin-top: 50px;
+        padding: 0.5em;
+      }
+
+      @media screen and (max-width: 550px) {
+        .header {
+          .hamb {
+            display: inline-block;
+          }
+          .nav {
+            display: none;
+          }
+
+          .side-menu:checked ~ nav {
+            position: absolute;
+            width: 100%;
+            top: 50px;
+            right: 0;
+            display: block;
+
+            & li {
+              width: 100%;
+              display: block;
+
+              & a {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <a class="logo"><img src="../../../css/svg/git/git-original.svg" /></a>
+      </div>
+      <div class="menu-container">
+        <input id="side-menu" class="side-menu" type="checkbox" />
+        <label class="hamb" for="side-menu"><i class="fa-solid fa-bars"></i></label>
+        <nav class="nav">
+          <ul class="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">About us</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <article>
+        <h1>Heading 1</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+      </article>
+
+      <article>
+        <h1>Heading 2</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+      </article>
+
+      <article>
+        <h1>Heading 2</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+      </article>
+
+      <article>
+        <h1>Heading 2</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nostrum inventore ex, maxime natus cum? Et praesentium, similique molestiae ipsam ipsum
+          tempore nulla! Est saepe, veniam quidem tempore magni atque!
+        </p>
+      </article>
+    </main>
+  </body>
+</html>

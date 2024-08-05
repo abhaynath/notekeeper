@@ -1,0 +1,42 @@
+@import url("../../../css/font-awesome/css/all.min.css");
+
+@font-face {
+  font-family: "OpenSans-Regular";
+  src: url("../../../css/fonts/opensans/opensans-regular/OpenSans-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "OpenSans-Bold";
+  src: url("../../../css/fonts/opensans/opensans-bold/OpenSans-Bold.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "robotoregular";
+  src: url("../../../css/fonts/roboto/roboto-regular/Roboto-Regular-webfont.woff") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "robotobold";
+  src: url("../../../css/fonts/roboto/roboto-bold/Roboto-Bold-webfont.woff") format("woff2");
+
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "firacode-regular";
+  src: url("../../../css/fonts/firacode/firacode-regular/FiraCode-Regular.woff2") format("woff");
+
+  font-weight: normal;
+  font-style: normal;
+}
+:root {
+  --font-roboto: "robotoregular";
+  --font-opensans: "OpenSans-Regular";
+  --font-firacode: "firacode-regular";
+  --font-roboto-bold: "robotobold";
+  --font-opensans-bold: "OpenSans-Bold";
+}
