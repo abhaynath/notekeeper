@@ -59,4 +59,48 @@
     repeating-linear-gradient(135deg, rgb(33, 33, 33) 0px, rgb(33, 33, 33) 1px, transparent 1px, transparent 4px),
     repeating-linear-gradient(45deg, rgb(56, 56, 56) 0px, rgb(56, 56, 56) 5px, transparent 5px, transparent 6px),
     linear-gradient(90deg, rgb(33, 33, 33), rgb(33, 33, 33));
+
+  --gradient-carbon-fiber-3: repeating-linear-gradient(
+      122deg,
+      hsla(238, 0%, 76%, 0.12) 0px,
+      transparent 2px,
+      hsla(238, 0%, 76%, 0.12) 5px,
+      transparent 8px,
+      hsla(238, 0%, 76%, 0.12) 11px
+    ),
+    repeating-linear-gradient(
+      218deg,
+      hsla(238, 0%, 76%, 0.12) 0px,
+      transparent 2px,
+      hsla(238, 0%, 76%, 0.12) 5px,
+      transparent 8px,
+      hsla(238, 0%, 76%, 0.12) 11px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      hsla(238, 0%, 76%, 0.15) 0px,
+      hsla(238, 0%, 76%, 0.15) 0px,
+      transparent 0px,
+      transparent 1px,
+      hsla(238, 0%, 76%, 0.15) 1px,
+      hsla(238, 0%, 76%, 0.15) 4px,
+      transparent 4px,
+      transparent 5px,
+      hsla(238, 0%, 76%, 0.15) 5px,
+      hsla(238, 0%, 76%, 0.15) 8px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      hsla(238, 0%, 76%, 0.15) 0px,
+      hsla(238, 0%, 76%, 0.15) 0px,
+      transparent 0px,
+      transparent 1px,
+      hsla(238, 0%, 76%, 0.15) 1px,
+      hsla(238, 0%, 76%, 0.15) 4px,
+      transparent 4px,
+      transparent 5px,
+      hsla(238, 0%, 76%, 0.15) 5px,
+      hsla(238, 0%, 76%, 0.15) 8px
+    ),
+    linear-gradient(90deg, rgb(37, 37, 37), rgb(37, 37, 37));
 }
