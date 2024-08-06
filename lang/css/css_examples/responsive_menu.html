@@ -8,10 +8,10 @@
 
     <style>
       :root {
-        --white: #f9f9f9;
+        --white: #e0e0e0;
         --black: #36383f;
         --grey: #85888c;
-       
+        --card-bg: white;
       }
 
       * {
@@ -21,6 +21,7 @@
       }
       body {
         background-color: var(--white);
+        /* background-image: var(--gradient-carbon-fiber-2); */
         font-family: var(--font-roboto);
       }
       .header {
@@ -34,9 +35,10 @@
         align-items: center;
         /* height: 50px; */
         padding: 0.5rem;
-        background-image: url("../../../css/jpg/bg_03.jpg");
+        background-image: var(--gradient-carbon-fiber-1);
+        /* background-image: url("../../../css/jpg/bg_03.jpg");
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: cover; */
 
         & .logo-container {
           .logo {
@@ -60,7 +62,7 @@
           .menu {
             list-style: none;
             display: flex;
-            gap: 1rem;
+            /* gap: 1rem; */
             /* background-color: var(--black); */
             justify-content: space-between;
 
@@ -74,8 +76,8 @@
                 text-shadow: black 0px 1px 4px;
               }
               & a:hover {
-                background-color: var(--white);
-                color: var(--black);
+                background-color: var(--grey);
+                color: var(--card-bg);
               }
             }
           }
@@ -95,6 +97,21 @@
         }
       }
 
+      article {
+        border-radius: 10px;
+        border: 1px solid var(--grey);
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        background-image: linear-gradient(var(--card-bg), var(--white));
+        box-shadow: black 0px 2px 2px;
+        h1 {
+          text-align: center;
+        }
+        p {
+          text-indent: 1rem;
+        }
+      }
+
       main {
         /* margin-top: 50px; */
         padding: 0.5em;
@@ -104,6 +121,14 @@
         .header {
           .hamb {
             display: inline-block;
+
+            & span::after {
+              font-size: 1rem;
+              font-family: var(--fa-style-family, "Font Awesome 6 Free");
+              font-weight: var(--fa-style, 900);
+              content: "\f0c9";
+              display: inline-block;
+            }
           }
           .nav {
             display: none;
@@ -116,11 +141,11 @@
           }
 
           .side-menu:checked ~ nav {
-            background-color: var(--black);
+            background-image: var(--gradient-carbon-fiber-1);
             position: absolute;
             width: 100%;
-            top: 50px;
-            right: 0;
+            top: 61px;
+            left: 0;
             display: block;
 
             & li {
@@ -131,7 +156,13 @@
 
                 /* width: 100%; */
               }
+              & a:hover {
+                background-color: var(--grey);
+              }
             }
+          }
+          .side-menu:checked ~ .hamb span::after {
+            content: "\f00d";
           }
         }
       }
@@ -144,10 +175,12 @@
       </div>
       <div class="menu-container">
         <input id="side-menu" class="side-menu" type="checkbox" />
-        <label class="hamb" for="side-menu"><i class="fa-solid fa-bars"></i></label>
+        <label class="hamb" for="side-menu"><span></span></label>
         <nav class="nav">
           <ul class="menu">
-            <li><a href="#">Home</a></li>
+            <li>
+              <a href="#"><span class="fa fa-home"></span></a>
+            </li>
             <li><a href="#">Products</a></li>
             <li><a href="#">Documentation</a></li>
             <li><a href="#">About us</a></li>
