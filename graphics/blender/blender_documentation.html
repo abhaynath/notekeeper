@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/blender/Blender_logo_no_text.svg" />
+    <title>Documentation</title>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="blender_index.html">Blender</a>
+      </nav>
+
+      <section id="array1">
+        <h4>Build Blender Documentation locally</h4>
+        <p>Make sure Python 3 is installed. To check, run following command</p>
+        <pre class="shell">python --version</pre>
+        Create a new folder <b>blender-doc</b>
+        <pre class="shell">cd blender-doc</pre>
+        Clone git repository
+        <pre class="shell">git clone https://projects.blender.org/blender/blender-manual.git</pre>
+        Create a virtual environment
+        <pre class="shell">python -m venv .venv</pre>
+        Change directory to Scripts
+        <pre class="shell">cd .venv/Scripts</pre>
+        Activate the virtual environment
+        <pre class="shell">activate</pre>
+
+        Install all the required dependencies. You may need to run it from root folder
+        <pre class="shell">pip install -r requirements.txt</pre>
+        Every now and then you may want to make sure your dependencies are up to date using:
+        <pre class="shell">pip install -r requirements.txt --upgrade</pre>
+
+        To build the pages
+        <pre class="shell">make</pre>
+      </section>
+    </div>
+  </body>
+</html>
