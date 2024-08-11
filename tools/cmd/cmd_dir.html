@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/cmd/cmd.svg" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Dir Command</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="cmd_index.html">CMD</a>
+    </nav>
+
+    <div class="content">
+      <section id="cmd_01">
+        <h4>All files and folder inside subfolders sorted</h4>
+        <pre class="shell">dir /s /b /o:gn</pre>
+      </section>
+
+      <section id="cmd_02">
+        <h4>Write list of all files inside subfolders to a file</h4>
+        <pre class="shell">dir /s /b /o:gn &#x3E; files.txt</pre>
+      </section>
+
+      <section id="cmd_03">
+        <h4>Show directory and files tree structure</h4>
+        <pre class="shell">tree /f</pre>
+      </section>
+
+      <section id="cmd_04">
+        <h4>Write directory tree structure to a file</h4>
+        <pre class="shell">tree /a /f &#x3E; myfiles.txt</pre>
+      </section>
+
+      <section id="cmd_05">
+        <h4>Show only directories</h4>
+        <pre class="shell">dir /ad</pre>
+      </section>
+
+      <section id="cmd_06">
+        <h4>Show only files</h4>
+        <pre class="shell">dir /a-d</pre>
+      </section>
+
+      <section id="cmd_07">
+        <h4></h4>
+        <pre class="shell"></pre>
+      </section>
+
+      <section id="cmd_08">
+        <h4></h4>
+        <pre class="shell"></pre>
+      </section>
+
+      <section id="cmd_09">
+        <h4></h4>
+        <pre class="shell"></pre>
+      </section>
+      <section id="cmd_10">
+        <h4>dir /?</h4>
+        <pre class="shell">
+Displays a list of files and subdirectories in a directory.
+
+DIR [drive:][path][filename] [/A[[:]attributes]] [/B] [/C] [/D] [/L] [/N]
+  [/O[[:]sortorder]] [/P] [/Q] [/R] [/S] [/T[[:]timefield]] [/W] [/X] [/4]
+
+  [drive:][path][filename]
+              Specifies drive, directory, and/or files to list.
+
+  /A          Displays files with specified attributes.
+  attributes   D  Directories                R  Read-only files
+               H  Hidden files               A  Files ready for archiving
+               S  System files               I  Not content indexed files
+               L  Reparse Points             O  Offline files
+               -  Prefix meaning not
+  /B          Uses bare format (no heading information or summary).
+  /C          Display the thousand separator in file sizes.  This is the
+              default.  Use /-C to disable display of separator.
+  /D          Same as wide but files are list sorted by column.
+  /L          Uses lowercase.
+  /N          New long list format where filenames are on the far right.
+  /O          List by files in sorted order.
+  sortorder    N  By name (alphabetic)       S  By size (smallest first)
+               E  By extension (alphabetic)  D  By date/time (oldest first)
+               G  Group directories first    -  Prefix to reverse order
+  /P          Pauses after each screenful of information.
+  /Q          Display the owner of the file.
+  /R          Display alternate data streams of the file.
+  /S          Displays files in specified directory and all subdirectories.
+  /T          Controls which time field displayed or used for sorting
+  timefield   C  Creation
+              A  Last Access
+              W  Last Written
+  /W          Uses wide list format.
+  /X          This displays the short names generated for non-8dot3 file
+              names.  The format is that of /N with the short name inserted
+              before the long name. If no short name is present, blanks are
+              displayed in its place.
+  /4          Displays four-digit years
+
+Switches may be preset in the DIRCMD environment variable.  Override
+preset switches by prefixing any switch with - (hyphen)--for example, /-W.   </pre
+        >
+      </section>
+
+      <section>
+        <table>
+          <colgroup span="1"></colgroup>
+          <colgroup span="1"></colgroup>
+          <thead>
+            <tr>
+              <th colspan="2">Dir Command Options</th>
+            </tr>
+          </thead>
+          <tbody data-check="-1">
+            <tr>
+              <td><strong>Item</strong></td>
+              <td><strong>Explanation</strong></td>
+            </tr>
+            <tr>
+              <td><em>drive</em><strong>:</strong><em>, path, filename</em></td>
+              <td>
+                This is the <em>drive</em>, <em>path</em>, and/or <em>filename</em> that you want to see results for. All three are optional since the command
+                can be executed alone. Wildcards are allowed. See the <em>Dir Command Examples</em> section below if this isn't clear.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/a</strong></td>
+              <td>
+                <p>
+                  When executed alone, this switch shows all types of files and folders, including those with file attributes that typically prevent them from
+                  showing up in Command Prompt or in Windows. Use <strong>/a</strong> with one or more of the following <em>attributes</em> (colon is optional,
+                  no spaces needed) to show only those types of files in the command result:
+                </p>
+                <p><em>a</em> = archive files</p>
+                <p><em>d</em> = directories</p>
+                <p><em>h</em> = hidden files</p>
+                <p><em>i</em> = not content indexed files</p>
+                <p><em>l</em> = reparse points</p>
+                <p><em>r</em> = read-only files</p>
+                <p><em>s</em> = system files</p>
+                <p><em>v</em> = integrity files</p>
+                <p><em>x</em> = no scrub files</p>
+                <p><em>-</em> = Use this as a prefix to any of the above attributes to exclude items with those file attributes from the results.</p>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/b</strong></td>
+              <td>
+                Use this option to show the dir results using "bare" format, which removes the typical header and footer information, as well as all the details
+                on each item, leaving only the directory name or file name and extension.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/c</strong></td>
+              <td>
+                This switch forces the use of the thousands separator when the command is used in a way that shows file sizes. This is the default behavior on
+                most computers, so the practical use is <strong>/-c</strong> to disable the thousands separator in results.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/d</strong></td>
+              <td>
+                Use <strong>/d</strong> to limit the items displayed to just folders (contained within brackets) and file names with their extensions. Items are
+                listed top-to-bottom and then across columns. Standard dir command header and footer data remain the same.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/l</strong></td>
+              <td>Use this option to show all folder and file names in lowercase.</td>
+            </tr>
+            <tr>
+              <td><strong>/n</strong></td>
+              <td>
+                This switch produces a result with columns in the <em>date</em> &gt; <em>time</em>&nbsp;&gt; <em>directory</em>&nbsp;&gt;
+                <em>file size</em>&nbsp;&gt; <em>file or folder name</em> column structure. Since this is the default behavior, the practical use is
+                <strong>/-n</strong> which produces columns in the <em>file or folder name</em>&nbsp;&gt; <em>directory</em>&nbsp;&gt;
+                <em>file size&nbsp;</em>&gt; <em>date</em>&nbsp;&gt; <em>time</em> order.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/o</strong></td>
+              <td>
+                <p>
+                  Use this option to specify a sort order for the results. When executed alone, <strong>/o</strong> lists directories first, followed by files,
+                  both in alphabetical order. Use this option with one or more of the following values (colon is optional, no spaces needed) to sort the dir
+                  command result in the specified manner:
+                </p>
+                <p><em>d</em> = sort by date/time (oldest first)</p>
+                <p><em>e</em> = sort by extension (alphabetical)</p>
+                <p><em>g</em> = group directory first, followed by files</p>
+                <p><em>n</em> = sort by name (alphabetical)</p>
+                <p><em>s</em> = sort by size (smallest first)</p>
+                <p>
+                  <em>-</em> = Use this as a prefix with any of the above values to reverse the order (<em>-d</em> to sort by newest first, <em>-s</em> for
+                  largest first, etc.).
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/p</strong></td>
+              <td>This option displays the results one page at a time, interrupted with a <em>Press any key to continue...</em> prompt.</td>
+            </tr>
+            <tr>
+              <td><strong>/q</strong></td>
+              <td>
+                Use this switch to display the owner of the file or folder in the results. The easiest way to view or change a file's ownership from within
+                Windows is via the <em>Advanced</em> button in the <em>Security</em> tab when looking at the file's <em>Properties</em>.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/r</strong></td>
+              <td>
+                The <strong>/r</strong> option shows any alternate data streams (ADS) that are part of a file. The data stream itself is listed in a new row,
+                under the file, and is always suffixed with <em>$DATA</em>, making them easy to spot.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/s</strong></td>
+              <td>
+                This option shows all the files and folders in the specified directory <em>plus</em> all of the files and folders contained within any
+                subdirectories of that specified directory.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/t</strong></td>
+              <td>
+                <p>
+                  Use this option with one of the values below (colon is optional, no spaces needed) to specify a time field to be used when sorting and/or
+                  displaying results:
+                </p>
+                <p><em>a</em> = last access</p>
+                <p><em>c</em> = created</p>
+                <p><em>w</em> = last written</p>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/w</strong></td>
+              <td>
+                Use <strong>/w</strong> to show results in "wide format" which limits the items displayed to just folders (contained within brackets) and file
+                names with their extensions. Items are listed left-to-right and then down rows. Standard dir command header and footer data remain the same.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/x</strong></td>
+              <td>This switch shows the "short name" equivalent for files whose long names don't comply with non-8dot3 rules.</td>
+            </tr>
+            <tr>
+              <td><strong>/4</strong></td>
+              <td>
+                The <strong>/4</strong> switch forces the use of 4-digit years. At least in newer versions of Windows, the 4-digit year display is the default
+                behavior and <strong>/-4</strong> doesn't result in a 2-digit year display.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>/?</strong></td>
+              <td>
+                Use the help switch with the dir command to show details about the above options directly in the Command Prompt window. Executing
+                <strong>dir /?</strong> is the same as using the help command to execute <strong>help dir</strong>.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+</html>
