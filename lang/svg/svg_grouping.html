@@ -20,11 +20,76 @@
     </nav>
     <div class="content">
       <section id="svg_01_01">
-        <h4></h4>
+        <h4>Nested Grouping</h4>
         <pre><code class="language-svg">
+  &#x3C;svg viewBox=&#x22;-100 -100 200 200&#x22;&#x3E;
+      &#x3C;defs&#x3E;
+        &#x3C;linearGradient id=&#x22;lg1&#x22;&#x3E;
+          &#x3C;stop offset=&#x22;0%&#x22; stop-color=&#x22;yellowgreen&#x22;&#x3E;&#x3C;/stop&#x3E;
+          &#x3C;stop offset=&#x22;100%&#x22; stop-color=&#x22;green&#x22;&#x3E;&#x3C;/stop&#x3E;
+        &#x3C;/linearGradient&#x3E;
+        &#x3C;radialGradient id=&#x22;rad1&#x22;&#x3E;
+          &#x3C;stop offset=&#x22;0%&#x22; stop-color=&#x22;yellow&#x22;&#x3E;&#x3C;/stop&#x3E;
+          &#x3C;stop offset=&#x22;100%&#x22; stop-color=&#x22;orange&#x22;&#x3E;&#x3C;/stop&#x3E;
+        &#x3C;/radialGradient&#x3E;
+
+        &#x3C;rect id=&#x22;rectbox&#x22; x=&#x22;0&#x22; y=&#x22;0&#x22; width=&#x22;25&#x22; rx=&#x22;2&#x22; ry=&#x22;2&#x22; height=&#x22;25&#x22; fill=&#x22;url(#lg1)&#x22; stroke=&#x22;black&#x22; stroke-width=&#x22;0.5&#x22;&#x3E;&#x3C;/rect&#x3E;
+        &#x3C;circle id=&#x22;circle1&#x22; cx=&#x22;12.5&#x22; cy=&#x22;12.5&#x22; r=&#x22;10&#x22; fill=&#x22;url(#rad1)&#x22; stroke=&#x22;black&#x22; stroke-width=&#x22;0.5&#x22;&#x3E;&#x3C;/circle&#x3E;
+        &#x3C;g id=&#x22;p1&#x22;&#x3E;
+          &#x3C;g id=&#x22;rect1&#x22;&#x3E;
+            &#x3C;use xlink:href=&#x22;#rectbox&#x22;&#x3E;&#x3C;/use&#x3E;
+            &#x3C;use xlink:href=&#x22;#circle1&#x22;&#x3E;&#x3C;/use&#x3E;
+            &#x3C;use xlink:href=&#x22;#circle1&#x22; transform=&#x22;scale(0.5,0.5)&#x22;&#x3E;&#x3C;/use&#x3E;
+          &#x3C;/g&#x3E;
+        &#x3C;/g&#x3E;
+        &#x3C;g id=&#x22;br1&#x22;&#x3E;
+          &#x3C;use xlink:href=&#x22;#p1&#x22; x=&#x22;0&#x22; y=&#x22;0&#x22;&#x3E;&#x3C;/use&#x3E;
+          &#x3C;use xlink:href=&#x22;#p1&#x22; x=&#x22;25&#x22; y=&#x22;25&#x22;&#x3E;&#x3C;/use&#x3E;
+          &#x3C;use xlink:href=&#x22;#p1&#x22; x=&#x22;50&#x22; y=&#x22;50&#x22;&#x3E;&#x3C;/use&#x3E;
+          &#x3C;use xlink:href=&#x22;#p1&#x22; x=&#x22;75&#x22; y=&#x22;75&#x22;&#x3E;&#x3C;/use&#x3E;
+        &#x3C;/g&#x3E;
+      &#x3C;/defs&#x3E;
+
+      &#x3C;use xlink:href=&#x22;#br1&#x22;&#x3E;&#x3C;/use&#x3E;
+      &#x3C;use xlink:href=&#x22;#br1&#x22; transform=&#x22;scale(-1,1)&#x22;&#x3E;&#x3C;/use&#x3E;
+      &#x3C;use xlink:href=&#x22;#br1&#x22; transform=&#x22;scale(-1,-1)&#x22;&#x3E;&#x3C;/use&#x3E;
+      &#x3C;use xlink:href=&#x22;#br1&#x22; transform=&#x22;scale(1,-1)&#x22;&#x3E;&#x3C;/use&#x3E;
+  &#x3C;/svg&#x3E;
 </code>
         </pre>
-        <svg width="200" height="200" viewBox="0 0 200 200" style="border: 1px solid #949494; background: white"></svg>
+        <svg width="300" height="300" viewBox="-100 -100 200 200">
+          <defs>
+            <linearGradient id="lg1">
+              <stop offset="0%" stop-color="yellowgreen"></stop>
+              <stop offset="100%" stop-color="green"></stop>
+            </linearGradient>
+            <radialGradient id="rad1">
+              <stop offset="0%" stop-color="yellow"></stop>
+              <stop offset="100%" stop-color="orange"></stop>
+            </radialGradient>
+
+            <rect id="rectbox" x="0" y="0" width="25" rx="2" ry="2" height="25" fill="url(#lg1)" stroke="black" stroke-width="0.5"></rect>
+            <circle id="circle1" cx="12.5" cy="12.5" r="10" fill="url(#rad1)" stroke="black" stroke-width="0.5"></circle>
+            <g id="p1">
+              <g id="rect1">
+                <use xlink:href="#rectbox"></use>
+                <use xlink:href="#circle1"></use>
+                <use xlink:href="#circle1" transform="scale(0.5,0.5)"></use>
+              </g>
+            </g>
+            <g id="br1">
+              <use xlink:href="#p1" x="0" y="0"></use>
+              <use xlink:href="#p1" x="25" y="25"></use>
+              <use xlink:href="#p1" x="50" y="50"></use>
+              <use xlink:href="#p1" x="75" y="75"></use>
+            </g>
+          </defs>
+
+          <use xlink:href="#br1"></use>
+          <use xlink:href="#br1" transform="scale(-1,1)"></use>
+          <use xlink:href="#br1" transform="scale(-1,-1)"></use>
+          <use xlink:href="#br1" transform="scale(1,-1)"></use>
+        </svg>
       </section>
     </div>
   </body>
