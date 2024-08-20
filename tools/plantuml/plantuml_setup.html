@@ -62,7 +62,7 @@ Installation seems OK. File generation OK
       <section>
         <h4>Simple State diagram</h4>
         <ol>
-          <li>Create a new text file <b>state.txt</b></li>
+          <li>Create a new text file <b>state.puml</b></li>
           <li>
             Add following content in the File
             <pre><code>
@@ -80,12 +80,19 @@ State2 --&#x3E; [*]
           </li>
           <li>
             To generate png,
-            <pre class="shell">puml state.txt</pre>
+            <pre class="shell">puml state.puml</pre>
+          </li>
+          <li>
+            To generate png in specific folder,
+            <pre class="shell">puml -o output_folder state.puml</pre>
           </li>
           <li>
             To generate svg,
-            <pre class="shell">puml state.txt -tsvg</pre>
+            <pre class="shell">puml state.puml -tsvg</pre>
 
+            To Generate svg in specific folder
+            <pre class="shell">puml -o output_folder state.puml -tsvg</pre>
+            
             <svg xmlns="http://www.w3.org/2000/svg" width="400" style="background: #fff" viewBox="0 0 236 242">
               <circle cx="70.5" cy="16" r="10" fill="#222" style="stroke: #222; stroke-width: 1" />
               <rect width="127.385" height="67.797" x="7" y="86" fill="#F1F1F1" rx="12.5" ry="12.5" style="stroke: #181818; stroke-width: 0.5" />
