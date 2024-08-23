@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/svg/svg_logo.svg" />
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
+    <title>Create Elements with JavaScript</title>
+    <style>
+      .container {
+        margin: 10px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .box {
+        width: 300px;
+        height: 300px;
+        border: 1px solid gray;
+      }
+      .customClass {
+        fill: white;
+        stroke: black;
+        stroke-width: 4;
+      }
+      .hoverClass {
+        fill: #00eeff;
+        cursor: pointer;
+        stroke: yellowgreen;
+        stroke-width: 4;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svg_index.html">SVG</a>
+    </nav>
+    <div class="content">
+      <section id="svg_01_01">
+        <h4>Creating SVG Elements with JavaScript</h4>
+        <div id="container" class="container"></div>
+        <pre><code class="language-js">
+  const svg_namespace = &#x22;http://www.w3.org/2000/svg&#x22;;
+
+  const obj_viewbox = { x: -100, y: -100, width: 200, height: 200 };
+  const linearGradientId = &#x22;lg1&#x22;;
+  const radialGradientId = &#x22;rg1&#x22;;
+
+  const rectangleId = &#x22;rect_01&#x22;;
+
+  const linearGradientStops = [
+    { color: &#x22;#0C0C7A&#x22;, offset: &#x22;0%&#x22; },
+    { color: &#x22;#5A93FC&#x22;, offset: &#x22;100%&#x22; },
+  ];
+
+  const radialGradientStops = [
+    { color: &#x22;red&#x22;, offset: &#x22;0%&#x22; },
+    { color: &#x22;yellow&#x22;, offset: &#x22;100%&#x22; },
+  ];
+  const getViewBoxDimensionString = (obj) =&#x3E; {
+    const str = &#x60;${obj.x + &#x22; &#x22; + obj.y + &#x22; &#x22; + obj.width + &#x22; &#x22; + obj.height}&#x60;;
+    return str;
+  };
+  const getSVGDefs = () =&#x3E; {
+    const defs = document.createElementNS(svg_namespace, &#x22;defs&#x22;);
+    return defs;
+  };
+  const getUse = (href) =&#x3E; {
+    const use = document.createElementNS(svg_namespace, &#x22;use&#x22;);
+    use.setAttribute(&#x22;href&#x22;, href);
+    return use;
+  };
+
+  const getGroup = (id) =&#x3E; {
+    const group = document.createElementNS(svg_namespace, &#x22;g&#x22;);
+    group.setAttribute(&#x22;id&#x22;, id);
+    return group;
+  };
+  const getSVGHrefFromId = (id) =&#x3E; {
+    return &#x60;#${id}&#x60;;
+  };
+  const createRootSVG = () =&#x3E; {
+    const svg = document.createElementNS(svg_namespace, &#x22;svg&#x22;);
+    const str = getViewBoxDimensionString(obj_viewbox);
+    svg.setAttribute(&#x22;viewBox&#x22;, str);
+    return svg;
+  };
+  const getSVGUrlFromId = (id) =&#x3E; {
+    return &#x60;url(#${id})&#x60;;
+  };
+
+  const getSVGCircle = (cx, cy, r, fill, stroke, strokeWidth) =&#x3E; {
+    const circle = document.createElementNS(svg_namespace, &#x22;circle&#x22;);
+    circle.setAttribute(&#x22;cx&#x22;, cx);
+    circle.setAttribute(&#x22;cy&#x22;, cy);
+    circle.setAttribute(&#x22;r&#x22;, r);
+    circle.setAttribute(&#x22;fill&#x22;, fill);
+    circle.setAttribute(&#x22;stroke&#x22;, stroke);
+    circle.setAttribute(&#x22;stroke-width&#x22;, strokeWidth);
+    return circle;
+  };
+  const getSVGRectangle = (id, x, y, width, height, fill, stroke, strokeWidth) =&#x3E; {
+    const rectangle = document.createElementNS(svg_namespace, &#x22;rect&#x22;);
+    rectangle.setAttribute(&#x22;id&#x22;, id);
+    rectangle.setAttribute(&#x22;x&#x22;, x);
+    rectangle.setAttribute(&#x22;y&#x22;, y);
+    rectangle.setAttribute(&#x22;width&#x22;, width);
+    rectangle.setAttribute(&#x22;height&#x22;, height);
+    rectangle.setAttribute(&#x22;fill&#x22;, fill);
+    rectangle.setAttribute(&#x22;stroke&#x22;, stroke);
+    rectangle.setAttribute(&#x22;stroke-width&#x22;, strokeWidth);
+    return rectangle;
+  };
+
+  const getArrowGroup = (id) =&#x3E; {
+    const group1 = getGroup(id);
+
+    const rectHref = getSVGHrefFromId(rectangleId);
+    const rect1 = getUse(rectHref);
+    const rect2 = getUse(rectHref);
+    const rect3 = getUse(rectHref);
+    const rect4 = getUse(rectHref);
+
+    rect2.setAttribute(&#x22;transform&#x22;, &#x22;rotate(90)&#x22;);
+    rect3.setAttribute(&#x22;transform&#x22;, &#x22;rotate(180)&#x22;);
+    rect4.setAttribute(&#x22;transform&#x22;, &#x22;rotate(270)&#x22;);
+
+    group1.appendChild(rect1);
+    group1.appendChild(rect2);
+    group1.appendChild(rect3);
+    group1.appendChild(rect4);
+    return group1;
+  };
+  const getLinearGradient = (id, stops) =&#x3E; {
+    const gradient = document.createElementNS(svg_namespace, &#x22;linearGradient&#x22;);
+
+    stops.forEach((stop) =&#x3E; {
+      const el = document.createElementNS(svg_namespace, &#x22;stop&#x22;);
+      el.setAttribute(&#x22;offset&#x22;, stop.offset);
+      el.setAttribute(&#x22;stop-color&#x22;, stop.color);
+      gradient.appendChild(el);
+    });
+    gradient.id = id;
+    gradient.setAttribute(&#x22;x1&#x22;, &#x22;0&#x22;);
+    gradient.setAttribute(&#x22;x2&#x22;, &#x22;1&#x22;);
+    gradient.setAttribute(&#x22;y1&#x22;, &#x22;0&#x22;);
+    gradient.setAttribute(&#x22;y2&#x22;, &#x22;1&#x22;);
+
+    return gradient;
+  };
+
+  const getRadialGradient = (id, stops, cx, cy, r, fx, fy) =&#x3E; {
+    const gradient = document.createElementNS(svg_namespace, &#x22;radialGradient&#x22;);
+
+    stops.forEach((stop) =&#x3E; {
+      const el = document.createElementNS(svg_namespace, &#x22;stop&#x22;);
+      el.setAttribute(&#x22;offset&#x22;, stop.offset);
+      el.setAttribute(&#x22;stop-color&#x22;, stop.color);
+      gradient.appendChild(el);
+    });
+    gradient.id = id;
+    gradient.setAttribute(&#x22;cx&#x22;, cx);
+    gradient.setAttribute(&#x22;cy&#x22;, cy);
+    gradient.setAttribute(&#x22;r&#x22;, r);
+    gradient.setAttribute(&#x22;fx&#x22;, fx);
+    gradient.setAttribute(&#x22;fy&#x22;, fy);
+
+    return gradient;
+  };
+  const createSvgImage = () =&#x3E; {
+    let box = document.createElement(&#x22;div&#x22;);
+    box.className = &#x22;box&#x22;;
+
+    const svg = createRootSVG();
+    const defs = getSVGDefs();
+    const linearGradient_01 = getLinearGradient(linearGradientId, linearGradientStops);
+    const radialGradient_01 = getRadialGradient(radialGradientId, radialGradientStops, &#x22;50%&#x22;, &#x22;50%&#x22;, &#x22;50%&#x22;, &#x22;50%&#x22;, &#x22;50%&#x22;);
+
+    defs.appendChild(linearGradient_01);
+    defs.appendChild(radialGradient_01);
+    svg.appendChild(defs);
+
+    const url_lg_01 = getSVGUrlFromId(linearGradientId);
+    const url_rg_01 = getSVGUrlFromId(radialGradientId);
+
+    const r1 = getSVGRectangle(rectangleId, 10, -5, 85, 10, url_rg_01, &#x22;navy&#x22;, 1);
+    defs.appendChild(r1);
+
+    const c1 = getSVGCircle(0, 0, 80, url_lg_01, &#x22;yellowgreen&#x22;, 4);
+    const c2 = getSVGCircle(0, 0, 60, url_rg_01, &#x22;yellowgreen&#x22;, 4);
+    const c3 = getSVGCircle(-45, 0, 30, url_rg_01, url_lg_01, 2);
+    const c4 = getSVGCircle(45, 0, 30, &#x22;#ffa002&#x22;, &#x22;yellow&#x22;, 2);
+
+    c3.addEventListener(&#x22;mouseover&#x22;, (e) =&#x3E; {
+      onCircleOver(e);
+    });
+    c3.addEventListener(&#x22;mouseout&#x22;, (e) =&#x3E; {
+      onCircleOut(e);
+    });
+    c4.classList.add(&#x22;customClass&#x22;);
+    svg.appendChild(c1);
+    svg.appendChild(c2);
+
+    const getGroup1Id = &#x22;group_rect_01&#x22;;
+    const group1 = getArrowGroup(getGroup1Id);
+    defs.appendChild(group1);
+    const href_g1 = getSVGHrefFromId(getGroup1Id);
+    const g1 = getUse(href_g1);
+    const g2 = getUse(href_g1);
+    const g3 = getUse(href_g1);
+    const g4 = getUse(href_g1);
+    g2.setAttribute(&#x22;transform&#x22;, &#x22;rotate(22.5)&#x22;);
+    g3.setAttribute(&#x22;transform&#x22;, &#x22;rotate(45)&#x22;);
+    g4.setAttribute(&#x22;transform&#x22;, &#x22;rotate(67.5)&#x22;);
+    svg.appendChild(g1);
+    svg.appendChild(g2);
+    svg.appendChild(g3);
+    svg.appendChild(g4);
+
+    svg.appendChild(c3);
+    svg.appendChild(c4);
+    box.appendChild(svg);
+    container.appendChild(box);
+  };
+
+  let container = document.getElementById(&#x22;container&#x22;);
+
+  const onCircleOver = (e) =&#x3E; {
+    e.target.classList.add(&#x22;hoverClass&#x22;);
+  };
+  const onCircleOut = (e) =&#x3E; {
+    e.target.classList.remove(&#x22;hoverClass&#x22;);
+  };
+
+  createSvgImage();
+        </code>
+        </pre>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+
+  <script>
+    const svg_namespace = "http://www.w3.org/2000/svg";
+
+    const obj_viewbox = { x: -100, y: -100, width: 200, height: 200 };
+    const linearGradientId = "lg1";
+    const radialGradientId = "rg1";
+
+    const rectangleId = "rect_01";
+
+    const linearGradientStops = [
+      { color: "#0C0C7A", offset: "0%" },
+      { color: "#5A93FC", offset: "100%" },
+    ];
+
+    const radialGradientStops = [
+      { color: "red", offset: "0%" },
+      { color: "yellow", offset: "100%" },
+    ];
+    const getViewBoxDimensionString = (obj) => {
+      const str = `${obj.x + " " + obj.y + " " + obj.width + " " + obj.height}`;
+      return str;
+    };
+    const getSVGDefs = () => {
+      const defs = document.createElementNS(svg_namespace, "defs");
+      return defs;
+    };
+    const getUse = (href) => {
+      const use = document.createElementNS(svg_namespace, "use");
+      use.setAttribute("href", href);
+      return use;
+    };
+
+    const getGroup = (id) => {
+      const group = document.createElementNS(svg_namespace, "g");
+      group.setAttribute("id", id);
+      return group;
+    };
+    const getSVGHrefFromId = (id) => {
+      return `#${id}`;
+    };
+    const createRootSVG = () => {
+      const svg = document.createElementNS(svg_namespace, "svg");
+      const str = getViewBoxDimensionString(obj_viewbox);
+      svg.setAttribute("viewBox", str);
+      return svg;
+    };
+    const getSVGUrlFromId = (id) => {
+      return `url(#${id})`;
+    };
+
+    const getSVGCircle = (cx, cy, r, fill, stroke, strokeWidth) => {
+      const circle = document.createElementNS(svg_namespace, "circle");
+      circle.setAttribute("cx", cx);
+      circle.setAttribute("cy", cy);
+      circle.setAttribute("r", r);
+      circle.setAttribute("fill", fill);
+      circle.setAttribute("stroke", stroke);
+      circle.setAttribute("stroke-width", strokeWidth);
+      return circle;
+    };
+    const getSVGRectangle = (id, x, y, width, height, fill, stroke, strokeWidth) => {
+      const rectangle = document.createElementNS(svg_namespace, "rect");
+      rectangle.setAttribute("id", id);
+      rectangle.setAttribute("x", x);
+      rectangle.setAttribute("y", y);
+      rectangle.setAttribute("width", width);
+      rectangle.setAttribute("height", height);
+      rectangle.setAttribute("fill", fill);
+      rectangle.setAttribute("stroke", stroke);
+      rectangle.setAttribute("stroke-width", strokeWidth);
+      return rectangle;
+    };
+
+    const getArrowGroup = (id) => {
+      const group1 = getGroup(id);
+
+      const rectHref = getSVGHrefFromId(rectangleId);
+      const rect1 = getUse(rectHref);
+      const rect2 = getUse(rectHref);
+      const rect3 = getUse(rectHref);
+      const rect4 = getUse(rectHref);
+
+      rect2.setAttribute("transform", "rotate(90)");
+      rect3.setAttribute("transform", "rotate(180)");
+      rect4.setAttribute("transform", "rotate(270)");
+
+      group1.appendChild(rect1);
+      group1.appendChild(rect2);
+      group1.appendChild(rect3);
+      group1.appendChild(rect4);
+      return group1;
+    };
+    const getLinearGradient = (id, stops) => {
+      const gradient = document.createElementNS(svg_namespace, "linearGradient");
+
+      stops.forEach((stop) => {
+        const el = document.createElementNS(svg_namespace, "stop");
+        el.setAttribute("offset", stop.offset);
+        el.setAttribute("stop-color", stop.color);
+        gradient.appendChild(el);
+      });
+      gradient.id = id;
+      gradient.setAttribute("x1", "0");
+      gradient.setAttribute("x2", "1");
+      gradient.setAttribute("y1", "0");
+      gradient.setAttribute("y2", "1");
+
+      return gradient;
+    };
+
+    const getRadialGradient = (id, stops, cx, cy, r, fx, fy) => {
+      const gradient = document.createElementNS(svg_namespace, "radialGradient");
+
+      stops.forEach((stop) => {
+        const el = document.createElementNS(svg_namespace, "stop");
+        el.setAttribute("offset", stop.offset);
+        el.setAttribute("stop-color", stop.color);
+        gradient.appendChild(el);
+      });
+      gradient.id = id;
+      gradient.setAttribute("cx", cx);
+      gradient.setAttribute("cy", cy);
+      gradient.setAttribute("r", r);
+      gradient.setAttribute("fx", fx);
+      gradient.setAttribute("fy", fy);
+
+      return gradient;
+    };
+    const createSvgImage = () => {
+      let box = document.createElement("div");
+      box.className = "box";
+
+      const svg = createRootSVG();
+      const defs = getSVGDefs();
+      const linearGradient_01 = getLinearGradient(linearGradientId, linearGradientStops);
+      const radialGradient_01 = getRadialGradient(radialGradientId, radialGradientStops, "50%", "50%", "50%", "50%", "50%");
+
+      defs.appendChild(linearGradient_01);
+      defs.appendChild(radialGradient_01);
+      svg.appendChild(defs);
+
+      const url_lg_01 = getSVGUrlFromId(linearGradientId);
+      const url_rg_01 = getSVGUrlFromId(radialGradientId);
+
+      const r1 = getSVGRectangle(rectangleId, 10, -5, 85, 10, url_rg_01, "navy", 1);
+      defs.appendChild(r1);
+
+      const c1 = getSVGCircle(0, 0, 80, url_lg_01, "yellowgreen", 4);
+      const c2 = getSVGCircle(0, 0, 60, url_rg_01, "yellowgreen", 4);
+      const c3 = getSVGCircle(-45, 0, 30, url_rg_01, url_lg_01, 2);
+      const c4 = getSVGCircle(45, 0, 30, "#ffa002", "yellow", 2);
+
+      c3.addEventListener("mouseover", (e) => {
+        onCircleOver(e);
+      });
+      c3.addEventListener("mouseout", (e) => {
+        onCircleOut(e);
+      });
+      c4.classList.add("customClass");
+      svg.appendChild(c1);
+      svg.appendChild(c2);
+
+      const getGroup1Id = "group_rect_01";
+      const group1 = getArrowGroup(getGroup1Id);
+      defs.appendChild(group1);
+      const href_g1 = getSVGHrefFromId(getGroup1Id);
+      const g1 = getUse(href_g1);
+      const g2 = getUse(href_g1);
+      const g3 = getUse(href_g1);
+      const g4 = getUse(href_g1);
+      g2.setAttribute("transform", "rotate(22.5)");
+      g3.setAttribute("transform", "rotate(45)");
+      g4.setAttribute("transform", "rotate(67.5)");
+      svg.appendChild(g1);
+      svg.appendChild(g2);
+      svg.appendChild(g3);
+      svg.appendChild(g4);
+
+      svg.appendChild(c3);
+      svg.appendChild(c4);
+      box.appendChild(svg);
+      container.appendChild(box);
+    };
+
+    let container = document.getElementById("container");
+
+    const onCircleOver = (e) => {
+      e.target.classList.add("hoverClass");
+    };
+    const onCircleOut = (e) => {
+      e.target.classList.remove("hoverClass");
+    };
+
+    createSvgImage();
+  </script>
+</html>
