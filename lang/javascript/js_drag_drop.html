@@ -1,39 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
-    <!-- 
-    
-     -->
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/javascript/javascript-original.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
     <title>JavaScript Array Methods</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="javascript_index.html">JavaScript</a>
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="javascript_index.html">JavaScript</a>
     </nav>
 
     <div class="content">
-
-        <section id="js_03_01">
-            <h4>Drag and Drop (Example 1)</h4>
-            <pre><code class="language-html">
+      <section id="js_03_01">
+        <h4>Drag and Drop (Example 1)</h4>
+        <pre><code class="language-html">
     &#x3C;div id=&#x22;div1&#x22; draggable=&#x22;true&#x22;&#x3E;Draggable Div&#x3C;/div&#x3E;
     &#x3C;div id=&#x22;divContainer&#x22;&#x3E;Container&#x3C;/div&#x3E;
 </code></pre>
-            <pre><code class="language-javascript">
+        <pre><code class="language-javascript">
     var div1 = document.getElementById("div1");
     var divContainer = document.getElementById("divContainer");
 
@@ -56,18 +49,17 @@
 
 
     };</code></pre>
+      </section>
 
-        </section>
-
-        <section id="js_03_02">
-            <h4>Drag and Drop (Example of Data Transfer)</h4>
-            <pre><code class="language-javascript">&#x3C;ul&#x3E;
+      <section id="js_03_02">
+        <h4>Drag and Drop (Example of Data Transfer)</h4>
+        <pre><code class="language-javascript">&#x3C;ul&#x3E;
     &#x3C;li id=&#x22;i1&#x22; ondragstart=&#x22;dragstart_handler(event);&#x22; draggable=&#x22;true&#x22;&#x3E;Drag Item 1 to the Drop Zone&#x3C;/li&#x3E;
     &#x3C;li id=&#x22;i2&#x22; ondragstart=&#x22;dragstart_handler(event);&#x22; draggable=&#x22;true&#x22;&#x3E;Drag Item 2 to the Drop Zone&#x3C;/li&#x3E;
 &#x3C;/ul&#x3E;
 &#x3C;div id=&#x22;target&#x22; ondrop=&#x22;drop_handler(event);&#x22; ondragover=&#x22;dragover_handler(event);&#x22;&#x3E;Drop Zone&#x3C;/div&#x3E;
 </code></pre>
-            <pre><code class="language-javascript">
+        <pre><code class="language-javascript">
     function dragstart_handler(ev) {
 
         // Add this element's id to the drag payload so the drop handler will
@@ -91,9 +83,10 @@
         ev.dataTransfer.dropEffect = "move"
     }
  </code></pre>
-        </section>
-
+      </section>
     </div>
-</body>
-<script>hljs.highlightAll();</script>
+  </body>
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
