@@ -8,10 +8,8 @@
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
 
     <script src="../../js/libs/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
-    />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/css3/css3-original.svg" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>HTML Tags</title>
   </head>
@@ -157,16 +155,18 @@
 
       <section id="css_07_04">
         <h3>Description List</h3>
-        <div><dl>
-          <dt>Beast of Bodmin</dt>
-          <dd>A large feline inhabiting Bodmin Moor.</dd>
-      
-          <dt>Morgawr</dt>
-          <dd>A sea serpent.</dd>
-      
-          <dt>Owlman</dt>
-          <dd>A giant owl-like creature.</dd>
-      </dl></div>
+        <div>
+          <dl>
+            <dt>Beast of Bodmin</dt>
+            <dd>A large feline inhabiting Bodmin Moor.</dd>
+
+            <dt>Morgawr</dt>
+            <dd>A sea serpent.</dd>
+
+            <dt>Owlman</dt>
+            <dd>A giant owl-like creature.</dd>
+          </dl>
+        </div>
         <pre><code class="language-html">
 &#x3C;dl&#x3E;
     &#x3C;dt&#x3E;Beast of Bodmin&#x3C;/dt&#x3E;
@@ -188,17 +188,7 @@
       <section id="css_07_06">
         <h3>meter</h3>
         <div>
-          <meter
-          id="fuel"
-          min="0"
-          max="100"
-          low="33"
-          high="66"
-          optimum="80"
-          value="30"
-      >
-          at 50/100
-      </meter>
+          <meter id="fuel" min="0" max="100" low="33" high="66" optimum="80" value="30">at 50/100</meter>
         </div>
         <pre><code class="language-html">
 &#x3C;body&#x3E;
@@ -224,10 +214,9 @@
   <script>
     hljs.highlightAll();
     let m = document.getElementById("fuel");
-    setInterval(()=>{
-        let num = Math.floor(Math.random()*80);
-        m.value = num;
-
-    },500);
+    setInterval(() => {
+      let num = Math.floor(Math.random() * 80);
+      m.value = num;
+    }, 500);
   </script>
 </html>
