@@ -22,43 +22,28 @@
       <section id="cs_01_01">
         <h3>Abstract Factory Method Design Pattern</h3>
         <h4>Intent</h4>
-        <p>
-          Abstract Factory is a creational design pattern that lets you produce
-          families of related objects without specifying their concrete classes.
-        </p>
+        <p>Abstract Factory is a creational design pattern that lets you produce families of related objects without specifying their concrete classes.</p>
         <h4>Problem</h4>
-        <p>
-          Imagine that you&#x2019;re creating a furniture shop simulator. Your
-          code consists of classes that represent:
-        </p>
+        <p>Imagine that you&#x2019;re creating a furniture shop simulator. Your code consists of classes that represent:</p>
 
         <ol>
-          <li>
-            A family of related products, say: Chair + Sofa + CoffeeTable.
-          </li>
+          <li>A family of related products, say: Chair + Sofa + CoffeeTable.</li>
           <li>
             <p>
-              Several variants of this family. For example, products Chair +
-              Sofa + CoffeeTable are available in these variants: Modern,
-              Victorian, ArtDeco.
+              Several variants of this family. For example, products Chair + Sofa + CoffeeTable are available in these variants: Modern, Victorian, ArtDeco.
             </p>
             <div class="space_between">
               <img src="../../../images/design_patterns/dp_abf1.png" />
               <p>
-                You need a way to create individual furniture objects so that
-                they match other objects of the same family. Customers get quite
-                mad when they receive non-matching furniture.
+                You need a way to create individual furniture objects so that they match other objects of the same family. Customers get quite mad when they
+                receive non-matching furniture.
               </p>
             </div>
 
             <div class="space_between">
-           
               <p>
-                Also, you don&#x2019;t want to change existing code when adding
-                new products or families of products to the program. Furniture
-                vendors update their catalogs very often, and you
-                wouldn&#x2019;t want to change the core code each time it
-                happens.
+                Also, you don&#x2019;t want to change existing code when adding new products or families of products to the program. Furniture vendors update
+                their catalogs very often, and you wouldn&#x2019;t want to change the core code each time it happens.
               </p>
             </div>
           </li>
@@ -69,88 +54,57 @@
         <h4>Solution</h4>
 
         <p>
-          The first thing the Abstract Factory pattern suggests is to explicitly
-          declare interfaces for each distinct product of the product family
-          (e.g., chair, sofa or coffee table). Then you can make all variants of
-          products follow those interfaces. For example, all chair variants can
-          implement the Chair interface; all coffee table variants can implement
-          the CoffeeTable interface, and so on.
+          The first thing the Abstract Factory pattern suggests is to explicitly declare interfaces for each distinct product of the product family (e.g.,
+          chair, sofa or coffee table). Then you can make all variants of products follow those interfaces. For example, all chair variants can implement the
+          Chair interface; all coffee table variants can implement the CoffeeTable interface, and so on.
           <img src="../../../images/design_patterns/dp_abf3.png" />
         </p>
         <p>
-          The next move is to declare the Abstract Factory&#x2014;an interface
-          with a list of creation methods for all products that are part of the
-          product family (for example, createChair, createSofa and
-          createCoffeeTable). These methods must return abstract product types
-          represented by the interfaces we extracted previously: Chair, Sofa,
-          CoffeeTable and so on.
+          The next move is to declare the Abstract Factory&#x2014;an interface with a list of creation methods for all products that are part of the product
+          family (for example, createChair, createSofa and createCoffeeTable). These methods must return abstract product types represented by the interfaces we
+          extracted previously: Chair, Sofa, CoffeeTable and so on.
           <img src="../../../images/design_patterns/dp_abf4.png" />
         </p>
         <p>
-          Now, how about the product variants? For each variant of a product
-          family, we create a separate factory class based on the
-          AbstractFactory interface. A factory is a class that returns products
-          of a particular kind. For example, the ModernFurnitureFactory can only
-          create ModernChair, ModernSofa and ModernCoffeeTable objects.
+          Now, how about the product variants? For each variant of a product family, we create a separate factory class based on the AbstractFactory interface.
+          A factory is a class that returns products of a particular kind. For example, the ModernFurnitureFactory can only create ModernChair, ModernSofa and
+          ModernCoffeeTable objects.
         </p>
         <p>
-          The client code has to work with both factories and products via their
-          respective abstract interfaces. This lets you change the type of a
-          factory that you pass to the client code, as well as the product
-          variant that the client code receives, without breaking the actual
-          client code.
+          The client code has to work with both factories and products via their respective abstract interfaces. This lets you change the type of a factory that
+          you pass to the client code, as well as the product variant that the client code receives, without breaking the actual client code.
           <img src="../../../images/design_patterns/dp_abf5.png" />
         </p>
         <p>
-          Say the client wants a factory to produce a chair. The client
-          doesn&#x2019;t have to be aware of the factory&#x2019;s class, nor
-          does it matter what kind of chair it gets. Whether it&#x2019;s a
-          Modern model or a Victorian-style chair, the client must treat all
-          chairs in the same manner, using the abstract Chair interface. With
-          this approach, the only thing that the client knows about the chair is
-          that it implements the sitOn method in some way. Also, whichever
-          variant of the chair is returned, it&#x2019;ll always match the type
-          of sofa or coffee table produced by the same factory object.
+          Say the client wants a factory to produce a chair. The client doesn&#x2019;t have to be aware of the factory&#x2019;s class, nor does it matter what
+          kind of chair it gets. Whether it&#x2019;s a Modern model or a Victorian-style chair, the client must treat all chairs in the same manner, using the
+          abstract Chair interface. With this approach, the only thing that the client knows about the chair is that it implements the sitOn method in some way.
+          Also, whichever variant of the chair is returned, it&#x2019;ll always match the type of sofa or coffee table produced by the same factory object.
         </p>
         <p>
-          There&#x2019;s one more thing left to clarify: if the client is only
-          exposed to the abstract interfaces, what creates the actual factory
-          objects? Usually, the application creates a concrete factory object at
-          the initialization stage. Just before that, the app must select the
-          factory type depending on the configuration or the environment
-          settings.
+          There&#x2019;s one more thing left to clarify: if the client is only exposed to the abstract interfaces, what creates the actual factory objects?
+          Usually, the application creates a concrete factory object at the initialization stage. Just before that, the app must select the factory type
+          depending on the configuration or the environment settings.
         </p>
       </section>
       <section>
         <h4>Structure</h4>
         <div class="space_between">
           <ol>
+            <li>Abstract Products declare interfaces for a set of distinct but related products which make up a product family.</li>
             <li>
-              Abstract Products declare interfaces for a set of distinct but
-              related products which make up a product family.
+              Concrete Products are various implementations of abstract products, grouped by variants. Each abstract product (chair/sofa) must be implemented in
+              all given variants (Victorian/Modern).
+            </li>
+            <li>The Abstract Factory interface declares a set of methods for creating each of the abstract products.</li>
+            <li>
+              Concrete Factories implement creation methods of the abstract factory. Each concrete factory corresponds to a specific variant of products and
+              creates only those product variants.
             </li>
             <li>
-              Concrete Products are various implementations of abstract
-              products, grouped by variants. Each abstract product (chair/sofa)
-              must be implemented in all given variants (Victorian/Modern).
-            </li>
-            <li>
-              The Abstract Factory interface declares a set of methods for
-              creating each of the abstract products.
-            </li>
-            <li>
-              Concrete Factories implement creation methods of the abstract
-              factory. Each concrete factory corresponds to a specific variant
-              of products and creates only those product variants.
-            </li>
-            <li>
-              Although concrete factories instantiate concrete products,
-              signatures of their creation methods must return corresponding
-              abstract products. This way the client code that uses a factory
-              doesn&#x2019;t get coupled to the specific variant of the product
-              it gets from a factory. The Client can work with any concrete
-              factory/product variant, as long as it communicates with their
-              objects via abstract interfaces.
+              Although concrete factories instantiate concrete products, signatures of their creation methods must return corresponding abstract products. This
+              way the client code that uses a factory doesn&#x2019;t get coupled to the specific variant of the product it gets from a factory. The Client can
+              work with any concrete factory/product variant, as long as it communicates with their objects via abstract interfaces.
             </li>
           </ol>
           <img src="../../../images/design_patterns/dp_abf6.png" />
@@ -161,46 +115,31 @@
         <summary>Pseudocode</summary>
         <div>
           <p>
-            This example illustrates how the Abstract Factory pattern can be
-            used for creating cross-platform UI elements without coupling the
-            client code to concrete UI classes, while keeping all created
-            elements consistent with a selected operating system.
+            This example illustrates how the Abstract Factory pattern can be used for creating cross-platform UI elements without coupling the client code to
+            concrete UI classes, while keeping all created elements consistent with a selected operating system.
           </p>
           <img src="../../../images/design_patterns/dp_abf7.png" />
           <p>
-            The same UI elements in a cross-platform application are expected to
-            behave similarly, but look a little bit different under different
-            operating systems. Moreover, it&#x2019;s your job to make sure that
-            the UI elements match the style of the current operating system. You
-            wouldn&#x2019;t want your program to render macOS controls when
-            it&#x2019;s executed in Windows.
+            The same UI elements in a cross-platform application are expected to behave similarly, but look a little bit different under different operating
+            systems. Moreover, it&#x2019;s your job to make sure that the UI elements match the style of the current operating system. You wouldn&#x2019;t want
+            your program to render macOS controls when it&#x2019;s executed in Windows.
           </p>
           <p>
-            The Abstract Factory interface declares a set of creation methods
-            that the client code can use to produce different types of UI
-            elements. Concrete factories correspond to specific operating
-            systems and create the UI elements that match that particular OS.
+            The Abstract Factory interface declares a set of creation methods that the client code can use to produce different types of UI elements. Concrete
+            factories correspond to specific operating systems and create the UI elements that match that particular OS.
           </p>
           <p>
-            It works like this: when an application launches, it checks the type
-            of the current operating system. The app uses this information to
-            create a factory object from a class that matches the operating
-            system. The rest of the code uses this factory to create UI
-            elements. This prevents the wrong elements from being created.
+            It works like this: when an application launches, it checks the type of the current operating system. The app uses this information to create a
+            factory object from a class that matches the operating system. The rest of the code uses this factory to create UI elements. This prevents the wrong
+            elements from being created.
           </p>
           <p>
-            With this approach, the client code doesn&#x2019;t depend on
-            concrete classes of factories and UI elements as long as it works
-            with these objects via their abstract interfaces. This also lets the
-            client code support other factories or UI elements that you might
-            add in the future.
+            With this approach, the client code doesn&#x2019;t depend on concrete classes of factories and UI elements as long as it works with these objects
+            via their abstract interfaces. This also lets the client code support other factories or UI elements that you might add in the future.
           </p>
           <p>
-            As a result, you don&#x2019;t need to modify the client code each
-            time you add a new variation of UI elements to your app. You just
-            have to create a new factory class that produces these elements and
-            slightly modify the app&#x2019;s initialization code so it selects
-            that class when appropriate.
+            As a result, you don&#x2019;t need to modify the client code each time you add a new variation of UI elements to your app. You just have to create a
+            new factory class that produces these elements and slightly modify the app&#x2019;s initialization code so it selects that class when appropriate.
           </p>
           <pre><code class="language-csharp">
       // The abstract factory interface declares a set of methods that
@@ -301,32 +240,17 @@
       <section>
         <h4>Implementation</h4>
         <ol>
+          <li>Map out a matrix of distinct product types versus variants of these products.</li>
+          <li>Declare abstract product interfaces for all product types. Then make all concrete product classes implement these interfaces.</li>
+          <li>Declare the abstract factory interface with a set of creation methods for all abstract products.</li>
+          <li>Implement a set of concrete factory classes, one for each product variant.</li>
           <li>
-            Map out a matrix of distinct product types versus variants of these
-            products.
+            Create factory initialization code somewhere in the app. It should instantiate one of the concrete factory classes, depending on the application
+            configuration or the current environment. Pass this factory object to all classes that construct products.
           </li>
           <li>
-            Declare abstract product interfaces for all product types. Then make
-            all concrete product classes implement these interfaces.
-          </li>
-          <li>
-            Declare the abstract factory interface with a set of creation
-            methods for all abstract products.
-          </li>
-          <li>
-            Implement a set of concrete factory classes, one for each product
-            variant.
-          </li>
-          <li>
-            Create factory initialization code somewhere in the app. It should
-            instantiate one of the concrete factory classes, depending on the
-            application configuration or the current environment. Pass this
-            factory object to all classes that construct products.
-          </li>
-          <li>
-            Scan through the code and find all direct calls to product
-            constructors. Replace them with calls to the appropriate creation
-            method on the factory object.
+            Scan through the code and find all direct calls to product constructors. Replace them with calls to the appropriate creation method on the factory
+            object.
           </li>
         </ol>
 
@@ -334,43 +258,31 @@
         <ul>
           <li>
             Many designs start by using
-            <a href="cs_dp_factory.html">Factory Method</a> (less complicated
-            and more customizable via subclasses) and evolve toward Abstract
-            Factory, <a href="cs_dp_prototype.html">Prototype</a>, or
+            <a href="cs_dp_factory.html">Factory Method</a> (less complicated and more customizable via subclasses) and evolve toward Abstract Factory,
+            <a href="cs_dp_prototype.html">Prototype</a>, or
             <a href="cs_dp_builder.html">Builder</a>
             (more flexible, but more complicated).
           </li>
           <li>
-            <a href="cs_dp_builder.html">Builder</a> focuses on constructing
-            complex objects step by step. Abstract Factory specializes in
-            creating families of related objects. Abstract Factory returns the
-            product immediately, whereas
-            <a href="cs_dp_builder.html">Builder</a> lets you run some
-            additional construction steps before fetching the product.
+            <a href="cs_dp_builder.html">Builder</a> focuses on constructing complex objects step by step. Abstract Factory specializes in creating families of
+            related objects. Abstract Factory returns the product immediately, whereas <a href="cs_dp_builder.html">Builder</a> lets you run some additional
+            construction steps before fetching the product.
           </li>
           <li>
-            Abstract Factory classes are often based on a set of Factory
-            Methods, but you can also use
-            <a href="cs_dp_prototype.html">Prototype</a> to compose the methods
-            on these classes.
+            Abstract Factory classes are often based on a set of Factory Methods, but you can also use
+            <a href="cs_dp_prototype.html">Prototype</a> to compose the methods on these classes.
           </li>
           <li>
-            Abstract Factory can serve as an alternative to Facade when you only
-            want to hide the way the subsystem objects are created from the
-            client code.
+            Abstract Factory can serve as an alternative to Facade when you only want to hide the way the subsystem objects are created from the client code.
           </li>
           <li>
             You can use Abstract Factory along with
-            <a href="cs_dp_bridge.html">Bridge</a>. This pairing is useful when
-            some abstractions defined by
-            <a href="cs_dp_bridge.html">Bridge</a> can only work with specific
-            implementations. In this case, Abstract Factory can encapsulate
-            these relations and hide the complexity from the client code.
+            <a href="cs_dp_bridge.html">Bridge</a>. This pairing is useful when some abstractions defined by <a href="cs_dp_bridge.html">Bridge</a> can only
+            work with specific implementations. In this case, Abstract Factory can encapsulate these relations and hide the complexity from the client code.
           </li>
           <li>
-            Abstract Factories, <a href="cs_dp_builder.html">Builders</a> and
-            <a href="cs_dp_prototype.html">Prototypes</a> can all be implemented
-            as Singletons.
+            Abstract Factories, <a href="cs_dp_builder.html">Builders</a> and <a href="cs_dp_prototype.html">Prototypes</a> can all be implemented as
+            Singletons.
           </li>
         </ul>
       </section>
