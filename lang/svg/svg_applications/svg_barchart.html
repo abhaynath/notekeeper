@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/svg" href="../../../css/svg/svg/svg_logo.svg" />
+    <title>Bar Chart</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      .container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        & .buttons-group {
+          padding: 10px;
+        }
+        & .chart-container {
+          background-color: yellowgreen;
+          width: 800px;
+          height: 400px;
+          & svg {
+            background: #020024;
+            background: linear-gradient(0deg, #020024 0%, #090979 35%, #00d4ff 100%);
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="buttons-group">
+        <button id="btnUpdateData">Update Data</button>
+      </div>
+      <div class="chart-container" id="divChartContainer"></div>
+    </div>
+  </body>
+  <script>
+    const svg_namespace = "http://www.w3.org/2000/svg";
+    const obj_viewbox = { x: 0, y: 0, width: 400, height: 200 };
+
+    const obj_ids = {
+      id_group_bars: "group_bars",
+    };
+    const getId = () => {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    };
+    const getViewBoxDimensionString = (obj) => {
+      const str = `${obj.x + " " + obj.y + " " + obj.width + " " + obj.height}`;
+      return str;
+    };
+    const getRandomColor = () => {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+    const getSVGDefs = () => {
+      const defs = document.createElementNS(svg_namespace, "defs");
+      return defs;
+    };
+    const getUse = (href) => {
+      const use = document.createElementNS(svg_namespace, "use");
+      use.setAttribute("href", href);
+      return use;
+    };
+    const getSVGText = (str, x, y, fill, fontSize) => {
+      const text = document.createElementNS(svg_namespace, "text");
+      text.setAttribute("x", x);
+      text.setAttribute("y", y);
+      text.setAttribute("fill", fill);
+      text.setAttribute("font-size", fontSize);
+
+      const textNode = document.createTextNode(str);
+      text.appendChild(textNode);
+      return text;
+    };
+    const getGroup = (id) => {
+      const group = document.createElementNS(svg_namespace, "g");
+      group.setAttribute("id", id);
+      return group;
+    };
+    const getSVGHrefFromId = (id) => {
+      return `#${id}`;
+    };
+    const createRootSVG = () => {
+      const svg = document.createElementNS(svg_namespace, "svg");
+      const str = getViewBoxDimensionString(obj_viewbox);
+      svg.setAttribute("viewBox", str);
+      return svg;
+    };
+    const getSVGUrlFromId = (id) => {
+      return `url(#${id})`;
+    };
+
+    const getSVGRectangle = (x, y, width, height, fill, stroke, strokeWidth) => {
+      const rectangle = document.createElementNS(svg_namespace, "rect");
+      rectangle.setAttribute("x", x);
+      rectangle.setAttribute("y", y);
+      rectangle.setAttribute("width", width);
+      rectangle.setAttribute("height", height);
+      rectangle.setAttribute("fill", fill);
+      rectangle.setAttribute("stroke", stroke);
+      rectangle.setAttribute("stroke-width", strokeWidth);
+      return rectangle;
+    };
+
+    const getData = () => {
+      let arr = [];
+      const len = 2 + Math.floor(Math.random() * 30);
+
+      for (let i = 0; i < len; i++) {
+        let data = Math.random() * 1000;
+        let obj = { label: "", data: data };
+        arr.push(obj);
+      }
+      return arr;
+    };
+
+    const initSVG = () => {
+      const defs = getSVGDefs();
+      svg.appendChild(defs);
+
+      const group = getGroup(obj_ids.id_group_bars);
+      svg.appendChild(group);
+
+      document.getElementById("divChartContainer").appendChild(svg);
+    };
+
+    const getChartData = (arrData, width, height) => {
+      let max = arrData[0].data;
+      let min = arrData[0].data;
+      arrData.forEach((item) => {
+        if (item.data > max) {
+          max = item.data;
+        }
+        if (item.data < min) {
+          min = item.data;
+        }
+      });
+      max = Math.abs(max);
+      min = Math.abs(min);
+
+      let data_range = max - min;
+      let tolarance = data_range / 5;
+      max += tolarance;
+      min -= tolarance;
+      let scaleFactor = height / (max - min);
+
+      let arr = [];
+      arrData.forEach((item, i) => {
+        let bar_height = (item.data - min) * scaleFactor;
+        let y = height - bar_height;
+        let obj = {
+          label: item.label,
+          data: item.data,
+          y: y,
+          bar_height: bar_height,
+        };
+        arr.push(obj);
+      });
+
+      return arr;
+    };
+
+    const drawBars = (arr) => {
+      if (arr == undefined || arr == null || arr.length < 1) {
+        return;
+      }
+      const arrPlot = getChartData(arr, obj_viewbox.width, obj_viewbox.height);
+      const len = arr.length;
+      const width = obj_viewbox.width / len;
+      const height = obj_viewbox.height;
+
+      const group_bars = document.getElementById(obj_ids.id_group_bars);
+      group_bars.innerHTML = "";
+      arrPlot.forEach((item, i) => {
+        const bar_x = i * width;
+        const rect = getSVGRectangle(bar_x, item.y, width, item.bar_height, getRandomColor(), "black", 0.5);
+        const txt = getSVGText(Math.floor(item.data), bar_x, item.y - 2, "white", "8px");
+        group_bars.appendChild(rect);
+        group_bars.appendChild(txt);
+      });
+    };
+
+    const updateChart = () => {
+      const arr = getData();
+      drawBars(arr);
+    };
+
+    const initChart = () => {
+      initSVG();
+      document.getElementById("btnUpdateData").onclick = function () {
+        updateChart();
+      };
+      updateChart();
+    };
+
+    const svg = createRootSVG();
+    initChart();
+  </script>
+</html>
