@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/kdenlive/Kdenlive-logo.svg" />
+    <title>Motion Tracking</title>
+  </head>
+
+  <body>
+    <div class="content">
+      <nav class="nav_main">
+        <a href="../../index.html"><i class="fa fa-home"></i></a>
+        <a href="kdenlive_index.html">Kdenlive</a>
+      </nav>
+
+      <section id="sec1">
+        <h4>Basic Motion Tracking</h4>
+        <ol>
+          <li>Add the clip in the timeline.</li>
+          <li>Search <b>Motion Tracker</b> effect and drop it on the clip in the timeline.</li>
+          <li>In effects panel, you should see the <b>Motion Tracker</b> details.</li>
+          <li><img src="../../images/graphics/kdenlive/motion_track_1.jpg" /></li>
+          <li>Drag the red selection around the object you want to track.</li>
+          <li>Click <b>Analyze to Apply Effect</b> button. It should take some time to process.</li>
+          <li>Once analysis is done, you should see the path of the object in the video like this,</li>
+          <li><img src="../../images/graphics/kdenlive/motion_track_2.jpg" /></li>
+          <li>Add a new <b>Title Clip</b> above the video clip.</li>
+          <li>
+            Select the video clip in the timeline, and open effects panel. In motion tracking effects option, click <b>Copy all keyframes to clipboard</b>
+          </li>
+          <li><img src="../../images/graphics/kdenlive/motion_track_3.jpg" /></li>
+          <li>Select the <b>Title clip</b>. Apply <b>Transform Effect</b> to the title clip.</li>
+          <li>In <b>Transform Effects</b> of Title Clip, select <b>Import Keyframes from clipboard</b></li>
+          <li><img src="../../images/graphics/kdenlive/motion_track_4.jpg" /></li>
+          <li><img src="../../images/graphics/kdenlive/motion_track_5.jpg" /></li>
+          <li>Play the Project. You should see title moving along the tracked object.</li>
+          <li>You can disable the red tracking marks in <b>Motion tracker effects</b> panel by setting <b>Shape Width</b> to 0.</li>
+        </ol>
+      </section>
+    </div>
+  </body>
+</html>
