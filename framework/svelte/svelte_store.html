@@ -1,35 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
-  
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/svelte/svelte.svg" />
     <script src="../../js/libs/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Store Examples</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="svelte_index.html">Svelte</a>
-
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
-
-        <section id="sv_04_01">
-            <h3>Basic Store</h3>
-            <img src="../../images/frameworks/svelte/svelte_basic_store.jpg"/>
-            <h4>MyApp.svelte</h4>
-<pre><code class="language-html">&#x3C;script&#x3E;
+      <section id="sv_04_01">
+        <h3>Basic Store</h3>
+        <img src="../../images/frameworks/svelte/svelte_basic_store.jpg" />
+        <h4>MyApp.svelte</h4>
+        <pre><code class="language-html">&#x3C;script&#x3E;
 import Bowling from &#x22;./components/Bowling.svelte&#x22;;
 import Batting from &#x22;./components/Batting.svelte&#x22;;
 import Scorecard from &#x22;./components/Scorecard.svelte&#x22;;
@@ -50,8 +44,8 @@ import Scorecard from &#x22;./components/Scorecard.svelte&#x22;;
 &#x3C;/style&#x3E;
 
 </code></pre>
-<h4>store.js</h4>
-<pre><code class="language-js">
+        <h4>store.js</h4>
+        <pre><code class="language-js">
 import { writable } from &#x22;svelte/store&#x22;;
 export const teamScore = writable({
     teamName: &#x22;India&#x22;,
@@ -60,8 +54,8 @@ export const teamScore = writable({
     wicket: 0,
 });
     </code></pre>
-    <h4>Batting.svelte</h4>
-    <pre><code class="language-html">
+        <h4>Batting.svelte</h4>
+        <pre><code class="language-html">
 &#x3C;script&#x3E;
 import { teamScore } from &#x22;../stores/store.js&#x22;;
 
@@ -124,8 +118,8 @@ cursor: pointer;
 &#x3C;/style&#x3E;
 
     </code></pre>
-<h4>Bowling.svelte</h4>
-<pre><code class="language-html">
+        <h4>Bowling.svelte</h4>
+        <pre><code class="language-html">
 &#x3C;script&#x3E;
 import { teamScore } from &#x22;../stores/store.js&#x22;;
 
@@ -150,8 +144,8 @@ teamScore.update((obj) =&#x3E; {
   }
 &#x3C;/style&#x3E;</code></pre>
 
-<h4>Scorecard.svelte</h4>
-<pre><code class="language-html">
+        <h4>Scorecard.svelte</h4>
+        <pre><code class="language-html">
 &#x3C;script&#x3E;
 import { teamScore } from &#x22;../stores/store.js&#x22;;
 &#x3C;/script&#x3E;
@@ -184,14 +178,13 @@ import { teamScore } from &#x22;../stores/store.js&#x22;;
   &#x3C;/style&#x3E;
      
 </code></pre>
-           
-        </section>
+      </section>
 
-        <section id="sv_04_02">
-          <h3>Store CRUD Component</h3>
-          <img src="../../images/frameworks/svelte/svelte_store_crud.jpg"/>
-          <h4>store.js</h4>
-          <pre><code class="language-js">
+      <section id="sv_04_02">
+        <h3>Store CRUD Component</h3>
+        <img src="../../images/frameworks/svelte/svelte_store_crud.jpg" />
+        <h4>store.js</h4>
+        <pre><code class="language-js">
 import { writable } from &#x22;svelte/store&#x22;;
 const uid = function () {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
@@ -239,8 +232,8 @@ const createTeamStore = () =&#x3E; {
 export const team = createTeamStore();
 
           </code></pre>
-          <h4>App.svelte</h4>
-          <pre><code class="language-html">
+        <h4>App.svelte</h4>
+        <pre><code class="language-html">
 &#x3C;script&#x3E;
   import { team } from &#x22;./store.js&#x22;;
   let name = &#x22;&#x22;;
@@ -312,16 +305,11 @@ export const team = createTeamStore();
     width: 100%;
   }
 &#x3C;/style&#x3E;</code></pre>
-
-        </section>
-
-
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>hljs.highlightAll();</script>
-
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>

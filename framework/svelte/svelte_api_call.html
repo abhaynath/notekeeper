@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
-  
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/svelte/svelte.svg" />
 
     <script src="../../js/libs/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css"/>
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
-    <title>API Call </title>
+    <title>API Call</title>
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <nav class="nav_main">
-        <a href="../../index.html"><i class="fa fa-home"></i></a>
-        <a href="svelte_index.html">Svelte</a>
-
-
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
+      <section id="sv_03_01">
+        <h4>API call example</h4>
+        <ol>
+          <li>
+            Create file 'App.svelte'
 
-        <section id="sv_03_01">
-            <h4>API call example</h4>
-            <ol><li>Create file 'App.svelte'
-
-<pre>
+            <pre>
     <code class="language-html">
     &#x3C;script&#x3E;
     import User from &#x22;./User.svelte&#x22;;
@@ -70,11 +66,12 @@
     &#x3C;/div&#x3E;
          
     </code>
-</pre></li>
+</pre>
+          </li>
 
-<li>
-    Create child component 'User.svelte'
-<pre>
+          <li>
+            Create child component 'User.svelte'
+            <pre>
     <code class="language-html">
 &#x3C;script&#x3E;
 export let id;
@@ -95,17 +92,13 @@ export let name;
 
     </code>
 </pre>
-</li></ol>
-
-        </section>
-
-
+          </li>
+        </ol>
+      </section>
     </div>
+  </body>
 
-
-
-</body>
-
-<script>hljs.highlightAll();</script>
-
+  <script>
+    hljs.highlightAll();
+  </script>
 </html>
