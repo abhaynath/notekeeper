@@ -6,10 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
     <link rel="shortcut icon" type="image/svg" href="../../css/svg/svelte/svelte.svg" />
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
     <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
     <title>Runes</title>
   </head>
 
@@ -19,12 +21,41 @@
       <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
-      <section id="state">
+      <div id="state">
         <details>
           <summary>$state</summary>
-          <pre><code  class="language-html"></code></pre>
+          <div>
+            <h3>State in external js</h3>
+            <ul id="external_state" class="tabs">
+              <li data-title="UI">
+                <img src="../../images/frameworks/svelte/state_in_external_js.JPG" />
+              </li>
+              <li data-title="Counter.svelte">
+                <pre><code  class="language-html">&#x3C;script&#x3E;
+  import { createCounter } from &#x22;./counter.svelte.js&#x22;;
+  const counter = createCounter();
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;h3&#x3E;{counter.count}&#x3C;/h3&#x3E;
+  &#x3C;button onclick={counter.increment}&#x3E;Update&#x3C;/button&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+              </li>
+              <li data-title="counter.svelte.js">
+                <pre><code class="language-js">export function createCounter() {
+    let count = $state(0);
+    return {
+      get count() {
+        return count;
+      },
+      increment: () =&#x3E; (count += 1),
+    };
+  }</code></pre>
+              </li>
+            </ul>
+          </div>
         </details>
-      </section>
+      </div>
 
       <section id="derived">
         <details>
@@ -72,5 +103,15 @@
 
   <script>
     hljs.highlightAll();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // create horizontal tabs
+      new VanillaTabs({
+        selector: "#external_state", // default is ".tabs"
+        type: "horizontal", // can be horizontal / vertical / accordion
+        responsiveBreak: 840, // tabs become accordion on this device width
+        activeIndex: 0, // active tab index (starts from 0 ). Can be -1 for accordions.
+      });
+    });
   </script>
 </html>
