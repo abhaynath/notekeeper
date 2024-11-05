@@ -25,6 +25,111 @@
         <details>
           <summary>$state</summary>
           <div>
+            <h3>State within Component</h3>
+            <ul id="internal_state" class="tabs">
+              <li data-title="UI"><img src="../../images/frameworks/svelte/state_in_external_js.JPG" /></li>
+              <li data-title="Counter.svelte">
+                <pre><code class="language-html">&#x3C;script&#x3E;
+  let count = $state(0);
+  function increment() {
+    count += 1;
+  }
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;h3&#x3E;{count}&#x3C;/h3&#x3E;
+  &#x3C;button onclick={increment}&#x3E;Update&#x3C;/button&#x3E;
+&#x3C;/div&#x3E;</code></pre></li>
+            </ul>
+
+            <h3>Array as state</h3>
+            <ul id="state_array" class="tabs">
+              <li data-title="UI"><img src="../../images/frameworks/svelte/state_with_array.JPG" /></li>
+              <li data-title="Counter.svelte">
+                <pre><code class="language-html">&#x3C;script&#x3E;
+    let users = $state([]);
+    let firstName = $state(&#x22;&#x22;);
+    let lastName = $state(&#x22;&#x22;);
+  
+    const getRandomId = () =&#x3E; Date.now().toString(36) + Math.random().toString(36).substring(2);
+  
+    const getRandomColor = () =&#x3E; {
+      var letters = &#x22;0123456789ABCDEF&#x22;;
+      var color = &#x22;#&#x22;;
+      for (var i = 0; i &#x3C; 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+  
+    const insertUser = () =&#x3E; {
+      let user = {};
+      user.id = getRandomId();
+      user.firstName = firstName.trim();
+      user.lastName = lastName.trim();
+  
+      if (user.firstName != &#x22;&#x22; &#x26;&#x26; user.lastName != &#x22;&#x22;) {
+        user.bgColor = getRandomColor();
+        users.push(user);
+      }
+      firstName = &#x22;&#x22;;
+      lastName = &#x22;&#x22;;
+    };
+  
+    const removeUser = (id) =&#x3E; {
+      const index = users.findIndex((obj) =&#x3E; obj.id == id);
+      if (index != -1) {
+        users.splice(index, 1);
+      }
+    };
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div&#x3E;
+    &#x3C;div class=&#x22;input-box&#x22;&#x3E;
+      &#x3C;input type=&#x22;text&#x22; placeholder=&#x22;First Name&#x22; bind:value={firstName} /&#x3E;
+      &#x3C;input type=&#x22;text&#x22; placeholder=&#x22;Last Name&#x22; bind:value={lastName} /&#x3E;
+      &#x3C;button onclick={insertUser}&#x3E;Insert User&#x3C;/button&#x3E;
+    &#x3C;/div&#x3E;
+    &#x3C;table&#x3E;
+      &#x3C;tbody&#x3E;
+        &#x3C;tr&#x3E;&#x3C;th&#x3E;Id&#x3C;/th&#x3E;&#x3C;th&#x3E;First Name&#x3C;/th&#x3E;&#x3C;th&#x3E;Last Name&#x3C;/th&#x3E;&#x3C;th&#x3E;&#x3C;/th&#x3E;&#x3C;/tr&#x3E;
+        {#each users as user}
+          &#x3C;tr
+            &#x3E;&#x3C;td style=&#x22;background-color: {user.bgColor};&#x22;&#x3E;{user.id}&#x3C;/td&#x3E;&#x3C;td&#x3E;{user.firstName}&#x3C;/td&#x3E;&#x3C;td&#x3E;{user.lastName}&#x3C;/td&#x3E;&#x3C;td&#x3E;
+              &#x3C;button
+                onclick={() =&#x3E; {
+                  removeUser(user.id);
+                }}&#x3E;Remove {user.firstName}&#x3C;/button
+              &#x3E;&#x3C;/td
+            &#x3E;&#x3C;/tr
+          &#x3E;
+        {/each}
+      &#x3C;/tbody&#x3E;
+    &#x3C;/table&#x3E;
+  &#x3C;/div&#x3E;
+  
+  &#x3C;style&#x3E;
+    .input-box {
+      padding: 10px;
+      border: 1px solid grey;
+    }
+    button,
+    input {
+      padding: 4px;
+    }
+    table {
+      width: 100%;
+      border: 1px solid grey;
+      border-collapse: collapse;
+    }
+    td,
+    th {
+      text-align: center;
+      padding: 4px;
+      border: 1px solid grey;
+    }
+  &#x3C;/style&#x3E;</code></pre></li>
+            </ul>
             <h3>State in external js</h3>
             <ul id="external_state" class="tabs">
               <li data-title="UI">
@@ -111,6 +216,19 @@
         type: "horizontal", // can be horizontal / vertical / accordion
         responsiveBreak: 840, // tabs become accordion on this device width
         activeIndex: 0, // active tab index (starts from 0 ). Can be -1 for accordions.
+      });
+
+      new VanillaTabs({
+        selector: "#internal_state",
+        type: "horizontal",
+        responsiveBreak: 840,
+        activeIndex: 0,
+      });
+      new VanillaTabs({
+        selector: "#state_array",
+        type: "horizontal",
+        responsiveBreak: 840,
+        activeIndex: 0,
       });
     });
   </script>

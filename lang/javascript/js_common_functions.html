@@ -22,22 +22,19 @@
     <div class="content">
       <section id="js_05_01">
         <h4>Generate random Id</h4>
-        <pre><code class="language-js">
-const getRandomId = function () {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
-};</code></pre>
+        <pre><code class="language-js">const getRandomId = () =&#x3E; Date.now().toString(36) + Math.random().toString(36).substring(2);
+</code></pre>
       </section>
 
       <section id="js_05_02">
         <h4>Generate random colors</h4>
-        <pre><code class="language-js">
-const getRandomColor = function () {
-    var letters = &#x22;0123456789ABCDEF&#x22;;
-    var color = &#x22;#&#x22;;
-    for (var i = 0; i &#x3C; 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+        <pre><code class="language-js">const getRandomColor = () =&#x3E; {
+  var letters = &#x22;0123456789ABCDEF&#x22;;
+  var color = &#x22;#&#x22;;
+  for (var i = 0; i &#x3C; 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 };</code></pre>
       </section>
 
