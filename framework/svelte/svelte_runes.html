@@ -22,31 +22,83 @@
     </nav>
     <div class="content">
       <div id="state">
+        <h2>$state</h2>
         <details>
-          <summary>$state</summary>
-          <div>
-            <h3>State within Component</h3>
-            <ul id="internal_state" class="tabs">
-              <li data-title="UI"><img src="../../images/frameworks/svelte/state_in_external_js.JPG" /></li>
-              <li data-title="Counter.svelte">
-                <pre><code class="language-html">&#x3C;script&#x3E;
-  let count = $state(0);
-  function increment() {
-    count += 1;
-  }
+          <summary>Internal Component State</summary>
+          <ul id="internal_state" class="tabs">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/state_in_external_js.JPG" /></li>
+            <li data-title="Counter.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+let count = $state(0);
+function increment() {
+  count += 1;
+}
 &#x3C;/script&#x3E;
 
 &#x3C;div&#x3E;
-  &#x3C;h3&#x3E;{count}&#x3C;/h3&#x3E;
-  &#x3C;button onclick={increment}&#x3E;Update&#x3C;/button&#x3E;
-&#x3C;/div&#x3E;</code></pre></li>
-            </ul>
+&#x3C;h3&#x3E;{count}&#x3C;/h3&#x3E;
+&#x3C;button onclick={increment}&#x3E;Update&#x3C;/button&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
+        <details>
+          <summary>Class as state</summary>
+          <ul id="state_class" class="tabs">
+            <li data-title="UI">
+              <img src="../../images/frameworks/svelte/state_class.JPG" />
+            </li>
+            <li data-title="counterStore.svelte.js">
+              <pre><code class="language-js">class Counter {
+  count = $state(0);
+  incrementor = $state(1);
 
-            <h3>Array as state</h3>
-            <ul id="state_array" class="tabs">
-              <li data-title="UI"><img src="../../images/frameworks/svelte/state_with_array.JPG" /></li>
-              <li data-title="Counter.svelte">
-                <pre><code class="language-html">&#x3C;script&#x3E;
+  increment() {
+    this.count += this.incrementor;
+  }
+  resetCount() {
+    this.count = 0;
+  }
+  resetIncrementor() {
+    this.incrementor = 1;
+  }
+}
+export const counterStore = new Counter();</code></pre>
+            </li>
+            <li data-title="Counter.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+    import { counterStore } from &#x22;../stores/counterStore.svelte.js&#x22;;
+    import Slider from &#x22;./Slider.svelte&#x22;;
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div&#x3E;
+    &#x3C;h3&#x3E;count = {counterStore.count}&#x3C;/h3&#x3E;
+    &#x3C;button
+      onclick={() =&#x3E; {
+        counterStore.increment();
+      }}&#x3E;Increment&#x3C;/button
+    &#x3E;
+  
+    &#x3C;Slider&#x3E;&#x3C;/Slider&#x3E;
+  &#x3C;/div&#x3E;</code></pre>
+            </li>
+            <li data-title="Slider.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+    import {counterStore} from &#x27;../stores/counterStore.svelte.js&#x27;;
+  &#x3C;/script&#x3E;
+&#x3C;div&#x3E;
+    &#x3C;h3&#x3E;Incrementor = {counterStore.incrementor}&#x3C;/h3&#x3E;
+    &#x3C;input type=&#x22;range&#x22; min=&#x22;1&#x22; max=&#x22;5&#x22; bind:value={counterStore.incrementor}/&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
+        <details>
+          <summary>Array as state</summary>
+          <ul id="state_array" class="tabs">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/state_with_array.JPG" /></li>
+            <li data-title="Counter.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
     let users = $state([]);
     let firstName = $state(&#x22;&#x22;);
     let lastName = $state(&#x22;&#x22;);
@@ -128,81 +180,228 @@
       padding: 4px;
       border: 1px solid grey;
     }
-  &#x3C;/style&#x3E;</code></pre></li>
-            </ul>
-            <h3>State in external js</h3>
-            <ul id="external_state" class="tabs">
-              <li data-title="UI">
-                <img src="../../images/frameworks/svelte/state_in_external_js.JPG" />
-              </li>
-              <li data-title="Counter.svelte">
-                <pre><code  class="language-html">&#x3C;script&#x3E;
-  import { createCounter } from &#x22;./counter.svelte.js&#x22;;
-  const counter = createCounter();
+  &#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
+        <details>
+          <summary>External Js state</summary>
+          <ul id="external_state" class="tabs">
+            <li data-title="UI">
+              <img src="../../images/frameworks/svelte/state_in_external_js.JPG" />
+            </li>
+            <li data-title="Counter.svelte">
+              <pre><code  class="language-html">&#x3C;script&#x3E;
+  import { countStore } from &#x22;../stores/counter.svelte.js&#x22;;
+
+  let { increment } = countStore;
 &#x3C;/script&#x3E;
 
-&#x3C;div&#x3E;
-  &#x3C;h3&#x3E;{counter.count}&#x3C;/h3&#x3E;
-  &#x3C;button onclick={counter.increment}&#x3E;Update&#x3C;/button&#x3E;
-&#x3C;/div&#x3E;</code></pre>
-              </li>
-              <li data-title="counter.svelte.js">
-                <pre><code class="language-js">export function createCounter() {
-    let count = $state(0);
-    return {
-      get count() {
-        return count;
-      },
-      increment: () =&#x3E; (count += 1),
+&#x3C;h2&#x3E;{countStore.count}&#x3C;/h2&#x3E;
+&#x3C;button onclick={increment}&#x3E;Update&#x3C;/button&#x3E;</code></pre>
+            </li>
+            <li data-title="counter.svelte.js">
+              <pre><code class="language-js">const createCounter = () =&#x3E; {
+  let count = $state(0);
+  return {
+    get count() {
+      return count;
+    },
+    increment: () =&#x3E; (count += 1),
+  };
+};
+
+export const countStore = createCounter();</code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>Object as state</summary>
+          <ul id="state_as_object" class="tabs">
+            <li data-title="UI">
+              <img src="../../images/frameworks/svelte/state_as_object.jpg" />
+            </li>
+            <li data-title="teamscore.svelte.js">
+              <pre><code class="language-js">const createTeamScoreStore = () =&#x3E; {
+    let initObject = {
+      teamName: &#x22;&#x22;,
+      balls: 0,
+      runs: 0,
+      wicket: 0,
     };
-  }</code></pre>
-              </li>
-            </ul>
-          </div>
+    let teamScore = $state(initObject);
+  
+    return {
+      get teamScore() {
+        return teamScore;
+      },
+      addRuns: (num) =&#x3E; {
+        teamScore.runs += num;
+        teamScore.balls += 1;
+      },
+      addWicket: () =&#x3E; {
+        teamScore.wicket += 1;
+        teamScore.balls += 1;
+      },
+      setTeam: (team) =&#x3E; {
+        team = team.trim();
+        if (team != &#x22;&#x22;) {
+          teamScore.teamName = team;
+        }
+      },
+    };
+  };
+  
+  export const teamScoreStore = createTeamScoreStore();</code></pre>
+            </li>
+            <li data-title="ScoreCard.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+    import { teamScoreStore } from &#x22;../stores/teamscore.svelte&#x22;;
+    let { teamScore, setTeam } = teamScoreStore;
+  
+    let teamTitle = $state(&#x22;&#x22;);
+    console.log($inspect(teamScoreStore));
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div class=&#x22;scorecard&#x22;&#x3E;
+    &#x3C;div&#x3E;
+      &#x3C;input type=&#x22;text&#x22; bind:value={teamTitle} /&#x3E;
+      &#x3C;button
+        onclick={() =&#x3E; {
+          setTeam(teamTitle);
+          teamTitle = &#x22;&#x22;;
+        }}&#x3E;Update Team&#x3C;/button
+      &#x3E;
+    &#x3C;/div&#x3E;
+  
+    &#x3C;div&#x3E;
+      {teamScore.teamName}
+    &#x3C;/div&#x3E;
+    &#x3C;div&#x3E;
+      {teamScore.runs}/{teamScore.wicket}
+    &#x3C;/div&#x3E;
+    &#x3C;div class=&#x22;score&#x22;&#x3E;
+      {Math.floor(teamScore.balls / 6) + &#x22;.&#x22; + (teamScore.balls % 6)}
+    &#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+  
+  &#x3C;style&#x3E;
+    .scorecard {
+      background: navy;
+      color: white;
+      padding: 5px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .score {
+      font-size: 12px;
+      font-weight: normal;
+    }
+  &#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Batting.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+    import { teamScoreStore } from &#x22;../stores/teamscore.svelte&#x22;;
+    let { addRuns } = teamScoreStore;
+  
+    let arr = [
+      { id: &#x22;id1&#x22;, name: &#x22;Dot&#x22;, run: 0 },
+      { id: &#x22;id2&#x22;, name: &#x22;1&#x22;, run: 1 },
+      { id: &#x22;id3&#x22;, name: &#x22;2&#x22;, run: 2 },
+      { id: &#x22;id4&#x22;, name: &#x22;3&#x22;, run: 3 },
+      { id: &#x22;id5&#x22;, name: &#x22;4&#x22;, run: 4 },
+      { id: &#x22;id6&#x22;, name: &#x22;6&#x22;, run: 6 },
+    ];
+  
+    const ballClick = (val) =&#x3E; {
+      addRuns(val.run);
+    };
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div class=&#x22;batting&#x22;&#x3E;
+    {#each arr as ball, index}
+      &#x3C;div
+        tabindex={index}
+        role=&#x22;button&#x22;
+        aria-label=&#x22;runs&#x22;
+        class=&#x22;ball&#x22;
+        on:click={() =&#x3E; {
+          ballClick(ball);
+        }}
+        on:keydown={() =&#x3E; {}}
+      &#x3E;
+        {ball.name}
+      &#x3C;/div&#x3E;
+    {/each}
+  &#x3C;/div&#x3E;
+  
+  &#x3C;style&#x3E;
+    .batting {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px;
+    }
+    .batting .ball {
+      background: radial-gradient(circle, #fa0000 0%, #7c1200 43%, #240000 100%);
+      color: white;
+      padding: 5px;
+      border-radius: 20px;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  &#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Bowling.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+import { teamScoreStore } from &#x22;../stores/teamscore.svelte&#x22;;
+let { addWicket } = teamScoreStore;
+&#x3C;/script&#x3E;
+
+&#x3C;div tabindex=&#x22;0&#x22; role=&#x22;button&#x22; aria-label=&#x22;wicket&#x22; onkeydown={addWicket} class=&#x22;wicket&#x22; onclick={addWicket}&#x3E;Wicket!&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .wicket {
+  background: green;
+  color: yellow;
+  padding: 10px;
+  display: inline-block;
+  cursor: pointer;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
         </details>
       </div>
 
-      <section id="derived">
-        <details>
-          <summary>$derived</summary>
-          <pre><code  class="language-html"></code></pre>
-        </details>
-      </section>
+      <div id="derived">
+        <h2>$derived</h2>
+      </div>
 
-      <section id="effect">
-        <details>
-          <summary>$effect</summary>
-          <pre><code  class="language-html"></code></pre>
-        </details>
-      </section>
+      <div id="effect">
+        <h2>$effect</h2>
+      </div>
 
-      <section id="props">
-        <details>
-          <summary>$props</summary>
-          <pre><code  class="language-html"></code></pre>
-        </details>
-      </section>
+      <div id="props">
+        <h2>$props</h2>
+      </div>
 
-      <section id="bindable">
-        <details>
-          <summary>$bindable</summary>
-          <pre><code  class="language-html"></code></pre>
-        </details>
-      </section>
+      <div id="bindable">
+        <h2>$bindable</h2>
+      </div>
 
-      <section id="inspect">
-        <details>
-          <summary>$inspect</summary>
-          <pre><code  class="language-html"></code></pre>
-        </details>
-      </section>
+      <div id="inspect">
+        <h2>$inspect</h2>
+      </div>
 
-      <section id="host">
-        <details>
-          <summary>$host</summary>
-          <pre><code  class="language-html"></code></pre>
-        </details>
-      </section>
+      <div id="host">
+        <h2>$host</h2>
+      </div>
     </div>
   </body>
 
@@ -230,6 +429,20 @@
         responsiveBreak: 840,
         activeIndex: 0,
       });
+      new VanillaTabs({
+        selector: "#state_class",
+        type: "horizontal",
+        responsiveBreak: 840,
+        activeIndex: 0,
+      });
+      new VanillaTabs({
+        selector: "#state_as_object",
+        type: "horizontal",
+        responsiveBreak: 840,
+        activeIndex: 0,
+      });
     });
+
+    //
   </script>
 </html>
