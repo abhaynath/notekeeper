@@ -496,22 +496,217 @@ export const CircleStore = new Circle();</code></pre>
 
       <div id="effect">
         <h2>$effect</h2>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
       </div>
 
       <div id="props">
         <h2>$props</h2>
+
+        <details>
+          <summary>Simple props</summary>
+          <ul class="tabs" id="props_simple">
+            <li data-title="UI">
+              <img src="../../images/frameworks/svelte/props_simple.JPG" />
+            </li>
+            <li data-title="Parent.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import Props from &#x22;./Props.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+  &#x3C;Props title=&#x22;Title from parent&#x22; description=&#x22;This description is from parent&#x22;&#x3E;&#x3C;/Props&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .parentComp {
+    padding: 1em;
+    margin: 1em;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Child.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+let props = $props();
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+    &#x3C;h1&#x3E;{props.title}&#x3C;/h1&#x3E;
+    &#x3C;p&#x3E;{props.description}&#x3C;/p&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
       </div>
 
       <div id="bindable">
         <h2>$bindable</h2>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
       </div>
 
       <div id="inspect">
         <h2>$inspect</h2>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
       </div>
 
       <div id="host">
         <h2>$host</h2>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary></summary>
+          <ul class="tabs">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
       </div>
     </div>
   </body>
@@ -520,7 +715,17 @@ export const CircleStore = new Circle();</code></pre>
     hljs.highlightAll();
 
     const createTabs = () => {
-      let arr = ["#internal_state", "#external_state", "#state_array", "#state_class", "#state_as_object", "#derived_internal", "#derived_internal_by","#derived_by_store"];
+      let arr = [
+        "#internal_state",
+        "#external_state",
+        "#state_array",
+        "#state_class",
+        "#state_as_object",
+        "#derived_internal",
+        "#derived_internal_by",
+        "#derived_by_store",
+        "#props_simple",
+      ];
 
       arr.forEach((tab) => {
         new VanillaTabs({
