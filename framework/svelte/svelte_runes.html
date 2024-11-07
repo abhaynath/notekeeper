@@ -412,7 +412,6 @@ let { addWicket } = teamScoreStore;
           </ul>
         </details>
 
-
         <details>
           <summary>derived.by</summary>
           <ul id="derived_internal_by" class="tabs">
@@ -471,55 +470,21 @@ let { addWicket } = teamScoreStore;
   <script>
     hljs.highlightAll();
 
+    const createTabs = () => {
+      let arr = ["#internal_state", "#external_state", "#state_array", "#state_class", "#state_as_object", "#derived_internal", "#derived_internal_by"];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
     document.addEventListener("DOMContentLoaded", () => {
-      // create horizontal tabs
-      new VanillaTabs({
-        selector: "#external_state", // default is ".tabs"
-        type: "horizontal", // can be horizontal / vertical / accordion
-        responsiveBreak: 840, // tabs become accordion on this device width
-        activeIndex: 0, // active tab index (starts from 0 ). Can be -1 for accordions.
-      });
-
-      new VanillaTabs({
-        selector: "#internal_state",
-        type: "horizontal",
-        responsiveBreak: 840,
-        activeIndex: 0,
-      });
-      new VanillaTabs({
-        selector: "#state_array",
-        type: "horizontal",
-        responsiveBreak: 840,
-        activeIndex: 0,
-      });
-      new VanillaTabs({
-        selector: "#state_class",
-        type: "horizontal",
-        responsiveBreak: 840,
-        activeIndex: 0,
-      });
-      new VanillaTabs({
-        selector: "#state_as_object",
-        type: "horizontal",
-        responsiveBreak: 840,
-        activeIndex: 0,
-      });
-
-      new VanillaTabs({
-        selector: "#derived_internal",
-        type: "horizontal",
-        responsiveBreak: 840,
-        activeIndex: 0,
-      });
-
-      new VanillaTabs({
-        selector: "#derived_internal_by",
-        type: "horizontal",
-        responsiveBreak: 840,
-        activeIndex: 0,
-      });
+      createTabs();
     });
-
-    //derived_internal_by
   </script>
 </html>
