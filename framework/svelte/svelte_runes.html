@@ -443,6 +443,55 @@ let { addWicket } = teamScoreStore;
             </li>
           </ul>
         </details>
+
+        <details>
+          <summary>derived.by store</summary>
+          <ul id="derived_by_store" class="tabs">
+            <li data-title="UI">
+              <img src="../../images/frameworks/svelte/derived_by_store.JPG" />
+            </li>
+            <li data-title="circleStore.svelte.js">
+              <pre><code class="language-js">class Circle {
+  radius = $state(0);
+  circleInfo = $derived.by(() =&#x3E; {
+    let d = 2 * this.radius;
+    let c = 2 * Math.PI * this.radius;
+    let a = Math.PI * this.radius * this.radius;
+    return {
+      radius: this.radius,
+      diameter: d,
+      circumference: c,
+      area: a,
+    };
+  });
+}
+export const CircleStore = new Circle();</code></pre>
+            </li>
+            <li data-title="Derived.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import { CircleStore } from &#x22;../stores/circleStore.svelte.js&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;h4&#x3E;Radius = {CircleStore.radius}&#x3C;/h4&#x3E;
+  &#x3C;input type=&#x22;range&#x22; min=&#x22;0&#x22; max=&#x22;20&#x22; bind:value={CircleStore.radius} /&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+            </li>
+            <li data-title="CircleInfo.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import { CircleStore } from &#x22;../stores/circleStore.svelte.js&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;h3&#x3E;Circle Info&#x3C;/h3&#x3E;
+  &#x3C;div&#x3E;radius = {CircleStore.circleInfo.radius}&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;diameter = {CircleStore.circleInfo.diameter}&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;circumference = {CircleStore.circleInfo.circumference}&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;area = {CircleStore.circleInfo.area}&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
       </div>
 
       <div id="effect">
@@ -471,7 +520,7 @@ let { addWicket } = teamScoreStore;
     hljs.highlightAll();
 
     const createTabs = () => {
-      let arr = ["#internal_state", "#external_state", "#state_array", "#state_class", "#state_as_object", "#derived_internal", "#derived_internal_by"];
+      let arr = ["#internal_state", "#external_state", "#state_array", "#state_class", "#state_as_object", "#derived_internal", "#derived_internal_by","#derived_by_store"];
 
       arr.forEach((tab) => {
         new VanillaTabs({
