@@ -39,13 +39,13 @@
   /* background: #eee; */
   display: block;
 }
-.tabs.style__horizontal .tabs__nav .tabs__nav_link::before{
+.tabs.style__horizontal .tabs__nav .tabs__nav_link::before {
   content: none;
 }
 .tabs.style__horizontal .tabs__nav .tabs__nav_link.is__active {
   font-weight: bold;
   background: #fc9801;
-  color:white;
+  color: white;
 }
 .tabs.style__horizontal .tabs__content.is__active {
   border: 1px solid #ccc;
@@ -111,12 +111,14 @@
 .tabs.is__responsive .tabs__nav_link.is__active {
   font-weight: bold;
   margin-bottom: 0;
+  background: #fc9801;
+  color: white;
 }
 .tabs.style__accordion .tabs__content,
 .tabs.is__responsive .tabs__content {
   border: 1px solid #ccc;
   padding: 18px;
-  background: #fff;
+  /* background: #fff; */
   margin: 0 0 15px 0 0;
   display: block;
   height: auto;
