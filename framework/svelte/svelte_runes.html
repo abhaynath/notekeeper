@@ -381,6 +381,69 @@ let { addWicket } = teamScoreStore;
 
       <div id="derived">
         <h2>$derived</h2>
+        <details>
+          <summary>Internal derived</summary>
+          <ul id="derived_internal" class="tabs">
+            <li data-title="UI">
+              <img src="../../images/frameworks/svelte/derived_internal.JPG" />
+            </li>
+            <li data-title="Derived.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+    let count = $state(0);
+    let doubled = $derived(count * 2);
+  
+    const increment = () =&#x3E; {
+      count += 1;
+    };
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div&#x3E;
+    &#x3C;div&#x3E;count = {count}&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;button onclick={increment}&#x3E;Increment&#x3C;/button&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;double = {doubled}&#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+  
+  &#x3C;style&#x3E;
+    div {
+      padding: 4px;
+    }
+  &#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
+
+
+        <details>
+          <summary>derived.by</summary>
+          <ul id="derived_internal_by" class="tabs">
+            <li data-title="UI">
+              <img src="../../images/frameworks/svelte/derived_by.JPG" />
+            </li>
+            <li data-title="Derived.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let numbers = $state([1, 2, 3]);
+  let total = $derived.by(() =&#x3E; {
+    let sum = 0;
+    for (const n of numbers) {
+      sum += n;
+    }
+    return sum;
+  });
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;div&#x3E;{numbers.join(&#x22; + &#x22;)} = {total}&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;
+    &#x3C;button
+      onclick={() =&#x3E; {
+        numbers.push(numbers.length + 1);
+      }}&#x3E;Add {numbers.length + 1}&#x3C;/button
+    &#x3E;
+  &#x3C;/div&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
       </div>
 
       <div id="effect">
@@ -441,8 +504,22 @@ let { addWicket } = teamScoreStore;
         responsiveBreak: 840,
         activeIndex: 0,
       });
+
+      new VanillaTabs({
+        selector: "#derived_internal",
+        type: "horizontal",
+        responsiveBreak: 840,
+        activeIndex: 0,
+      });
+
+      new VanillaTabs({
+        selector: "#derived_internal_by",
+        type: "horizontal",
+        responsiveBreak: 840,
+        activeIndex: 0,
+      });
     });
 
-    //
+    //derived_internal_by
   </script>
 </html>
