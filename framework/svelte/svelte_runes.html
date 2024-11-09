@@ -560,10 +560,19 @@ export const CircleStore = new Circle();</code></pre>
             <li data-title="Parent.svelte">
               <pre><code class="language-html">&#x3C;script&#x3E;
   import Props from &#x22;./Props.svelte&#x22;;
+  let count = $state(0);
+
+  const add = () =&#x3E; {
+    count += 1;
+  };
+  const subtract = () =&#x3E; {
+    count -= 1;
+  };
 &#x3C;/script&#x3E;
 
 &#x3C;div class=&#x22;parentComp&#x22;&#x3E;
-  &#x3C;Props title=&#x22;Title from parent&#x22; description=&#x22;This description is from parent&#x22;&#x3E;&#x3C;/Props&#x3E;
+  &#x3C;h1&#x3E;Parent = {count}&#x3C;/h1&#x3E;
+  &#x3C;Props {count} increment={add} decrement={subtract}&#x3E;&#x3C;/Props&#x3E;
 &#x3C;/div&#x3E;
 
 &#x3C;style&#x3E;
@@ -575,13 +584,14 @@ export const CircleStore = new Circle();</code></pre>
             </li>
             <li data-title="Child.svelte">
               <pre><code class="language-html">&#x3C;script&#x3E;
-let props = $props();
+  // @ts-nocheck
+
+  let { count, increment, decrement } = $props();
 &#x3C;/script&#x3E;
 
-&#x3C;div&#x3E;
-    &#x3C;h1&#x3E;{props.title}&#x3C;/h1&#x3E;
-    &#x3C;p&#x3E;{props.description}&#x3C;/p&#x3E;
-&#x3C;/div&#x3E;</code></pre>
+&#x3C;button class=&#x22;btn-blue&#x22; onclick={increment}&#x3E;Increment&#x3C;/button&#x3E;
+&#x3C;button class=&#x22;btn-blue&#x22; onclick={decrement}&#x3E;Decrement&#x3C;/button&#x3E;
+&#x3C;h2&#x3E;Child = {count}&#x3C;/h2&#x3E;</code></pre>
             </li>
           </ul>
         </details>
