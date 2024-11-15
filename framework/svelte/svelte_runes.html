@@ -597,21 +597,94 @@ export const CircleStore = new Circle();</code></pre>
         </details>
 
         <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
+          <summary>Default Props Value</summary>
+          <ul class="tabs" id="props_default_fallback_value">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/props_default_value.JPG" /></li>
+            <li data-title="Parent.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import Props from &#x22;./Props.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+  &#x3C;Props&#x3E;&#x3C;/Props&#x3E;
+  &#x3C;Props title=&#x22;Title From Parent Component&#x22;&#x3E;&#x3C;/Props&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .parentComp {
+    padding: 1em;
+    margin: 1em;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Child.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let { title = &#x22;Default Title&#x22; } = $props();
+&#x3C;/script&#x3E;
+
+&#x3C;h4&#x3E;{title}&#x3C;/h4&#x3E;</code></pre>
             </li>
           </ul>
         </details>
 
         <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
+          <summary>Rename Props</summary>
+          <ul class="tabs" id="props_rename">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/props_rename.JPG" /></li>
+            <li data-title="Parent.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+                import Props from &#x22;./Props.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+  &#x3C;Props title=&#x22;Title From Parent Component&#x22;&#x3E;&#x3C;/Props&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .parentComp {
+    padding: 1em;
+    margin: 1em;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Child.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let { title: heading } = $props();
+&#x3C;/script&#x3E;
+
+&#x3C;h4&#x3E;{heading}&#x3C;/h4&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
+
+        <details>
+          <summary>Props rest destructure</summary>
+          <ul class="tabs" id="props_rest_destructure">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/props_destructuring.JPG" /></li>
+            <li data-title="Parent.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import Props from &#x22;./Props.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+  &#x3C;Props title=&#x22;Abhay&#x22; city=&#x22;Mumbai&#x22; age=&#x22;36&#x22;&#x3E;&#x3C;/Props&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .parentComp {
+    padding: 1em;
+    margin: 1em;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Child.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let { title, ...other } = $props();
+&#x3C;/script&#x3E;
+
+&#x3C;h4&#x3E;{title}&#x3C;/h4&#x3E;
+&#x3C;h4&#x3E;{other.city}&#x3C;/h4&#x3E;
+&#x3C;h4&#x3E;{other.age}&#x3C;/h4&#x3E;</code></pre>
             </li>
           </ul>
         </details>
@@ -621,13 +694,68 @@ export const CircleStore = new Circle();</code></pre>
         <h2>$bindable</h2>
 
         <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
+          <summary>binding props</summary>
+          <div>
+            <div>
+              <p>Ordinarily, props go one way, from parent to child. This makes it easy to understand how data flows around your app.</p>
+              <p>
+                In Svelte, component props can be bound, which means that data can also flow up from child to parent. This isn’t something you should do often,
+                but it can simplify your code if used sparingly and carefully.
+              </p>
+              <p>It also means that a state proxy can be mutated in the child.</p>
+              <p>
+                <b>
+                  Mutation is also possible with normal props, but is strongly discouraged &#x2014; Svelte will warn you if it detects that a component is
+                  mutating state it does not &#x2018;own&#x2019;.</b
+                >
+              </p>
+            </div>
+
+            <ul class="tabs" id="binding_props">
+              <li data-title="UI"><img src="../../images/frameworks/svelte/binding_props.JPG" /></li>
+              <li data-title="Parent.svelte">
+                <pre><code class="language-html">&#x3C;script&#x3E;
+  import Props from &#x22;./Props.svelte&#x22;;
+  let userId = $state(&#x22;&#x22;);
+  let email = $state(&#x22;&#x22;);
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+  &#x3C;Props bind:text={userId} placeholder=&#x22;User Id&#x22;&#x3E;&#x3C;/Props&#x3E;
+  &#x3C;Props bind:text={email} placeholder=&#x22;Email Id&#x22;&#x3E;&#x3C;/Props&#x3E;
+
+  &#x3C;h3&#x3E;User Name = {userId}&#x3C;/h3&#x3E;
+  &#x3C;h3&#x3E;Email ID = {email}&#x3C;/h3&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .parentComp {
+    padding: 1em;
+    margin: 1em;
+  }
+&#x3C;/style&#x3E;</code></pre>
+              </li>
+
+              <li data-title="Child.svelte">
+                <pre><code class="language-html">&#x3C;script&#x3E;
+  let { text = $bindable(), placeholder = &#x22;Input text&#x22; } = $props();
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;myinput&#x22;&#x3E;
+  &#x3C;input type=&#x22;text&#x22; bind:value={text} {placeholder} /&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .myinput {
+    padding: 0.25rem;
+  }
+  input {
+    padding: 0.4rem;
+  }
+&#x3C;/style&#x3E;</code></pre>
+              </li>
+            </ul>
+          </div>
         </details>
 
         <details>
@@ -735,6 +863,10 @@ export const CircleStore = new Circle();</code></pre>
         "#derived_internal_by",
         "#derived_by_store",
         "#props_simple",
+        "#props_default_fallback_value",
+        "#props_rename",
+        "#props_rest_destructure",
+        "#binding_props",
       ];
 
       arr.forEach((tab) => {
