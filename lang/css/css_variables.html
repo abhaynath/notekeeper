@@ -93,7 +93,7 @@
       <details>
         <summary>Using private variables for style variation</summary>
         <section id="css_02_04">
-          <ul id="tabs-h" class="tabs">
+          <ul id="grid_1" class="tabs">
             <li data-title="Demo">
               <img src="../../images/lang/css/private_variables.JPG" />
             </li>
@@ -219,15 +219,20 @@
 
   <script>
     hljs.highlightAll();
+    const createTabs = () => {
+      let arr = ["#grid_1"];
 
-    document.addEventListener("DOMContentLoaded", () => {
-      // create horizontal tabs
-      new VanillaTabs({
-        selector: "#tabs-h", // default is ".tabs"
-        type: "horizontal", // can be horizontal / vertical / accordion
-        responsiveBreak: 840, // tabs become accordion on this device width
-        activeIndex: 0, // active tab index (starts from 0 ). Can be -1 for accordions.
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
       });
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
     });
   </script>
 </html>
