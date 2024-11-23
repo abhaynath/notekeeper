@@ -757,93 +757,57 @@ export const CircleStore = new Circle();</code></pre>
             </ul>
           </div>
         </details>
-
-        <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
-        </details>
-
-        <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
-        </details>
       </div>
 
       <div id="inspect">
         <h2>$inspect</h2>
 
         <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
+          <summary>logging</summary>
+          <div>
+            <p>
+              The $inspect rune is roughly equivalent to console.log, with the exception that it will re-run whenever its argument changes. $inspect tracks
+              reactive state deeply, meaning that updating something inside an object or array using fine-grained reactivity will cause it to re-fire
+            </p>
+            <ul class="tabs" id="inspect_simple">
+              <li data-title="UI"><img src="../../images/frameworks/svelte/inspect_log.JPG" /></li>
+              <li data-title="Child.svelte">
+                <pre><code class="language-html">&#x3C;script&#x3E;
+  let count = $state(0);
+  let message = $state(&#x22;hello&#x22;);
+
+  $inspect(count, message);
+&#x3C;/script&#x3E;
+
+&#x3C;button onclick={() =&#x3E; count++}&#x3E;Increment&#x3C;/button&#x3E;
+&#x3C;input bind:value={message} /&#x3E;</code></pre>
+              </li>
+            </ul>
+          </div>
         </details>
 
         <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
-        </details>
+          <summary>inspect.with</summary>
+          <div>
+            <p>
+              $inspect returns a property with, which you can invoke with a callback, which will then be invoked instead of console.log. The first argument to
+              the callback is either &#x22;init&#x22; or &#x22;update&#x22;; subsequent arguments are the values passed to $inspect
+            </p>
+            <ul class="tabs" id="inspect_with">
+              <li data-title="UI"><img src="../../images/frameworks/svelte/inspect_with.JPG" /></li>
+              <li data-title="Child.svelte">
+                <pre><code class="language-html">&#x3C;script&#x3E;
+  let count = $state(0);
 
-        <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
-        </details>
-      </div>
+  $inspect(count).with((type, count) =&#x3E; {
+    console.log(type, count);
+  });
+&#x3C;/script&#x3E;
 
-      <div id="host">
-        <h2>$host</h2>
-
-        <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
-        </details>
-
-        <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
-        </details>
-
-        <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
+&#x3C;button onclick={() =&#x3E; count++}&#x3E;Increment&#x3C;/button&#x3E;</code></pre>
+              </li>
+            </ul>
+          </div>
         </details>
       </div>
     </div>
@@ -867,6 +831,8 @@ export const CircleStore = new Circle();</code></pre>
         "#props_rename",
         "#props_rest_destructure",
         "#binding_props",
+        "#inspect_simple",
+        "#inspect_with",
       ];
 
       arr.forEach((tab) => {
