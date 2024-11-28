@@ -8,10 +8,7 @@
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
-    />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <title>Git Basics</title>
   </head>
@@ -43,13 +40,15 @@
           </li>
         </ol>
       </section>
-
+      <section id="git_update">
+        <h4>Update git command line</h4>
+        <pre class="shell">git update-git-for-windows</pre>
+      </section>
       <section id="git_01_02">
         <h4>Creating Repository</h4>
         <ol class="steps">
           <li>
-            Create an empty directory named 'myproject'. Run following command
-            inside myproject
+            Create an empty directory named 'myproject'. Run following command inside myproject
             <pre class="shell">git init</pre>
           </li>
           <li>
@@ -58,8 +57,7 @@
             <pre class="shell">git status</pre>
           </li>
           <li>
-            Add 'index.html' new file in 'myproject' folder. To stage the
-            index.html file, run following command
+            Add 'index.html' new file in 'myproject' folder. To stage the index.html file, run following command
 
             <pre class="shell">git add index.html</pre>
             To add all files,
@@ -68,13 +66,9 @@
           <li>
             To commit changes, run following command
 
-            <pre class="shell">
-git commit --message "initial commit for the project"</pre
-            >
+            <pre class="shell">git commit --message "initial commit for the project"</pre>
             or
-            <pre class="shell">
-git commit --m "initial commit for the project"</pre
-            >
+            <pre class="shell">git commit --m "initial commit for the project"</pre>
           </li>
         </ol>
       </section>
@@ -86,8 +80,7 @@ git commit --m "initial commit for the project"</pre
             <pre class="shell">git rm css/style.css</pre>
           </li>
           <li>
-            This will delete the css folder and add a staged snapshot. To commit
-            these changes,
+            This will delete the css folder and add a staged snapshot. To commit these changes,
             <pre class="shell">git commit -m "Removed CSS folder"</pre>
           </li>
         </ol>
@@ -105,14 +98,9 @@ git commit --m "initial commit for the project"</pre
       </section>
 
       <section id="git_01_05">
-        <h4>
-          Untrack files already added to git repository based on .gitignore
-        </h4>
+        <h4>Untrack files already added to git repository based on .gitignore</h4>
         <ol class="steps">
-          <li>
-            Add the list of files/folder in gitignore files you want git to
-            ignore.
-          </li>
+          <li>Add the list of files/folder in gitignore files you want git to ignore.</li>
           <li>Commit the changes</li>
           <li>
             Remove everything from the repository.
@@ -158,9 +146,8 @@ git commit --m "initial commit for the project"</pre
             Merging Branch
             <ol class="steps">
               <li>
-                Suppose we have two branches (master &amp; new-homepage). You
-                have made few changes in 'new-home' branch and you want to merge
-                these changes into master branch.
+                Suppose we have two branches (master &amp; new-homepage). You have made few changes in 'new-home' branch and you want to merge these changes
+                into master branch.
               </li>
               <li>Commit all the changes in 'new-homepage' branch.</li>
               <li>Switch to 'master' branch.</li>
@@ -184,9 +171,7 @@ git commit --m "initial commit for the project"</pre
           <li>
             Create an empty folder. Run following command from the directory,
 
-            <pre class="shell">
-git clone https://github.com/abhaynath/snake.git</pre
-            >
+            <pre class="shell">git clone https://github.com/abhaynath/snake.git</pre>
 
             This will create a repository called 'origin'
 
@@ -207,8 +192,7 @@ git clone https://github.com/abhaynath/snake.git</pre
         <h4>Stashing</h4>
         <ol class="steps">
           <li>
-            If you do not want to commit some unfinished files changes, but you
-            may need them in future, you need to stash those files.
+            If you do not want to commit some unfinished files changes, but you may need them in future, you need to stash those files.
             <pre class="shell">git stash</pre>
           </li>
           <li>
