@@ -6,11 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
     <link rel="shortcut icon" type="image/svg" href="../../css/svg/svelte/svelte.svg" />
 
     <script src="../../js/libs/jquery.min.js"></script>
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
     <title>API Call</title>
   </head>
 
@@ -20,6 +22,98 @@
       <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
+      <div>
+        <details>
+          <summary>API Call</summary>
+          <ul class="tabs" id="api_call">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/api_snippet.jpg" /></li>
+            <li data-title="Users.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let promise = $state();
+  let users = $state([]);
+
+  async function getUsers() {
+    const res = await fetch(&#x22;https://jsonplaceholder.typicode.com/users&#x22;);
+    const text = await res.text();
+
+    if (res.ok) {
+      users = JSON.parse(text);
+      return text;
+    } else {
+      throw new Error(text);
+    }
+  }
+  const loadUsers = () =&#x3E; {
+    promise = getUsers();
+  };
+&#x3C;/script&#x3E;
+
+{#snippet userCard(obj)}
+  &#x3C;div class=&#x22;user-card&#x22;&#x3E;
+    &#x3C;div class=&#x22;name&#x22;&#x3E;{obj.name}&#x3C;/div&#x3E;
+    &#x3C;div class=&#x22;email&#x22;&#x3E;{obj.email}&#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+{/snippet}
+&#x3C;div&#x3E;
+  &#x3C;div&#x3E;
+    &#x3C;button onclick={loadUsers}&#x3E;Load&#x3C;/button&#x3E;
+  &#x3C;/div&#x3E;
+  &#x3C;div&#x3E;
+    {#await promise}
+      &#x3C;div&#x3E;Loading....&#x3C;/div&#x3E;
+    {:then resp}
+      &#x3C;div class=&#x22;card-container&#x22;&#x3E;
+        {#each users as user (user.email)}
+          {@render userCard(user)}
+        {/each}
+      &#x3C;/div&#x3E;
+    {:catch error}
+      &#x3C;div&#x3E;
+        {error}
+      &#x3C;/div&#x3E;
+    {/await}
+  &#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .card-container {
+    padding: 0.2em;
+    border: 2px solid #04aa28;
+    background-color: #96e98b;
+    font-family: &#x22;Trebuchet MS&#x22;, &#x22;Lucida Sans Unicode&#x22;, &#x22;Lucida Grande&#x22;, &#x22;Lucida Sans&#x22;, Arial, sans-serif;
+  }
+  .user-card {
+    margin: 0.2em;
+    border: 1px solid #08c901;
+    padding: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d3ff79;
+    .name {
+      font-weight: bold;
+    }
+    .email {
+      font-size: 0.8em;
+    }
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
+
+      <div>
+        <details>
+          <summary>API Call</summary>
+          <ul class="tabs" id="api_call_store">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
       <section id="sv_03_01">
         <h4>API call example</h4>
         <ol>
@@ -100,5 +194,22 @@ export let name;
 
   <script>
     hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = ["#api_call", "#api_call_store"];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
   </script>
 </html>

@@ -496,27 +496,98 @@ export const CircleStore = new Circle();</code></pre>
 
       <div id="effect">
         <h2>$effect</h2>
-
         <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
-            </li>
-          </ul>
+          <summary>effects usages</summary>
+          <div>
+            <p>
+              Effects are what make your application do things. When Svelte runs an effect function, it tracks which pieces of state (and derived state) are
+              accessed (unless accessed inside untrack), and re-runs the function when that state later changes.
+            </p>
+            <p>
+              Most of the effects in a Svelte app are created by Svelte itself &#x2014; they&#x2019;re the bits that update the text in &#x3C;h1&#x3E;hello
+              {name}!&#x3C;/h1&#x3E; when name changes, for example.
+            </p>
+            <p>
+              But you can also create your own effects with the $effect rune, which is useful when you need to synchronize an external system (whether
+              that&#x2019;s a library, or a &#x3C;canvas&#x3E; element, or something across a network) with state inside your Svelte app.
+            </p>
+            <h4>When not to use $effect</h4>
+            <p>
+              In general, $effect is best considered something of an escape hatch &#x2014; useful for things like analytics and direct DOM manipulation &#x2014;
+              rather than a tool you should use frequently. In particular, avoid using it to synchronise state.
+            </p>
+          </div>
         </details>
 
         <details>
-          <summary></summary>
-          <ul class="tabs">
-            <li data-title="UI"></li>
-            <li data-title="">
-              <pre><code class="language-html"></code></pre>
+          <summary>Lifecycles</summary>
+          <ul class="tabs" id="lifecycles">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/svelte_lifecycle.jpg" /></li>
+            <li data-title="Parent.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import Props from &#x22;./Props.svelte&#x22;;
+  let show = $state(true);
+  let num = $state(0);
+  const toggle = () =&#x3E; {
+    num = Math.ceil(Math.random() * 100);
+    show = !show;
+  };
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+  &#x3C;div&#x3E;&#x3C;button onclick={toggle}&#x3E;Toggle&#x3C;/button&#x3E;&#x3C;/div&#x3E;
+  {#if show}
+    &#x3C;Props {num}&#x3E;&#x3C;/Props&#x3E;
+  {/if}
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .parentComp {
+    padding: 1em;
+    margin: 1em;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Props.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import { onDestroy, onMount, tick } from &#x22;svelte&#x22;;
+
+  let receivables = $state(0);
+  let payables = $state(0);
+  let { num } = $props();
+  onMount(() =&#x3E; {
+    console.log(&#x22;mounted&#x22;);
+  });
+  onDestroy(() =&#x3E; {
+    console.log(&#x22;%c destroyed&#x22;, &#x22;background-color:red;&#x22;);
+  });
+  $effect.pre(() =&#x3E; {
+    console.log(&#x22;%c effect.pre&#x22;, &#x22;background-color:green;&#x22;);
+
+    console.log(&#x22;before update&#x22;);
+
+    tick().then(() =&#x3E; {
+      console.log(&#x22;after update&#x22;);
+    });
+  });
+  $effect(() =&#x3E; {
+    console.log(&#x22;effect&#x22;);
+    console.log({ receivables, payables });
+    return () =&#x3E; {
+      console.log(&#x22;cleanup&#x22;);
+    };
+  });
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;div&#x3E;{num}&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;&#x3C;label&#x3E;Receivables : &#x3C;input bind:value={receivables} type=&#x22;number&#x22; /&#x3E;&#x3C;/label&#x3E;&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;&#x3C;label&#x3E;Payables : &#x3C;input bind:value={payables} type=&#x22;number&#x22; /&#x3E;&#x3C;/label&#x3E;&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;</code></pre>
             </li>
           </ul>
         </details>
-
         <details>
           <summary></summary>
           <ul class="tabs">
@@ -833,6 +904,7 @@ export const CircleStore = new Circle();</code></pre>
         "#binding_props",
         "#inspect_simple",
         "#inspect_with",
+        "#lifecycles",
       ];
 
       arr.forEach((tab) => {
