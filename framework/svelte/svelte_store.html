@@ -22,25 +22,53 @@
     </nav>
     <div class="content">
       <div>
+        <h4>Svelte 5 Stores</h4>
         <details>
           <summary>Scorecard Store</summary>
-          <ul class="tabs" id="store_scorecard">
-            <li data-title="UI"><img src="../../images/frameworks/svelte/svelte_basic_store.jpg" /></li>
-            <li data-title="MyApp.svelte">
+          <ul class="tabs" id="svelte_5_scorecard">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/store_5_scorecard.jpg" /></li>
+            <li data-title="teamScore.js">
+              <pre><code class="language-js">class TeamScoreStore {
+  teamScore = $state({
+    teamName: &#x22;India&#x22;,
+    balls: 0,
+    runs: 0,
+    wicket: 0,
+  });
+
+  addRuns(num) {
+    this.teamScore.runs += num;
+  }
+  addWicket() {
+    this.teamScore.wicket += 1;
+  }
+  setTeam(team) {
+    team = team.trim();
+    if (team != &#x22;&#x22;) {
+      this.teamScore.teamName = team;
+    }
+  }
+}
+
+export const teamScoreStore = new TeamScoreStore();</code></pre>
+            </li>
+            <li data-title="Parent.svelte">
               <pre><code class="language-html">&#x3C;script&#x3E;
-  import Bowling from &#x22;./components/Bowling.svelte&#x22;;
-  import Batting from &#x22;./components/Batting.svelte&#x22;;
-  import Scorecard from &#x22;./components/Scorecard.svelte&#x22;;
+  import Batting from &#x22;./Batting.svelte&#x22;;
+  import Bowling from &#x22;./Bowling.svelte&#x22;;
+  import Scorecard from &#x22;./Scorecard.svelte&#x22;;
 &#x3C;/script&#x3E;
 
-&#x3C;div class=&#x22;store-demo&#x22;&#x3E;
-  &#x3C;Scorecard /&#x3E;
-  &#x3C;Batting /&#x3E;
-  &#x3C;Bowling /&#x3E;
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+  &#x3C;Scorecard&#x3E;&#x3C;/Scorecard&#x3E;
+  &#x3C;Batting&#x3E;&#x3C;/Batting&#x3E;
+  &#x3C;Bowling&#x3E;&#x3C;/Bowling&#x3E;
 &#x3C;/div&#x3E;
 
 &#x3C;style&#x3E;
-  .store-demo {
+  .parentComp {
+    padding: 1em;
+    margin: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,113 +76,48 @@
 &#x3C;/style&#x3E;</code></pre>
             </li>
 
-            <li data-title="store.js">
-              <pre><code class="language-js">import { writable } from &#x22;svelte/store&#x22;;
-export const teamScore = writable({
-    teamName: &#x22;India&#x22;,
-    balls: 0,
-    runs: 0,
-    wicket: 0,
-});</code></pre>
-            </li>
-            <li data-title="Batting.svelte">
+            <li data-title="Scorecard.svelte">
               <pre><code class="language-html">&#x3C;script&#x3E;
-    import { teamScore } from &#x22;../stores/store.js&#x22;;
-    
-    let arr = [
-    { id: &#x22;id1&#x22;, name: &#x22;Dot&#x22;, run: 0 },
-    { id: &#x22;id2&#x22;, name: &#x22;1&#x22;, run: 1 },
-    { id: &#x22;id3&#x22;, name: &#x22;2&#x22;, run: 2 },
-    { id: &#x22;id4&#x22;, name: &#x22;3&#x22;, run: 3 },
-    { id: &#x22;id5&#x22;, name: &#x22;4&#x22;, run: 4 },
-    { id: &#x22;id6&#x22;, name: &#x22;6&#x22;, run: 6 },
-    ];
-    
-    const ballClick = (val) =&#x3E; {
-    console.log(teamScore);
-    teamScore.update((obj) =&#x3E; {
-        obj.runs = obj.runs + val.run;
-        obj.balls = obj.balls + 1;
-        return obj;
-    });
-    };
-&#x3C;/script&#x3E;
-    
-&#x3C;div class=&#x22;batting&#x22;&#x3E;
-    {#each arr as ball (ball.id)}
-    &#x3C;div
-        class=&#x22;ball&#x22;
-        on:click={() =&#x3E; {
-        ballClick(ball);
-        }}
-    &#x3E;
-        {ball.run}
-    &#x3C;/div&#x3E;
-    {/each}
-&#x3C;/div&#x3E;
-    
-&#x3C;style&#x3E;
-    .batting {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px;
-    }
-    .batting .ball {
-    background: rgb(250, 0, 0);
-    background: radial-gradient(
-        circle,
-        rgba(250, 0, 0, 1) 0%,
-        rgba(124, 18, 0, 1) 43%,
-        rgba(36, 0, 0, 1) 100%
-    );
-    color: white;
-    padding: 5px;
-    border-radius: 20px;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-    margin-right: 5px;
-    cursor: pointer;
-    }
-&#x3C;/style&#x3E;</code></pre>
-            </li>
-            <li data-title="Bowling.svelte">
-              <pre><code class="language-html">&#x3C;script&#x3E;
-  import { teamScore } from &#x22;../stores/store.js&#x22;;
+  import { teamScoreStore } from &#x22;../stores/teamscore.svelte&#x22;;
 
-  const addWicket = () =&#x3E; {
-    teamScore.update((obj) =&#x3E; {
-        obj.wicket++;
-        obj.balls++;
-        return obj;
-    });
+  let { teamScore } = teamScoreStore;
+  let showChangeTeam = $state(false);
+  let teamTitle = $state(&#x22;&#x22;);
+
+  const toggleShowTeam = () =&#x3E; {
+    showChangeTeam = !showChangeTeam;
   };
 &#x3C;/script&#x3E;
 
-&#x3C;div class=&#x22;wicket&#x22; on:click={addWicket}&#x3E;Wicket!&#x3C;/div&#x3E;
-
-&#x3C;style&#x3E;
-  .wicket {
-    background: green;
-    color: yellow;
-    padding: 10px;
-    display: inline-block;
-    cursor: pointer;
-  }
-&#x3C;/style&#x3E;</code></pre>
-            </li>
-            <li data-title="Scorecard.svelte">
-              <pre><code class="language-html">&#x3C;script&#x3E;
-  import { teamScore } from &#x22;../stores/store.js&#x22;;
-&#x3C;/script&#x3E;
-  
 &#x3C;div class=&#x22;scorecard&#x22;&#x3E;
-  &#x3C;div&#x3E;{$teamScore.teamName}&#x3C;/div&#x3E;
-  &#x3C;div&#x3E;{$teamScore.runs}/{$teamScore.wicket}&#x3C;/div&#x3E;
-  &#x3C;div class=&#x22;score&#x22;&#x3E;{Math.floor($teamScore.balls / 6) + &#x22;.&#x22; + ($teamScore.balls % 6)}&#x3C;/div&#x3E;
+  {#if !showChangeTeam}
+    &#x3C;div&#x3E;&#x3C;button onclick={toggleShowTeam}&#x3E;&#x2699;&#xFE0F; Team &#x3C;/button&#x3E;&#x3C;/div&#x3E;
+  {/if}
+
+  {#if showChangeTeam}
+    &#x3C;div&#x3E;
+      &#x3C;input type=&#x22;text&#x22; bind:value={teamTitle} /&#x3E;
+      &#x3C;button
+        onclick={() =&#x3E; {
+          teamScoreStore.setTeam(teamTitle);
+          teamTitle = &#x22;&#x22;;
+          toggleShowTeam();
+        }}&#x3E;&#x2699;&#xFE0F; Update Team&#x3C;/button
+      &#x3E;
+    &#x3C;/div&#x3E;
+  {/if}
+
+  &#x3C;div&#x3E;
+    {teamScore.teamName}
+  &#x3C;/div&#x3E;
+  &#x3C;div&#x3E;
+    {teamScore.runs}/{teamScore.wicket}
+  &#x3C;/div&#x3E;
+  &#x3C;div class=&#x22;score&#x22;&#x3E;
+    {Math.floor(teamScore.balls / 6) + &#x22;.&#x22; + (teamScore.balls % 6)}
+  &#x3C;/div&#x3E;
 &#x3C;/div&#x3E;
-  
+
 &#x3C;style&#x3E;
   .scorecard {
     background: navy;
@@ -170,139 +133,376 @@ export const teamScore = writable({
   }
 &#x3C;/style&#x3E;</code></pre>
             </li>
-          </ul>
-        </details>
-      </div>
-      <div>
-        <details>
-          <summary>CRUD Store</summary>
-          <ul class="tabs" id="store_crud">
-            <li data-title="UI"><img src="../../images/frameworks/svelte/svelte_store_crud.jpg" /></li>
-            <li data-title="store.js">
-              <pre><code class="language-js">import { writable } from &#x22;svelte/store&#x22;;
-  
-const uid = function () {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
-};
-
-const createTeamStore = () =&#x3E; {
-  let { subscribe, update, set } = writable([]);
-  const addPlayer = (name) =&#x3E; {
-    update((val) =&#x3E; {
-      let obj = {};
-      obj.id = uid();
-      obj.name = name;
-      val = [...val, obj];
-      return val;
-    });
-  };
-
-  const deletePlayer = (id) =&#x3E; {
-    update((val) =&#x3E; {
-      let d = val.slice(0);
-      let index = d.findIndex((obj) =&#x3E; obj.id == id);
-      d.splice(index, 1);
-      val = d;
-      return val;
-    });
-  };
-
-  const updatePlayer = (obj) =&#x3E; {
-    update((val) =&#x3E; {
-      let d = val.slice(0);
-      let index = d.findIndex((j) =&#x3E; j.id == obj.id);
-      d[index] = obj;
-      val = d;
-      return val;
-    });
-  };
-
-  return {
-    subscribe,
-    addPlayer,
-    deletePlayer,
-    updatePlayer,
-  };
-};
-
-export const team = createTeamStore();</code></pre>
-            </li>
-            <li data-title="App.svelte">
+            <li data-title="Batting.svelte">
               <pre><code class="language-html">&#x3C;script&#x3E;
-  import { team } from &#x22;./store.js&#x22;;
-  let name = &#x22;&#x22;;
-  let players = [];
-  team.subscribe((val) =&#x3E; {
-    players = val;
-  });
+  import { teamScoreStore } from &#x22;../stores/teamscore.svelte&#x22;;
 
-  const addPlayer = () =&#x3E; {
-    team.addPlayer(name);
-    name = &#x22;&#x22;;
-  };
-  const removePlayer = (id) =&#x3E; {
-    team.deletePlayer(id);
-  };
-  const updatePlayer = (obj) =&#x3E; {
-    team.updatePlayer(obj);
+  let arr = [
+    { id: &#x22;id1&#x22;, name: &#x22;Dot&#x22;, run: 0 },
+    { id: &#x22;id2&#x22;, name: &#x22;1&#x22;, run: 1 },
+    { id: &#x22;id3&#x22;, name: &#x22;2&#x22;, run: 2 },
+    { id: &#x22;id4&#x22;, name: &#x22;3&#x22;, run: 3 },
+    { id: &#x22;id5&#x22;, name: &#x22;4&#x22;, run: 4 },
+    { id: &#x22;id6&#x22;, name: &#x22;6&#x22;, run: 6 },
+  ];
+
+  const ballClick = (val) =&#x3E; {
+    teamScoreStore.addRuns(val.run);
   };
 &#x3C;/script&#x3E;
 
-&#x3C;div class=&#x22;crud&#x22;&#x3E;
-  &#x3C;div class=&#x22;create&#x22;&#x3E;
-    &#x3C;input type=&#x22;text&#x22; placeholder=&#x22;Player Name&#x22; bind:value={name} /&#x3E;
-    &#x3C;button on:click={addPlayer}&#x3E; Add Player &#x3C;/button&#x3E;
-  &#x3C;/div&#x3E;
-  &#x3C;table&#x3E;
-    {#each players as player (player.id)}
-      &#x3C;tr&#x3E;
-        &#x3C;td&#x3E;{player.name}&#x3C;/td&#x3E;
-        &#x3C;td&#x3E;{player.id}&#x3C;/td&#x3E;
-
-        &#x3C;td&#x3E;&#x3C;input type=&#x22;text&#x22; bind:value={player.name} /&#x3E;&#x3C;/td&#x3E;
-        &#x3C;td&#x3E;&#x3C;button on:click={updatePlayer(player)}&#x3E;Update&#x3C;/button&#x3E;&#x3C;/td&#x3E;
-        &#x3C;td&#x3E;&#x3C;button on:click={removePlayer(player.id)}&#x3E;X&#x3C;/button&#x3E;&#x3C;/td&#x3E;
-      &#x3C;/tr&#x3E;
-    {/each}
-  &#x3C;/table&#x3E;
-  &#x3C;div&#x3E;
-    &#x3C;ol&#x3E;
-      {#each $team as player (player.id)}
-        &#x3C;li&#x3E;{player.name} ({player.id})&#x3C;/li&#x3E;
-      {/each}
-    &#x3C;/ol&#x3E;
-  &#x3C;/div&#x3E;
+&#x3C;div class=&#x22;batting&#x22;&#x3E;
+  {#each arr as ball, index}
+    &#x3C;div
+      tabindex={index}
+      role=&#x22;button&#x22;
+      aria-label=&#x22;runs&#x22;
+      class=&#x22;ball&#x22;
+      on:click={() =&#x3E; {
+        ballClick(ball);
+      }}
+      on:keydown={() =&#x3E; {}}
+    &#x3E;
+      {ball.name}
+    &#x3C;/div&#x3E;
+  {/each}
 &#x3C;/div&#x3E;
 
 &#x3C;style&#x3E;
-  .crud {
-    padding: 10px;
-    border: 1px solid gray;
-  }
-  .create {
+  .batting {
     display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
   }
-  .create input {
-    flex-grow: 1;
-  }
-  table {
-    width: 100%;
-    border: 1px solid gray;
-    border-collapse: collapse;
-  }
-  td {
-    border: 1px solid gray;
+  .batting .ball {
+    background: radial-gradient(circle, #fa0000 0%, #7c1200 43%, #240000 100%);
+    color: white;
+    padding: 5px;
+    border-radius: 20px;
+    width: 30px;
+    height: 30px;
     text-align: center;
+    line-height: 30px;
+    margin-right: 5px;
+    cursor: pointer;
   }
-  table input,
-  table button {
-    width: 100%;
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+            <li data-title="Bowling.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import { teamScoreStore } from &#x22;../stores/teamscore.svelte&#x22;;
+
+  const wicketClick = () =&#x3E; {
+    teamScoreStore.addWicket();
+  };
+&#x3C;/script&#x3E;
+
+&#x3C;div tabindex=&#x22;0&#x22; role=&#x22;button&#x22; aria-label=&#x22;wicket&#x22; onkeydown={wicketClick} class=&#x22;wicket&#x22; onclick={wicketClick}&#x3E;&#x1F3CF; Wicket!&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .wicket {
+    background: white;
+    color: red;
+    padding: 10px;
+    display: inline-block;
+    cursor: pointer;
+    border: 3px solid red;
+  }
+  .wicket:hover {
+    background: orange;
   }
 &#x3C;/style&#x3E;</code></pre>
             </li>
           </ul>
         </details>
       </div>
+      <details>
+        <summary>Svelte 4 Stores</summary>
+        <div>
+          <div>
+            <details>
+              <summary>Scorecard Store</summary>
+              <ul class="tabs" id="store_scorecard">
+                <li data-title="UI"><img src="../../images/frameworks/svelte/svelte_basic_store.jpg" /></li>
+                <li data-title="MyApp.svelte">
+                  <pre><code class="language-html">&#x3C;script&#x3E;
+import Bowling from &#x22;./components/Bowling.svelte&#x22;;
+import Batting from &#x22;./components/Batting.svelte&#x22;;
+import Scorecard from &#x22;./components/Scorecard.svelte&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;store-demo&#x22;&#x3E;
+&#x3C;Scorecard /&#x3E;
+&#x3C;Batting /&#x3E;
+&#x3C;Bowling /&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.store-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+&#x3C;/style&#x3E;</code></pre>
+                </li>
+
+                <li data-title="store.js">
+                  <pre><code class="language-js">import { writable } from &#x22;svelte/store&#x22;;
+export const teamScore = writable({
+  teamName: &#x22;India&#x22;,
+  balls: 0,
+  runs: 0,
+  wicket: 0,
+});</code></pre>
+                </li>
+                <li data-title="Batting.svelte">
+                  <pre><code class="language-html">&#x3C;script&#x3E;
+  import { teamScore } from &#x22;../stores/store.js&#x22;;
+  
+  let arr = [
+  { id: &#x22;id1&#x22;, name: &#x22;Dot&#x22;, run: 0 },
+  { id: &#x22;id2&#x22;, name: &#x22;1&#x22;, run: 1 },
+  { id: &#x22;id3&#x22;, name: &#x22;2&#x22;, run: 2 },
+  { id: &#x22;id4&#x22;, name: &#x22;3&#x22;, run: 3 },
+  { id: &#x22;id5&#x22;, name: &#x22;4&#x22;, run: 4 },
+  { id: &#x22;id6&#x22;, name: &#x22;6&#x22;, run: 6 },
+  ];
+  
+  const ballClick = (val) =&#x3E; {
+  console.log(teamScore);
+  teamScore.update((obj) =&#x3E; {
+      obj.runs = obj.runs + val.run;
+      obj.balls = obj.balls + 1;
+      return obj;
+  });
+  };
+&#x3C;/script&#x3E;
+  
+&#x3C;div class=&#x22;batting&#x22;&#x3E;
+  {#each arr as ball (ball.id)}
+  &#x3C;div
+      class=&#x22;ball&#x22;
+      on:click={() =&#x3E; {
+      ballClick(ball);
+      }}
+  &#x3E;
+      {ball.run}
+  &#x3C;/div&#x3E;
+  {/each}
+&#x3C;/div&#x3E;
+  
+&#x3C;style&#x3E;
+  .batting {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  }
+  .batting .ball {
+  background: rgb(250, 0, 0);
+  background: radial-gradient(
+      circle,
+      rgba(250, 0, 0, 1) 0%,
+      rgba(124, 18, 0, 1) 43%,
+      rgba(36, 0, 0, 1) 100%
+  );
+  color: white;
+  padding: 5px;
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  margin-right: 5px;
+  cursor: pointer;
+  }
+&#x3C;/style&#x3E;</code></pre>
+                </li>
+                <li data-title="Bowling.svelte">
+                  <pre><code class="language-html">&#x3C;script&#x3E;
+import { teamScore } from &#x22;../stores/store.js&#x22;;
+
+const addWicket = () =&#x3E; {
+  teamScore.update((obj) =&#x3E; {
+      obj.wicket++;
+      obj.balls++;
+      return obj;
+  });
+};
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;wicket&#x22; on:click={addWicket}&#x3E;Wicket!&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.wicket {
+  background: green;
+  color: yellow;
+  padding: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+&#x3C;/style&#x3E;</code></pre>
+                </li>
+                <li data-title="Scorecard.svelte">
+                  <pre><code class="language-html">&#x3C;script&#x3E;
+import { teamScore } from &#x22;../stores/store.js&#x22;;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;scorecard&#x22;&#x3E;
+&#x3C;div&#x3E;{$teamScore.teamName}&#x3C;/div&#x3E;
+&#x3C;div&#x3E;{$teamScore.runs}/{$teamScore.wicket}&#x3C;/div&#x3E;
+&#x3C;div class=&#x22;score&#x22;&#x3E;{Math.floor($teamScore.balls / 6) + &#x22;.&#x22; + ($teamScore.balls % 6)}&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.scorecard {
+  background: navy;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.score {
+  font-size: 12px;
+  font-weight: normal;
+}
+&#x3C;/style&#x3E;</code></pre>
+                </li>
+              </ul>
+            </details>
+          </div>
+          <div>
+            <details>
+              <summary>CRUD Store</summary>
+              <ul class="tabs" id="store_crud">
+                <li data-title="UI"><img src="../../images/frameworks/svelte/svelte_store_crud.jpg" /></li>
+                <li data-title="store.js">
+                  <pre><code class="language-js">import { writable } from &#x22;svelte/store&#x22;;
+
+const uid = function () {
+return Date.now().toString(36) + Math.random().toString(36).substr(2);
+};
+
+const createTeamStore = () =&#x3E; {
+let { subscribe, update, set } = writable([]);
+const addPlayer = (name) =&#x3E; {
+  update((val) =&#x3E; {
+    let obj = {};
+    obj.id = uid();
+    obj.name = name;
+    val = [...val, obj];
+    return val;
+  });
+};
+
+const deletePlayer = (id) =&#x3E; {
+  update((val) =&#x3E; {
+    let d = val.slice(0);
+    let index = d.findIndex((obj) =&#x3E; obj.id == id);
+    d.splice(index, 1);
+    val = d;
+    return val;
+  });
+};
+
+const updatePlayer = (obj) =&#x3E; {
+  update((val) =&#x3E; {
+    let d = val.slice(0);
+    let index = d.findIndex((j) =&#x3E; j.id == obj.id);
+    d[index] = obj;
+    val = d;
+    return val;
+  });
+};
+
+return {
+  subscribe,
+  addPlayer,
+  deletePlayer,
+  updatePlayer,
+};
+};
+
+export const team = createTeamStore();</code></pre>
+                </li>
+                <li data-title="App.svelte">
+                  <pre><code class="language-html">&#x3C;script&#x3E;
+import { team } from &#x22;./store.js&#x22;;
+let name = &#x22;&#x22;;
+let players = [];
+team.subscribe((val) =&#x3E; {
+  players = val;
+});
+
+const addPlayer = () =&#x3E; {
+  team.addPlayer(name);
+  name = &#x22;&#x22;;
+};
+const removePlayer = (id) =&#x3E; {
+  team.deletePlayer(id);
+};
+const updatePlayer = (obj) =&#x3E; {
+  team.updatePlayer(obj);
+};
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;crud&#x22;&#x3E;
+&#x3C;div class=&#x22;create&#x22;&#x3E;
+  &#x3C;input type=&#x22;text&#x22; placeholder=&#x22;Player Name&#x22; bind:value={name} /&#x3E;
+  &#x3C;button on:click={addPlayer}&#x3E; Add Player &#x3C;/button&#x3E;
+&#x3C;/div&#x3E;
+&#x3C;table&#x3E;
+  {#each players as player (player.id)}
+    &#x3C;tr&#x3E;
+      &#x3C;td&#x3E;{player.name}&#x3C;/td&#x3E;
+      &#x3C;td&#x3E;{player.id}&#x3C;/td&#x3E;
+
+      &#x3C;td&#x3E;&#x3C;input type=&#x22;text&#x22; bind:value={player.name} /&#x3E;&#x3C;/td&#x3E;
+      &#x3C;td&#x3E;&#x3C;button on:click={updatePlayer(player)}&#x3E;Update&#x3C;/button&#x3E;&#x3C;/td&#x3E;
+      &#x3C;td&#x3E;&#x3C;button on:click={removePlayer(player.id)}&#x3E;X&#x3C;/button&#x3E;&#x3C;/td&#x3E;
+    &#x3C;/tr&#x3E;
+  {/each}
+&#x3C;/table&#x3E;
+&#x3C;div&#x3E;
+  &#x3C;ol&#x3E;
+    {#each $team as player (player.id)}
+      &#x3C;li&#x3E;{player.name} ({player.id})&#x3C;/li&#x3E;
+    {/each}
+  &#x3C;/ol&#x3E;
+&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.crud {
+  padding: 10px;
+  border: 1px solid gray;
+}
+.create {
+  display: flex;
+}
+.create input {
+  flex-grow: 1;
+}
+table {
+  width: 100%;
+  border: 1px solid gray;
+  border-collapse: collapse;
+}
+td {
+  border: 1px solid gray;
+  text-align: center;
+}
+table input,
+table button {
+  width: 100%;
+}
+&#x3C;/style&#x3E;</code></pre>
+                </li>
+              </ul>
+            </details>
+          </div>
+        </div>
+      </details>
     </div>
   </body>
 
@@ -310,7 +510,7 @@ export const team = createTeamStore();</code></pre>
     hljs.highlightAll();
 
     const createTabs = () => {
-      let arr = ["#store_scorecard", "#store_crud"];
+      let arr = ["#svelte_5_scorecard", "#store_scorecard", "#store_crud"];
 
       arr.forEach((tab) => {
         new VanillaTabs({
