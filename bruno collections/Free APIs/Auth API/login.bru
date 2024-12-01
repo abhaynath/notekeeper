@@ -1,0 +1,15 @@
+meta {
+  name: login
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://dummyjson.com/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {"username":"emilys","password":"emilyspass","expiresInMins":30}
+}

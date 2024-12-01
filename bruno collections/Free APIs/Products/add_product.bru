@@ -1,0 +1,15 @@
+meta {
+  name: add_product
+  type: http
+  seq: 10
+}
+
+post {
+  url: https://dummyjson.com/products/add
+  body: json
+  auth: none
+}
+
+body:json {
+  {"title":"BMW Pencil"}
+}
