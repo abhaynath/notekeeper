@@ -225,6 +225,7 @@ export const teamScoreStore = new TeamScoreStore();</code></pre>
   import { teamStore } from &#x22;../stores/crudStore.svelte.js&#x22;;
 
   let name = $state(&#x22;&#x22;);
+  let players = teamStore.players;
 
   const addPlayer = () =&#x3E; {
     teamStore.addPlayer(name);
@@ -232,9 +233,6 @@ export const teamScoreStore = new TeamScoreStore();</code></pre>
   };
   const removePlayer = (id) =&#x3E; {
     teamStore.deletePlayer(id);
-  };
-  const updatePlayer = (obj) =&#x3E; {
-    teamStore.updatePlayer(obj);
   };
 &#x3C;/script&#x3E;
 
@@ -245,25 +243,25 @@ export const teamScoreStore = new TeamScoreStore();</code></pre>
   &#x3C;/div&#x3E;
   &#x3C;table&#x3E;
     &#x3C;tbody
-      &#x3E;{#each teamStore.players as player (player.id)}
+      &#x3E;{#each players as player (player.id)}
         &#x3C;tr&#x3E;
           &#x3C;td&#x3E;{player.name}&#x3C;/td&#x3E;
           &#x3C;td&#x3E;{player.id}&#x3C;/td&#x3E;
 
           &#x3C;td&#x3E;&#x3C;input type=&#x22;text&#x22; bind:value={player.name} /&#x3E;&#x3C;/td&#x3E;
+
           &#x3C;td
-            &#x3E;&#x3C;button
-              onclick={() =&#x3E; {
-                updatePlayer(player);
-              }}&#x3E;Update&#x3C;/button
-            &#x3E;&#x3C;/td
-          &#x3E;
-          &#x3C;td
-            &#x3E;&#x3C;button
+            &#x3E;&#x3C;div
+              tabindex=&#x22;0&#x22;
+              role=&#x22;button&#x22;
+              aria-label=&#x22;Close&#x22;
+              onkeydown={() =&#x3E; {}}
               onclick={() =&#x3E; {
                 removePlayer(player.id);
-              }}&#x3E;X&#x3C;/button
-            &#x3E;&#x3C;/td
+              }}
+            &#x3E;
+              &#x274C;
+            &#x3C;/div&#x3E;&#x3C;/td
           &#x3E;
         &#x3C;/tr&#x3E;
       {/each}&#x3C;/tbody
@@ -271,7 +269,7 @@ export const teamScoreStore = new TeamScoreStore();</code></pre>
   &#x3C;/table&#x3E;
   &#x3C;div&#x3E;
     &#x3C;ol&#x3E;
-      {#each teamStore.players as player (player.id)}
+      {#each players as player (player.id)}
         &#x3C;li&#x3E;{player.name} ({player.id})&#x3C;/li&#x3E;
       {/each}
     &#x3C;/ol&#x3E;
@@ -289,6 +287,7 @@ export const teamScoreStore = new TeamScoreStore();</code></pre>
     flex-grow: 1;
   }
   table {
+    margin-top: 0.5em;
     width: 100%;
     border: 1px solid gray;
     border-collapse: collapse;
@@ -297,10 +296,6 @@ export const teamScoreStore = new TeamScoreStore();</code></pre>
     padding: 0.2em;
     border: 1px solid gray;
     text-align: center;
-  }
-  table input,
-  table button {
-    width: 100%;
   }
 &#x3C;/style&#x3E;</code></pre>
             </li>
