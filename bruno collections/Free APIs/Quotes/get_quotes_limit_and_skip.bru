@@ -1,0 +1,16 @@
+meta {
+  name: get_quotes_limit_and_skip
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://dummyjson.com/quotes?limit=3&skip=10
+  body: none
+  auth: none
+}
+
+params:query {
+  limit: 3
+  skip: 10
+}

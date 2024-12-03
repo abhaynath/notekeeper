@@ -1,0 +1,16 @@
+meta {
+  name: filter_users
+  type: http
+  seq: 6
+}
+
+get {
+  url: https://dummyjson.com/users/filter?key=hair.color&value=Brown
+  body: none
+  auth: none
+}
+
+params:query {
+  key: hair.color
+  value: Brown
+}
