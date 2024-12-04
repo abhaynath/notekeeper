@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
-    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css"/>
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
     <link rel="shortcut icon" type="image/svg" href="../../css/svg/svelte/svelte.svg" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
     <title>Special Elements</title>
   </head>
 
@@ -19,194 +21,96 @@
       <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
-      <section id="sv_10_01">
-        <h4>svelte:self</h4>
-        <img src="../../images/frameworks/svelte/folder.jpg" />
-        <h5>FolderSelf.svelte</h5>
-        <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import Folder from &#x22;./Folder.svelte&#x22;;
+      <div>
+        <details>
+          <summary>svelte:element</summary>
+          <div><p>Sometimes we don&#x27;t know in advance what kind of DOM element to render. &#x3C;svelte:element&#x3E; comes in handy here.</p></div>
+          <ul class="tabs" id="svelte_element">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
 
-  class Item {
-    public name: string;
-    public files?: Item[];
-  }
+      <div>
+        <details>
+          <summary>svelte:window</summary>
+          <div><p></p></div>
+          <ul class="tabs" id="svelte_window">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>svelte:document</summary>
+          <div><p></p></div>
+          <ul class="tabs" id="svelte_document">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
 
-  let root: Item[] = [
-    {
-      name: &#x22;Important work stuff&#x22;,
-      files: [{ name: &#x22;quarterly-results.xlsx&#x22; }],
-    },
-    {
-      name: &#x22;Animal GIFs&#x22;,
-      files: [
-        {
-          name: &#x22;Dogs&#x22;,
-          files: [{ name: &#x22;treadmill.gif&#x22; }, { name: &#x22;rope-jumping.gif&#x22; }],
-        },
-        {
-          name: &#x22;Goats&#x22;,
-          files: [{ name: &#x22;parkour.gif&#x22; }, { name: &#x22;rampage.gif&#x22; }],
-        },
-        { name: &#x22;cat-roomba.gif&#x22; },
-        { name: &#x22;duck-shuffle.gif&#x22; },
-        { name: &#x22;monkey-on-a-pig.gif&#x22; },
-      ],
-    },
-    { name: &#x22;TODO.md&#x22; },
-  ];
-&#x3C;/script&#x3E;
+      <div>
+        <details>
+          <summary>svelte:body</summary>
+          <div><p></p></div>
+          <ul class="tabs" id="svelte_body">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>svelte:head</summary>
+          <div><p></p></div>
+          <ul class="tabs" id="svelte_head">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
 
-&#x3C;div class=&#x22;wrap&#x22;&#x3E;
-  &#x3C;Folder name=&#x22;Home&#x22; files={root} /&#x3E;
-&#x3C;/div&#x3E;
-
-&#x3C;style&#x3E;
-  .wrap {
-    margin: 10px;
-  }
-&#x3C;/style&#x3E;</code></pre>
-
-        <h5>File.svelte</h5>
-        <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import Fa from &#x22;svelte-fa&#x22;;
-  import { faFolder, faFile } from &#x22;@fortawesome/free-solid-svg-icons&#x22;;
-  export let name;
-  $: type = name.slice(name.lastIndexOf(&#x22;.&#x22;) + 1);
-&#x3C;/script&#x3E;
-
-&#x3C;span&#x3E;&#x3C;Fa icon={faFile} color=&#x22;#00c1fb&#x22; /&#x3E;&#x3C;span class=&#x22;lbl&#x22;&#x3E;{name}&#x3C;/span&#x3E;&#x3C;/span&#x3E;
-
-&#x3C;style&#x3E;
-  span {
-    padding: 5px;
-  }
-  .lbl {
-    padding-left: 5px;
-    font-size: 0.8em;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-&#x3C;/style&#x3E;
-
-        </code></pre>
-
-        <h5>Folder.svelte</h5>
-        <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import File from &#x22;./File.svelte&#x22;;
-  import Fa from &#x22;svelte-fa&#x22;;
-  import { faFolderOpen, faFolderBlank } from &#x22;@fortawesome/free-solid-svg-icons&#x22;;
-  export let expanded = false;
-  export let name;
-  export let files;
-
-  function toggle() {
-    expanded = !expanded;
-  }
-&#x3C;/script&#x3E;
-
-{#if expanded}
-  &#x3C;span class:expanded on:click={toggle}&#x3E;&#x3C;Fa icon={faFolderOpen} color=&#x22;#ffbc42&#x22; /&#x3E;&#x3C;span class=&#x22;lbl&#x22;&#x3E;{name}&#x3C;/span&#x3E;&#x3C;/span&#x3E;
-  &#x3C;ul&#x3E;
-    {#each files as file}
-      &#x3C;li&#x3E;
-        {#if file.files}
-          &#x3C;svelte:self {...file} /&#x3E;
-        {:else}
-          &#x3C;File {...file} /&#x3E;
-        {/if}
-      &#x3C;/li&#x3E;
-    {/each}
-  &#x3C;/ul&#x3E;
-{:else}
-  &#x3C;span class:expanded on:click={toggle}&#x3E;&#x3C;Fa icon={faFolderBlank} color=&#x22;#ffbc42&#x22; /&#x3E;&#x3C;span class=&#x22;lbl&#x22;&#x3E;{name}&#x3C;/span&#x3E;&#x3C;/span&#x3E;
-{/if}
-
-&#x3C;style&#x3E;
-  span {
-    padding: 3px;
-    cursor: pointer;
-  }
-
-  ul {
-    padding: 0.2em 0 0 0.5em;
-    margin: 0 0 0 0.5em;
-    list-style: none;
-    border-left: 1px solid rgb(255, 115, 0);
-  }
-
-  li {
-    padding: 0.2em 0;
-  }
-  .lbl {
-    padding-left: 5px;
-    font-weight: bold;
-    font-size: 0.8em;
-
-    font-family: Arial, Helvetica, sans-serif;
-  }
-&#x3C;/style&#x3E;
-
-    </code></pre>
-      </section>
-
-      <section id="sv_10_02">
-        <h4>svelte:component</h4>
-        <p>A component can change its category altogether with &#x3C;svelte:component&#x3E;</p>
-        <h5>SvelteComponent.svelte</h5>
-        <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-    import Green from &#x22;./Green.svelte&#x22;;
-    import Blue from &#x22;./Blue.svelte&#x22;;
-    import Red from &#x22;./Red.svelte&#x22;;
-    
-    const options = [
-        { color: &#x22;red&#x22;, component: Red },
-        { color: &#x22;green&#x22;, component: Green },
-        { color: &#x22;blue&#x22;, component: Blue },
-    ];
-    
-    let selected = options[0];
-&#x3C;/script&#x3E;
-    
-&#x3C;div class=&#x22;wrap&#x22;&#x3E;
-    &#x3C;select bind:value={selected}&#x3E;
-        {#each options as option}
-        &#x3C;option value={option}&#x3E;{option.color}&#x3C;/option&#x3E;
-        {/each}
-    &#x3C;/select&#x3E;
-    
-    &#x3C;svelte:component this={selected.component} /&#x3E;
-&#x3C;/div&#x3E;
-    
-&#x3C;style&#x3E;
-    .wrap {
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid black;
-    }
-&#x3C;/style&#x3E;</code></pre>
-
-        <h5>Red.svelte / Green.svelte / Blue.svelte</h5>
-        <pre><code class="language-html">&#x3C;div&#x3E;
-    &#x3C;h1&#x3E;Red&#x3C;/h1&#x3E;
-&#x3C;/div&#x3E;
-  
-&#x3C;style&#x3E;
-div {
-    background-color: red;
-    margin: 10px;
-    color: white;
-    padding:10px;
-    text-align: center;
-}
-&#x3C;/style&#x3E;</code></pre>
-      </section>
-
+      <div>
+        <details>
+          <summary>svelte:boundary</summary>
+          <div><p></p></div>
+          <ul class="tabs" id="svelte_boundary">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>svelte:options</summary>
+          <div><p></p></div>
+          <ul class="tabs" id="svelte_options">
+            <li data-title="UI"></li>
+            <li data-title="">
+              <pre><code class="language-html"></code></pre>
+            </li>
+          </ul>
+        </details>
+      </div>
       <section id="sv_10_03">
         <h4>svelte:element</h4>
-        <p>Sometimes we don&#x27;t know in advance what kind of DOM element to render. &#x3C;svelte:element&#x3E; comes in handy here.</p>
+
         <pre><code class="language-html">
 &#x3C;script lang=&#x22;ts&#x22;&#x3E;
   const options = [&#x22;h1&#x22;, &#x22;h3&#x22;, &#x22;p&#x22;];
@@ -335,233 +239,26 @@ div {
 
 &#x3C;h1&#x3E;Hello world!&#x3C;/h1&#x3E;</code></pre>
       </section>
-
-      <section id="sv_10_07">
-        <h4>svelte:fragment</h4>
-        <p>
-          The &#x3C;svelte:fragment&#x3E; element allows you to place content in a named slot without wrapping it in a container DOM element. This keeps the
-          flow layout of your document intact.
-        </p>
-        <img src="../../images/frameworks/svelte/fragment.jpg" />
-        <h5>SvelteFragment.svelte</h5>
-        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import Box from &#x22;./Box.svelte&#x22;;
-&#x3C;/script&#x3E;
-
-&#x3C;div&#x3E;
-  &#x3C;h3&#x3E;Fragment test&#x3C;/h3&#x3E;
-  &#x3C;Box&#x3E;
-    &#x3C;svelte:fragment slot=&#x22;footer&#x22;&#x3E;
-      &#x3C;p&#x3E;copyright abhaynath@gmail.com&#x3C;/p&#x3E;
-    &#x3C;/svelte:fragment&#x3E;
-  &#x3C;/Box&#x3E;
-
-  &#x3C;Box&#x3E;
-    &#x3C;svelte:fragment slot=&#x22;header&#x22;&#x3E;
-      &#x3C;h4&#x3E;Google&#x3C;/h4&#x3E;
-    &#x3C;/svelte:fragment&#x3E;
-  &#x3C;/Box&#x3E;
-&#x3C;/div&#x3E;</code></pre>
-        <h5>Box.svelte</h5>
-        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  &#x3C;/script&#x3E;
-  
-  &#x3C;div class=&#x22;box&#x22;&#x3E;
-    &#x3C;slot name=&#x22;header&#x22;&#x3E;No header provided&#x3C;/slot&#x3E;
-    &#x3C;div&#x3E;some content between header and footer&#x3C;/div&#x3E;
-    &#x3C;slot name=&#x22;footer&#x22;&#x3E;default footer text&#x3C;/slot&#x3E;
-  &#x3C;/div&#x3E;
-  
-  &#x3C;style&#x3E;
-    .box {
-      width: 300px;
-      border: 1px solid #aaa;
-      border-radius: 2px;
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 1em;
-      margin: 0 0 1em 0;
-      display: flex;
-      flex-direction: column;
-    }
-  &#x3C;/style&#x3E;</code></pre>
-      </section>
-
-      <section id="sv_10_08">
-        <h4>svelte:context</h4>
-        <p>
-          In all the examples we&#x27;ve seen so far, the &#x3C;script&#x3E; block contains code that runs when each component instance is initialised. For the
-          vast majority of components, that&#x27;s all you&#x27;ll ever need.
-        </p>
-        <p>
-          Very occasionally, you&#x27;ll need to run some code outside of an individual component instance. For example, you can play all five of these audio
-          players simultaneously; it would be better if playing one stopped all the others.
-        </p>
-        <p>
-          We can do that by declaring a &#x3C;script context=&#x22;module&#x22;&#x3E; block. Code contained inside it will run once, when the module first
-          evaluates, rather than when a component is instantiated. Place this at the top of AudioPlayer.svelte
-        </p>
-
-        <img src="../../images/frameworks/svelte/context.jpg" />
-        <h5>SvelteContext.svelte</h5>
-        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import AudioPlayer from &#x22;./AudioPlayer.svelte&#x22;;
-&#x3C;/script&#x3E;
-
-&#x3C;div&#x3E;
-  &#x3C;!-- https://musopen.org/music/9862-the-blue-danube-op-314/ --&#x3E;
-  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/strauss.mp3&#x22; title=&#x22;The Blue Danube Waltz&#x22; composer=&#x22;Johann Strauss&#x22; performer=&#x22;European Archive&#x22; /&#x3E;
-
-  &#x3C;!-- https://musopen.org/music/43775-the-planets-op-32/ --&#x3E;
-  &#x3C;AudioPlayer
-    src=&#x22;https://sveltejs.github.io/assets/music/holst.mp3&#x22;
-    title=&#x22;Mars, the Bringer of War&#x22;
-    composer=&#x22;Gustav Holst&#x22;
-    performer=&#x22;USAF Heritage of America Band&#x22;
-  /&#x3E;
-
-  &#x3C;!-- https://musopen.org/music/8010-3-gymnopedies/ --&#x3E;
-  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/satie.mp3&#x22; title=&#x22;Gymnop&#xE9;die no. 1&#x22; composer=&#x22;Erik Satie&#x22; performer=&#x22;Prodigal Procrastinator&#x22; /&#x3E;
-&#x3C;/div&#x3E;</code></pre>
-
-        <h5>AudioPlayer.svelte</h5>
-        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22; context=&#x22;module&#x22;&#x3E;
-  let current: HTMLAudioElement;
-&#x3C;/script&#x3E;
-
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  export let src: string;
-  export let title: string;
-  export let composer: string;
-  export let performer: string;
-
-  let audio: HTMLAudioElement;
-  let paused = true;
-
-  function stopOthers() {
-    if (current &#x26;&#x26; current !== audio) current.pause();
-    current = audio;
-  }
-&#x3C;/script&#x3E;
-
-&#x3C;article class:playing={!paused}&#x3E;
-  &#x3C;h2&#x3E;{title}&#x3C;/h2&#x3E;
-  &#x3C;p&#x3E;&#x3C;strong&#x3E;{composer}&#x3C;/strong&#x3E; / performed by {performer}&#x3C;/p&#x3E;
-
-  &#x3C;audio bind:this={audio} bind:paused on:play={stopOthers} controls {src} /&#x3E;
-&#x3C;/article&#x3E;
-
-&#x3C;style&#x3E;
-  article {
-    margin: 0 0 1em 0;
-    max-width: 800px;
-  }
-  h2,
-  p {
-    margin: 0 0 0.3em 0;
-  }
-  audio {
-    width: 100%;
-    margin: 0.5em 0 1em 0;
-  }
-  .playing {
-    color: #ff3e00;
-  }
-&#x3C;/style&#x3E;</code></pre>
-
-        <p>It&#x27;s now possible for the components to &#x27;talk&#x27; to each other without any state management</p>
-      </section>
-
-      <section id="sv_10_09">
-        <h4>svelte:context export</h4>
-        <p>Anything exported from a context=&#x22;module&#x22; script block becomes an export from the module itself.</p>
-        <h5>SvelteContextExport.svelte</h5>
-        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import AudioPlayer, { stopAll } from &#x22;./AudioPlayer.svelte&#x22;;
-&#x3C;/script&#x3E;
-
-&#x3C;button on:click={stopAll}&#x3E; stop all audio &#x3C;/button&#x3E;
-&#x3C;div&#x3E;
-  &#x3C;!-- https://musopen.org/music/9862-the-blue-danube-op-314/ --&#x3E;
-  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/strauss.mp3&#x22; title=&#x22;The Blue Danube Waltz&#x22; composer=&#x22;Johann Strauss&#x22; performer=&#x22;European Archive&#x22; /&#x3E;
-
-  &#x3C;!-- https://musopen.org/music/43775-the-planets-op-32/ --&#x3E;
-  &#x3C;AudioPlayer
-    src=&#x22;https://sveltejs.github.io/assets/music/holst.mp3&#x22;
-    title=&#x22;Mars, the Bringer of War&#x22;
-    composer=&#x22;Gustav Holst&#x22;
-    performer=&#x22;USAF Heritage of America Band&#x22;
-  /&#x3E;
-
-  &#x3C;!-- https://musopen.org/music/8010-3-gymnopedies/ --&#x3E;
-  &#x3C;AudioPlayer src=&#x22;https://sveltejs.github.io/assets/music/satie.mp3&#x22; title=&#x22;Gymnop&#xE9;die no. 1&#x22; composer=&#x22;Erik Satie&#x22; performer=&#x22;Prodigal Procrastinator&#x22; /&#x3E;
-&#x3C;/div&#x3E;</code></pre>
-
-        <h5>AudioPlayer.svelte</h5>
-        <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22; context=&#x22;module&#x22;&#x3E;
-  const elements = new Set();
-
-  export function stopAll() {
-    elements.forEach((element: HTMLAudioElement) =&#x3E; {
-      element.pause();
-    });
-  }
-&#x3C;/script&#x3E;
-
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import { onMount } from &#x22;svelte&#x22;;
-  export let src: string;
-  export let title: string;
-  export let composer: string;
-  export let performer: string;
-
-  let audio: HTMLAudioElement;
-  let paused = true;
-
-  onMount(() =&#x3E; {
-    elements.add(audio);
-    return () =&#x3E; elements.delete(audio);
-  });
-
-  function stopOthers() {
-    elements.forEach((element: HTMLAudioElement) =&#x3E; {
-      if (element !== audio) element.pause();
-    });
-  }
-&#x3C;/script&#x3E;
-
-&#x3C;article class:playing={!paused}&#x3E;
-&#x9;&#x3C;h2&#x3E;{title}&#x3C;/h2&#x3E;
-&#x9;&#x3C;p&#x3E;&#x3C;strong&#x3E;{composer}&#x3C;/strong&#x3E; / performed by {performer}&#x3C;/p&#x3E;
-
-&#x9;&#x3C;audio
-&#x9;&#x9;bind:this={audio}
-&#x9;&#x9;bind:paused
-&#x9;&#x9;on:play={stopOthers}
-&#x9;&#x9;controls
-&#x9;&#x9;{src}
-&#x9;&#x3E;&#x3C;/audio&#x3E;
-&#x3C;/article&#x3E;
-
-&#x3C;style&#x3E;
-&#x9;article {
-&#x9;&#x9;margin: 0 0 1em 0; max-width: 800px;
-&#x9;}
-&#x9;h2, p {
-&#x9;&#x9;margin: 0 0 0.3em 0;
-&#x9;}
-&#x9;audio {
-&#x9;&#x9;width: 100%; margin: 0.5em 0 1em 0;
-&#x9;}
-&#x9;.playing {
-&#x9;&#x9;color: #ff3e00;
-&#x9;}
-&#x3C;/style&#x3E;</code></pre>
-<img src="../../images/frameworks/svelte/context_export.jpg" />
-      </section>
     </div>
   </body>
 
   <script>
     hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = ["#svelte_element", "#svelte_window", "#svelte_document", "#svelte_body", "#svelte_head", "#svelte_options", "#svelte_boundary"];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
   </script>
 </html>
