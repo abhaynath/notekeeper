@@ -29,7 +29,7 @@
       <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
-      <section id="sv_01_00">
+      <section id="sv_vite">
         <details>
           <summary>Installation using Vite</summary>
           <ol>
@@ -64,8 +64,29 @@
           </ol>
         </details>
       </section>
+      <section id="sv_fonts">
+        <details>
+          <summary>Fonts</summary>
+          <div>
+            <p>You can use local fonts</p>
+            <ul id="svelte5_fonts" class="tabs">
+              <li data-title="Font location"><img src="../../images/frameworks/svelte/svelte_5_fonts.jpg" /></li>
+              <li data-title="app.css">
+                <pre><code class="language-css">@font-face {
+  font-family: &#x22;pt_sansregular&#x22;;
+  src: url(&#x22;assets/fonts/pt_sans/PTS55F-webfont.woff&#x22;) format(&#x22;woff&#x22;);
+  font-weight: normal;
+  font-style: normal;
+}
 
-      <section id="sv_01_01">
+html {
+  font-family: &#x22;pt_sansregular&#x22;;
+}</code></pre></li>
+            </ul>
+          </div>
+        </details>
+      </section>
+      <section id="sv_fa">
         <details>
           <summary>Using Font-Awesome</summary>
           <div>
@@ -127,7 +148,7 @@ npm install @fortawesome/free-brands-svg-icons</pre
         </details>
       </section>
 
-      <section id="sv_01_02">
+      <section id="sv_typedoc">
         <details>
           <summary>TypeDoc in Vite Svelte</summary>
           <ol>
@@ -154,7 +175,7 @@ npm install @fortawesome/free-brands-svg-icons</pre
     &#x22;build&#x22;: &#x22;vite build&#x22;,
     &#x22;preview&#x22;: &#x22;vite preview&#x22;,
     &#x22;check&#x22;: &#x22;svelte-check --tsconfig ./tsconfig.json&#x22;,
-    &#x22;docs&#x22;: &#x22;typedoc --entryPointStrategy expand ./src&#x22;
+    &#x22;docs&#x22;: &#x22;npx typedoc --entryPointStrategy Expand src&#x22;
   },</code></pre>
             </li>
             <li>
@@ -164,7 +185,7 @@ npm install @fortawesome/free-brands-svg-icons</pre
           </ol>
         </details>
       </section>
-      <section id="sv_01_03">
+      <section id="sv_ghpages">
         <details>
           <summary>Deploy Svelte Vite app to github pages</summary>
           <ol>
@@ -194,7 +215,7 @@ npm install @fortawesome/free-brands-svg-icons</pre
     &#x22;build&#x22;: &#x22;vite build&#x22;,
     &#x22;preview&#x22;: &#x22;vite preview&#x22;,
     &#x22;check&#x22;: &#x22;svelte-check --tsconfig ./tsconfig.json&#x22;,
-    &#x22;docs&#x22;: &#x22;typedoc --entryPointStrategy expand ./src&#x22;,
+    &#x22;docs&#x22;: &#x22;npx typedoc --entryPointStrategy Expand src&#x22;
     &#x22;deploy&#x22;:&#x22;npx gh-pages -d dist&#x22;
   }</code></pre>
             </li>
@@ -205,7 +226,7 @@ npm install @fortawesome/free-brands-svg-icons</pre
           </ol>
         </details>
       </section>
-      <section id="sv_01_04">
+      <section id="sv_tspaths">
         <details>
           <summary>Vite Path aliases in Typescript</summary>
           <div>
@@ -270,7 +291,7 @@ import { FoodTypes, type BonusItem, type FoodItem, type SnakeItem } from &#x22;$
           </div>
         </details>
       </section>
-      <section>
+      <section id="sv_jspaths">
         <details>
           <summary>JavaScript Path Aliases</summary>
           <div>
@@ -330,7 +351,7 @@ export default defineConfig({
     hljs.highlightAll();
 
     const createTabs = () => {
-      let arr = ["#js_path_resolve", "#ts_path_resolve"];
+      let arr = ["#svelte5_fonts", "#js_path_resolve", "#ts_path_resolve"];
 
       arr.forEach((tab) => {
         new VanillaTabs({
