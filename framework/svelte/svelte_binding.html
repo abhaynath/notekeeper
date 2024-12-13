@@ -19,18 +19,13 @@
       <a href="svelte_index.html">Svelte</a>
     </nav>
     <div class="content">
-      <section id="sv_05_01">
-        <h4>Combobox Binding (Single)</h4>
+      <details>
+        <summary>Combobox Binding (Single)</summary>
+        <div id="sv_05_01">
+          <pre><code class="language-html">&#x3C;script&#x3E;
+  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
 
-        <pre><code class="language-html">
-&#x3C;script&#x3E;
-let players = [
-{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },
-{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },
-{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; },
-];
-
-let selectedPlayer = players[0];
+  let selectedPlayer = players[0];
 &#x3C;/script&#x3E;
 
 &#x3C;div&#x3E;
@@ -40,100 +35,74 @@ let selectedPlayer = players[0];
   {#each players as player}
     &#x3C;option value={player}&#x3E;{player.name}&#x3C;/option&#x3E;
   {/each}
-&#x3C;/select&#x3E;
-
-</code></pre>
-      </section>
-
-      <section id="sv_05_02">
-        <h4>Combobox Binding (Multiple)</h4>
-
-        <pre><code class="language-html">
-&#x3C;script&#x3E;
-let players = [
-    { id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },
-    { id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },
-    { id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; },
-    { id: &#x22;id_3&#x22;, name: &#x22;MS Dhoni&#x22; },
-    { id: &#x22;id_3&#x22;, name: &#x22;Jaspreet Bumrah&#x22; },
-];
-let selectedPlayers = [];
-&#x3C;/script&#x3E;
-
-&#x3C;div&#x3E;
-&#x3C;select multiple bind:value={selectedPlayers}&#x3E;
-    {#each players as player}
-    &#x3C;option value={player}&#x3E;{player.name}&#x3C;/option&#x3E;
-    {/each}
-&#x3C;/select&#x3E;
-&#x3C;/div&#x3E;
-&#x3C;div&#x3E;
-{JSON.stringify(selectedPlayers)}
-&#x3C;/div&#x3E;
-     </code></pre>
-      </section>
-
-      <section id="sv_05_03">
-        <h4>Checkbox Group</h4>
-
-        <pre><code class="language-html">
-&#x3C;script&#x3E;
-let players = [
-    { id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },
-    { id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },
-    { id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; },
-];
-let selectedPlayers = [];
-&#x3C;/script&#x3E;
-
-&#x3C;div&#x3E;
-{#each players as player (player.id)}
-    &#x3C;label
-    &#x3E;&#x3C;input
-        type=&#x22;checkbox&#x22;
-        bind:group={selectedPlayers}
-        value={player.id}
-    /&#x3E;{player.name}&#x3C;/label
-    &#x3E;
-{/each}
-&#x3C;/div&#x3E;
-{JSON.stringify(selectedPlayers)}
-</code></pre>
-      </section>
-      <section id="sv_05_04">
-        <h4>Radio Button Group</h4>
-        <pre>
-        <code class="language-html">
-&#x3C;script&#x3E;
-let arr = [
-    { id: &#x22;id_1&#x22;, name: &#x22;India&#x22; },
-    { id: &#x22;id_2&#x22;, name: &#x22;Australia&#x22; },
-    { id: &#x22;id_3&#x22;, name: &#x22;England&#x22; },
-];
-
-let selectedTeam = arr[0].id;
-&#x3C;/script&#x3E;
-
-&#x3C;div&#x3E;
-{#each arr as team (team.id)}
-    &#x3C;label
-    &#x3E;&#x3C;input
-        type=&#x22;radio&#x22;
-        bind:group={selectedTeam}
-        value={team.id}
-    /&#x3E;{team.name}&#x3C;/label
-    &#x3E;
-{/each}
-
-&#x3C;div&#x3E;Selected : {selectedTeam}&#x3C;/div&#x3E;
+&#x3C;/select&#x3E;</code></pre>
+        </div>
+      </details>
+      <details>
+        <summary>Combobox Binding (Multiple)</summary>
+        <div id="sv_05_02">
+          <pre><code class="language-html">&#x3C;script&#x3E;
+  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
+  let selectedPlayers = [];
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div&#x3E;
+  &#x3C;select multiple bind:value={selectedPlayers}&#x3E;
+      {#each players as player}
+      &#x3C;option value={player}&#x3E;{player.name}&#x3C;/option&#x3E;
+      {/each}
+  &#x3C;/select&#x3E;
+  &#x3C;/div&#x3E;
+  &#x3C;div&#x3E;
+  {JSON.stringify(selectedPlayers)}
 &#x3C;/div&#x3E;</code></pre>
-      </section>
+        </div>
+      </details>
+      <details>
+        <summary>Checkbox Group</summary>
+        <div id="sv_05_03">
+          <pre><code class="language-html">&#x3C;script&#x3E;
+  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
+  let selectedPlayers = [];
+  &#x3C;/script&#x3E;
+  
+  &#x3C;div&#x3E;
+  {#each players as player (player.id)}
+      &#x3C;label
+      &#x3E;&#x3C;input
+          type=&#x22;checkbox&#x22;
+          bind:group={selectedPlayers}
+          value={player.id}
+      /&#x3E;{player.name}&#x3C;/label
+      &#x3E;
+  {/each}
+&#x3C;/div&#x3E;
+{JSON.stringify(selectedPlayers)}</code></pre>
+        </div>
+      </details>
+      <details>
+        <summary>Radio Button Group</summary>
+        <div id="sv_05_04">
+          <pre><code class="language-html">&#x3C;script&#x3E;
+  let arr = [{ id: &#x22;id_1&#x22;, name: &#x22;India&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Australia&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;England&#x22; }];
 
-      <section id="sv_05_05">
-        <h4>Dimension width and height</h4>
-        <img src="../../images/frameworks/svelte/dimensions.jpg" />
-        <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+  let selectedTeam = arr[0].id;
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;
+  {#each arr as team (team.id)}
+      &#x3C;label&#x3E;&#x3C;input type=&#x22;radio&#x22; bind:group={selectedTeam} value={team.id} /&#x3E;{team.name}&#x3C;/label&#x3E;
+  {/each}
+
+  &#x3C;div&#x3E;Selected : {selectedTeam}&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+        </div>
+      </details>
+      <details>
+        <summary>Dimension width and height</summary>
+        <div id="sv_05_05">
+          <img src="../../images/frameworks/svelte/dimensions.jpg" />
+          <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
   let w = 0;
   let h = 0;
   let fontSize = 10;
@@ -141,8 +110,7 @@ let selectedTeam = arr[0].id;
 
 &#x3C;div&#x3E;
   &#x3C;div&#x3E;
-    &#x3C;span&#x3E;Font Size = {fontSize}&#x3C;/span&#x3E;
-    &#x3C;input type=&#x22;range&#x22; bind:value={fontSize} /&#x3E;
+    &#x3C;span&#x3E;Font Size = {fontSize}&#x3C;/span&#x3E; &#x3C;input type=&#x22;range&#x22; bind:value={fontSize} /&#x3E;
   &#x3C;/div&#x3E;
   &#x3C;div&#x3E;Width = {w}px Height = {h}px&#x3C;/div&#x3E;
   &#x3C;div class=&#x22;box&#x22; bind:clientWidth={w} bind:clientHeight={h} style=&#x22;font-size:{fontSize}px&#x22;&#x3E;Font-size {fontSize}&#x3C;/div&#x3E;
@@ -158,13 +126,14 @@ let selectedTeam = arr[0].id;
   }
 &#x3C;/style&#x3E;
 
-  </code></pre>
-      </section>
-      <section id="sv_05_06">
-        <h4>this : Canvas example</h4>
-        <img src="../../images/frameworks/svelte/this.jpg" />
-        <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+</code></pre>
+        </div>
+      </details>
+      <details>
+        <summary>this : Canvas example</summary>
+        <div id="sv_05_06">
+          <img src="../../images/frameworks/svelte/this.jpg" />
+          <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
   import { onMount } from &#x22;svelte&#x22;;
 
   let canvas: HTMLCanvasElement;
@@ -173,23 +142,23 @@ let selectedTeam = arr[0].id;
   let height = 400;
 
   const getRandomColor = () =&#x3E; {
-    const letters = &#x22;0123456789ABCDEF&#x22;;
-    let color = &#x22;#&#x22;;
-    for (let i = 0; i &#x3C; 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  const letters = &#x22;0123456789ABCDEF&#x22;;
+  let color = &#x22;#&#x22;;
+  for (let i = 0; i &#x3C; 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
   };
   const drawCircle = () =&#x3E; {
-    let r = Math.floor(Math.random() * (width / 2));
-    context.strokeStyle = getRandomColor();
-    context.beginPath();
+  let r = Math.floor(Math.random() * (width / 2));
+  context.strokeStyle = getRandomColor();
+  context.beginPath();
 
-    context.arc(width / 2, height / 2, r, 0, 2 * Math.PI, true);
-    context.stroke();
+  context.arc(width / 2, height / 2, r, 0, 2 * Math.PI, true);
+  context.stroke();
   };
   onMount(() =&#x3E; {
-    context = canvas.getContext(&#x22;2d&#x22;);
+  context = canvas.getContext(&#x22;2d&#x22;);
   });
 &#x3C;/script&#x3E;
 
@@ -205,64 +174,66 @@ let selectedTeam = arr[0].id;
     margin: 10px;
   }
 &#x3C;/style&#x3E;</code></pre>
-      </section>
-      <section id="sv_05_07">
-        <h4>Bind to component prop</h4>
-
-        <img src="../../images/frameworks/svelte/bindtoprops.jpg" />
-        <h5>BindToProps.svelte</h5>
-        <pre><code class="language-html">
+        </div>
+      </details>
+      <details>
+        <summary>Bind to component prop</summary>
+        <div id="sv_05_07">
+          <img src="../../images/frameworks/svelte/bindtoprops.jpg" />
+          <h5>BindToProps.svelte</h5>
+          <pre><code class="language-html">
 &#x3C;script lang=&#x22;ts&#x22;&#x3E;
-    import Batsman from &#x22;./Batsman.svelte&#x22;;
-    let batsmanName = &#x22;&#x22;;
-    let batsmanRuns = 0;
-    let batsmanInnings = 1;
-    $: average = batsmanRuns / batsmanInnings;
-&#x3C;/script&#x3E;
-  
-&#x3C;div class=&#x22;wrap&#x22;&#x3E;
-  &#x3C;div&#x3E;{batsmanName}&#x3C;/div&#x3E;
-  &#x3C;div&#x3E;{batsmanRuns}&#x3C;/div&#x3E;
-  &#x3C;div&#x3E;{average.toFixed(2)}&#x3C;/div&#x3E;
-  &#x3C;Batsman bind:name={batsmanName} bind:runs={batsmanRuns} bind:innings={batsmanInnings} /&#x3E;
-&#x3C;/div&#x3E;
-  
-&#x3C;style&#x3E;
-  .wrap {
-    margin: 10px;
-    padding: 10px;
-    width: 200px;
-    border: 1px solid black;
-  }
-&#x3C;/style&#x3E;</code></pre>
-
-        <h5>Batsman.svelte</h5>
-        <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  export let name = &#x22;&#x22;;
-  export let runs = 0;
-  export let innings = 0;
+import Batsman from &#x22;./Batsman.svelte&#x22;;
+let batsmanName = &#x22;&#x22;;
+let batsmanRuns = 0;
+let batsmanInnings = 1;
+$: average = batsmanRuns / batsmanInnings;
 &#x3C;/script&#x3E;
 
 &#x3C;div class=&#x22;wrap&#x22;&#x3E;
-  &#x3C;input type=&#x22;text&#x22; bind:value={name} placeholder=&#x22;player name&#x22; /&#x3E;
-  &#x3C;input type=&#x22;number&#x22; bind:value={runs} placeholder=&#x22;runs&#x22; min=&#x22;0&#x22; /&#x3E;
-  &#x3C;input type=&#x22;number&#x22; bind:value={innings} placeholder=&#x22;innings&#x22; min=&#x22;1&#x22; /&#x3E;
+&#x3C;div&#x3E;{batsmanName}&#x3C;/div&#x3E;
+&#x3C;div&#x3E;{batsmanRuns}&#x3C;/div&#x3E;
+&#x3C;div&#x3E;{average.toFixed(2)}&#x3C;/div&#x3E;
+&#x3C;Batsman bind:name={batsmanName} bind:runs={batsmanRuns} bind:innings={batsmanInnings} /&#x3E;
 &#x3C;/div&#x3E;
 
 &#x3C;style&#x3E;
-  .wrap {
-    display: flex;
-    flex-direction: column;
-  }
+.wrap {
+margin: 10px;
+padding: 10px;
+width: 200px;
+border: 1px solid black;
+}
 &#x3C;/style&#x3E;</code></pre>
-      </section>
 
-      <section id="sv_05_08">
-        <h4>Binding to instance</h4>
-        <img src="../../images/frameworks/svelte/focus.jpg" />
-        <h5>BindToInstance.svelte</h5>
-        <pre><code class="language-html">
+          <h5>Batsman.svelte</h5>
+          <pre><code class="language-html">
+&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+export let name = &#x22;&#x22;;
+export let runs = 0;
+export let innings = 0;
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;wrap&#x22;&#x3E;
+&#x3C;input type=&#x22;text&#x22; bind:value={name} placeholder=&#x22;player name&#x22; /&#x3E;
+&#x3C;input type=&#x22;number&#x22; bind:value={runs} placeholder=&#x22;runs&#x22; min=&#x22;0&#x22; /&#x3E;
+&#x3C;input type=&#x22;number&#x22; bind:value={innings} placeholder=&#x22;innings&#x22; min=&#x22;1&#x22; /&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.wrap {
+display: flex;
+flex-direction: column;
+}
+&#x3C;/style&#x3E;</code></pre>
+        </div>
+      </details>
+      <details>
+        <summary>Binding to instance</summary>
+        <div id="sv_05_08">
+          <img src="../../images/frameworks/svelte/focus.jpg" />
+          <h5>BindToInstance.svelte</h5>
+          <pre><code class="language-html">
 &#x3C;script lang=&#x22;ts&#x22;&#x3E;
   import InputField from &#x22;./InputField.svelte&#x22;;
 
@@ -288,8 +259,8 @@ let selectedTeam = arr[0].id;
     }
 &#x3C;/style&#x3E;</code></pre>
 
-        <h5>InputField.svelte</h5>
-        <pre><code class="language-html">
+          <h5>InputField.svelte</h5>
+          <pre><code class="language-html">
 &#x3C;script lang=&#x22;ts&#x22;&#x3E;
   let input: HTMLInputElement;
   export function focus() {
@@ -302,54 +273,56 @@ let selectedTeam = arr[0].id;
 &#x3C;/div&#x3E;
 
 </code></pre>
-      </section>
-
-      <section id="sv_05_09">
-        <h4>Todo App example</h4>
-        <img src="../../images/frameworks/svelte/todoapp.jpg" />
-        <pre><code class="language-html">
+        </div>
+      </details>
+      <details>
+        <summary>Todo App example</summary>
+        <div id="sv_05_09">
+          <img src="../../images/frameworks/svelte/todoapp.jpg" />
+          <pre><code class="language-html">
 &#x3C;script&#x3E;
 let list = [
-    { id: &#x22;id1&#x22;, name: &#x22;Blender&#x22;, done: false },
-    { id: &#x22;id2&#x22;, name: &#x22;Maya&#x22;, done: true },
-    { id: &#x22;id3&#x22;, name: &#x22;C#&#x22;, done: false },
+{ id: &#x22;id1&#x22;, name: &#x22;Blender&#x22;, done: false },
+{ id: &#x22;id2&#x22;, name: &#x22;Maya&#x22;, done: true },
+{ id: &#x22;id3&#x22;, name: &#x22;C#&#x22;, done: false },
 ];
 
 const addTodo = () =&#x3E; {
-    let id = &#x22;id&#x22; + Math.floor(Math.random() * 10000);
-    list = list.concat({ id: id, name: &#x22;&#x22;, done: false });
+let id = &#x22;id&#x22; + Math.floor(Math.random() * 10000);
+list = list.concat({ id: id, name: &#x22;&#x22;, done: false });
 };
 const clearFinished = () =&#x3E; {
-    list = list.filter((t) =&#x3E; !t.done);
+list = list.filter((t) =&#x3E; !t.done);
 };
 $: remaining = list.filter((t) =&#x3E; !t.done).length;
 &#x3C;/script&#x3E;
 
 &#x3C;div&#x3E;
 &#x3C;div&#x3E;
-    &#x3C;button on:click={addTodo}&#x3E;Add Todo&#x3C;/button&#x3E;
-    &#x3C;button on:click={clearFinished}&#x3E;Clear Finished&#x3C;/button&#x3E;
+&#x3C;button on:click={addTodo}&#x3E;Add Todo&#x3C;/button&#x3E;
+&#x3C;button on:click={clearFinished}&#x3E;Clear Finished&#x3C;/button&#x3E;
 &#x3C;/div&#x3E;
 &#x3C;div&#x3E;Remaining : {remaining}&#x3C;/div&#x3E;
 &#x3C;div&#x3E;
-    {#each list as task (task.id)}
-    &#x3C;div&#x3E;
-        &#x3C;input type=&#x22;checkbox&#x22; bind:checked={task.done} /&#x3E;
-        &#x3C;input type=&#x22;text&#x22; bind:value={task.name} disabled={task.done} /&#x3E;
-    &#x3C;/div&#x3E;
-    {/each}
+{#each list as task (task.id)}
+&#x3C;div&#x3E;
+    &#x3C;input type=&#x22;checkbox&#x22; bind:checked={task.done} /&#x3E;
+    &#x3C;input type=&#x22;text&#x22; bind:value={task.name} disabled={task.done} /&#x3E;
+&#x3C;/div&#x3E;
+{/each}
 &#x3C;/div&#x3E;
 &#x3C;div&#x3E;
-    &#x3C;ul&#x3E;
-    {#each list as task (task.id)}
-        &#x3C;li&#x3E;{task.name} --- {task.done}&#x3C;/li&#x3E;
-    {/each}
-    &#x3C;/ul&#x3E;
+&#x3C;ul&#x3E;
+{#each list as task (task.id)}
+    &#x3C;li&#x3E;{task.name} --- {task.done}&#x3C;/li&#x3E;
+{/each}
+&#x3C;/ul&#x3E;
 &#x3C;/div&#x3E;
 &#x3C;/div&#x3E;
-            
-    </code></pre>
-      </section>
+        
+</code></pre>
+        </div>
+      </details>
     </div>
   </body>
 
