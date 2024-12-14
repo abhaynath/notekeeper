@@ -7,9 +7,11 @@
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
     <link rel="shortcut icon" type="image/svg" href="../../css/svg/svelte/svelte.svg" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
     <script src="../../js/libs/jquery.min.js"></script>
     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
     <title>Svelte Binding</title>
   </head>
 
@@ -20,22 +22,164 @@
     </nav>
     <div class="content">
       <details>
-        <summary>Combobox Binding (Single)</summary>
-        <div id="sv_05_01">
-          <pre><code class="language-html">&#x3C;script&#x3E;
-  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
-
-  let selectedPlayer = players[0];
+        <summary>Input Text</summary>
+        <ul class="tabs" id="binding_input_text">
+          <li data-title="UI"><img src="../../images/frameworks/svelte/binding_input_text.jpg" /></li>
+          <li data-title="User.svelte">
+            <pre><code class="language-html">&#x3C;script&#x3E;
+  let name = $state(&#x22;&#x22;);
 &#x3C;/script&#x3E;
 
-&#x3C;div&#x3E;
-  {selectedPlayer.name}
+&#x3C;input bind:value={name} placeholder=&#x22;enter your name&#x22; /&#x3E;
+&#x3C;p&#x3E;Hello {name || &#x22;stranger&#x22;}!&#x3C;/p&#x3E;</code></pre>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>Numeric value</summary>
+        <ul class="tabs" id="binding_numeric">
+          <li data-title="UI"><img src="../../images/frameworks/svelte/binding_numeric.jpg" /></li>
+          <li data-title="Numbers.svelte">
+            <pre><code class="language-html">&#x3C;script&#x3E;
+  let a = $state(1);
+  let b = $state(2);
+&#x3C;/script&#x3E;
+
+&#x3C;label&#x3E;
+  &#x3C;input type=&#x22;number&#x22; bind:value={a} min=&#x22;0&#x22; max=&#x22;10&#x22; /&#x3E;
+  &#x3C;input type=&#x22;range&#x22; bind:value={a} min=&#x22;0&#x22; max=&#x22;10&#x22; /&#x3E;
+&#x3C;/label&#x3E;
+
+&#x3C;label&#x3E;
+  &#x3C;input type=&#x22;number&#x22; bind:value={b} min=&#x22;0&#x22; max=&#x22;10&#x22; /&#x3E;
+  &#x3C;input type=&#x22;range&#x22; bind:value={b} min=&#x22;0&#x22; max=&#x22;10&#x22; /&#x3E;
+&#x3C;/label&#x3E;
+
+&#x3C;p&#x3E;{a} + {b} = {a + b}&#x3C;/p&#x3E;</code></pre>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>Single Checkbox</summary>
+        <ul class="tabs" id="binding_single_checkbox">
+          <li data-title="UI"><img src="../../images/frameworks/svelte/binding_single_checkbox.jpg" /></li>
+          <li data-title="Login.svelte">
+            <pre><code class="language-html">&#x3C;script&#x3E;
+  let isRegistered = $state(false);
+&#x3C;/script&#x3E;
+
+{#if isRegistered}
+  &#x3C;div class=&#x22;user-form&#x22;&#x3E;
+    &#x3C;div&#x3E;&#x3C;h4&#x3E;Login&#x3C;/h4&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;input type=&#x22;text&#x22; placeholder=&#x22;Email Id&#x22; /&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;input type=&#x22;password&#x22; placeholder=&#x22;Password&#x22; /&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;button class=&#x22;btn-red&#x22;&#x3E;Login&#x3C;/button&#x3E;&#x3C;/div&#x3E;
+
+    &#x3C;div&#x3E;
+      &#x3C;label&#x3E;
+        &#x3C;input type=&#x22;checkbox&#x22; bind:checked={isRegistered} /&#x3E;
+        Take me to registration
+      &#x3C;/label&#x3E;
+    &#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+{:else}
+  &#x3C;div class=&#x22;user-form&#x22;&#x3E;
+    &#x3C;div&#x3E;&#x3C;h4&#x3E;Register&#x3C;/h4&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;input type=&#x22;text&#x22; placeholder=&#x22;First Name&#x22; /&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;input type=&#x22;text&#x22; placeholder=&#x22;Last Name&#x22; /&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;input type=&#x22;text&#x22; placeholder=&#x22;Email Id&#x22; /&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;input type=&#x22;password&#x22; placeholder=&#x22;Password&#x22; /&#x3E;&#x3C;/div&#x3E;
+    &#x3C;div&#x3E;&#x3C;button class=&#x22;btn-blue&#x22;&#x3E;Register&#x3C;/button&#x3E;&#x3C;/div&#x3E;
+
+    &#x3C;div&#x3E;
+      &#x3C;label&#x3E;
+        &#x3C;input type=&#x22;checkbox&#x22; bind:checked={isRegistered} /&#x3E;
+        Take me to login
+      &#x3C;/label&#x3E;
+    &#x3C;/div&#x3E;
+  &#x3C;/div&#x3E;
+{/if}
+
+&#x3C;style&#x3E;
+  .user-form {
+    display: flex;
+    flex-direction: column;
+  }
+  .user-form &#x3E; div {
+    margin-bottom: 0.4em;
+  }
+&#x3C;/style&#x3E;</code></pre>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>Checkbox Group</summary>
+        <ul class="tabs" id="bindig_group_checkbox">
+          <li data-title="UI"><img src="../../images/frameworks/svelte/binding_group_checkbox.jpg" /></li>
+          <li data-title="Players.svelte">
+            <pre><code class="language-html">&#x3C;script&#x3E;
+  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
+  let selectedPlayers = $state([]);
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;players&#x22;&#x3E;
+  {#each players as player (player.id)}
+    &#x3C;label&#x3E;&#x3C;input type=&#x22;checkbox&#x22; bind:group={selectedPlayers} value={player.id} /&#x3E;{player.name}&#x3C;/label&#x3E;
+  {/each}
 &#x3C;/div&#x3E;
+
+&#x3C;div&#x3E;
+  &#x3C;pre&#x3E;{JSON.stringify(selectedPlayers)}&#x3C;/pre&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .players {
+    display: flex;
+    margin-bottom: 1em;
+    &#x26; label {
+      display: inline-block;
+      margin-right: 0.5em;
+      padding: 0.5em;
+      background-color: #bff3fc;
+      border: 1px solid #94d8e4;
+      &#x26; input[type=&#x22;checkbox&#x22;] {
+        margin-right: 0.5em;
+      }
+    }
+  }
+&#x3C;/style&#x3E;</code></pre></li>
+        </ul>
+      </details>
+      <details>
+        <summary></summary>
+        <ul class="tabs" id="binding_input_text3">
+          <li data-title="UI"></li>
+          <li data-title="">
+            <pre><code class="language-html"></code></pre>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>Combobox Binding (Single)</summary>
+        <div id="sv_05_01">
+          <ul class="tabs" id="binding_single_select">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/binding_single_select.jpg" /></li>
+            <li data-title="Players.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
+
+  let selectedPlayer = $state(players[0]);
+&#x3C;/script&#x3E;
+
+&#x3C;div&#x3E;{selectedPlayer.name}&#x3C;/div&#x3E;
+
 &#x3C;select bind:value={selectedPlayer}&#x3E;
   {#each players as player}
     &#x3C;option value={player}&#x3E;{player.name}&#x3C;/option&#x3E;
   {/each}
 &#x3C;/select&#x3E;</code></pre>
+            </li>
+          </ul>
         </div>
       </details>
       <details>
@@ -58,28 +202,7 @@
 &#x3C;/div&#x3E;</code></pre>
         </div>
       </details>
-      <details>
-        <summary>Checkbox Group</summary>
-        <div id="sv_05_03">
-          <pre><code class="language-html">&#x3C;script&#x3E;
-  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
-  let selectedPlayers = [];
-  &#x3C;/script&#x3E;
-  
-  &#x3C;div&#x3E;
-  {#each players as player (player.id)}
-      &#x3C;label
-      &#x3E;&#x3C;input
-          type=&#x22;checkbox&#x22;
-          bind:group={selectedPlayers}
-          value={player.id}
-      /&#x3E;{player.name}&#x3C;/label
-      &#x3E;
-  {/each}
-&#x3C;/div&#x3E;
-{JSON.stringify(selectedPlayers)}</code></pre>
-        </div>
-      </details>
+
       <details>
         <summary>Radio Button Group</summary>
         <div id="sv_05_04">
@@ -328,5 +451,20 @@ $: remaining = list.filter((t) =&#x3E; !t.done).length;
 
   <script>
     hljs.highlightAll();
+    const createTabs = () => {
+      let arr = ["#binding_input_text", "#binding_numeric", "#binding_single_checkbox", "#bindig_group_checkbox", "#binding_single_select"];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
   </script>
 </html>
