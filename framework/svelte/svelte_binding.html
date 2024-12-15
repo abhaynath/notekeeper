@@ -147,7 +147,8 @@
       }
     }
   }
-&#x3C;/style&#x3E;</code></pre></li>
+&#x3C;/style&#x3E;</code></pre>
+          </li>
         </ul>
       </details>
       <details>
@@ -184,22 +185,79 @@
       </details>
       <details>
         <summary>Combobox Binding (Multiple)</summary>
-        <div id="sv_05_02">
-          <pre><code class="language-html">&#x3C;script&#x3E;
-  let players = [{ id: &#x22;id_1&#x22;, name: &#x22;Rohit Sharma&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Shikhar Dhawan&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;Virat Kohli&#x22; }];
-  let selectedPlayers = [];
-  &#x3C;/script&#x3E;
-  
-  &#x3C;div&#x3E;
-  &#x3C;select multiple bind:value={selectedPlayers}&#x3E;
-      {#each players as player}
-      &#x3C;option value={player}&#x3E;{player.name}&#x3C;/option&#x3E;
-      {/each}
+        <div>
+          <ul class="tabs" id="binding_multiple_combobox">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/binding_multiple_combobox.JPG" /></li>
+            <li data-title="Combobox.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let scoops = $state(1);
+  let flavours = $state([&#x22;Mint choc chip&#x22;]);
+
+  let menu = [&#x22;Cookies and cream&#x22;, &#x22;Mint choc chip&#x22;, &#x22;Raspberry ripple&#x22;];
+
+  function join(flavours) {
+    if (flavours.length === 1) return flavours[0];
+    return &#x60;${flavours.slice(0, -1).join(&#x22;, &#x22;)} and ${flavours[flavours.length - 1]}&#x60;;
+  }
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;card&#x22;&#x3E;
+  &#x3C;h2&#x3E;Size&#x3C;/h2&#x3E;
+
+  &#x3C;label&#x3E;
+    &#x3C;input type=&#x22;radio&#x22; bind:group={scoops} value={1} /&#x3E;
+    One scoop
+  &#x3C;/label&#x3E;
+
+  &#x3C;label&#x3E;
+    &#x3C;input type=&#x22;radio&#x22; bind:group={scoops} value={2} /&#x3E;
+    Two scoops
+  &#x3C;/label&#x3E;
+
+  &#x3C;label&#x3E;
+    &#x3C;input type=&#x22;radio&#x22; bind:group={scoops} value={3} /&#x3E;
+    Three scoops
+  &#x3C;/label&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;div class=&#x22;card&#x22;&#x3E;
+  &#x3C;h2&#x3E;Flavours&#x3C;/h2&#x3E;
+
+  &#x3C;select multiple bind:value={flavours}&#x3E;
+    {#each menu as flavour}
+      &#x3C;option value={flavour}&#x3E;
+        {flavour}
+      &#x3C;/option&#x3E;
+    {/each}
   &#x3C;/select&#x3E;
-  &#x3C;/div&#x3E;
-  &#x3C;div&#x3E;
-  {JSON.stringify(selectedPlayers)}
-&#x3C;/div&#x3E;</code></pre>
+
+  {#if flavours.length === 0}
+    &#x3C;p&#x3E;Please select at least one flavour&#x3C;/p&#x3E;
+  {:else if flavours.length &#x3E; scoops}
+    &#x3C;p&#x3E;Can&#x27;t order more flavours than scoops!&#x3C;/p&#x3E;
+  {:else}
+    &#x3C;p&#x3E;
+      You ordered {scoops}
+      {scoops === 1 ? &#x22;scoop&#x22; : &#x22;scoops&#x22;}
+      of {join(flavours)}
+    &#x3C;/p&#x3E;
+  {/if}
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .card {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 #00000033;
+  }
+  select &#x3E; option {
+    padding: 4px;
+    font-family: &#x22;pt_sansregular&#x22;;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
         </div>
       </details>
 
@@ -452,7 +510,14 @@ $: remaining = list.filter((t) =&#x3E; !t.done).length;
   <script>
     hljs.highlightAll();
     const createTabs = () => {
-      let arr = ["#binding_input_text", "#binding_numeric", "#binding_single_checkbox", "#bindig_group_checkbox", "#binding_single_select"];
+      let arr = [
+        "#binding_input_text",
+        "#binding_numeric",
+        "#binding_single_checkbox",
+        "#bindig_group_checkbox",
+        "#binding_single_select",
+        "#binding_multiple_combobox",
+      ];
 
       arr.forEach((tab) => {
         new VanillaTabs({
