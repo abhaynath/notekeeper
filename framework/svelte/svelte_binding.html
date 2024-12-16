@@ -36,6 +36,78 @@
         </ul>
       </details>
       <details>
+        <summary>Markdown text-area</summary>
+        <div>
+          <p>Install <b>marked</b> package</p>
+          <pre class="shell">npm install marked --verbose</pre>
+          <ul class="tabs" id="binding_marked_textarea">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/binding_marked_textarea.jpg" /></li>
+            <li data-title="MarkedTextArea.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import { marked } from &#x22;marked&#x22;;
+  let text = $state(&#x60;Marked - Markdown Parser
+========================
+
+[Marked] lets you convert [Markdown] into HTML.  Markdown is a simple text format whose goal is to be very easy to read and write, even when not converted to HTML.  This demo page will let you type anything you like and see how it gets converted.  Live.  No more waiting around.
+
+How To Use The Demo
+-------------------
+
+1. Type in stuff on the left.
+2. See the live updates on the right.
+
+That&#x27;s it.  Pretty simple.  There&#x27;s also a drop-down option above to switch between various views:
+
+- **Preview:**  A live display of the generated HTML as it would render in a browser.
+- **HTML Source:**  The generated HTML before your browser makes it pretty.
+- **Lexer Data:**  What [marked] uses internally, in case you like gory stuff like this.
+- **Quick Reference:**  A brief run-down of how to format things using markdown.
+
+Why Markdown?
+-------------
+
+It&#x27;s easy.  It&#x27;s not overly bloated, unlike HTML.  Also, as the creator of [markdown] says,
+
+&#x3E; The overriding design goal for Markdown&#x27;s
+&#x3E; formatting syntax is to make it as readable
+&#x3E; as possible. The idea is that a
+&#x3E; Markdown-formatted document should be
+&#x3E; publishable as-is, as plain text, without
+&#x3E; looking like it&#x27;s been marked up with tags
+&#x3E; or formatting instructions.
+
+Ready to start writing?  Either start changing stuff on the left or
+[clear everything](/demo/?text=) with a simple click.
+
+[Marked]: https://github.com/markedjs/marked/
+[Markdown]: http://daringfireball.net/projects/markdown/&#x60;);
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;card&#x22;&#x3E;
+  &#x3C;textarea bind:value={text}&#x3E;&#x3C;/textarea&#x3E;
+  &#x3C;div&#x3E;{@html marked(text)}&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  textarea {
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 200px;
+    padding: 1em;
+  }
+  .card {
+    padding: 2em;
+    margin: 4px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 #00000033;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
+        </div>
+      </details>
+      <details>
         <summary>Numeric value</summary>
         <ul class="tabs" id="binding_numeric">
           <li data-title="UI"><img src="../../images/frameworks/svelte/binding_numeric.jpg" /></li>
@@ -263,20 +335,45 @@
 
       <details>
         <summary>Radio Button Group</summary>
-        <div id="sv_05_04">
-          <pre><code class="language-html">&#x3C;script&#x3E;
-  let arr = [{ id: &#x22;id_1&#x22;, name: &#x22;India&#x22; },{ id: &#x22;id_2&#x22;, name: &#x22;Australia&#x22; },{ id: &#x22;id_3&#x22;, name: &#x22;England&#x22; }];
+        <div>
+          <ul class="tabs" id="binding_group_radio">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/binding_radio_group.jpg" /></li>
+            <li data-title="RadioGroup.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  let arr = [
+    { id: &#x22;id_1&#x22;, name: &#x22;India&#x22; },
+    { id: &#x22;id_2&#x22;, name: &#x22;Australia&#x22; },
+    { id: &#x22;id_3&#x22;, name: &#x22;England&#x22; },
+  ];
 
-  let selectedTeam = arr[0].id;
+  let selectedTeam = $state(arr[0].id);
 &#x3C;/script&#x3E;
 
-&#x3C;div&#x3E;
+&#x3C;div class=&#x22;card&#x22;&#x3E;
   {#each arr as team (team.id)}
-      &#x3C;label&#x3E;&#x3C;input type=&#x22;radio&#x22; bind:group={selectedTeam} value={team.id} /&#x3E;{team.name}&#x3C;/label&#x3E;
+    &#x3C;label&#x3E;&#x3C;input type=&#x22;radio&#x22; bind:group={selectedTeam} value={team.id} /&#x3E;{team.name}&#x3C;/label&#x3E;
   {/each}
+&#x3C;/div&#x3E;
+&#x3C;div class=&#x22;card&#x22;&#x3E;Selected : {selectedTeam}&#x3C;/div&#x3E;
 
-  &#x3C;div&#x3E;Selected : {selectedTeam}&#x3C;/div&#x3E;
-&#x3C;/div&#x3E;</code></pre>
+&#x3C;style&#x3E;
+  .card {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 #00000033;
+
+    &#x26; label {
+      margin-right: 1em;
+
+      &#x26; input {
+        margin-right: 10px;
+      }
+    }
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
         </div>
       </details>
       <details>
@@ -456,54 +553,6 @@ flex-direction: column;
 </code></pre>
         </div>
       </details>
-      <details>
-        <summary>Todo App example</summary>
-        <div id="sv_05_09">
-          <img src="../../images/frameworks/svelte/todoapp.jpg" />
-          <pre><code class="language-html">
-&#x3C;script&#x3E;
-let list = [
-{ id: &#x22;id1&#x22;, name: &#x22;Blender&#x22;, done: false },
-{ id: &#x22;id2&#x22;, name: &#x22;Maya&#x22;, done: true },
-{ id: &#x22;id3&#x22;, name: &#x22;C#&#x22;, done: false },
-];
-
-const addTodo = () =&#x3E; {
-let id = &#x22;id&#x22; + Math.floor(Math.random() * 10000);
-list = list.concat({ id: id, name: &#x22;&#x22;, done: false });
-};
-const clearFinished = () =&#x3E; {
-list = list.filter((t) =&#x3E; !t.done);
-};
-$: remaining = list.filter((t) =&#x3E; !t.done).length;
-&#x3C;/script&#x3E;
-
-&#x3C;div&#x3E;
-&#x3C;div&#x3E;
-&#x3C;button on:click={addTodo}&#x3E;Add Todo&#x3C;/button&#x3E;
-&#x3C;button on:click={clearFinished}&#x3E;Clear Finished&#x3C;/button&#x3E;
-&#x3C;/div&#x3E;
-&#x3C;div&#x3E;Remaining : {remaining}&#x3C;/div&#x3E;
-&#x3C;div&#x3E;
-{#each list as task (task.id)}
-&#x3C;div&#x3E;
-    &#x3C;input type=&#x22;checkbox&#x22; bind:checked={task.done} /&#x3E;
-    &#x3C;input type=&#x22;text&#x22; bind:value={task.name} disabled={task.done} /&#x3E;
-&#x3C;/div&#x3E;
-{/each}
-&#x3C;/div&#x3E;
-&#x3C;div&#x3E;
-&#x3C;ul&#x3E;
-{#each list as task (task.id)}
-    &#x3C;li&#x3E;{task.name} --- {task.done}&#x3C;/li&#x3E;
-{/each}
-&#x3C;/ul&#x3E;
-&#x3C;/div&#x3E;
-&#x3C;/div&#x3E;
-        
-</code></pre>
-        </div>
-      </details>
     </div>
   </body>
 
@@ -512,11 +561,13 @@ $: remaining = list.filter((t) =&#x3E; !t.done).length;
     const createTabs = () => {
       let arr = [
         "#binding_input_text",
+        "#binding_marked_textarea",
         "#binding_numeric",
         "#binding_single_checkbox",
         "#bindig_group_checkbox",
         "#binding_single_select",
         "#binding_multiple_combobox",
+        "#binding_group_radio",
       ];
 
       arr.forEach((tab) => {
