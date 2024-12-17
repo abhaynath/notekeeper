@@ -378,34 +378,37 @@ Ready to start writing?  Either start changing stuff on the left or
       </details>
       <details>
         <summary>Dimension width and height</summary>
-        <div id="sv_05_05">
-          <img src="../../images/frameworks/svelte/dimensions.jpg" />
-          <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  let w = 0;
-  let h = 0;
-  let fontSize = 10;
+        <ul class="tabs" id="binding_dimension">
+          <li data-title="UI"><img src="../../images/frameworks/svelte/binding_dimension.jpg" /></li>
+          <li data-title="Dimension.svelte">
+            <pre><code class="language-html">&#x3C;script&#x3E;
+  let w = $state();
+  let h = $state();
+  let size = $state(42);
+  let text = $state(&#x22;edit me&#x22;);
 &#x3C;/script&#x3E;
 
-&#x3C;div&#x3E;
-  &#x3C;div&#x3E;
-    &#x3C;span&#x3E;Font Size = {fontSize}&#x3C;/span&#x3E; &#x3C;input type=&#x22;range&#x22; bind:value={fontSize} /&#x3E;
+&#x3C;div class=&#x22;card&#x22;&#x3E;
+  &#x3C;input type=&#x22;range&#x22; bind:value={size} /&#x3E;
+  &#x3C;input bind:value={text} /&#x3E;
+
+  &#x3C;p&#x3E;size: {w}px x {h}px&#x3C;/p&#x3E;
+
+  &#x3C;div bind:clientWidth={w} bind:clientHeight={h}&#x3E;
+    &#x3C;span style=&#x22;font-size: {size}px&#x22;&#x3E;{text}&#x3C;/span&#x3E;
   &#x3C;/div&#x3E;
-  &#x3C;div&#x3E;Width = {w}px Height = {h}px&#x3C;/div&#x3E;
-  &#x3C;div class=&#x22;box&#x22; bind:clientWidth={w} bind:clientHeight={h} style=&#x22;font-size:{fontSize}px&#x22;&#x3E;Font-size {fontSize}&#x3C;/div&#x3E;
 &#x3C;/div&#x3E;
 
 &#x3C;style&#x3E;
-  .box {
-    border: 1px solid black;
-    margin: 10px;
-    padding: 5px;
-    background-color: aquamarine;
+  input {
+    display: block;
+  }
+  div {
     display: inline-block;
   }
-&#x3C;/style&#x3E;
-
-</code></pre>
-        </div>
+&#x3C;/style&#x3E;</code></pre>
+          </li>
+        </ul>
       </details>
       <details>
         <summary>this : Canvas example</summary>
@@ -568,6 +571,7 @@ flex-direction: column;
         "#binding_single_select",
         "#binding_multiple_combobox",
         "#binding_group_radio",
+        "#binding_dimension",
       ];
 
       arr.forEach((tab) => {
