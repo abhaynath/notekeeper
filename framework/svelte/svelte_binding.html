@@ -223,15 +223,7 @@ Ready to start writing?  Either start changing stuff on the left or
           </li>
         </ul>
       </details>
-      <details>
-        <summary></summary>
-        <ul class="tabs" id="binding_input_text3">
-          <li data-title="UI"></li>
-          <li data-title="">
-            <pre><code class="language-html"></code></pre>
-          </li>
-        </ul>
-      </details>
+
       <details>
         <summary>Combobox Binding (Single)</summary>
         <div id="sv_05_01">
@@ -412,40 +404,42 @@ Ready to start writing?  Either start changing stuff on the left or
       </details>
       <details>
         <summary>this : Canvas example</summary>
-        <div id="sv_05_06">
-          <img src="../../images/frameworks/svelte/this.jpg" />
-          <pre><code class="language-html">&#x3C;script lang=&#x22;ts&#x22;&#x3E;
+        <div id="bind_canvas">
+          <ul class="tabs" id="binding_canvas_1">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/binding_canvas_1.jpg" /></li>
+            <li data-title="Circle.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
   import { onMount } from &#x22;svelte&#x22;;
 
-  let canvas: HTMLCanvasElement;
-  let context: CanvasRenderingContext2D;
+  let canvas;
+  let context;
   let width = 400;
   let height = 400;
 
   const getRandomColor = () =&#x3E; {
-  const letters = &#x22;0123456789ABCDEF&#x22;;
-  let color = &#x22;#&#x22;;
-  for (let i = 0; i &#x3C; 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+    const letters = &#x22;0123456789ABCDEF&#x22;;
+    let color = &#x22;#&#x22;;
+    for (let i = 0; i &#x3C; 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   };
   const drawCircle = () =&#x3E; {
-  let r = Math.floor(Math.random() * (width / 2));
-  context.strokeStyle = getRandomColor();
-  context.beginPath();
+    let r = Math.floor(Math.random() * (width / 2));
+    context.strokeStyle = getRandomColor();
+    context.beginPath();
 
-  context.arc(width / 2, height / 2, r, 0, 2 * Math.PI, true);
-  context.stroke();
+    context.arc(width / 2, height / 2, r, 0, 2 * Math.PI, true);
+    context.stroke();
   };
   onMount(() =&#x3E; {
-  context = canvas.getContext(&#x22;2d&#x22;);
+    context = canvas.getContext(&#x22;2d&#x22;);
   });
 &#x3C;/script&#x3E;
 
 &#x3C;div&#x3E;
   &#x3C;button on:click={drawCircle}&#x3E;Circle&#x3C;/button&#x3E;
-  &#x3C;canvas bind:this={canvas} {width} {height} /&#x3E;
+  &#x3C;canvas bind:this={canvas} {width} {height}&#x3E;&#x3C;/canvas&#x3E;
 &#x3C;/div&#x3E;
 
 &#x3C;style&#x3E;
@@ -455,105 +449,214 @@ Ready to start writing?  Either start changing stuff on the left or
     margin: 10px;
   }
 &#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
+          <ul class="tabs" id="binding_canvas_2">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/binding_canvas_2.jpg" /></li>
+            <li data-title="SvgMasking.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+  import { onMount } from &#x22;svelte&#x22;;
+
+  let canvas = $state();
+
+  onMount(() =&#x3E; {
+    const ctx = canvas.getContext(&#x22;2d&#x22;);
+    let frame;
+
+    (function loop() {
+      frame = requestAnimationFrame(loop);
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+      for (let p = 0; p &#x3C; imageData.data.length; p += 4) {
+        const i = p / 4;
+        const x = i % canvas.width;
+        const y = (i / canvas.height) &#x3E;&#x3E;&#x3E; 0;
+
+        const t = window.performance.now();
+
+        const r = 64 + (128 * x) / canvas.width + 64 * Math.sin(t / 1000);
+        const g = 64 + (128 * y) / canvas.height + 64 * Math.cos(t / 1400);
+        const b = 128;
+
+        imageData.data[p + 0] = r;
+        imageData.data[p + 1] = g;
+        imageData.data[p + 2] = b;
+        imageData.data[p + 3] = 255;
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+    })();
+
+    return () =&#x3E; {
+      cancelAnimationFrame(frame);
+    };
+  });
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;box&#x22;&#x3E;
+  &#x3C;canvas bind:this={canvas}&#x3E;&#x3C;/canvas&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .box {
+    margin: 10px;
+    width: 300px;
+    height: 300px;
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #666;
+    -webkit-mask: url(../assets/images/svelte-logo-mask.svg) 50% 50% no-repeat;
+    mask: url(../assets/images/svelte-logo-mask.svg) 50% 50% no-repeat;
+  }
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
         </div>
       </details>
       <details>
-        <summary>Bind to component prop</summary>
-        <div id="sv_05_07">
-          <img src="../../images/frameworks/svelte/bindtoprops.jpg" />
-          <h5>BindToProps.svelte</h5>
-          <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-import Batsman from &#x22;./Batsman.svelte&#x22;;
-let batsmanName = &#x22;&#x22;;
-let batsmanRuns = 0;
-let batsmanInnings = 1;
-$: average = batsmanRuns / batsmanInnings;
-&#x3C;/script&#x3E;
+        <summary>Components</summary>
+        <ul class="tabs" id="binding_components">
+          <li data-title="UI"><img src="../../images/frameworks/svelte/binding_components.jpg" /></li>
+          <li data-title="App.svelte">
+            <pre><code class="language-html">&#x3C;script&#x3E;
+  import Keypad from &#x22;./Keypad.svelte&#x22;;
 
-&#x3C;div class=&#x22;wrap&#x22;&#x3E;
-&#x3C;div&#x3E;{batsmanName}&#x3C;/div&#x3E;
-&#x3C;div&#x3E;{batsmanRuns}&#x3C;/div&#x3E;
-&#x3C;div&#x3E;{average.toFixed(2)}&#x3C;/div&#x3E;
-&#x3C;Batsman bind:name={batsmanName} bind:runs={batsmanRuns} bind:innings={batsmanInnings} /&#x3E;
-&#x3C;/div&#x3E;
+  let pin = $state(&#x22;&#x22;);
+  let view = $derived(pin ? pin.replace(/\d(?!$)/g, &#x22;&#x2022;&#x22;) : &#x22;enter your pin&#x22;);
 
-&#x3C;style&#x3E;
-.wrap {
-margin: 10px;
-padding: 10px;
-width: 200px;
-border: 1px solid black;
-}
-&#x3C;/style&#x3E;</code></pre>
-
-          <h5>Batsman.svelte</h5>
-          <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-export let name = &#x22;&#x22;;
-export let runs = 0;
-export let innings = 0;
-&#x3C;/script&#x3E;
-
-&#x3C;div class=&#x22;wrap&#x22;&#x3E;
-&#x3C;input type=&#x22;text&#x22; bind:value={name} placeholder=&#x22;player name&#x22; /&#x3E;
-&#x3C;input type=&#x22;number&#x22; bind:value={runs} placeholder=&#x22;runs&#x22; min=&#x22;0&#x22; /&#x3E;
-&#x3C;input type=&#x22;number&#x22; bind:value={innings} placeholder=&#x22;innings&#x22; min=&#x22;1&#x22; /&#x3E;
-&#x3C;/div&#x3E;
-
-&#x3C;style&#x3E;
-.wrap {
-display: flex;
-flex-direction: column;
-}
-&#x3C;/style&#x3E;</code></pre>
-        </div>
-      </details>
-      <details>
-        <summary>Binding to instance</summary>
-        <div id="sv_05_08">
-          <img src="../../images/frameworks/svelte/focus.jpg" />
-          <h5>BindToInstance.svelte</h5>
-          <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  import InputField from &#x22;./InputField.svelte&#x22;;
-
-  let textField: InputField;
-&#x3C;/script&#x3E;
-
-&#x3C;div class=&#x22;wrap&#x22;&#x3E;
-  &#x3C;h4&#x3E;Binding to instance&#x3C;/h4&#x3E;
-  &#x3C;button
-    on:click={() =&#x3E; {
-      textField.focus();
-    }}&#x3E;Focus TextField&#x3C;/button
-  &#x3E;
-  &#x3C;InputField bind:this={textField} /&#x3E;
-&#x3C;/div&#x3E;
-
-&#x3C;style&#x3E;
-    .wrap{
-        margin:10px;
-        border:1px solid black;
-        padding:10px;
-        width:200px;
-    }
-&#x3C;/style&#x3E;</code></pre>
-
-          <h5>InputField.svelte</h5>
-          <pre><code class="language-html">
-&#x3C;script lang=&#x22;ts&#x22;&#x3E;
-  let input: HTMLInputElement;
-  export function focus() {
-    input.focus();
+  function handleSubmit() {
+    alert(&#x60;submitted ${pin}&#x60;);
   }
 &#x3C;/script&#x3E;
 
-&#x3C;div&#x3E;
-  &#x3C;input type=&#x22;text&#x22; bind:this={input} placeholder=&#x22;user name&#x22; /&#x3E;
+&#x3C;div class=&#x22;box&#x22;&#x3E;
+  &#x3C;h1 class:pin&#x3E;{view}&#x3C;/h1&#x3E;
+
+  &#x3C;Keypad bind:value={pin} onSubmit={handleSubmit} /&#x3E;
 &#x3C;/div&#x3E;
 
-</code></pre>
+&#x3C;style&#x3E;
+  .box {
+    margin: 20px;
+  }
+  h1 {
+    color: #ccc;
+  }
+  h1.pin {
+    color: #333;
+  }
+  :global(body.dark) h1 {
+    color: #444;
+  }
+  :global(body.dark) h1.pin {
+    color: #fff;
+  }
+&#x3C;/style&#x3E;</code></pre>
+          </li>
+          <li data-title="Keypad.svelte">
+            <pre><code class="language-html">&#x3C;script&#x3E;
+  let { value = $bindable(), onSubmit } = $props();
+
+  const select = (num) =&#x3E; () =&#x3E; (value += num);
+  const clear = () =&#x3E; (value = &#x22;&#x22;);
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;keypad&#x22;&#x3E;
+  &#x3C;button onclick={select(1)}&#x3E;1&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(2)}&#x3E;2&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(3)}&#x3E;3&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(4)}&#x3E;4&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(5)}&#x3E;5&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(6)}&#x3E;6&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(7)}&#x3E;7&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(8)}&#x3E;8&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(9)}&#x3E;9&#x3C;/button&#x3E;
+
+  &#x3C;button disabled={!value} onclick={clear}&#x3E;clear&#x3C;/button&#x3E;
+  &#x3C;button onclick={select(0)}&#x3E;0&#x3C;/button&#x3E;
+  &#x3C;button disabled={!value} onclick={onSubmit}&#x3E;submit&#x3C;/button&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 5em);
+    grid-template-rows: repeat(4, 3em);
+    grid-gap: 0.5em;
+  }
+
+  button {
+    margin: 0;
+  }
+&#x3C;/style&#x3E;</code></pre>
+          </li>
+        </ul>
+      </details>
+      <details>
+        <summary>Child props</summary>
+        <div>
+          <div>
+            <p>Ordinarily, props go one way, from parent to child. This makes it easy to understand how data flows around your app.</p>
+            <p>
+              In Svelte, component props can be bound, which means that data can also flow up from child to parent. This isn’t something you should do often,
+              but it can simplify your code if used sparingly and carefully.
+            </p>
+            <p>It also means that a state proxy can be mutated in the child.</p>
+            <p>
+              <b>
+                Mutation is also possible with normal props, but is strongly discouraged &#x2014; Svelte will warn you if it detects that a component is
+                mutating state it does not &#x2018;own&#x2019;.</b
+              >
+            </p>
+          </div>
+
+          <ul class="tabs" id="binding_props">
+            <li data-title="UI"><img src="../../images/frameworks/svelte/binding_props.JPG" /></li>
+            <li data-title="Parent.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+import Props from &#x22;./Props.svelte&#x22;;
+let userId = $state(&#x22;&#x22;);
+let email = $state(&#x22;&#x22;);
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;parentComp&#x22;&#x3E;
+&#x3C;Props bind:text={userId} placeholder=&#x22;User Id&#x22;&#x3E;&#x3C;/Props&#x3E;
+&#x3C;Props bind:text={email} placeholder=&#x22;Email Id&#x22;&#x3E;&#x3C;/Props&#x3E;
+
+&#x3C;h3&#x3E;User Name = {userId}&#x3C;/h3&#x3E;
+&#x3C;h3&#x3E;Email ID = {email}&#x3C;/h3&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.parentComp {
+  padding: 1em;
+  margin: 1em;
+}
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+
+            <li data-title="Child.svelte">
+              <pre><code class="language-html">&#x3C;script&#x3E;
+let { text = $bindable(), placeholder = &#x22;Input text&#x22; } = $props();
+&#x3C;/script&#x3E;
+
+&#x3C;div class=&#x22;myinput&#x22;&#x3E;
+&#x3C;input type=&#x22;text&#x22; bind:value={text} {placeholder} /&#x3E;
+&#x3C;/div&#x3E;
+
+&#x3C;style&#x3E;
+.myinput {
+  padding: 0.25rem;
+}
+input {
+  padding: 0.4rem;
+}
+&#x3C;/style&#x3E;</code></pre>
+            </li>
+          </ul>
         </div>
       </details>
     </div>
@@ -572,6 +675,10 @@ flex-direction: column;
         "#binding_multiple_combobox",
         "#binding_group_radio",
         "#binding_dimension",
+        "#binding_canvas_1",
+        "#binding_canvas_2",
+        "#binding_components",
+        "#binding_props",
       ];
 
       arr.forEach((tab) => {
