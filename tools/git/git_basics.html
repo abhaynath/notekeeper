@@ -20,25 +20,28 @@
     <div class="content">
       <h4>Git Configuration</h4>
       <section id="git_01_01">
-        <h4>Setting username and email</h4>
-        <ol class="steps">
-          <li>
-            on Command Prompt, use following command
+        <h4>Configuration</h4>
+        <details>
+          <summary>Setting username and email</summary>
+          <ol class="steps">
+            <li>
+              on Command Prompt, use following command
 
-            <pre class="shell">
-    git config --global user.name = "Abhay Nath" 
-    git config --global user.email = "abhaynath@gmail.com"</pre
-            >
-          </li>
+              <pre class="shell">
+git config --global user.name = "Abhay Nath" 
+git config --global user.email = "abhaynath@gmail.com"</pre
+              >
+            </li>
 
-          <li>
-            To check if the user name and emailid successfully saved,
-            <pre class="shell">
+            <li>
+              To check if the user name and emailid successfully saved,
+              <pre class="shell">
     git config user.name
     git config user.email</pre
-            >
-          </li>
-        </ol>
+              >
+            </li>
+          </ol>
+        </details>
       </section>
       <section id="git_update">
         <h4>Update git command line</h4>
@@ -46,217 +49,244 @@
       </section>
       <section id="git_01_02">
         <h4>Creating Repository</h4>
-        <ol class="steps">
-          <li>
-            Create an empty directory named 'myproject'. Run following command inside myproject
-            <pre class="shell">git init</pre>
-          </li>
-          <li>
-            Run following command to check the status of the repository
+        <details>
+          <summary>init- status - add - commit</summary>
+          <ol class="steps">
+            <li>
+              Create an empty directory named 'myproject'. Run following command inside myproject
+              <pre class="shell">git init</pre>
+            </li>
+            <li>
+              Run following command to check the status of the repository
 
-            <pre class="shell">git status</pre>
-          </li>
-          <li>
-            Add 'index.html' new file in 'myproject' folder. To stage the index.html file, run following command
+              <pre class="shell">git status</pre>
+            </li>
+            <li>
+              Add 'index.html' new file in 'myproject' folder. To stage the index.html file, run following command
 
-            <pre class="shell">git add index.html</pre>
-            To add all files,
-            <pre class="shell">git add --all</pre>
-          </li>
-          <li>
-            To commit changes, run following command
+              <pre class="shell">git add index.html</pre>
+              To add all files,
+              <pre class="shell">git add --all</pre>
+            </li>
+            <li>
+              To commit changes, run following command
 
-            <pre class="shell">git commit --message "initial commit for the project"</pre>
-            or
-            <pre class="shell">git commit --m "initial commit for the project"</pre>
-          </li>
-        </ol>
+              <pre class="shell">git commit --message "initial commit for the project"</pre>
+              or
+              <pre class="shell">git commit --m "initial commit for the project"</pre>
+            </li>
+          </ol>
+        </details>
       </section>
       <section id="git_01_03">
         <h4>Delete Files</h4>
-        <ol class="steps">
-          <li>
-            Suppose we want to delete any file from the repository
-            <pre class="shell">git rm css/style.css</pre>
-          </li>
-          <li>
-            This will delete the css folder and add a staged snapshot. To commit these changes,
-            <pre class="shell">git commit -m "Removed CSS folder"</pre>
-          </li>
-        </ol>
+        <details>
+          <summary>git rm</summary>
+          <ol class="steps">
+            <li>
+              Suppose we want to delete any file from the repository
+              <pre class="shell">git rm css/style.css</pre>
+            </li>
+            <li>
+              This will delete the css folder and add a staged snapshot. To commit these changes,
+              <pre class="shell">git commit -m "Removed CSS folder"</pre>
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section id="git_01_04">
         <h4>Rename files</h4>
-        <ol class="steps">
-          <li>
-            If we want to rename style.css to screen.css
+        <details>
+          <summary>git mv</summary>
+          <ol class="steps">
+            <li>
+              If we want to rename style.css to screen.css
 
-            <pre class="shell">git mv css/style.css css/screen.css</pre>
-          </li>
-        </ol>
+              <pre class="shell">git mv css/style.css css/screen.css</pre>
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section id="git_01_05">
         <h4>Untrack files already added to git repository based on .gitignore</h4>
-        <ol class="steps">
-          <li>Add the list of files/folder in gitignore files you want git to ignore.</li>
-          <li>Commit the changes</li>
-          <li>
-            Remove everything from the repository.
+        <details>
+          <summary>git rm -r --cached .</summary>
+          <ol class="steps">
+            <li>Add the list of files/folder in gitignore files you want git to ignore.</li>
+            <li>Commit the changes</li>
+            <li>
+              Remove everything from the repository.
 
-            <pre class="shell">git rm -r --cached .</pre>
+              <pre class="shell">git rm -r --cached .</pre>
 
-            This command will remove everything from repository cached
-          </li>
-          <li>
-            Re add everything
+              This command will remove everything from repository cached
+            </li>
+            <li>
+              Re add everything
 
-            <pre class="shell">git add .</pre>
-          </li>
-          <li>
-            Commit
-            <pre class="shell">git commit -m ".gitignore fix"</pre>
-          </li>
-        </ol>
+              <pre class="shell">git add .</pre>
+            </li>
+            <li>
+              Commit
+              <pre class="shell">git commit -m ".gitignore fix"</pre>
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section id="git_01_06">
         <h4>Branching</h4>
-        <ol class="steps">
-          <li>
-            Get list of all branches
+        <details>
+          <summary>branch - checkout - merge</summary>
+          <ol class="steps">
+            <li>
+              Get list of all branches
 
-            <pre class="shell">git branch</pre>
-          </li>
-          <li>
-            Create new branch
+              <pre class="shell">git branch</pre>
+            </li>
+            <li>
+              Create new branch
 
-            <pre class="shell">git branch new-homepage</pre>
-          </li>
-          <li>
-            Switch to newly created branch,
-            <pre class="shell">git checkout new-homepage</pre>
-          </li>
-          <li>
-            Check which branch is active currently,
-            <pre class="shell">git branch</pre>
-          </li>
-          <li>
-            Merging Branch
-            <ol class="steps">
-              <li>
-                Suppose we have two branches (master &amp; new-homepage). You have made few changes in 'new-home' branch and you want to merge these changes
-                into master branch.
-              </li>
-              <li>Commit all the changes in 'new-homepage' branch.</li>
-              <li>Switch to 'master' branch.</li>
-              <li>
-                <pre class="shell">git merge new-homepage</pre>
-                This will merge all the changes from 'new-homepage' to 'master'
-              </li>
-            </ol>
-          </li>
-          <li>
-            Delete a local branch
-            <pre class="shell">git branch -d branch_name</pre>
-          </li>
-        </ol>
+              <pre class="shell">git branch new-homepage</pre>
+            </li>
+            <li>
+              Switch to newly created branch,
+              <pre class="shell">git checkout new-homepage</pre>
+            </li>
+            <li>
+              Check which branch is active currently,
+              <pre class="shell">git branch</pre>
+            </li>
+            <li>
+              Merging Branch
+              <ol class="steps">
+                <li>
+                  Suppose we have two branches (master &amp; new-homepage). You have made few changes in 'new-home' branch and you want to merge these changes
+                  into master branch.
+                </li>
+                <li>Commit all the changes in 'new-homepage' branch.</li>
+                <li>Switch to 'master' branch.</li>
+                <li>
+                  <pre class="shell">git merge new-homepage</pre>
+                  This will merge all the changes from 'new-homepage' to 'master'
+                </li>
+              </ol>
+            </li>
+            <li>
+              Delete a local branch
+              <pre class="shell">git branch -d branch_name</pre>
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section id="git_01_07">
         <h4>Remote Repository</h4>
-        <ol class="steps">
-          <li>To clone the repository on GitHub, copy the path of project</li>
-          <li>
-            Create an empty folder. Run following command from the directory,
+        <details>
+          <summary>clone - pull - push - remote</summary>
+          <ol class="steps">
+            <li>To clone the repository on GitHub, copy the path of project</li>
+            <li>
+              Create an empty folder. Run following command from the directory,
 
-            <pre class="shell">git clone https://github.com/abhaynath/snake.git</pre>
+              <pre class="shell">git clone https://github.com/abhaynath/snake.git</pre>
 
-            This will create a repository called 'origin'
+              This will create a repository called 'origin'
 
-            <pre class="shell">git push origin master</pre>
-          </li>
-          <li>
-            Get list of branches on remote
-            <pre class="shell">git remote show origin</pre>
-          </li>
-          <li>
-            Delete a remote branch
-            <pre class="shell">git push origin --delete branch_name</pre>
-          </li>
-        </ol>
+              <pre class="shell">git push origin master</pre>
+            </li>
+            <li>
+              Get list of branches on remote
+              <pre class="shell">git remote show origin</pre>
+            </li>
+            <li>
+              Delete a remote branch
+              <pre class="shell">git push origin --delete branch_name</pre>
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section id="git_01_08">
         <h4>Stashing</h4>
-        <ol class="steps">
-          <li>
-            If you do not want to commit some unfinished files changes, but you may need them in future, you need to stash those files.
-            <pre class="shell">git stash</pre>
-          </li>
-          <li>
-            To get the list of stash
-            <pre class="shell">git stash list</pre>
-            <pre class="output">
-  Output : 
-  stash@{0}: WIP on style: af6811f merged changed
-  stash@{1}: WIP on style: af6811f merged changed
-  stash@{2}: WIP on style: af6811f merged changed
-    </pre
-            >
-          </li>
-          <li>
-            To apply stash,
-            <pre class="shell">git stash apply stash@{1}</pre>
-          </li>
-        </ol>
+        <details>
+          <summary>stash - apply</summary>
+          <ol class="steps">
+            <li>
+              If you do not want to commit some unfinished files changes, but you may need them in future, you need to stash those files.
+              <pre class="shell">git stash</pre>
+            </li>
+            <li>
+              To get the list of stash
+              <pre class="shell">git stash list</pre>
+              <pre class="output">
+    Output : 
+    stash@{0}: WIP on style: af6811f merged changed
+    stash@{1}: WIP on style: af6811f merged changed
+    stash@{2}: WIP on style: af6811f merged changed
+      </pre
+              >
+            </li>
+            <li>
+              To apply stash,
+              <pre class="shell">git stash apply stash@{1}</pre>
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section id="git_01_09">
         <h4>Commands</h4>
-        <ol class="steps">
-          <li>
-            Get list of changes in file
+        <details>
+          <summary>diff - reflog</summary>
+          <ol class="steps">
+            <li>
+              Get list of changes in file
 
-            <pre class="shell">git diff &#x3C;filename&#x3E;</pre>
-          </li>
-          <li>
-            Get list of Commits
-            <pre class="shell">git reflog &#x3C;filename&#x3E;</pre>
-            <pre class="shell">git reflog</pre>
-          </li>
-          <li>
-            Compare the changes between two files,
-            <pre class="shell">git diff &#x3C;id1&#x3E; &#x3C;id2&#x3E;</pre>
-          </li>
-          <li>
-            Replaced master branch with another branch code completely
-            <pre class="shell">
-  git checkout new_branch
-  git merge -s ours master
-  git checkout master
-  git merge new_branch</pre
-            >
-          </li>
-        </ol>
+              <pre class="shell">git diff &#x3C;filename&#x3E;</pre>
+            </li>
+            <li>
+              Get list of Commits
+              <pre class="shell">git reflog &#x3C;filename&#x3E;</pre>
+              <pre class="shell">git reflog</pre>
+            </li>
+            <li>
+              Compare the changes between two files,
+              <pre class="shell">git diff &#x3C;id1&#x3E; &#x3C;id2&#x3E;</pre>
+            </li>
+            <li>
+              Replaced master branch with another branch code completely
+              <pre class="shell">
+    git checkout new_branch
+    git merge -s ours master
+    git checkout master
+    git merge new_branch</pre
+              >
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section id="git_01_10">
         <h4>Rollback Changes</h4>
-        <ol class="steps">
-          <li>To revert uncommited changes in local repository</li>
-          <li>
-            Method 1 : For individual files
-            <pre class="shell">git checkout &#x3C;filename&#x3E;</pre>
-            for all files since last commit
-            <pre class="shell">git reset --hard</pre>
-          </li>
-          <li>
-            Method 2 :
-            <pre class="shell">git checkout .</pre>
-          </li>
-        </ol>
+        <details>
+          <summary>reset --hard</summary>
+          <ol class="steps">
+            <li>To revert uncommited changes in local repository</li>
+            <li>
+              Method 1 : For individual files
+              <pre class="shell">git checkout &#x3C;filename&#x3E;</pre>
+              for all files since last commit
+              <pre class="shell">git reset --hard</pre>
+            </li>
+            <li>
+              Method 2 :
+              <pre class="shell">git checkout .</pre>
+            </li>
+          </ol>
+        </details>
       </section>
     </div>
   </body>
