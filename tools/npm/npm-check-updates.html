@@ -18,8 +18,98 @@
     </nav>
     <div class="content">
       <section id="npm_1_1">
-        <h4>Get list of all installed global packages</h4>
-        <pre class="shell">npm list -g --depth=0</pre>
+        <h4>Install npm-check-updates</h4>
+        <pre class="shell">npm install -g npm-check-updates --verbose</pre>
+
+        <h4>Check installation</h4>
+        <pre class="shell">ncu -v</pre>
+      </section>
+
+      <section>
+        <h4>Display all available commands</h4>
+        <details>
+          <summary>ncu -h</summary>
+          <pre class="shell">
+Usage: cli [options] [filter]
+
+[filter] is a list or regex of package names to check (all others will be
+ignored).
+
+Options:
+  --cache                    Cache versions to a local cache file. Default  --cacheFile is ~/.ncu-cache.json and default --cacheExpiration is 10 minutes.
+  --cacheClear               Clear the default cache, or the cache file specified by --cacheFile.
+  --cacheExpiration &#x3C;min&#x3E;    Cache expiration in minutes. Only works with --cache. (default: 10)
+  --cacheFile &#x3C;path&#x3E;         Filepath for the cache file. Only works with --cache. (default: &#x22;~/.ncu-cache.json&#x22;)
+  --color                    Force color in terminal.
+  --concurrency &#x3C;n&#x3E;          Max number of concurrent HTTP requests to registry. (default: 8)
+  --configFileName &#x3C;s&#x3E;       Config file name. (default: .ncurc.{json,yml,js,cjs})
+  --configFilePath &#x3C;path&#x3E;    Directory of .ncurc config file. (default: directory of packageFile)
+  --cwd &#x3C;path&#x3E;               Working directory in which npm will be executed.
+  --deep                     Run recursively in current working directory. Alias of (--packageFile &#x27;**/package.json&#x27;).
+  --dep &#x3C;value&#x3E;              Check one or more sections of dependencies only: dev, optional, peer, prod, or packageManager (comma-delimited). (default:
+                              [&#x22;prod&#x22;,&#x22;dev&#x22;,&#x22;optional&#x22;,&#x22;packageManager&#x22;])
+  --deprecated               Include deprecated packages. Use --no-deprecated to exclude deprecated packages (uses more bandwidth). (default: true)
+  -d, --doctor               Iteratively installs upgrades and runs tests to identify breaking upgrades. Requires -u to execute. Run &#x22;ncu --help doctor&#x22; for details.
+  --doctorInstall &#x3C;command&#x3E;  Specifies the install script to use in doctor mode. (default: npm install or the equivalent for your package manager)
+  --doctorTest &#x3C;command&#x3E;     Specifies the test script to use in doctor mode. (default: npm test)
+  --enginesNode              Include only packages that satisfy engines.node as specified in the package file.
+  -e, --errorLevel &#x3C;n&#x3E;       Set the error level. 1: exits with error code 0 if no errors occur. 2: exits with error code 0 if no packages need updating (useful for continuous integration). (default: 1)
+  -f, --filter &#x3C;p&#x3E;           Include only package names matching the given string, wildcard, glob, comma-or-space-delimited list, /regex/, or predicate function. Run &#x22;ncu --help filter&#x22; for details.
+  filterResults*             Filters out upgrades based on a user provided function. Run &#x22;ncu --help filterResults&#x22; for details.
+  --filterVersion &#x3C;p&#x3E;        Filter on package version using comma-or-space-delimited list, /regex/, or predicate function. Run &#x22;ncu --help filterVersion&#x22; for details.
+  --format &#x3C;value&#x3E;           Modify the output formatting or show additional information. Specify one or more comma-delimited values: group, ownerChanged, repo, time, lines,
+                              installedVersion. Run &#x22;ncu --help format&#x22; for
+                              details. (default: [])
+  -g, --global               Check global packages instead of in the current project.
+  groupFunction*             Customize how packages are divided into groups when using --format group. Run &#x22;ncu --help groupFunction&#x22; for details.
+  --install &#x3C;value&#x3E;          Control the auto-install behavior: always, never, prompt. Run &#x22;ncu --help install&#x22; for details.,(default: &#x22;prompt&#x22;)
+  -i, --interactive          Enable interactive prompts for each dependency; implies -u unless one of the json options are set.
+  -j, --jsonAll              Output new package file instead of human-readable message.
+  --jsonDeps                 Like jsonAll but only lists dependencies, devDependencies, optionalDependencies, etc of the new package data.
+  --jsonUpgraded             Output upgraded dependencies in json.
+  -l, --loglevel &#x3C;n&#x3E;         Amount to log: silent, error, minimal, warn, info, verbose, silly. (default: &#x22;warn&#x22;)
+  --mergeConfig              Merges nested configs with the root config file for --deep or --packageFile options. (default: false)
+  -m, --minimal              Do not upgrade newer versions that are already satisfied by the version range according to semver.
+  --packageData &#x3C;value&#x3E;      Package file data (you can also use stdin).
+  --packageFile &#x3C;path|glob&#x3E;  Package file(s) location. (default: ./package.json)
+  -p, --packageManager &#x3C;s&#x3E;   npm, yarn, pnpm, deno, bun, staticRegistry (default: npm). Run &#x22;ncu --help packageManager&#x22; for details.
+  --peer                     Check peer dependencies of installed packages and filter updates to compatible versions. Run &#x22;ncu --help peer&#x22; for details.
+  --pre &#x3C;n&#x3E;                  Include prerelease versions, e.g. -alpha.0,-beta.5, -rc.2. Automatically set to 1 when --target is newest or greatest, or when the current version is a prerelease. (default: 0)
+  --prefix &#x3C;path&#x3E;            Current working directory of npm.
+  -r, --registry &#x3C;uri&#x3E;       Specify the registry to use when looking up package versions.
+  --registryType &#x3C;type&#x3E;      Specify whether --registry refers to a full npm registry or a simple JSON file or url: npm, json.
+                              (default: npm) Run &#x22;ncu --help registryType&#x22; for details.
+  -x, --reject &#x3C;p&#x3E;           Exclude packages matching the given string, wildcard, glob, comma-or-space-delimited list, /regex/, or predicate function. Run &#x22;ncu --help reject&#x22; for details.
+  --rejectVersion &#x3C;p&#x3E;        Exclude package.json versions using comma-or-space-delimited list, /regex/, or predicate function. Run &#x22;ncu --help rejectVersion&#x22; for details.
+  --removeRange              Remove version ranges from the final package version.
+  --retry &#x3C;n&#x3E;                Number of times to retry failed requests for package info. (default: 3)
+  --root                     Runs updates on the root project in addition to specified workspaces. Only allowed with --workspace or --workspaces. (default: true)
+  -s, --silent               Don&#x27;t output anything. Alias for --loglevel silent.
+  --stdin                    Read package.json from stdin.
+  -t, --target &#x3C;value&#x3E;       Determines the version to upgrade to: latest, newest, greatest, minor, patch, semver, @[tag], or [function]. (default: latest) Run &#x22;ncu --help target&#x22; for details.
+  --timeout &#x3C;ms&#x3E;             Global timeout in milliseconds. (default: no global timeout and 30 seconds per npm-registry-fetch)
+  -u, --upgrade              Overwrite package file with upgraded versions instead of just outputting to console.
+  --verbose                  Log additional information for debugging. Alias for --loglevel verbose.
+  -w, --workspace &#x3C;s&#x3E;        Run on one or more specified workspaces. Add --root to also upgrade the root project. (default:[])
+  -ws, --workspaces          Run on all workspaces. Add --root to also upgrade the root project.
+  -v, -V, --version          Output the version number of npm-check-updates.
+  -h, --help                 You&#x27;re lookin&#x27; at it. Run &#x22;ncu --help &#x3C;option&#x3E;&#x22; for a specific option.</pre
+          >
+        </details>
+      </section>
+      <section>
+        <h4>Check the latest versions of all project dependencies</h4>
+        <pre class="shell">ncu</pre>
+      </section>
+
+      <section>
+        <h4>Upgrade a project's package file</h4>
+        <pre class="shell">ncu -u</pre>
+      </section>
+
+      <section>
+        <h4>Check global packages</h4>
+        <pre class="shell">ncu -g</pre>
       </section>
     </div>
   </body>
