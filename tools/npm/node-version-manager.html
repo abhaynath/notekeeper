@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/npm/npm-logo.svg" />
+    <title>nvm</title>
+  </head>
+
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="npm_index.html">NPM</a>
+    </nav>
+    <div class="content">
+      <section id="nvm_01">
+        <h4>Installation</h4>
+        <details>
+          <summary>Setup instruction for windows</summary>
+          <div>
+            <p>
+              Download the latest release of from <a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank">node-version-manager</a> and
+              install.
+            </p>
+            <p>To check if node-version-manager is installed properly, run following command.</p>
+            <pre class="shell">nvm -v</pre>
+          </div>
+
+          <h4>display help</h4>
+          <pre class="shell">
+F:\&#x3E;nvm -h
+
+Running version 1.1.12.
+
+Usage:
+
+nvm arch                     : Show if node is running in 32 or 64 bit mode.
+nvm current                  : Display active version.
+nvm debug                    : Check the NVM4W process for known problems (troubleshooter).
+nvm install &#x3C;version&#x3E; [arch] : The version can be a specific version, &#x22;latest&#x22; for the latest current version, or &#x22;lts&#x22; for the
+                                most recent LTS version. Optionally specify whether to install the 32 or 64 bit version (defaults
+                                to system arch). Set [arch] to &#x22;all&#x22; to install 32 AND 64 bit versions.
+                                Add --insecure to the end of this command to bypass SSL validation of the remote download server.
+nvm list [available]         : List the node.js installations. Type &#x22;available&#x22; at the end to see what can be installed. Aliased as ls.
+nvm on                       : Enable node.js version management.
+nvm off                      : Disable node.js version management.
+nvm proxy [url]              : Set a proxy to use for downloads. Leave [url] blank to see the current proxy.
+                                Set [url] to &#x22;none&#x22; to remove the proxy.
+nvm node_mirror [url]        : Set the node mirror. Defaults to https://nodejs.org/dist/. Leave [url] blank to use default url.
+nvm npm_mirror [url]         : Set the npm mirror. Defaults to https://github.com/npm/cli/archive/. Leave [url] blank to default url.
+nvm uninstall &#x3C;version&#x3E;      : The version must be a specific version.
+nvm use [version] [arch]     : Switch to use the specified version. Optionally use &#x22;latest&#x22;, &#x22;lts&#x22;, or &#x22;newest&#x22;.
+                                &#x22;newest&#x22; is the latest installed version. Optionally specify 32/64bit architecture.
+                                nvm use &#x3C;arch&#x3E; will continue using the selected version, but switch to 32/64 bit mode.
+nvm root [path]              : Set the directory where nvm should store different versions of node.js.
+                                If &#x3C;path&#x3E; is not set, the current root will be displayed.
+nvm [--]version              : Displays the current running version of nvm for Windows. Aliased as v.</pre
+          >
+        </details>
+      </section>
+
+      <section id="nvm_03">
+        <h4>List all installed node versions</h4>
+        <pre class="shell">nvm list</pre>
+      </section>
+
+      <section id="nvm_04">
+        <h4>List all available node version that can be installed</h4>
+        <pre class="shell">nvm list available</pre>
+      </section>
+      <section id="nvm_02">
+        <h4>Installing node versions</h4>
+        <details>
+          <summary>Install version number / latest / LTS</summary>
+          <div>
+            <h5>Install specific node version</h5>
+            <pre class="shell">nvm install 22.12.0</pre>
+            <h5>Install latest node version</h5>
+            <pre class="shell">nvm install latest</pre>
+            <h5>Install LTS node version</h5>
+            <pre class="shell">nvm install lts</pre>
+          </div>
+        </details>
+      </section>
+
+      <section id="nvm_08">
+        <h4>Use specific Node version</h4>
+        <pre class="shell">nvm use 22.12.0</pre>
+      </section>
+
+      <section id="nvm_09">
+        <h4>Uninstall specific Node version</h4>
+        <pre class="shell">nvm uninstall 22.12.0</pre>
+      </section>
+
+      <section id="nvm_10">
+        <h4></h4>
+        <pre class="shell"></pre>
+      </section>
+
+      <section id="nvm_11">
+        <h4></h4>
+        <pre class="shell"></pre>
+      </section>
+    </div>
+  </body>
+
+  <script></script>
+</html>
