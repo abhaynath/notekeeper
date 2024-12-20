@@ -21,18 +21,149 @@
       <a href="ef-index.html">Entity Framework</a>
     </nav>
     <div class="content">
-      <div>
-        <ul class="tabs" id="basic">
-          <li data-title="Something"></li>
-        </ul>
-      </div>
+      <section>
+        <h4>Install entity framework cli globally</h4>
+        <p>
+          This installs dotnet ef and the design package which is required to run the command on a project. The migrations command scaffolds a migration to
+          create the initial set of tables for the model. The database update command creates the database and applies the new migration to it.
+        </p>
+        <pre class="shell">dotnet tool install --global dotnet-ef</pre>
+      </section>
+      <section>
+        <h4>Sample Application</h4>
+        <p>In this example, we will create a simple console application with Entity Framework Code First approach.</p>
+        <ol>
+          <li>
+            <p>Create a Console Application via dotnet commands</p>
+            <pre class="shell">
+dotnet new console -o EFGetStarted
+cd EFGetStarted</pre
+            >
+          </li>
+          <li>
+            <p>To install EF Core, you install the package for the EF Core database provider(s) you want to target. We are using SQLite in this tutorial.</p>
+            <ul class="tabs" id="efcoreinstall">
+              <li data-title=".NET Core CLI"><pre class="shell">dotnet add package Microsoft.EntityFrameworkCore.Sqlite</pre></li>
+              <li data-title="Package Manager Console"><pre class="shell">Install-Package Microsoft.EntityFrameworkCore.Sqlite</pre></li>
+            </ul>
+          </li>
+          <li>
+            <p>Create Model.cs file and modifing Program.cs as follows</p>
+            <ul class="tabs" id="blogging">
+              <li data-title="Model.cs">
+                <pre><code class="language-csharp">using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+
+public class BloggingContext : DbContext
+{
+    public DbSet&#x3C;Blog&#x3E; Blogs { get; set; }
+    public DbSet&#x3C;Post&#x3E; Posts { get; set; }
+
+    public string DbPath { get; }
+
+    public BloggingContext()
+    {
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        DbPath = System.IO.Path.Join(path, &#x22;blogging.db&#x22;);
+    }
+
+    // The following configures EF to create a Sqlite database file in the
+    // special &#x22;local&#x22; folder for your platform.
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        =&#x3E; options.UseSqlite($&#x22;Data Source={DbPath}&#x22;);
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+
+    public List&#x3C;Post&#x3E; Posts { get; } = new();
+}
+
+public class Post
+{
+    public int PostId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
+
+    public int BlogId { get; set; }
+    public Blog Blog { get; set; }
+}</code></pre>
+              </li>
+              <li data-title="Program.cs">
+                <pre><code class="language-csharp">using System;
+using System.Linq;
+
+using var db = new BloggingContext();
+
+// Note: This sample requires the database to be created before running.
+Console.WriteLine($&#x22;Database path: {db.DbPath}.&#x22;);
+
+// Create
+Console.WriteLine(&#x22;Inserting a new blog&#x22;);
+db.Add(new Blog { Url = &#x22;http://blogs.msdn.com/adonet&#x22; });
+db.SaveChanges();
+
+// Read
+Console.WriteLine(&#x22;Querying for a blog&#x22;);
+var blog = db.Blogs
+    .OrderBy(b =&#x3E; b.BlogId)
+    .First();
+
+// Update
+Console.WriteLine(&#x22;Updating the blog and adding a post&#x22;);
+blog.Url = &#x22;https://devblogs.microsoft.com/dotnet&#x22;;
+blog.Posts.Add(
+    new Post { Title = &#x22;Hello World&#x22;, Content = &#x22;I wrote an app using EF Core!&#x22; });
+db.SaveChanges();
+
+// Delete
+Console.WriteLine(&#x22;Delete the blog&#x22;);
+db.Remove(blog);
+db.SaveChanges();</code></pre>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p>Run the following commands to generate database.</p>
+            <ul class="tabs" id="migrations">
+              <li data-title=".NET Core CLI">
+                <pre class="shell">
+dotnet tool install --global dotnet-ef
+
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+dotnet ef migrations add InitialCreate
+
+dotnet ef database update</pre
+                >
+              </li>
+              <li data-title="Package Manager Console">
+                <pre class="shell">
+Install-Package Microsoft.EntityFrameworkCore.Tools
+
+Add-Migration InitialCreate
+
+Update-Database</pre
+                >
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p>Build the solution and run the application.</p>
+          </li>
+        </ol>
+      </section>
     </div>
   </body>
 
   <script>
     hljs.highlightAll();
     const createTabs = () => {
-      let arr = ["#basic"];
+      let arr = ["#efcoreinstall", "#blogging", "#migrations"];
 
       arr.forEach((tab) => {
         new VanillaTabs({
