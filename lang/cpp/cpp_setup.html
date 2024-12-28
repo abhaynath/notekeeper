@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/cpp/cpp_logo.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>C++ Setup</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="cpp_index.html">C++</a>
+    </nav>
+    <div class="content">
+      <div id="div1">
+        <h4>GCC and VS Code setup</h4>
+        <details>
+          <summary>Setting up compiler</summary>
+          <div>
+            <ol>
+              <li>
+                Follow the instructions from
+                <a href="https://code.visualstudio.com/docs/cpp/config-mingw" target="_blank"><span class="b">VS Code page</span></a>
+              </li>
+              <li>
+                <p>Add the <span class="keyword">C:\msys64\ucrt64\bin</span> path in enviornment variables.</p>
+                <img src="../../images/lang/cpp/gcc_env.jpg" alt="" />
+              </li>
+              <li>
+                <p>Check the setup by running following commands.</p>
+                <pre class="shell">
+  gcc --version
+  g++ --version
+  gdb --version</pre
+                >
+              </li>
+            </ol>
+          </div>
+        </details>
+      </div>
+      <div id="div2">
+        <details>
+          <summary>Hello world project example</summary>
+          <div>
+            <ul class="tabs" id="code1">
+              <li data-title="main.cpp">
+                <pre><code class="language-cpp">#include &#x3C;iostream&#x3E;
+#include &#x22;head.h&#x22;
+
+int main()
+{
+    User austin(&#x22;Stonecold Steve Austin&#x22;, 316);
+    austin.info();
+}</code></pre>
+              </li>
+              <li data-title="source.cpp">
+                <pre><code class="language-cpp">#include &#x3C;iostream&#x3E;
+#include &#x22;head.h&#x22;
+
+User::User(std::string nm, int ag)
+{
+    name = nm;
+    age = ag;
+};
+
+void User::info()
+{
+    std::cout &#x3C;&#x3C; &#x22; name = &#x22; &#x3C;&#x3C; name &#x3C;&#x3C; &#x22;\n age = &#x22; &#x3C;&#x3C; age &#x3C;&#x3C; std::endl;
+}</code></pre>
+              </li>
+              <li data-title="head.h">
+                <pre><code class="language-cpp">#ifndef head_h
+#define head_h
+
+#include &#x3C;iostream&#x3E;
+
+class User
+{
+public:
+    User(std::string nm, int ag);
+    void info();
+    int age;
+    std::string name;
+};
+
+#endif</code></pre>
+              </li>
+              <li data-title="tasks.json">
+                <pre><code class="language-json">{
+      &#x22;version&#x22;: &#x22;2.0.0&#x22;,
+      &#x22;tasks&#x22;: [
+        {
+          &#x22;type&#x22;: &#x22;cppbuild&#x22;,
+          &#x22;label&#x22;: &#x22;C/C++: g++.exe build active file&#x22;,
+          &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;,
+          &#x22;args&#x22;: [&#x22;-fdiagnostics-color=always&#x22;, &#x22;-g&#x22;, &#x22;${file}&#x22;, &#x22;-o&#x22;, &#x22;${fileDirname}\\${fileBasenameNoExtension}.exe&#x22;],
+          &#x22;options&#x22;: {
+            &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+          },
+          &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
+          &#x22;group&#x22;: {
+            &#x22;kind&#x22;: &#x22;build&#x22;,
+            &#x22;isDefault&#x22;: true
+          },
+          &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;
+        },
+        {
+          &#x22;type&#x22;: &#x22;shell&#x22;,
+          &#x22;label&#x22;: &#x22;Run Project&#x22;,
+          &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe -fdiagnostics-color=always -g \&#x22;${workspaceFolder}\\*.cpp\&#x22; -o \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22; &#x26;&#x26; \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22;&#x22;,
+          &#x22;options&#x22;: {
+            &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+          },
+          &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
+          &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;
+        }
+      ]
+    }</code></pre>
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = ["#code1"];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>
