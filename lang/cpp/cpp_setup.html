@@ -42,10 +42,114 @@
   gdb --version</pre
                 >
               </li>
+            
             </ol>
           </div>
         </details>
       </div>
+      <details>
+        <summary>gcc --help</summary>
+        <pre class="shell">
+Usage: gcc [options] file...
+          
+Options:
+-pass-exit-codes         Exit with highest error code from a phase.
+
+--help                   Display this information.
+
+--target-help            Display target specific command line options (including assembler and linker options).
+
+--help={common|optimizers|params|target|warnings|[^]{joined|separate|undocumented}}[,...].
+                  Display specific types of command line options.
+
+(Use &#x27;-v --help&#x27; to display command line options of sub-processes).
+
+--version                Display compiler version information.
+
+-dumpspecs               Display all of the built in spec strings.
+
+-dumpversion             Display the version of the compiler.
+
+-dumpmachine             Display the compiler&#x27;s target processor.
+
+-foffload=&#x3C;targets&#x3E;      Specify offloading targets.
+
+-print-search-dirs       Display the directories in the compiler&#x27;s search path.
+
+-print-libgcc-file-name  Display the name of the compiler&#x27;s companion library.
+
+-print-file-name=&#x3C;lib&#x3E;   Display the full path to library &#x3C;lib&#x3E;.
+
+-print-prog-name=&#x3C;prog&#x3E;  Display the full path to compiler component &#x3C;prog&#x3E;.
+
+-print-multiarch         Display the target&#x27;s normalized GNU triplet, used as a component in the library path.
+
+-print-multi-directory   Display the root directory for versions of libgcc.
+
+-print-multi-lib         Display the mapping between command line options and multiple library search directories.
+
+-print-multi-os-directory Display the relative path to OS libraries.
+
+-print-sysroot           Display the target libraries directory.
+
+-print-sysroot-headers-suffix Display the sysroot suffix used to find headers.
+
+-Wa,&#x3C;options&#x3E;            Pass comma-separated &#x3C;options&#x3E; on to the assembler.
+
+-Wp,&#x3C;options&#x3E;            Pass comma-separated &#x3C;options&#x3E; on to the preprocessor.
+
+-Wl,&#x3C;options&#x3E;            Pass comma-separated &#x3C;options&#x3E; on to the linker.
+
+-Xassembler &#x3C;arg&#x3E;        Pass &#x3C;arg&#x3E; on to the assembler.
+
+-Xpreprocessor &#x3C;arg&#x3E;     Pass &#x3C;arg&#x3E; on to the preprocessor.
+
+-Xlinker &#x3C;arg&#x3E;           Pass &#x3C;arg&#x3E; on to the linker.
+
+-save-temps              Do not delete intermediate files.
+
+-save-temps=&#x3C;arg&#x3E;        Do not delete intermediate files.
+
+-no-canonical-prefixes   Do not canonicalize paths when building relative prefixes to other gcc components.
+
+-pipe                    Use pipes rather than intermediate files.
+
+-time                    Time the execution of each subprocess.
+
+-specs=&#x3C;file&#x3E;            Override built-in specs with the contents of &#x3C;file&#x3E;.
+
+-std=&#x3C;standard&#x3E;          Assume that the input sources are for &#x3C;standard&#x3E;.
+
+--sysroot=&#x3C;directory&#x3E;    Use &#x3C;directory&#x3E; as the root directory for headers and libraries.
+
+-B &#x3C;directory&#x3E;           Add &#x3C;directory&#x3E; to the compiler&#x27;s search paths.
+
+-v                       Display the programs invoked by the compiler.
+
+-###                     Like -v but options quoted and commands not executed.
+
+-E                       Preprocess only; do not compile, assemble or link.
+
+-S                       Compile only; do not assemble or link.
+
+-c                       Compile and assemble, but do not link.
+
+-o &#x3C;file&#x3E;                Place the output into &#x3C;file&#x3E;.
+
+-pie                     Create a dynamically linked position independent executable.
+
+-shared                  Create a shared library.
+
+-x &#x3C;language&#x3E;            Specify the language of the following input files.
+                  Permissible languages include: c c++ assembler none
+                  &#x27;none&#x27; means revert to the default behavior of
+                  guessing the language based on the file&#x27;s extension.
+
+Options starting with -g, -f, -m, -O, -W, or --param are automatically
+passed on to the various sub-processes invoked by gcc.  In order to pass
+other options on to these processes the -W&#x3C;letter&#x3E; options must be used.</pre
+        >
+      </details>
       <div id="div2">
         <details>
           <summary>Hello world project example</summary>
@@ -95,35 +199,36 @@ public:
               </li>
               <li data-title="tasks.json">
                 <pre><code class="language-json">{
-      &#x22;version&#x22;: &#x22;2.0.0&#x22;,
-      &#x22;tasks&#x22;: [
-        {
-          &#x22;type&#x22;: &#x22;cppbuild&#x22;,
-          &#x22;label&#x22;: &#x22;C/C++: g++.exe build active file&#x22;,
-          &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;,
-          &#x22;args&#x22;: [&#x22;-fdiagnostics-color=always&#x22;, &#x22;-g&#x22;, &#x22;${file}&#x22;, &#x22;-o&#x22;, &#x22;${fileDirname}\\${fileBasenameNoExtension}.exe&#x22;],
-          &#x22;options&#x22;: {
-            &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
-          },
-          &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
-          &#x22;group&#x22;: {
-            &#x22;kind&#x22;: &#x22;build&#x22;,
-            &#x22;isDefault&#x22;: true
-          },
-          &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;
-        },
-        {
-          &#x22;type&#x22;: &#x22;shell&#x22;,
-          &#x22;label&#x22;: &#x22;Run Project&#x22;,
-          &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe -fdiagnostics-color=always -g \&#x22;${workspaceFolder}\\*.cpp\&#x22; -o \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22; &#x26;&#x26; \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22;&#x22;,
-          &#x22;options&#x22;: {
-            &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
-          },
-          &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
-          &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;
-        }
-      ]
-    }</code></pre>
+  &#x22;version&#x22;: &#x22;2.0.0&#x22;,
+  &#x22;tasks&#x22;: [
+    {
+      &#x22;type&#x22;: &#x22;cppbuild&#x22;,
+      &#x22;label&#x22;: &#x22;Abhay Task&#x22;,
+      &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;,
+      &#x22;args&#x22;: [&#x22;-g&#x22;, &#x22;-std=c++23&#x22;, &#x22;${workspaceFolder}/*.cpp&#x22;, &#x22;-o&#x22;, &#x22;${fileDirname}\\Austin.exe&#x22;],
+      &#x22;options&#x22;: {
+        &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+      },
+      &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
+      &#x22;group&#x22;: &#x22;build&#x22;,
+      &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;
+    },
+    {
+      &#x22;type&#x22;: &#x22;shell&#x22;,
+      &#x22;label&#x22;: &#x22;Run Project&#x22;,
+      &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe -fdiagnostics-color=always -g -std=c++23 \&#x22;${workspaceFolder}\\*.cpp\&#x22; -o \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22; &#x26;&#x26; \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22;&#x22;,
+      &#x22;options&#x22;: {
+        &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+      },
+      &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
+      &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;,
+      &#x22;group&#x22;: {
+        &#x22;kind&#x22;: &#x22;build&#x22;,
+        &#x22;isDefault&#x22;: true
+      }
+    }
+  ]
+}</code></pre>
               </li>
             </ul>
           </div>
