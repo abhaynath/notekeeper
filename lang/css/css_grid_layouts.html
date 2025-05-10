@@ -29,6 +29,22 @@
       .gridbox1 .block1 {
         background-color: white;
       }
+      .gridbox2 {
+        display: grid;
+        grid-template-columns: 50px 0.5fr 2fr 1fr;
+        gap: 5px;
+
+        border: 1px solid black;
+        background-color: gray;
+
+        & div {
+          padding: 10px;
+          background-color: #b8f4fc;
+          text-align: center;
+          color: black;
+          font-weight: bold;
+        }
+      }
     </style>
   </head>
 
@@ -54,8 +70,7 @@
             </div>
           </li>
           <li data-title="HTML">
-            <pre><code class="language-html">
-&#x3C;div class=&#x22;gridbox1&#x22;&#x3E;
+            <pre><code class="language-html">&#x3C;div class=&#x22;gridbox1&#x22;&#x3E;
     &#x3C;div class=&#x22;block1&#x22;&#x3E;&#x3C;/div&#x3E;
     &#x3C;div class=&#x22;block1&#x22;&#x3E;&#x3C;/div&#x3E;
     &#x3C;div class=&#x22;block1&#x22;&#x3E;&#x3C;/div&#x3E;
@@ -65,12 +80,10 @@
     &#x3C;div class=&#x22;block1&#x22;&#x3E;&#x3C;/div&#x3E;
     &#x3C;div class=&#x22;block1&#x22;&#x3E;&#x3C;/div&#x3E;
     &#x3C;div class=&#x22;block1&#x22;&#x3E;&#x3C;/div&#x3E;
-&#x3C;/div&#x3E;
-            </code></pre>
+&#x3C;/div&#x3E;</code></pre>
           </li>
           <li data-title="CSS">
-            <pre><code class="language-css">
-.gridbox1 {
+            <pre><code class="language-css">.gridbox1 {
     width: 100px;
     height: 100px;
     padding: 5px;
@@ -82,8 +95,151 @@
 }
 .gridbox1 .block1 {
     background-color: white;
-}
-            </code></pre>
+}</code></pre>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <ul id="grid_2" class="tabs">
+          <li data-title="UI">
+            <div class="gridbox2">
+              <div>1</div>
+              <div>2</div>
+              <div>3</div>
+              <div>4</div>
+              <div>5</div>
+              <div>6</div>
+              <div>7</div>
+              <div>8</div>
+              <div>9</div>
+            </div>
+          </li>
+          <li data-title="HTML">
+            <pre><code class="language-html">&#x3C;div class=&#x22;gridbox2&#x22;&#x3E;
+  &#x3C;div&#x3E;1&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;2&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;3&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;4&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;5&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;6&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;7&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;8&#x3C;/div&#x3E;
+  &#x3C;div&#x3E;9&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;</code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css">.gridbox2 {
+  display: grid;
+  grid-template-columns: 50px 0.5fr 2fr 1fr;
+  gap: 5px;
+
+  border: 1px solid black;
+  background-color: gray;
+
+  &#x26; div {
+    padding: 10px;
+    background-color: #b8f4fc;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+  }
+}</code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_3" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_4" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_5" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_6" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_7" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_8" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_9" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <ul id="grid_10" class="tabs">
+          <li data-title="UI"></li>
+          <li data-title="HTML">
+            <pre><code class="language-html"></code></pre>
+          </li>
+          <li data-title="CSS">
+            <pre><code class="language-css"></code></pre>
           </li>
         </ul>
       </div>
@@ -93,7 +249,7 @@
   <script>
     hljs.highlightAll();
     const createTabs = () => {
-      let arr = ["#grid_1"];
+      let arr = ["#grid_1", "#grid_2", "#grid_3", "#grid_4", "#grid_5", "#grid_6", "#grid_7", "#grid_8", "#grid_9", "#grid_10", "#grid_11", "#grid_12"];
 
       arr.forEach((tab) => {
         new VanillaTabs({
