@@ -45,6 +45,35 @@
           font-weight: bold;
         }
       }
+
+      .gridbox3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 100px;
+        border: 2px solid #f76707;
+        border-radius: 5px;
+        background-color: #fff4e6;
+
+        > div {
+          border: 2px solid #ffa94d;
+          border-radius: 5px;
+          background-color: #ffd8a8;
+          padding: 1em;
+          color: #d9480f;
+        }
+        .box1 {
+          grid-column-start: 1;
+          grid-column-end: 4;
+          grid-row-start: 1;
+          grid-row-end: 3;
+        }
+
+        .box2 {
+          grid-column-start: 1;
+          grid-row-start: 3;
+          grid-row-end: 5;
+        }
+      }
     </style>
   </head>
 
@@ -150,12 +179,51 @@
 
       <div>
         <ul id="grid_3" class="tabs">
-          <li data-title="UI"></li>
+          <li data-title="UI"><div class="gridbox3">
+      <div class="box1">One</div>
+      <div class="box2">Two</div>
+      <div class="box3">Three</div>
+      <div class="box4">Four</div>
+      <div class="box5">Five</div>
+    </div></li>
           <li data-title="HTML">
-            <pre><code class="language-html"></code></pre>
+            <pre><code class="language-html">&#x3C;div class=&#x22;gridbox3&#x22;&#x3E;
+  &#x3C;div class=&#x22;box1&#x22;&#x3E;One&#x3C;/div&#x3E;
+  &#x3C;div class=&#x22;box2&#x22;&#x3E;Two&#x3C;/div&#x3E;
+  &#x3C;div class=&#x22;box3&#x22;&#x3E;Three&#x3C;/div&#x3E;
+  &#x3C;div class=&#x22;box4&#x22;&#x3E;Four&#x3C;/div&#x3E;
+  &#x3C;div class=&#x22;box5&#x22;&#x3E;Five&#x3C;/div&#x3E;
+&#x3C;/div&#x3E;</code></pre>
           </li>
           <li data-title="CSS">
-            <pre><code class="language-css"></code></pre>
+            <pre><code class="language-css">.gridbox3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 100px;
+  border: 2px solid #f76707;
+  border-radius: 5px;
+  background-color: #fff4e6;
+
+  &#x3E; div {
+    border: 2px solid #ffa94d;
+    border-radius: 5px;
+    background-color: #ffd8a8;
+    padding: 1em;
+    color: #d9480f;
+  }
+  .box1 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .box2 {
+    grid-column-start: 1;
+    grid-row-start: 3;
+    grid-row-end: 5;
+  }
+}</code></pre>
           </li>
         </ul>
       </div>
