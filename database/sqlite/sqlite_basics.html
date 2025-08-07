@@ -7,10 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
 
-    <link
-      rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
-    />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/jquery.min.js"></script>
     <title>Sqlite Basics</title>
@@ -30,9 +27,7 @@
           <ol class="steps">
             <li>
               Go to
-              <a target="_blank" href="https://www.sqlite.org/download.html"
-                >sqlite.org</a
-              >
+              <a target="_blank" href="https://www.sqlite.org/download.html">sqlite.org</a>
             </li>
             <li>Download <b>sqlite-tools-win-x64</b> zip file.</li>
             <li>Unzip it in any folder.</li>
@@ -42,9 +37,7 @@
             </li>
             <li>
               Documentation for command line shell.
-              <a target="_blank" href="https://www.sqlite.org/cli.html"
-                >Sqlite Documentation</a
-              >
+              <a target="_blank" href="https://www.sqlite.org/cli.html">Sqlite Documentation</a>
             </li>
           </ol>
 
@@ -60,27 +53,19 @@
           <summary></summary>
           <div>
             <p>
-              The SQLite project provides a simple command-line program named
-              sqlite3 (or sqlite3.exe on Windows) that allows the user to
-              manually enter and execute SQL statements against an SQLite
-              database or against a ZIP archive. This document provides a brief
-              introduction on how to use the sqlite3 program.
+              The SQLite project provides a simple command-line program named sqlite3 (or sqlite3.exe on Windows) that allows the user to manually enter and
+              execute SQL statements against an SQLite database or against a ZIP archive. This document provides a brief introduction on how to use the sqlite3
+              program.
             </p>
             <p>
               Start the sqlite3 program by typing
-              <span class="keyword">&#x22;sqlite3&#x22;</span> at the command
-              prompt, optionally followed by the name the file that holds the
-              SQLite database (or ZIP archive). If the named file does not
-              exist, a new database file with the given name will be created
-              automatically. If no database file is specified on the
-              command-line, a temporary database is created and automatically
-              deleted when the &#x22;sqlite3&#x22; program exits.
+              <span class="keyword">&#x22;sqlite3&#x22;</span> at the command prompt, optionally followed by the name the file that holds the SQLite database
+              (or ZIP archive). If the named file does not exist, a new database file with the given name will be created automatically. If no database file is
+              specified on the command-line, a temporary database is created and automatically deleted when the &#x22;sqlite3&#x22; program exits.
             </p>
             <p>
-              On startup, the sqlite3 program will show a brief banner message
-              then prompt you to enter SQL. Type in SQL statements (terminated
-              by a semicolon), press &#x22;Enter&#x22; and the SQL will be
-              executed.
+              On startup, the sqlite3 program will show a brief banner message then prompt you to enter SQL. Type in SQL statements (terminated by a semicolon),
+              press &#x22;Enter&#x22; and the SQL will be executed.
 
               <img src="../../images/database/sqlite/shell1.jpg" />
             </p>
@@ -146,17 +131,10 @@ values(&#x27;sachin&#x27;,&#x27;tendulkar&#x27;,453,46.84);</pre
           <summary>Output format</summary>
           <ul>
             <li>
-              <b
-                >Change the output format. Default
-                <span class="keyword">list</span></b
-              >
+              <b>Change the output format. Default <span class="keyword">list</span></b>
             </li>
             <li>
-              <a
-                target="_blank"
-                href="https://www.sqlite.org/cli.html#changing_output_formats"
-                >More information about changing formats</a
-              >
+              <a target="_blank" href="https://www.sqlite.org/cli.html#changing_output_formats">More information about changing formats</a>
             </li>
             <pre class="shell">.mode format_type</pre>
 
@@ -190,20 +168,11 @@ values(&#x27;sachin&#x27;,&#x27;tendulkar&#x27;,453,46.84);</pre
           <div>
             <p>By default, sqlite3 sends query results to standard output.</p>
             <p>
-              You can change this using the <b>&#x22;.output&#x22;</b> and
-              <b>&#x22;.once&#x22;</b> commands. Just put the name of an output
-              file as an argument to .output and all subsequent query results
-              will be written to that file.
+              You can change this using the <b>&#x22;.output&#x22;</b> and <b>&#x22;.once&#x22;</b> commands. Just put the name of an output file as an argument
+              to .output and all subsequent query results will be written to that file.
             </p>
-            <p>
-              Or use the .once command instead of .output and output will only
-              be redirected for the single next command before reverting to the
-              console.
-            </p>
-            <p>
-              Use .output with no arguments to begin writing to standard output
-              again.
-            </p>
+            <p>Or use the .once command instead of .output and output will only be redirected for the single next command before reverting to the console.</p>
+            <p>Use .output with no arguments to begin writing to standard output again.</p>
             <ul>
               <li>
                 <b>Write sql output to JSON file.</b>
