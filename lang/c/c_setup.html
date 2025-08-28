@@ -17,7 +17,7 @@
   <body>
     <nav class="nav_main">
       <a href="../../index.html"><i class="fa fa-home"></i></a>
-      <a href="cpp_index.html">C++</a>
+      <a href="c_index.html">C</a>
     </nav>
     <div class="content">
       <div id="div1">
@@ -51,13 +51,9 @@ gdb --version</pre
           </div>
         </details>
       </div>
-      <details>
-        <summary>gcc --help</summary>
-        <pre class="shell"></pre>
-      </details>
       <div id="div2">
         <details>
-          <summary>Hello world project example</summary>
+          <summary>Compile project with GCC</summary>
           <div>
             <ul class="tabs" id="code1">
               <li data-title="main.c">
@@ -96,13 +92,120 @@ int sum(int a, int b);
           </div>
         </details>
       </div>
+      <div id="div3">
+        <details>
+          <summary>CMake with GCC</summary>
+          <div>
+            <div>
+              <pre class="shell">
+cmake-test/
+ &#x251C;&#x2500;&#x2500; CMakeLists.txt
+ &#x251C;&#x2500;&#x2500; src/
+ &#x2502;    &#x2514;&#x2500;&#x2500; main.c
+ &#x251C;&#x2500;&#x2500; lib/
+ &#x2502;    &#x251C;&#x2500;&#x2500; mathutils.c
+ &#x2502;    &#x2514;&#x2500;&#x2500; mathutils.h
+ &#x2514;&#x2500;&#x2500; build/   (created during build)</pre
+              >
+            </div>
+            <ul class="tabs" id="code2">
+              <li data-title="CMakeLists.txt">
+                <pre><code class="language-cmake">cmake_minimum_required(VERSION 4.1)
+project(CMakeDemo C)
+
+# Add the library from lib folder
+add_library(mathutils lib/mathutils.c)
+
+# Add the executable from src folder
+add_executable(cmakedemo src/main.c)
+
+# Link the library to the executable
+target_link_libraries(cmakedemo mathutils)
+
+# Include lib folder for headers
+target_include_directories(cmakedemo PRIVATE lib)</code></pre>
+              </li>
+              <li data-title="src/main.c">
+                <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x22;mathutils.h&#x22;
+int main(void)
+{
+&#x9;int x = 56;
+&#x9;int y = 67;
+&#x9;int result = sum(x, y);
+&#x9;printf(&#x22;Sum of %d and %d is %d\n&#x22;, x, y, result);
+&#x9;return 0;
+}</code></pre>
+              </li>
+              <li data-title="lib/mathutils.c">
+                <pre><code class="language-c">#include &#x22;mathutils.h&#x22;
+
+int sum(int a, int b) {
+    return a + b;
+}</code></pre>
+              </li>
+              <li data-title="lib/mathutils.h">
+                <pre><code class="language-c">#ifndef MATHUTILS_H
+#define MATHUTILS_H
+
+int sum(int a, int b);
+
+#endif</code></pre>
+              </li>
+              <li data-title=".vscode/tasks.json">
+                <pre><code class="language-json">{
+  &#x22;version&#x22;: &#x22;2.0.0&#x22;,
+  &#x22;tasks&#x22;: [
+    {
+      &#x22;label&#x22;: &#x22;Clean Build Folder&#x22;,
+      &#x22;type&#x22;: &#x22;shell&#x22;,
+      &#x22;command&#x22;: &#x22;powershell -Command \&#x22;Remove-Item -Recurse -Force build\\*\&#x22;&#x22;,
+      &#x22;problemMatcher&#x22;: []
+    },
+    {
+      &#x22;label&#x22;: &#x22;CMake Build (GCC)&#x22;,
+      &#x22;type&#x22;: &#x22;shell&#x22;,
+      &#x22;command&#x22;: &#x22;cmake -S . -B build -G \&#x22;MinGW Makefiles\&#x22; -DCMAKE_C_COMPILER=gcc &#x26;&#x26; cmake --build build&#x22;,
+      &#x22;problemMatcher&#x22;: []
+    },
+    {
+      &#x22;label&#x22;: &#x22;Run cmakedemo.exe&#x22;,
+      &#x22;type&#x22;: &#x22;shell&#x22;,
+      &#x22;command&#x22;: &#x22;build\\cmakedemo.exe&#x22;,
+      &#x22;problemMatcher&#x22;: []
+    },
+    {
+      &#x22;label&#x22;: &#x22;Build and Run&#x22;,
+      &#x22;dependsOn&#x22;: [&#x22;CMake Build (GCC)&#x22;, &#x22;Run cmakedemo.exe&#x22;],
+      &#x22;dependsOrder&#x22;: &#x22;sequence&#x22;,
+      &#x22;group&#x22;: {
+        &#x22;kind&#x22;: &#x22;build&#x22;,
+        &#x22;isDefault&#x22;: true
+      }
+    }
+  ]
+}</code></pre>
+              </li>
+            </ul>
+            <div>
+              Navigate to <b>cmake-test/build</b> folder.
+              <pre class="shell">
+cmake .. -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc
+cmake --build .</pre
+              >
+
+              If you are using VSCode, Press <b>Ctrl+Shift+P</b>. Select <b>Tasks:Run Task.</b> Select <b>Build and Run</b>
+            </div>
+          </div>
+        </details>
+      </div>
     </div>
   </body>
   <script>
     hljs.highlightAll();
 
     const createTabs = () => {
-      let arr = ["#code1"];
+      let arr = ["#code1", "#code2"];
 
       arr.forEach((tab) => {
         new VanillaTabs({
