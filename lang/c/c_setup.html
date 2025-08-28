@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/c/c.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>C Setup</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="cpp_index.html">C++</a>
+    </nav>
+    <div class="content">
+      <div id="div1">
+        <h4>GCC setup</h4>
+        <details>
+          <summary>Setting up compiler</summary>
+          <div>
+            <ol>
+              <li>Navigate to <a href="https://www.msys2.org/" target="_blank">MSYS2 website</a></li>
+              <li>
+                Download the installer for your environment. It might look like this
+                <a href="https://github.com/msys2/msys2-installer/releases/" target="_blank">release for windows</a>
+              </li>
+              <li>
+                After setup is complete, it will show MSYS2 terminal. Run following command
+                <pre class="shell">pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain</pre>
+              </li>
+              <li>
+                Add installation path in windows environment variables.
+                <b>C:\msys64\ucrt64\bin</b>
+              </li>
+              <li>
+                Check the installation
+                <pre class="shell">
+gcc --version
+g++ --version
+gdb --version</pre
+                >
+              </li>
+            </ol>
+          </div>
+        </details>
+      </div>
+      <details>
+        <summary>gcc --help</summary>
+        <pre class="shell"></pre>
+      </details>
+      <div id="div2">
+        <details>
+          <summary>Hello world project example</summary>
+          <div>
+            <ul class="tabs" id="code1">
+              <li data-title="main.c">
+                <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x22;mathutils.h&#x22;
+int main(void)
+{
+&#x9;int x = 56;
+&#x9;int y = 67;
+&#x9;int result = sum(x, y);
+&#x9;printf(&#x22;Sum of %d and %d is %d\n&#x22;, x, y, result);
+&#x9;return 0;
+}</code></pre>
+              </li>
+              <li data-title="mathutils.c">
+                <pre><code class="language-c">#include &#x22;mathutils.h&#x22;
+
+int sum(int a, int b)
+{
+    return a + b;
+}</code></pre>
+              </li>
+              <li data-title="mathutils.h">
+                <pre><code class="language-c">#ifndef MATHUTILS_H
+#define MATHUTILS_H
+
+int sum(int a, int b);
+
+#endif</code></pre>
+              </li>
+            </ul>
+            <div>
+              Run Following commands to build project
+              <pre class="shell">gcc main.c mathutils.c -o main.exe</pre>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = ["#code1"];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>
