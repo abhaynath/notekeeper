@@ -21,216 +21,211 @@
     </nav>
     <div class="content">
       <div id="div1">
-        <h4>GCC and VS Code setup</h4>
+        <h4>G++ setup</h4>
         <details>
           <summary>Setting up compiler</summary>
           <div>
             <ol>
+              <li>Navigate to <a href="https://www.msys2.org/" target="_blank">MSYS2 website</a></li>
               <li>
-                Follow the instructions from
-                <a href="https://code.visualstudio.com/docs/cpp/config-mingw" target="_blank"><span class="b">VS Code page</span></a>
+                Download the installer for your environment. It might look like this
+                <a href="https://github.com/msys2/msys2-installer/releases/" target="_blank">release for windows</a>
               </li>
               <li>
-                <p>Add the <span class="keyword">C:\msys64\ucrt64\bin</span> path in enviornment variables.</p>
-                <img src="../../images/lang/cpp/gcc_env.jpg" alt="" />
+                After setup is complete, it will show MSYS2 terminal. Run following command
+                <pre class="shell">pacman -S mingw-w64-x86_64-make</pre>
               </li>
               <li>
-                <p>Check the setup by running following commands.</p>
+                Add installation path in windows environment variables.
+                <b>C:\msys64\mingw64\bin</b>
+              </li>
+              <li>
+                Check the installation
                 <pre class="shell">
-  gcc --version
-  g++ --version
-  gdb --version</pre
+gcc --version
+g++ --version
+gdb --version</pre
                 >
               </li>
-            
             </ol>
           </div>
         </details>
       </div>
-      <details>
-        <summary>gcc --help</summary>
-        <pre class="shell">
-Usage: gcc [options] file...
-          
-Options:
--pass-exit-codes         Exit with highest error code from a phase.
-
---help                   Display this information.
-
---target-help            Display target specific command line options (including assembler and linker options).
-
---help={common|optimizers|params|target|warnings|[^]{joined|separate|undocumented}}[,...].
-                  Display specific types of command line options.
-
-(Use &#x27;-v --help&#x27; to display command line options of sub-processes).
-
---version                Display compiler version information.
-
--dumpspecs               Display all of the built in spec strings.
-
--dumpversion             Display the version of the compiler.
-
--dumpmachine             Display the compiler&#x27;s target processor.
-
--foffload=&#x3C;targets&#x3E;      Specify offloading targets.
-
--print-search-dirs       Display the directories in the compiler&#x27;s search path.
-
--print-libgcc-file-name  Display the name of the compiler&#x27;s companion library.
-
--print-file-name=&#x3C;lib&#x3E;   Display the full path to library &#x3C;lib&#x3E;.
-
--print-prog-name=&#x3C;prog&#x3E;  Display the full path to compiler component &#x3C;prog&#x3E;.
-
--print-multiarch         Display the target&#x27;s normalized GNU triplet, used as a component in the library path.
-
--print-multi-directory   Display the root directory for versions of libgcc.
-
--print-multi-lib         Display the mapping between command line options and multiple library search directories.
-
--print-multi-os-directory Display the relative path to OS libraries.
-
--print-sysroot           Display the target libraries directory.
-
--print-sysroot-headers-suffix Display the sysroot suffix used to find headers.
-
--Wa,&#x3C;options&#x3E;            Pass comma-separated &#x3C;options&#x3E; on to the assembler.
-
--Wp,&#x3C;options&#x3E;            Pass comma-separated &#x3C;options&#x3E; on to the preprocessor.
-
--Wl,&#x3C;options&#x3E;            Pass comma-separated &#x3C;options&#x3E; on to the linker.
-
--Xassembler &#x3C;arg&#x3E;        Pass &#x3C;arg&#x3E; on to the assembler.
-
--Xpreprocessor &#x3C;arg&#x3E;     Pass &#x3C;arg&#x3E; on to the preprocessor.
-
--Xlinker &#x3C;arg&#x3E;           Pass &#x3C;arg&#x3E; on to the linker.
-
--save-temps              Do not delete intermediate files.
-
--save-temps=&#x3C;arg&#x3E;        Do not delete intermediate files.
-
--no-canonical-prefixes   Do not canonicalize paths when building relative prefixes to other gcc components.
-
--pipe                    Use pipes rather than intermediate files.
-
--time                    Time the execution of each subprocess.
-
--specs=&#x3C;file&#x3E;            Override built-in specs with the contents of &#x3C;file&#x3E;.
-
--std=&#x3C;standard&#x3E;          Assume that the input sources are for &#x3C;standard&#x3E;.
-
---sysroot=&#x3C;directory&#x3E;    Use &#x3C;directory&#x3E; as the root directory for headers and libraries.
-
--B &#x3C;directory&#x3E;           Add &#x3C;directory&#x3E; to the compiler&#x27;s search paths.
-
--v                       Display the programs invoked by the compiler.
-
--###                     Like -v but options quoted and commands not executed.
-
--E                       Preprocess only; do not compile, assemble or link.
-
--S                       Compile only; do not assemble or link.
-
--c                       Compile and assemble, but do not link.
-
--o &#x3C;file&#x3E;                Place the output into &#x3C;file&#x3E;.
-
--pie                     Create a dynamically linked position independent executable.
-
--shared                  Create a shared library.
-
--x &#x3C;language&#x3E;            Specify the language of the following input files.
-                  Permissible languages include: c c++ assembler none
-                  &#x27;none&#x27; means revert to the default behavior of
-                  guessing the language based on the file&#x27;s extension.
-
-Options starting with -g, -f, -m, -O, -W, or --param are automatically
-passed on to the various sub-processes invoked by gcc.  In order to pass
-other options on to these processes the -W&#x3C;letter&#x3E; options must be used.</pre
-        >
-      </details>
       <div id="div2">
         <details>
-          <summary>Hello world project example</summary>
+          <summary>Compile project with g++</summary>
           <div>
             <ul class="tabs" id="code1">
               <li data-title="main.cpp">
                 <pre><code class="language-cpp">#include &#x3C;iostream&#x3E;
-#include &#x22;head.h&#x22;
+#include &#x22;mathutils.h&#x22;
 
 int main()
 {
-    User austin(&#x22;Stonecold Steve Austin&#x22;, 316);
-    austin.info();
+    int x = 5, y = 3;
+
+    std::cout &#x3C;&#x3C; &#x22;Add: &#x22; &#x3C;&#x3C; add(x, y) &#x3C;&#x3C; std::endl;
+    std::cout &#x3C;&#x3C; &#x22;Multiply: &#x22; &#x3C;&#x3C; multiply(x, y) &#x3C;&#x3C; std::endl;
+
+    return 0;
 }</code></pre>
               </li>
-              <li data-title="source.cpp">
-                <pre><code class="language-cpp">#include &#x3C;iostream&#x3E;
-#include &#x22;head.h&#x22;
+              <li data-title="mathutils.cpp">
+                <pre><code class="language-cpp">#include &#x22;mathutils.h&#x22;
 
-User::User(std::string nm, int ag)
+int add(int a, int b)
 {
-    name = nm;
-    age = ag;
-};
+    return a + b;
+}
 
-void User::info()
+int multiply(int a, int b)
 {
-    std::cout &#x3C;&#x3C; &#x22; name = &#x22; &#x3C;&#x3C; name &#x3C;&#x3C; &#x22;\n age = &#x22; &#x3C;&#x3C; age &#x3C;&#x3C; std::endl;
+    return a * b;
 }</code></pre>
               </li>
-              <li data-title="head.h">
-                <pre><code class="language-cpp">#ifndef head_h
-#define head_h
+              <li data-title="mathutils.h">
+                <pre><code class="language-cpp">#ifndef MATHUTILS_H
+#define MATHUTILS_H
 
-#include &#x3C;iostream&#x3E;
-
-class User
-{
-public:
-    User(std::string nm, int ag);
-    void info();
-    int age;
-    std::string name;
-};
+int add(int a, int b);
+int multiply(int a, int b);
 
 #endif</code></pre>
               </li>
-              <li data-title="tasks.json">
+            </ul>
+            <div>
+              Run Following commands to build project
+              <pre class="shell">g++ main.cpp mathutils.cpp -o myapp</pre>
+            </div>
+          </div>
+        </details>
+      </div>
+      <div id="div3">
+        <details>
+          <summary>CMake with g++</summary>
+          <div>
+            <div>
+              <pre class="shell">
+CmakeCpp/
+&#x2502;
+&#x251C;&#x2500;&#x2500; .vscode/
+&#x2502;   &#x2514;&#x2500;&#x2500; tasks.json
+&#x251C;&#x2500;&#x2500; CMakeLists.txt
+&#x251C;&#x2500;&#x2500; src/
+&#x2502;   &#x2514;&#x2500;&#x2500; main.cpp
+&#x251C;&#x2500;&#x2500; lib/
+&#x2502;   &#x251C;&#x2500;&#x2500; CMakeLists.txt
+&#x2502;   &#x2514;&#x2500;&#x2500; mathutils.cpp
+&#x2502;   &#x2514;&#x2500;&#x2500; mathutils.h
+&#x2514;&#x2500;&#x2500; build/</pre
+              >
+            </div>
+            <ul class="tabs" id="code2">
+              <li data-title="CMakeLists.txt">
+                <pre><code class="language-cmake">cmake_minimum_required(VERSION 4.1)
+project(CmakeCpp VERSION 1.0 LANGUAGES CXX)
+
+# Add library from lib/
+add_subdirectory(lib)
+
+# Add executable from src/
+add_executable(CmakeCpp src/main.cpp)
+
+# Link the library
+target_link_libraries(CmakeCpp PRIVATE MathUtils)</code></pre>
+              </li>
+              <li data-title="src/main.cpp">
+                <pre><code class="language-cpp">#include &#x3C;iostream&#x3E;
+#include &#x22;mathutils.h&#x22;
+
+int main()
+{
+    std::cout &#x3C;&#x3C; &#x22;Add: &#x22; &#x3C;&#x3C; add(3, 4) &#x3C;&#x3C; std::endl;
+    std::cout &#x3C;&#x3C; &#x22;Multiply: &#x22; &#x3C;&#x3C; multiply(3, 4) &#x3C;&#x3C; std::endl;
+    return 0;
+}</code></pre>
+              </li>
+              <li data-title="lib/mathutils.cpp">
+                <pre><code class="language-cpp">#include &#x22;mathutils.h&#x22;
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}</code></pre>
+              </li>
+              <li data-title="lib/mathutils.h">
+                <pre><code class="language-cpp">#ifndef MATHUTILS_H
+#define MATHUTILS_H
+
+int add(int a, int b);
+int multiply(int a, int b);
+
+#endif</code></pre>
+              </li>
+              <li data-title="lib/CMakeLists.txt">
+                <pre><code class="language-cmake"># Create a static library from mathutils.cpp
+add_library(MathUtils mathutils.cpp)
+
+# Include the current directory for headers
+target_include_directories(MathUtils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+</code></pre>
+              </li>
+              <li data-title=".vscode/tasks.json">
                 <pre><code class="language-json">{
   &#x22;version&#x22;: &#x22;2.0.0&#x22;,
   &#x22;tasks&#x22;: [
     {
-      &#x22;type&#x22;: &#x22;cppbuild&#x22;,
-      &#x22;label&#x22;: &#x22;Abhay Task&#x22;,
-      &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;,
-      &#x22;args&#x22;: [&#x22;-g&#x22;, &#x22;-std=c++23&#x22;, &#x22;${workspaceFolder}/*.cpp&#x22;, &#x22;-o&#x22;, &#x22;${fileDirname}\\Austin.exe&#x22;],
+      &#x22;label&#x22;: &#x22;CMake Configure&#x22;,
+      &#x22;type&#x22;: &#x22;shell&#x22;,
+      &#x22;command&#x22;: &#x22;cmake&#x22;,
+      &#x22;args&#x22;: [&#x22;-G&#x22;, &#x22;MinGW Makefiles&#x22;, &#x22;-DCMAKE_CXX_COMPILER=g++&#x22;, &#x22;-B&#x22;, &#x22;build&#x22;, &#x22;-S&#x22;, &#x22;.&#x22;],
       &#x22;options&#x22;: {
-        &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+        &#x22;cwd&#x22;: &#x22;${workspaceFolder}&#x22;
       },
-      &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
-      &#x22;group&#x22;: &#x22;build&#x22;,
-      &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;
+      &#x22;problemMatcher&#x22;: []
     },
     {
+      &#x22;label&#x22;: &#x22;CMake Build&#x22;,
       &#x22;type&#x22;: &#x22;shell&#x22;,
-      &#x22;label&#x22;: &#x22;Run Project&#x22;,
-      &#x22;command&#x22;: &#x22;C:\\msys64\\ucrt64\\bin\\g++.exe -fdiagnostics-color=always -g -std=c++23 \&#x22;${workspaceFolder}\\*.cpp\&#x22; -o \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22; &#x26;&#x26; \&#x22;${fileDirname}\\${fileBasenameNoExtension}.exe\&#x22;&#x22;,
+      &#x22;command&#x22;: &#x22;cmake&#x22;,
+      &#x22;args&#x22;: [&#x22;--build&#x22;, &#x22;build&#x22;],
       &#x22;options&#x22;: {
-        &#x22;cwd&#x22;: &#x22;${fileDirname}&#x22;
+        &#x22;cwd&#x22;: &#x22;${workspaceFolder}&#x22;
       },
-      &#x22;problemMatcher&#x22;: [&#x22;$gcc&#x22;],
-      &#x22;detail&#x22;: &#x22;compiler: C:\\msys64\\ucrt64\\bin\\g++.exe&#x22;,
+      &#x22;dependsOn&#x22;: [&#x22;CMake Configure&#x22;],
       &#x22;group&#x22;: {
         &#x22;kind&#x22;: &#x22;build&#x22;,
         &#x22;isDefault&#x22;: true
-      }
+      },
+      &#x22;problemMatcher&#x22;: []
+    },
+    {
+      &#x22;label&#x22;: &#x22;Run CmakeCpp&#x22;,
+      &#x22;type&#x22;: &#x22;shell&#x22;,
+      &#x22;command&#x22;: &#x22;${workspaceFolder}\\build\\CmakeCpp.exe&#x22;,
+      &#x22;group&#x22;: {
+        &#x22;kind&#x22;: &#x22;test&#x22;,
+        &#x22;isDefault&#x22;: true
+      },
+      &#x22;dependsOn&#x22;: [&#x22;CMake Build&#x22;],
+      &#x22;problemMatcher&#x22;: []
     }
   ]
 }</code></pre>
               </li>
             </ul>
+            <div>
+              Navigate to <b>CmakeCpp/build</b> folder.
+              <pre class="shell">
+cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ ..
+cmake --build .</pre
+              >
+
+              If you are using VSCode, Press <b>Ctrl+Shift+P</b>. Select <b>Tasks:Run Task.</b> Select <b>Build and Run</b>
+            </div>
           </div>
         </details>
       </div>
@@ -240,7 +235,7 @@ public:
     hljs.highlightAll();
 
     const createTabs = () => {
-      let arr = ["#code1"];
+      let arr = ["#code1", "#code2"];
 
       arr.forEach((tab) => {
         new VanillaTabs({
