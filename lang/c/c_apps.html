@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/c/c.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>C Programs</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="c_index.html">C</a>
+    </nav>
+    <div class="content">
+      <div id="div1">
+        <details>
+          <summary>ASCII - BINARY - HEX</summary>
+          <div id="ascii">
+            <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;wchar.h&#x3E;
+#include &#x3C;locale.h&#x3E;
+
+void print_binary(unsigned int codepoint)
+{
+    int total_bits = (codepoint &#x3C;= 0xFF) ? 8 : (codepoint &#x3C;= 0xFFFF) ? 16
+                                                                     : 32;
+
+    for (int i = total_bits - 1; i &#x3E;= 0; i--)
+    {
+        printf(&#x22;%d&#x22;, (codepoint &#x3E;&#x3E; i) &#x26; 1);
+        if (i % 4 == 0 &#x26;&#x26; i != 0) // space after every 4 bits except last
+            printf(&#x22; &#x22;);
+    }
+}
+
+int main()
+{
+    setlocale(LC_ALL, &#x22;&#x22;);
+
+    wchar_t ch;
+
+    wprintf(L&#x22;Enter a character: &#x22;);
+    if (wscanf(L&#x22;%lc&#x22;, &#x26;ch) != 1)
+    {
+        wprintf(L&#x22;Invalid input.\n&#x22;);
+        return 1;
+    }
+
+    unsigned int codepoint = (unsigned int)ch;
+
+    wprintf(L&#x22;Character: %lc\n&#x22;, ch);
+    printf(&#x22;Unicode codepoint: U+%04X\n&#x22;, codepoint);
+
+    if (codepoint &#x3C;= 0x7F)
+        printf(&#x22;ASCII value: %u\n&#x22;, codepoint);
+    else
+        printf(&#x22;ASCII value: (Not an ASCII character)\n&#x22;);
+
+    printf(&#x22;Binary: &#x22;);
+    print_binary(codepoint);
+    printf(&#x22;\n&#x22;);
+
+    printf(&#x22;Hexadecimal: 0x%X\n&#x22;, codepoint);
+    printf(&#x22;Octal: 0%o\n&#x22;, codepoint);
+
+    return 0;
+}</code></pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>Run shell command</summary>
+          <div id="shell_demo">
+            <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;string.h&#x3E;
+
+int main()
+{
+    char buffer[1024];
+    FILE *fp;
+    int git_found = 0;
+
+#ifdef _WIN32
+    const char *command = &#x22;cmd /c git --version 2&#x3E;&#x26;1&#x22;;
+#else
+    const char *command = &#x22;git --version 2&#x3E;&#x26;1&#x22;;
+#endif
+
+    fp = popen(command, &#x22;r&#x22;);
+    if (fp == NULL)
+    {
+        perror(&#x22;popen failed&#x22;);
+        return 1;
+    }
+
+    printf(&#x22;Checking Git installation...\n\n&#x22;);
+
+    while (fgets(buffer, sizeof(buffer), fp) != NULL)
+    {
+        printf(&#x22;%s&#x22;, buffer);
+        if (strstr(buffer, &#x22;git version&#x22;) != NULL)
+        {
+            git_found = 1;
+        }
+    }
+
+    int status = pclose(fp);
+
+    if (!git_found || status != 0)
+    {
+        printf(&#x22;\n&#x274C; Git is not installed or not found in PATH.\n&#x22;);
+        return 1;
+    }
+
+    printf(&#x22;\n&#x2705; Git is installed.\n&#x22;);
+    return 0;
+}</code></pre>
+          </div>
+        </details>
+
+        <details>
+          <summary>System Information</summary>
+          <div id="system_info">
+            <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;string.h&#x3E;
+
+#if defined(_WIN32) || defined(_WIN64)
+#include &#x3C;windows.h&#x3E;
+#include &#x3C;intrin.h&#x3E;
+#elif __linux__ || __APPLE__
+#include &#x3C;sys/utsname.h&#x3E;
+#include &#x3C;unistd.h&#x3E;
+#include &#x3C;sys/statvfs.h&#x3E;
+#endif
+
+#if __linux__
+#include &#x3C;sys/sysinfo.h&#x3E;
+#elif __APPLE__
+#include &#x3C;sys/sysctl.h&#x3E;
+#endif
+
+void print_user_info()
+{
+    char username[256] = {0};
+    char hostname[256] = {0};
+    char *home = NULL;
+
+#if defined(_WIN32) || defined(_WIN64)
+    DWORD size = sizeof(username);
+    GetUserNameA(username, &#x26;size);
+
+    DWORD hostSize = sizeof(hostname);
+    GetComputerNameA(hostname, &#x26;hostSize);
+
+    home = getenv(&#x22;USERPROFILE&#x22;);
+#else
+    getlogin_r(username, sizeof(username));
+    gethostname(hostname, sizeof(hostname));
+    home = getenv(&#x22;HOME&#x22;);
+#endif
+
+    printf(&#x22;=== User Information ===\n&#x22;);
+    printf(&#x22;Username: %s\n&#x22;, username);
+    printf(&#x22;Hostname: %s\n&#x22;, hostname);
+    if (home)
+        printf(&#x22;Home Dir: %s\n&#x22;, home);
+}
+
+void print_gpu_info()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    printf(&#x22;\n=== GPU Information ===\n&#x22;);
+    system(&#x22;wmic path win32_VideoController get Name&#x22;);
+#elif __linux__
+    printf(&#x22;\n=== GPU Information ===\n&#x22;);
+    if (system(&#x22;command -v lspci &#x3E;/dev/null 2&#x3E;&#x26;1&#x22;) == 0)
+        system(&#x22;lspci | grep -i &#x27;vga\\|3d\\|display&#x27;&#x22;);
+    else
+        printf(&#x22;lspci not available\n&#x22;);
+#elif __APPLE__
+    printf(&#x22;\n=== GPU Information ===\n&#x22;);
+    system(&#x22;system_profiler SPDisplaysDataType | grep &#x27;Chipset Model&#x27;&#x22;);
+#endif
+}
+
+void print_disk_info()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    ULARGE_INTEGER freeBytesAvailable, totalBytes, freeBytes;
+    if (GetDiskFreeSpaceEx(&#x22;C:\\&#x22;, &#x26;freeBytesAvailable, &#x26;totalBytes, &#x26;freeBytes))
+    {
+        printf(&#x22;\n=== Disk Information ===\n&#x22;);
+        printf(&#x22;Total Disk Size: %llu GB\n&#x22;, totalBytes.QuadPart / (1024ULL * 1024 * 1024));
+        printf(&#x22;Free Disk Space: %llu GB\n&#x22;, freeBytes.QuadPart / (1024ULL * 1024 * 1024));
+    }
+#elif __linux__ || __APPLE__
+    struct statvfs stat;
+    if (statvfs(&#x22;/&#x22;, &#x26;stat) == 0)
+    {
+        unsigned long long total = (unsigned long long)stat.f_blocks * stat.f_frsize;
+        unsigned long long free = (unsigned long long)stat.f_bfree * stat.f_frsize;
+        printf(&#x22;\n=== Disk Information ===\n&#x22;);
+        printf(&#x22;Total Disk Size: %llu GB\n&#x22;, total / (1024ULL * 1024 * 1024));
+        printf(&#x22;Free Disk Space: %llu GB\n&#x22;, free / (1024ULL * 1024 * 1024));
+    }
+#endif
+}
+
+void print_system_info()
+{
+#if defined(_WIN32) || defined(_WIN64)
+    SYSTEM_INFO si;
+    MEMORYSTATUSEX statex;
+    GetSystemInfo(&#x26;si);
+    statex.dwLength = sizeof(statex);
+    GlobalMemoryStatusEx(&#x26;statex);
+
+    printf(&#x22;\n=== System Information (Windows) ===\n&#x22;);
+    printf(&#x22;Processor Architecture: %u\n&#x22;, si.wProcessorArchitecture);
+    printf(&#x22;Number of Processors: %u\n&#x22;, si.dwNumberOfProcessors);
+    printf(&#x22;Total Physical Memory: %llu MB\n&#x22;, statex.ullTotalPhys / (1024 * 1024));
+
+    int cpuInfo[4] = {0};
+    char cpuBrand[0x40] = {0};
+    __cpuid(cpuInfo, 0x80000002);
+    memcpy(cpuBrand, cpuInfo, sizeof(cpuInfo));
+    __cpuid(cpuInfo, 0x80000003);
+    memcpy(cpuBrand + 16, cpuInfo, sizeof(cpuInfo));
+    __cpuid(cpuInfo, 0x80000004);
+    memcpy(cpuBrand + 32, cpuInfo, sizeof(cpuInfo));
+    printf(&#x22;CPU Model: %s\n&#x22;, cpuBrand);
+
+#elif __linux__
+    struct utsname unameData;
+    uname(&#x26;unameData);
+    struct sysinfo info;
+    sysinfo(&#x26;info);
+
+    printf(&#x22;\n=== System Information (Linux) ===\n&#x22;);
+    printf(&#x22;System: %s %s\n&#x22;, unameData.sysname, unameData.release);
+    printf(&#x22;Machine: %s\n&#x22;, unameData.machine);
+    printf(&#x22;Total RAM: %ld MB\n&#x22;, info.totalram / (1024 * 1024));
+
+    FILE *cpuinfo = fopen(&#x22;/proc/cpuinfo&#x22;, &#x22;r&#x22;);
+    if (cpuinfo)
+    {
+        char line[256];
+        while (fgets(line, sizeof(line), cpuinfo))
+        {
+            if (strncmp(line, &#x22;model name&#x22;, 10) == 0)
+            {
+                printf(&#x22;CPU Model: %s&#x22;, strchr(line, &#x27;:&#x27;) + 2);
+                break;
+            }
+        }
+        fclose(cpuinfo);
+    }
+
+#elif __APPLE__
+    struct utsname unameData;
+    uname(&#x26;unameData);
+
+    printf(&#x22;\n=== System Information (macOS) ===\n&#x22;);
+    printf(&#x22;System: %s %s\n&#x22;, unameData.sysname, unameData.release);
+    printf(&#x22;Machine: %s\n&#x22;, unameData.machine);
+
+    int64_t memsize;
+    size_t len = sizeof(memsize);
+    sysctlbyname(&#x22;hw.memsize&#x22;, &#x26;memsize, &#x26;len, NULL, 0);
+    printf(&#x22;Total RAM: %lld MB\n&#x22;, memsize / (1024 * 1024));
+
+    char cpuBrand[256];
+    len = sizeof(cpuBrand);
+    sysctlbyname(&#x22;machdep.cpu.brand_string&#x22;, &#x26;cpuBrand, &#x26;len, NULL, 0);
+    printf(&#x22;CPU Model: %s\n&#x22;, cpuBrand);
+#endif
+}
+
+int main()
+{
+    print_user_info();
+    print_system_info();
+    print_gpu_info();
+    print_disk_info();
+    return 0;
+}</code></pre>
+            <pre class="shell">
+=== User Information ===
+Username: DELL
+Hostname: ABHAY-DELL
+Home Dir: C:\Users\DELL
+
+=== System Information (Windows) ===
+Processor Architecture: 9
+Number of Processors: 4
+Total Physical Memory: 8057 MB
+CPU Model: Intel(R) Pentium(R) CPU 4415U @ 2.30GHz
+
+=== GPU Information ===
+Name
+Intel(R) HD Graphics 610
+
+
+=== Disk Information ===
+Total Disk Size: 110 GB
+Free Disk Space: 15 GB</pre
+            >
+          </div>
+        </details>
+
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-c"></code></pre>
+          </div>
+        </details>
+
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-c"></code></pre>
+          </div>
+        </details>
+
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-c"></code></pre>
+          </div>
+        </details>
+
+        <details>
+          <summary></summary>
+          <div>
+            <pre><code class="language-c"></code></pre>
+          </div>
+        </details>
+      </div>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = ["#code1", "#code2"];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>
