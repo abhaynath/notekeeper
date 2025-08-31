@@ -12,21 +12,172 @@
     <script src="../../js/libs/jquery.min.js"></script>
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/vanilla-tabs.min.js"></script>
-    <title>C Basics</title>
+    <title>File I/O</title>
   </head>
   <body>
     <nav class="nav_main">
       <a href="../../index.html"><i class="fa fa-home"></i></a>
       <a href="c_index.html">C</a>
     </nav>
-    <div class="content"></div>
+    <div class="content">
+      <section id="file1">
+        <h4>Read text file character-by-character</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;wchar.h&#x3E;
+#include &#x3C;locale.h&#x3E;
+
+int main()
+{
+    // Enable Unicode output in console
+    setlocale(LC_ALL, &#x22;&#x22;);
+
+    // File path (escaped backslashes for C string)
+    const wchar_t *filePath = L&#x22;F:\\System Folders\\Documents\\math books.txt&#x22;;
+
+    // Open file in read mode (wide char mode)
+    FILE *fp = _wfopen(filePath, L&#x22;r, ccs=UTF-8&#x22;);
+    if (!fp)
+    {
+        wprintf(L&#x22;Error: Could not open file %ls\n&#x22;, filePath);
+        return 1;
+    }
+
+    // Read and display content
+    wchar_t ch;
+    while ((ch = fgetwc(fp)) != WEOF)
+    {
+        putwchar(ch);
+    }
+
+    fclose(fp);
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="file2">
+        <h4>Read entire file in memory</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+int main()
+{
+    const char *filename = &#x22;F:\\System Folders\\Documents\\math books.txt&#x22;;
+    FILE *fp = fopen(filename, &#x22;rb&#x22;); // open in binary mode to avoid newline translation
+    if (!fp)
+    {
+        perror(&#x22;Error opening file&#x22;);
+        return 1;
+    }
+
+    // Get file size
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    rewind(fp);
+
+    // Allocate buffer (+1 for null terminator)
+    char *buffer = malloc(size + 1);
+    if (!buffer)
+    {
+        perror(&#x22;Memory allocation failed&#x22;);
+        fclose(fp);
+        return 1;
+    }
+
+    // Read the whole file
+    size_t bytesRead = fread(buffer, 1, size, fp);
+    buffer[bytesRead] = &#x27;\0&#x27;; // Null terminate
+
+    printf(&#x22;File content:\n%s\n&#x22;, buffer);
+
+    free(buffer);
+    fclose(fp);
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="file3">
+        <h4>Display tree view of folder contents</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;dirent.h&#x3E;
+#include &#x3C;string.h&#x3E;
+#include &#x3C;sys/stat.h&#x3E;
+
+#define COLOR_RESET &#x22;\x1b[0m&#x22;
+#define COLOR_BLUE &#x22;\x1b[34m&#x22;  // Folder
+#define COLOR_GREEN &#x22;\x1b[32m&#x22; // File
+
+void print_tree(const char *path, int depth)
+{
+    DIR *dir;
+    struct dirent *entry;
+
+    dir = opendir(path);
+    if (!dir)
+    {
+        perror(path);
+        return;
+    }
+
+    while ((entry = readdir(dir)) != NULL)
+    {
+        // Skip &#x22;.&#x22; and &#x22;..&#x22;
+        if (strcmp(entry-&#x3E;d_name, &#x22;.&#x22;) == 0 || strcmp(entry-&#x3E;d_name, &#x22;..&#x22;) == 0)
+            continue;
+
+        // Print indentation
+        for (int i = 0; i &#x3C; depth; i++)
+        {
+            printf(&#x22;    &#x22;);
+        }
+
+        // Build full path
+        char fullpath[1024];
+        snprintf(fullpath, sizeof(fullpath), &#x22;%s/%s&#x22;, path, entry-&#x3E;d_name);
+
+        struct stat st;
+        if (stat(fullpath, &#x26;st) == 0)
+        {
+            if (S_ISDIR(st.st_mode))
+            {
+                printf(&#x22;&#x251C;&#x2500;&#x2500; &#x22; COLOR_BLUE &#x22;%s&#x22; COLOR_RESET &#x22;\n&#x22;, entry-&#x3E;d_name);
+                // Recurse into directory
+                print_tree(fullpath, depth + 1);
+            }
+            else
+            {
+                printf(&#x22;&#x251C;&#x2500;&#x2500; &#x22; COLOR_GREEN &#x22;%s&#x22; COLOR_RESET &#x22;\n&#x22;, entry-&#x3E;d_name);
+            }
+        }
+    }
+
+    closedir(dir);
+}
+
+int main()
+{
+    const char *start_path = &#x22;F:\\System Folders\\Downloads\\YoutubeDownloader\\Logs&#x22;;
+    printf(COLOR_BLUE &#x22;%s&#x22; COLOR_RESET &#x22;\n&#x22;, start_path);
+    print_tree(start_path, 0);
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="file4">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+
+      <section id="file5">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
   </body>
   <script>
     hljs.highlightAll();
 
     const createTabs = () => {
       let arr = [];
-      
 
       arr.forEach((tab) => {
         new VanillaTabs({
