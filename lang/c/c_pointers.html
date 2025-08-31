@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/c/c.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>Pointers</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="c_index.html">C</a>
+    </nav>
+    <div class="content">
+      <section id="pointer1">
+        <h4>Introduction</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+
+int main()
+{
+    int x = 5;
+    printf(&#x22;Address of x = %u\n&#x22;, &#x26;x);
+    printf(&#x22;Value of x = %d\n&#x22;, x);
+    printf(&#x22;Value of x = %d\n&#x22;, *(&#x26;x));
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="pointer2">
+        <h4>Swap pointers</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+void swapPointers(int *x, int *y)
+{
+    int t;
+    t = *x;
+    *x = *y;
+    *y = t;
+}
+int main()
+{
+    int a = 10, b = 20;
+    printf(&#x22;a = %d and b = %d\n&#x22;, a, b);
+    swapPointers(&#x26;a, &#x26;b);
+    printf(&#x22;a = %d and b = %d\n&#x22;, a, b);
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="pointer3">
+        <h4>Call by reference example</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+void calculate(int, float *, float *);
+
+int main()
+{
+    int radius;
+    float area, perimeter;
+
+    printf(&#x22;Please enter radius\n&#x22;);
+    scanf(&#x22;%d&#x22;, &#x26;radius);
+
+    calculate(radius, &#x26;area, &#x26;perimeter);
+
+    printf(&#x22;Radius = %d\n&#x22;, radius);
+    printf(&#x22;Area = %f\n&#x22;, area);
+    printf(&#x22;Circumference = %f\n&#x22;, perimeter);
+
+    return 0;
+}
+void calculate(int r, float *a, float *p)
+{
+    *a = 3.1416 * r * r;
+    *p = 2 * 3.1616 * r;
+}</code></pre>
+      </section>
+
+      <section id="pointer4">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+
+      <section id="pointer5">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = [];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>

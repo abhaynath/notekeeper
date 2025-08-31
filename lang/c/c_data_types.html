@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/c/c.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>C Data Types</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="c_index.html">C</a>
+    </nav>
+    <div class="content">
+      <section id="data_types">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Bytes (typical)</th>
+              <th>Range (typical)</th>
+              <th>printf specifier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>signed char</td>
+              <td>1</td>
+              <td>-128 to 127</td>
+              <td>%hhd</td>
+            </tr>
+            <tr>
+              <td>unsigned char</td>
+              <td>1</td>
+              <td>0 to 255</td>
+              <td>%hhu</td>
+            </tr>
+            <tr>
+              <td>short</td>
+              <td>2</td>
+              <td>-32,768 to 32,767</td>
+              <td>%hd</td>
+            </tr>
+            <tr>
+              <td>unsigned short</td>
+              <td>2</td>
+              <td>0 to 65,535</td>
+              <td>%hu</td>
+            </tr>
+            <tr>
+              <td>int</td>
+              <td>4</td>
+              <td>-2,147,483,648 to 2,147,483,647</td>
+              <td>%d</td>
+            </tr>
+            <tr>
+              <td>unsigned int</td>
+              <td>4</td>
+              <td>0 to 4,294,967,295</td>
+              <td>%u</td>
+            </tr>
+            <tr>
+              <td>long</td>
+              <td>8 (LP64) / 4 (LLP64)</td>
+              <td>
+                LP64: −9,223,372,036,854,775,808 to 9,223,372,036,854,775,807<br />
+                LLP64: same as <em>int</em>
+              </td>
+              <td>%ld</td>
+            </tr>
+            <tr>
+              <td>unsigned long</td>
+              <td>8 (LP64) / 4 (LLP64)</td>
+              <td>
+                LP64: 0 to 18,446,744,073,709,551,615<br />
+                LLP64: 0 to 4,294,967,295
+              </td>
+              <td>%lu</td>
+            </tr>
+            <tr>
+              <td>long long</td>
+              <td>8</td>
+              <td>−9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
+              <td>%lld</td>
+            </tr>
+            <tr>
+              <td>unsigned long long</td>
+              <td>8</td>
+              <td>0 to 18,446,744,073,709,551,615</td>
+              <td>%llu</td>
+            </tr>
+            <tr>
+              <td>float</td>
+              <td>4</td>
+              <td>≈ 1.17549e−38 to 3.40282e38</td>
+              <td>%f (promoted to double)</td>
+            </tr>
+            <tr>
+              <td>double</td>
+              <td>8</td>
+              <td>≈ 2.22507e−308 to 1.79769e308</td>
+              <td>%f</td>
+            </tr>
+            <tr>
+              <td>long double</td>
+              <td>16 (LP64 GNU) / 8 (MSVC)</td>
+              <td>varies by platform (80-bit/128-bit or same as double)</td>
+              <td>%Lf</td>
+            </tr>
+            <tr>
+              <td>size_t</td>
+              <td>8 (64-bit) / 4 (32-bit)</td>
+              <td>0 to 2<sup>N</sup>−1</td>
+              <td>%zu</td>
+            </tr>
+            <tr>
+              <td>ptrdiff_t</td>
+              <td>8 (64-bit) / 4 (32-bit)</td>
+              <td>−2<sup>N−1</sup> to 2<sup>N−1</sup>−1</td>
+              <td>%td</td>
+            </tr>
+            <tr>
+              <td>wchar_t</td>
+              <td>2 (Windows) / 4 (Unix)</td>
+              <td>implementation-defined</td>
+              <td>%lc (as character)</td>
+            </tr>
+            <tr>
+              <td>char (as character)</td>
+              <td>1</td>
+              <td>implementation-defined signedness</td>
+              <td>%c</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          <small
+            ><strong>Notes:</strong> Sizes/ranges are implementation-defined; check <code>&lt;limits.h&gt;</code> and <code>&lt;float.h&gt;</code> at compile
+            time. For <code>scanf</code>, specifiers can differ (e.g., <code>double</code> uses <code>%lf</code>, <code>long double</code> uses
+            <code>%Lf</code>, <code>size_t</code> uses <code>%zu</code>). For hex/oct printing, use <code>%x/%X</code> or <code>%o</code> with the same length
+            modifiers (e.g., <code>%hhx</code>, <code>%llx</code>).</small
+          >
+        </p>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = [];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>
