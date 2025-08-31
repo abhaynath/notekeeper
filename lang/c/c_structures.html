@@ -12,21 +12,116 @@
     <script src="../../js/libs/jquery.min.js"></script>
     <script src="../../js/libs/highlight/highlight.min.js"></script>
     <script src="../../js/libs/vanilla-tabs.min.js"></script>
-    <title>C Basics</title>
+    <title>C Structure</title>
   </head>
   <body>
     <nav class="nav_main">
       <a href="../../index.html"><i class="fa fa-home"></i></a>
       <a href="c_index.html">C</a>
     </nav>
-    <div class="content"></div>
+    <div class="content">
+      <section id="str1">
+        <h4>Structure Basics</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;string.h&#x3E;
+
+struct book
+{
+    char *name;
+    float price;
+    int pages;
+};
+
+// Function to print book details
+void printBook(const struct book *b)
+{
+    printf(&#x22;Book Details : %s %.2f %d\n&#x22;, b-&#x3E;name, b-&#x3E;price, b-&#x3E;pages);
+}
+
+int main()
+{
+    struct book b1 = {&#x22;Let us C&#x22;, 300.50, 450};
+    printBook(&#x26;b1);
+
+    struct book b2;
+    char temp[100];
+
+    printf(&#x22;Enter book name : &#x22;);
+    fgets(temp, sizeof(temp), stdin);
+    temp[strcspn(temp, &#x22;\n&#x22;)] = &#x27;\0&#x27;; // Remove newline
+
+    b2.name = malloc(strlen(temp) + 1);
+    if (!b2.name)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        return 1;
+    }
+    strcpy(b2.name, temp);
+
+    printf(&#x22;Enter book price : &#x22;);
+    scanf(&#x22;%f&#x22;, &#x26;b2.price);
+
+    printf(&#x22;Enter book pages : &#x22;);
+    scanf(&#x22;%d&#x22;, &#x26;b2.pages);
+
+    printBook(&#x26;b2);
+
+    free(b2.name);
+    return 0;
+}</code></pre>
+      </section>
+      <section id="str2">
+        <h4>Nested Structures</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;string.h&#x3E;
+
+struct address
+{
+    char *city;
+    char *pincode;
+};
+struct employee
+{
+    char *name;
+    int empCode;
+    struct address location;
+};
+
+void display(const struct employee *);
+
+int main()
+{
+    struct employee e1 = {&#x22;Abhay Nath&#x22;, 35, &#x22;Mumbai&#x22;, &#x22;400067&#x22;};
+    display(&#x26;e1);
+    return 0;
+}
+void display(const struct employee *e)
+{
+    printf(&#x22;Name %s\n&#x22;, e-&#x3E;name);
+    printf(&#x22;Employee Code %d\n&#x22;, e-&#x3E;empCode);
+    printf(&#x22;City %s\n&#x22;, e-&#x3E;location.city);
+    printf(&#x22;Pin %s\n&#x22;, e-&#x3E;location.pincode);
+}</code></pre>
+      </section>
+
+       <section id="str3">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+
+       <section id="str4">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
   </body>
   <script>
     hljs.highlightAll();
 
     const createTabs = () => {
       let arr = [];
-      
 
       arr.forEach((tab) => {
         new VanillaTabs({
