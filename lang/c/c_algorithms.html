@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/c/c.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>C Algorithms</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="c_index.html">C</a>
+    </nav>
+    <div class="content">
+      <section id="alg1">
+        <h4>Arithmatic Expression Evaluation - Shunting Yard algorithm</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;ctype.h&#x3E;
+#include &#x3C;string.h&#x3E;
+#include &#x3C;math.h&#x3E;
+
+#define MAX 256
+#define VAR_MAX 50
+
+// Variable storage
+typedef struct
+{
+    char name[32];
+    double value;
+    int assigned;
+} Variable;
+
+Variable vars[VAR_MAX];
+int varCount = 0;
+
+// Stack for operators
+typedef struct
+{
+    char data[MAX];
+    int top;
+} CharStack;
+
+void initCharStack(CharStack *s) { s-&#x3E;top = -1; }
+int isCharEmpty(CharStack *s) { return s-&#x3E;top == -1; }
+void pushChar(CharStack *s, char c) { s-&#x3E;data[++s-&#x3E;top] = c; }
+char popChar(CharStack *s) { return s-&#x3E;data[s-&#x3E;top--]; }
+char peekChar(CharStack *s) { return s-&#x3E;data[s-&#x3E;top]; }
+
+// Stack for numbers
+typedef struct
+{
+    double data[MAX];
+    int top;
+} NumStack;
+
+void initNumStack(NumStack *s) { s-&#x3E;top = -1; }
+int isNumEmpty(NumStack *s) { return s-&#x3E;top == -1; }
+void pushNum(NumStack *s, double val) { s-&#x3E;data[++s-&#x3E;top] = val; }
+double popNum(NumStack *s) { return s-&#x3E;data[s-&#x3E;top--]; }
+
+// Variable handling
+int findVarIndex(const char *name)
+{
+    for (int i = 0; i &#x3C; varCount; i++)
+        if (strcmp(vars[i].name, name) == 0)
+            return i;
+    return -1;
+}
+
+void setVar(const char *name, double value)
+{
+    int idx = findVarIndex(name);
+    if (idx == -1)
+    {
+        if (varCount &#x3E;= VAR_MAX)
+        {
+            printf(&#x22;Error: Variable table full\n&#x22;);
+            exit(1);
+        }
+        strcpy(vars[varCount].name, name);
+        vars[varCount].value = value;
+        vars[varCount].assigned = 1;
+        varCount++;
+    }
+    else
+    {
+        vars[idx].value = value;
+        vars[idx].assigned = 1;
+    }
+}
+
+double getVar(const char *name)
+{
+    int idx = findVarIndex(name);
+    if (idx == -1 || !vars[idx].assigned)
+    {
+        printf(&#x22;Error: Variable &#x27;%s&#x27; not defined\n&#x22;, name);
+        exit(1);
+    }
+    return vars[idx].value;
+}
+
+// Operator precedence
+int precedence(char op)
+{
+    switch (op)
+    {
+    case &#x27;+&#x27;:
+    case &#x27;-&#x27;:
+        return 1;
+    case &#x27;*&#x27;:
+    case &#x27;/&#x27;:
+        return 2;
+    case &#x27;^&#x27;:
+        return 3;
+    }
+    return 0;
+}
+
+// Convert infix to postfix
+void infixToPostfix(const char *infix, char *postfix)
+{
+    CharStack stack;
+    initCharStack(&#x26;stack);
+    int i = 0, k = 0;
+
+    while (infix[i] != &#x27;\0&#x27;)
+    {
+        if (isspace(infix[i]))
+        {
+            i++;
+            continue;
+        }
+
+        if (isdigit(infix[i]) || isalpha(infix[i]))
+        {
+            while (isdigit(infix[i]) || isalpha(infix[i]) || infix[i] == &#x27;.&#x27;)
+                postfix[k++] = infix[i++];
+            postfix[k++] = &#x27; &#x27;;
+            continue;
+        }
+
+        if (infix[i] == &#x27;(&#x27;)
+        {
+            pushChar(&#x26;stack, infix[i]);
+        }
+        else if (infix[i] == &#x27;)&#x27;)
+        {
+            while (!isCharEmpty(&#x26;stack) &#x26;&#x26; peekChar(&#x26;stack) != &#x27;(&#x27;)
+            {
+                postfix[k++] = popChar(&#x26;stack);
+                postfix[k++] = &#x27; &#x27;;
+            }
+            popChar(&#x26;stack); // remove &#x27;(&#x27;
+        }
+        else
+        {
+            while (!isCharEmpty(&#x26;stack) &#x26;&#x26; precedence(peekChar(&#x26;stack)) &#x3E;= precedence(infix[i]))
+            {
+                postfix[k++] = popChar(&#x26;stack);
+                postfix[k++] = &#x27; &#x27;;
+            }
+            pushChar(&#x26;stack, infix[i]);
+        }
+        i++;
+    }
+
+    while (!isCharEmpty(&#x26;stack))
+    {
+        postfix[k++] = popChar(&#x26;stack);
+        postfix[k++] = &#x27; &#x27;;
+    }
+    postfix[k] = &#x27;\0&#x27;;
+}
+
+// Evaluate postfix
+double evaluatePostfix(const char *postfix)
+{
+    NumStack stack;
+    initNumStack(&#x26;stack);
+    int i = 0;
+
+    while (postfix[i] != &#x27;\0&#x27;)
+    {
+        if (isspace(postfix[i]))
+        {
+            i++;
+            continue;
+        }
+
+        if (isdigit(postfix[i]))
+        {
+            double num = 0;
+            while (isdigit(postfix[i]))
+            {
+                num = num * 10 + (postfix[i] - &#x27;0&#x27;);
+                i++;
+            }
+            if (postfix[i] == &#x27;.&#x27;)
+            {
+                i++;
+                double frac = 0.1;
+                while (isdigit(postfix[i]))
+                {
+                    num += (postfix[i] - &#x27;0&#x27;) * frac;
+                    frac /= 10;
+                    i++;
+                }
+            }
+            pushNum(&#x26;stack, num);
+        }
+        else if (isalpha(postfix[i]))
+        {
+            char name[32];
+            int j = 0;
+            while (isalnum(postfix[i]))
+            {
+                name[j++] = postfix[i++];
+            }
+            name[j] = &#x27;\0&#x27;;
+            pushNum(&#x26;stack, getVar(name));
+        }
+        else
+        {
+            double b = popNum(&#x26;stack);
+            double a = popNum(&#x26;stack);
+            switch (postfix[i])
+            {
+            case &#x27;+&#x27;:
+                pushNum(&#x26;stack, a + b);
+                break;
+            case &#x27;-&#x27;:
+                pushNum(&#x26;stack, a - b);
+                break;
+            case &#x27;*&#x27;:
+                pushNum(&#x26;stack, a * b);
+                break;
+            case &#x27;/&#x27;:
+                pushNum(&#x26;stack, a / b);
+                break;
+            case &#x27;^&#x27;:
+                pushNum(&#x26;stack, pow(a, b));
+                break;
+            }
+            i++;
+        }
+    }
+
+    return popNum(&#x26;stack);
+}
+
+// Process statement
+void processStatement(const char *stmt)
+{
+    char varName[32];
+    const char *expr = stmt;
+
+    // Check for assignment
+    const char *eq = strchr(stmt, &#x27;=&#x27;);
+    if (eq != NULL)
+    {
+        int len = eq - stmt;
+        strncpy(varName, stmt, len);
+        varName[len] = &#x27;\0&#x27;;
+
+        // Trim spaces
+        char *p = varName;
+        while (isspace(*p))
+            p++;
+        memmove(varName, p, strlen(p) + 1);
+        p = varName + strlen(varName) - 1;
+        while (p &#x3E; varName &#x26;&#x26; isspace(*p))
+            *p-- = &#x27;\0&#x27;;
+
+        expr = eq + 1;
+    }
+
+    char postfix[MAX];
+    infixToPostfix(expr, postfix);
+    double result = evaluatePostfix(postfix);
+
+    if (eq != NULL)
+    {
+        setVar(varName, result);
+    }
+    else
+    {
+        printf(&#x22;%g\n&#x22;, result);
+    }
+}
+
+int main()
+{
+    char input[MAX];
+
+    printf(&#x22;Tiny C Expression Interpreter (with variables)\n&#x22;);
+    printf(&#x22;Example: a = 5; b = a * 2; b + 3\n\n&#x22;);
+
+    while (1)
+    {
+        printf(&#x22;&#x3E; &#x22;);
+        if (!fgets(input, sizeof(input), stdin))
+            break;
+
+        char *stmt = strtok(input, &#x22;;&#x22;);
+        while (stmt != NULL)
+        {
+            if (strlen(stmt) &#x3E; 0)
+                processStatement(stmt);
+            stmt = strtok(NULL, &#x22;;&#x22;);
+        }
+    }
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="alg2">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+
+      <section id="alg3">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+
+      <section id="alg4">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = [];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>

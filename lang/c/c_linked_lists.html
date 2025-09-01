@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/c/c.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>Linked Lists</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="c_index.html">C</a>
+    </nav>
+    <div class="content">
+      <section id="ll1">
+        <h4>Linked List</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+} Node;
+
+// Function to create a new node
+Node *createNode(int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        exit(1);
+    }
+    newNode-&#x3E;data = data;
+    newNode-&#x3E;next = NULL;
+    return newNode;
+}
+
+// Insert at the end
+void insertEnd(Node **head, int data)
+{
+    Node *newNode = createNode(data);
+    if (*head == NULL)
+    {
+        *head = newNode;
+        return;
+    }
+    Node *temp = *head;
+    while (temp-&#x3E;next != NULL)
+        temp = temp-&#x3E;next;
+    temp-&#x3E;next = newNode;
+}
+
+// Delete a node by value
+void deleteNode(Node **head, int key)
+{
+    Node *temp = *head;
+    Node *prev = NULL;
+
+    if (temp != NULL &#x26;&#x26; temp-&#x3E;data == key)
+    {
+        *head = temp-&#x3E;next;
+        free(temp);
+        return;
+    }
+
+    while (temp != NULL &#x26;&#x26; temp-&#x3E;data != key)
+    {
+        prev = temp;
+        temp = temp-&#x3E;next;
+    }
+
+    if (temp == NULL)
+    {
+        printf(&#x22;Value %d not found!\n&#x22;, key);
+        return;
+    }
+
+    prev-&#x3E;next = temp-&#x3E;next;
+    free(temp);
+}
+
+// Display the linked list
+void displayList(Node *head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        printf(&#x22;%d -&#x3E; &#x22;, temp-&#x3E;data);
+        temp = temp-&#x3E;next;
+    }
+    printf(&#x22;NULL\n&#x22;);
+}
+
+int main()
+{
+    Node *head = NULL;
+
+    insertEnd(&#x26;head, 10);
+    insertEnd(&#x26;head, 20);
+    insertEnd(&#x26;head, 30);
+
+    printf(&#x22;Linked List: &#x22;);
+    displayList(head);
+
+    printf(&#x22;Deleting 20...\n&#x22;);
+    deleteNode(&#x26;head, 20);
+
+    printf(&#x22;Linked List after deletion: &#x22;);
+    displayList(head);
+
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="ll2">
+        <h4>Doubly Linked List</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Doubly linked list node structure
+typedef struct Node
+{
+    int data;
+    struct Node *prev;
+    struct Node *next;
+} Node;
+
+// Create a new node
+Node *createNode(int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        exit(1);
+    }
+    newNode-&#x3E;data = data;
+    newNode-&#x3E;prev = NULL;
+    newNode-&#x3E;next = NULL;
+    return newNode;
+}
+
+// Insert at the end
+void insertEnd(Node **head, int data)
+{
+    Node *newNode = createNode(data);
+    if (*head == NULL)
+    {
+        *head = newNode;
+        return;
+    }
+    Node *temp = *head;
+    while (temp-&#x3E;next != NULL)
+        temp = temp-&#x3E;next;
+    temp-&#x3E;next = newNode;
+    newNode-&#x3E;prev = temp;
+}
+
+// Delete a node by value
+void deleteNode(Node **head, int key)
+{
+    Node *temp = *head;
+
+    while (temp != NULL &#x26;&#x26; temp-&#x3E;data != key)
+        temp = temp-&#x3E;next;
+
+    if (temp == NULL)
+    {
+        printf(&#x22;Value %d not found!\n&#x22;, key);
+        return;
+    }
+
+    if (temp-&#x3E;prev != NULL)
+        temp-&#x3E;prev-&#x3E;next = temp-&#x3E;next;
+    else
+        *head = temp-&#x3E;next; // deleting the head
+
+    if (temp-&#x3E;next != NULL)
+        temp-&#x3E;next-&#x3E;prev = temp-&#x3E;prev;
+
+    free(temp);
+}
+
+// Display from head to tail
+void displayForward(Node *head)
+{
+    Node *temp = head;
+    printf(&#x22;Forward: &#x22;);
+    while (temp != NULL)
+    {
+        printf(&#x22;%d -&#x3E; &#x22;, temp-&#x3E;data);
+        temp = temp-&#x3E;next;
+    }
+    printf(&#x22;NULL\n&#x22;);
+}
+
+// Display from tail to head
+void displayBackward(Node *head)
+{
+    if (head == NULL)
+        return;
+
+    Node *temp = head;
+    while (temp-&#x3E;next != NULL)
+        temp = temp-&#x3E;next; // move to tail
+
+    printf(&#x22;Backward: &#x22;);
+    while (temp != NULL)
+    {
+        printf(&#x22;%d -&#x3E; &#x22;, temp-&#x3E;data);
+        temp = temp-&#x3E;prev;
+    }
+    printf(&#x22;NULL\n&#x22;);
+}
+
+int main()
+{
+    Node *head = NULL;
+
+    insertEnd(&#x26;head, 10);
+    insertEnd(&#x26;head, 20);
+    insertEnd(&#x26;head, 30);
+
+    displayForward(head);
+    displayBackward(head);
+
+    printf(&#x22;Deleting 20...\n&#x22;);
+    deleteNode(&#x26;head, 20);
+
+    displayForward(head);
+    displayBackward(head);
+
+    return 0;
+}</code></pre>
+      </section>
+
+      <section id="ll3">
+        <h4>Doubly linked list at location</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int data;
+    struct Node *prev;
+    struct Node *next;
+} Node;
+
+// Create a new node
+Node *createNode(int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        exit(1);
+    }
+    newNode-&#x3E;data = data;
+    newNode-&#x3E;prev = NULL;
+    newNode-&#x3E;next = NULL;
+    return newNode;
+}
+
+// Insert at beginning
+void insertBeginning(Node **head, int data)
+{
+    Node *newNode = createNode(data);
+    if (*head != NULL)
+    {
+        newNode-&#x3E;next = *head;
+        (*head)-&#x3E;prev = newNode;
+    }
+    *head = newNode;
+}
+
+// Insert at end
+void insertEnd(Node **head, int data)
+{
+    Node *newNode = createNode(data);
+    if (*head == NULL)
+    {
+        *head = newNode;
+        return;
+    }
+    Node *temp = *head;
+    while (temp-&#x3E;next != NULL)
+        temp = temp-&#x3E;next;
+    temp-&#x3E;next = newNode;
+    newNode-&#x3E;prev = temp;
+}
+
+// Insert at specific position (1-based index)
+void insertAtPosition(Node **head, int data, int position)
+{
+    if (position &#x3C;= 1)
+    {
+        insertBeginning(head, data);
+        return;
+    }
+
+    Node *temp = *head;
+    for (int i = 1; i &#x3C; position - 1 &#x26;&#x26; temp != NULL; i++)
+        temp = temp-&#x3E;next;
+
+    if (temp == NULL)
+    {
+        printf(&#x22;Position out of range, inserting at end.\n&#x22;);
+        insertEnd(head, data);
+        return;
+    }
+
+    Node *newNode = createNode(data);
+    newNode-&#x3E;next = temp-&#x3E;next;
+    newNode-&#x3E;prev = temp;
+    if (temp-&#x3E;next != NULL)
+        temp-&#x3E;next-&#x3E;prev = newNode;
+    temp-&#x3E;next = newNode;
+}
+
+// Delete a node by value
+void deleteNode(Node **head, int key)
+{
+    Node *temp = *head;
+
+    while (temp != NULL &#x26;&#x26; temp-&#x3E;data != key)
+        temp = temp-&#x3E;next;
+
+    if (temp == NULL)
+    {
+        printf(&#x22;Value %d not found!\n&#x22;, key);
+        return;
+    }
+
+    if (temp-&#x3E;prev != NULL)
+        temp-&#x3E;prev-&#x3E;next = temp-&#x3E;next;
+    else
+        *head = temp-&#x3E;next; // deleting the head
+
+    if (temp-&#x3E;next != NULL)
+        temp-&#x3E;next-&#x3E;prev = temp-&#x3E;prev;
+
+    free(temp);
+}
+
+// Display forward
+void displayForward(Node *head)
+{
+    Node *temp = head;
+    printf(&#x22;Forward: &#x22;);
+    while (temp != NULL)
+    {
+        printf(&#x22;%d -&#x3E; &#x22;, temp-&#x3E;data);
+        temp = temp-&#x3E;next;
+    }
+    printf(&#x22;NULL\n&#x22;);
+}
+
+// Display backward
+void displayBackward(Node *head)
+{
+    if (head == NULL)
+    {
+        printf(&#x22;Backward: NULL\n&#x22;);
+        return;
+    }
+
+    Node *temp = head;
+    while (temp-&#x3E;next != NULL)
+        temp = temp-&#x3E;next; // move to tail
+
+    printf(&#x22;Backward: &#x22;);
+    while (temp != NULL)
+    {
+        printf(&#x22;%d -&#x3E; &#x22;, temp-&#x3E;data);
+        temp = temp-&#x3E;prev;
+    }
+    printf(&#x22;NULL\n&#x22;);
+}
+
+int main()
+{
+    Node *head = NULL;
+
+    insertEnd(&#x26;head, 10);
+    insertEnd(&#x26;head, 20);
+    insertEnd(&#x26;head, 30);
+
+    displayForward(head);
+    displayBackward(head);
+
+    printf(&#x22;\nInserting 5 at beginning...\n&#x22;);
+    insertBeginning(&#x26;head, 5);
+    displayForward(head);
+
+    printf(&#x22;\nInserting 15 at position 3...\n&#x22;);
+    insertAtPosition(&#x26;head, 15, 3);
+    displayForward(head);
+
+    printf(&#x22;\nDeleting value 20...\n&#x22;);
+    deleteNode(&#x26;head, 20);
+    displayForward(head);
+    displayBackward(head);
+
+    return 0;
+}</code></pre>
+      </section>
+
+   
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = [];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>
