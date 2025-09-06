@@ -26,34 +26,8 @@
 #include &#x3C;stdlib.h&#x3E;
 #include &#x3C;ctype.h&#x3E;
 #include &#x3C;string.h&#x3E;
-#include &#x3C;math.h&#x3E;
 
-#define MAX 256
-#define VAR_MAX 50
-
-// Variable storage
-typedef struct
-{
-    char name[32];
-    double value;
-    int assigned;
-} Variable;
-
-Variable vars[VAR_MAX];
-int varCount = 0;
-
-// Stack for operators
-typedef struct
-{
-    char data[MAX];
-    int top;
-} CharStack;
-
-void initCharStack(CharStack *s) { s-&#x3E;top = -1; }
-int isCharEmpty(CharStack *s) { return s-&#x3E;top == -1; }
-void pushChar(CharStack *s, char c) { s-&#x3E;data[++s-&#x3E;top] = c; }
-char popChar(CharStack *s) { return s-&#x3E;data[s-&#x3E;top--]; }
-char peekChar(CharStack *s) { return s-&#x3E;data[s-&#x3E;top]; }
+#define MAX 100
 
 // Stack for numbers
 typedef struct
@@ -62,265 +36,166 @@ typedef struct
     int top;
 } NumStack;
 
-void initNumStack(NumStack *s) { s-&#x3E;top = -1; }
-int isNumEmpty(NumStack *s) { return s-&#x3E;top == -1; }
-void pushNum(NumStack *s, double val) { s-&#x3E;data[++s-&#x3E;top] = val; }
-double popNum(NumStack *s) { return s-&#x3E;data[s-&#x3E;top--]; }
-
-// Variable handling
-int findVarIndex(const char *name)
+void push_num(NumStack *s, double val)
 {
-    for (int i = 0; i &#x3C; varCount; i++)
-        if (strcmp(vars[i].name, name) == 0)
-            return i;
-    return -1;
+    s-&#x3E;data[++(s-&#x3E;top)] = val;
 }
 
-void setVar(const char *name, double value)
+double pop_num(NumStack *s)
 {
-    int idx = findVarIndex(name);
-    if (idx == -1)
-    {
-        if (varCount &#x3E;= VAR_MAX)
-        {
-            printf(&#x22;Error: Variable table full\n&#x22;);
-            exit(1);
-        }
-        strcpy(vars[varCount].name, name);
-        vars[varCount].value = value;
-        vars[varCount].assigned = 1;
-        varCount++;
-    }
-    else
-    {
-        vars[idx].value = value;
-        vars[idx].assigned = 1;
-    }
+    return s-&#x3E;data[(s-&#x3E;top)--];
 }
 
-double getVar(const char *name)
+// Stack for operators
+typedef struct
 {
-    int idx = findVarIndex(name);
-    if (idx == -1 || !vars[idx].assigned)
-    {
-        printf(&#x22;Error: Variable &#x27;%s&#x27; not defined\n&#x22;, name);
-        exit(1);
-    }
-    return vars[idx].value;
+    char data[MAX];
+    int top;
+} OpStack;
+
+void push_op(OpStack *s, char op)
+{
+    s-&#x3E;data[++(s-&#x3E;top)] = op;
 }
 
-// Operator precedence
+char pop_op(OpStack *s)
+{
+    return s-&#x3E;data[(s-&#x3E;top)--];
+}
+
+char peek_op(OpStack *s)
+{
+    return s-&#x3E;data[s-&#x3E;top];
+}
+
 int precedence(char op)
 {
-    switch (op)
-    {
-    case &#x27;+&#x27;:
-    case &#x27;-&#x27;:
+    if (op == &#x27;+&#x27; || op == &#x27;-&#x27;)
         return 1;
-    case &#x27;*&#x27;:
-    case &#x27;/&#x27;:
+    if (op == &#x27;*&#x27; || op == &#x27;/&#x27;)
         return 2;
-    case &#x27;^&#x27;:
-        return 3;
-    }
     return 0;
 }
 
-// Convert infix to postfix
-void infixToPostfix(const char *infix, char *postfix)
+int is_operator(char c)
 {
-    CharStack stack;
-    initCharStack(&#x26;stack);
-    int i = 0, k = 0;
-
-    while (infix[i] != &#x27;\0&#x27;)
-    {
-        if (isspace(infix[i]))
-        {
-            i++;
-            continue;
-        }
-
-        if (isdigit(infix[i]) || isalpha(infix[i]))
-        {
-            while (isdigit(infix[i]) || isalpha(infix[i]) || infix[i] == &#x27;.&#x27;)
-                postfix[k++] = infix[i++];
-            postfix[k++] = &#x27; &#x27;;
-            continue;
-        }
-
-        if (infix[i] == &#x27;(&#x27;)
-        {
-            pushChar(&#x26;stack, infix[i]);
-        }
-        else if (infix[i] == &#x27;)&#x27;)
-        {
-            while (!isCharEmpty(&#x26;stack) &#x26;&#x26; peekChar(&#x26;stack) != &#x27;(&#x27;)
-            {
-                postfix[k++] = popChar(&#x26;stack);
-                postfix[k++] = &#x27; &#x27;;
-            }
-            popChar(&#x26;stack); // remove &#x27;(&#x27;
-        }
-        else
-        {
-            while (!isCharEmpty(&#x26;stack) &#x26;&#x26; precedence(peekChar(&#x26;stack)) &#x3E;= precedence(infix[i]))
-            {
-                postfix[k++] = popChar(&#x26;stack);
-                postfix[k++] = &#x27; &#x27;;
-            }
-            pushChar(&#x26;stack, infix[i]);
-        }
-        i++;
-    }
-
-    while (!isCharEmpty(&#x26;stack))
-    {
-        postfix[k++] = popChar(&#x26;stack);
-        postfix[k++] = &#x27; &#x27;;
-    }
-    postfix[k] = &#x27;\0&#x27;;
+    return c == &#x27;+&#x27; || c == &#x27;-&#x27; || c == &#x27;*&#x27; || c == &#x27;/&#x27;;
 }
 
-// Evaluate postfix
-double evaluatePostfix(const char *postfix)
+// Convert infix to postfix using shunting-yard algorithm
+void infix_to_postfix(const char *expr, char output[][MAX], int *out_size)
 {
-    NumStack stack;
-    initNumStack(&#x26;stack);
-    int i = 0;
+    OpStack ops = {.top = -1};
+    int k = 0;
 
-    while (postfix[i] != &#x27;\0&#x27;)
+    for (int i = 0; expr[i]; i++)
     {
-        if (isspace(postfix[i]))
-        {
-            i++;
+        if (isspace(expr[i]))
             continue;
-        }
 
-        if (isdigit(postfix[i]))
+        if (isdigit(expr[i]))
         {
-            double num = 0;
-            while (isdigit(postfix[i]))
-            {
-                num = num * 10 + (postfix[i] - &#x27;0&#x27;);
-                i++;
-            }
-            if (postfix[i] == &#x27;.&#x27;)
-            {
-                i++;
-                double frac = 0.1;
-                while (isdigit(postfix[i]))
-                {
-                    num += (postfix[i] - &#x27;0&#x27;) * frac;
-                    frac /= 10;
-                    i++;
-                }
-            }
-            pushNum(&#x26;stack, num);
-        }
-        else if (isalpha(postfix[i]))
-        {
-            char name[32];
             int j = 0;
-            while (isalnum(postfix[i]))
+            while (isdigit(expr[i]) || expr[i] == &#x27;.&#x27;)
             {
-                name[j++] = postfix[i++];
+                output[k][j++] = expr[i++];
             }
-            name[j] = &#x27;\0&#x27;;
-            pushNum(&#x26;stack, getVar(name));
+            output[k][j] = &#x27;\0&#x27;;
+            k++;
+            i--;
         }
-        else
+        else if (expr[i] == &#x27;(&#x27;)
         {
-            double b = popNum(&#x26;stack);
-            double a = popNum(&#x26;stack);
-            switch (postfix[i])
+            push_op(&#x26;ops, expr[i]);
+        }
+        else if (expr[i] == &#x27;)&#x27;)
+        {
+            while (ops.top != -1 &#x26;&#x26; peek_op(&#x26;ops) != &#x27;(&#x27;)
+            {
+                output[k][0] = pop_op(&#x26;ops);
+                output[k][1] = &#x27;\0&#x27;;
+                k++;
+            }
+            pop_op(&#x26;ops); // remove &#x27;(&#x27;
+        }
+        else if (is_operator(expr[i]))
+        {
+            while (ops.top != -1 &#x26;&#x26; precedence(peek_op(&#x26;ops)) &#x3E;= precedence(expr[i]))
+            {
+                output[k][0] = pop_op(&#x26;ops);
+                output[k][1] = &#x27;\0&#x27;;
+                k++;
+            }
+            push_op(&#x26;ops, expr[i]);
+        }
+    }
+
+    while (ops.top != -1)
+    {
+        output[k][0] = pop_op(&#x26;ops);
+        output[k][1] = &#x27;\0&#x27;;
+        k++;
+    }
+
+    *out_size = k;
+}
+
+// Evaluate postfix expression
+double eval_postfix(char tokens[][MAX], int size)
+{
+    NumStack nums = {.top = -1};
+
+    for (int i = 0; i &#x3C; size; i++)
+    {
+        if (is_operator(tokens[i][0]) &#x26;&#x26; strlen(tokens[i]) == 1)
+        {
+            double b = pop_num(&#x26;nums);
+            double a = pop_num(&#x26;nums);
+            switch (tokens[i][0])
             {
             case &#x27;+&#x27;:
-                pushNum(&#x26;stack, a + b);
+                push_num(&#x26;nums, a + b);
                 break;
             case &#x27;-&#x27;:
-                pushNum(&#x26;stack, a - b);
+                push_num(&#x26;nums, a - b);
                 break;
             case &#x27;*&#x27;:
-                pushNum(&#x26;stack, a * b);
+                push_num(&#x26;nums, a * b);
                 break;
             case &#x27;/&#x27;:
-                pushNum(&#x26;stack, a / b);
-                break;
-            case &#x27;^&#x27;:
-                pushNum(&#x26;stack, pow(a, b));
+                push_num(&#x26;nums, a / b);
                 break;
             }
-            i++;
+        }
+        else
+        {
+            push_num(&#x26;nums, atof(tokens[i]));
         }
     }
-
-    return popNum(&#x26;stack);
-}
-
-// Process statement
-void processStatement(const char *stmt)
-{
-    char varName[32];
-    const char *expr = stmt;
-
-    // Check for assignment
-    const char *eq = strchr(stmt, &#x27;=&#x27;);
-    if (eq != NULL)
-    {
-        int len = eq - stmt;
-        strncpy(varName, stmt, len);
-        varName[len] = &#x27;\0&#x27;;
-
-        // Trim spaces
-        char *p = varName;
-        while (isspace(*p))
-            p++;
-        memmove(varName, p, strlen(p) + 1);
-        p = varName + strlen(varName) - 1;
-        while (p &#x3E; varName &#x26;&#x26; isspace(*p))
-            *p-- = &#x27;\0&#x27;;
-
-        expr = eq + 1;
-    }
-
-    char postfix[MAX];
-    infixToPostfix(expr, postfix);
-    double result = evaluatePostfix(postfix);
-
-    if (eq != NULL)
-    {
-        setVar(varName, result);
-    }
-    else
-    {
-        printf(&#x22;%g\n&#x22;, result);
-    }
+    return pop_num(&#x26;nums);
 }
 
 int main()
 {
-    char input[MAX];
+    char expr[MAX];
+    char postfix[MAX][MAX];
+    int size;
 
-    printf(&#x22;Tiny C Expression Interpreter (with variables)\n&#x22;);
-    printf(&#x22;Example: a = 5; b = a * 2; b + 3\n\n&#x22;);
+    printf(&#x22;Enter an expression: &#x22;);
+    fgets(expr, sizeof(expr), stdin);
+    expr[strcspn(expr, &#x22;\n&#x22;)] = &#x27;\0&#x27;; // remove newline
 
-    while (1)
-    {
-        printf(&#x22;&#x3E; &#x22;);
-        if (!fgets(input, sizeof(input), stdin))
-            break;
+    infix_to_postfix(expr, postfix, &#x26;size);
 
-        char *stmt = strtok(input, &#x22;;&#x22;);
-        while (stmt != NULL)
-        {
-            if (strlen(stmt) &#x3E; 0)
-                processStatement(stmt);
-            stmt = strtok(NULL, &#x22;;&#x22;);
-        }
-    }
+    double result = eval_postfix(postfix, size);
+    printf(&#x22;Result: %.2f\n&#x22;, result);
+
     return 0;
 }</code></pre>
+        <pre class="shell">
+Enter an expression: 5*(3+2)
+Result: 25.00</pre
+        >
       </section>
 
       <section id="alg2">

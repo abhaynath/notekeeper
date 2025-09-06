@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/vanilla-tabs.min.css" />
+    <link rel="shortcut icon" type="image/svg" href="../../css/svg/c/c.svg" />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
+    <script src="../../js/libs/jquery.min.js"></script>
+    <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/vanilla-tabs.min.js"></script>
+    <title>C Trees</title>
+  </head>
+  <body>
+    <nav class="nav_main">
+      <a href="../../index.html"><i class="fa fa-home"></i></a>
+      <a href="c_index.html">C</a>
+    </nav>
+    <div class="content">
+      <section id="tree1">
+        <h4>Binary Search Tree in inorder and postorder traversal</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int key;
+    struct Node *left, *right;
+} Node;
+
+// Create a new node
+Node *create_node(int key)
+{
+    Node *newNode = malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed\n&#x22;);
+        exit(1);
+    }
+    newNode-&#x3E;key = key;
+    newNode-&#x3E;left = newNode-&#x3E;right = NULL;
+    return newNode;
+}
+
+// Insert into BST
+Node *insert(Node *root, int key)
+{
+    if (root == NULL)
+        return create_node(key);
+
+    if (key &#x3C; root-&#x3E;key)
+        root-&#x3E;left = insert(root-&#x3E;left, key);
+    else if (key &#x3E; root-&#x3E;key)
+        root-&#x3E;right = insert(root-&#x3E;right, key);
+
+    return root;
+}
+
+// Search in BST
+Node *search(Node *root, int key)
+{
+    if (root == NULL || root-&#x3E;key == key)
+        return root;
+    if (key &#x3C; root-&#x3E;key)
+        return search(root-&#x3E;left, key);
+    return search(root-&#x3E;right, key);
+}
+
+// Inorder traversal (Left, Root, Right)
+void inorder(Node *root)
+{
+    if (root != NULL)
+    {
+        inorder(root-&#x3E;left);
+        printf(&#x22;%d &#x22;, root-&#x3E;key);
+        inorder(root-&#x3E;right);
+    }
+}
+
+// Preorder traversal (Root, Left, Right)
+void preorder(Node *root)
+{
+    if (root != NULL)
+    {
+        printf(&#x22;%d &#x22;, root-&#x3E;key);
+        preorder(root-&#x3E;left);
+        preorder(root-&#x3E;right);
+    }
+}
+
+// Postorder traversal (Left, Right, Root)
+void postorder(Node *root)
+{
+    if (root != NULL)
+    {
+        postorder(root-&#x3E;left);
+        postorder(root-&#x3E;right);
+        printf(&#x22;%d &#x22;, root-&#x3E;key);
+    }
+}
+
+// Find minimum value node
+Node *min_value_node(Node *node)
+{
+    Node *current = node;
+    while (current &#x26;&#x26; current-&#x3E;left != NULL)
+        current = current-&#x3E;left;
+    return current;
+}
+
+// Delete a node from BST
+Node *delete_node(Node *root, int key)
+{
+    if (root == NULL)
+        return root;
+
+    if (key &#x3C; root-&#x3E;key)
+        root-&#x3E;left = delete_node(root-&#x3E;left, key);
+    else if (key &#x3E; root-&#x3E;key)
+        root-&#x3E;right = delete_node(root-&#x3E;right, key);
+    else
+    {
+        // Node with only one child or no child
+        if (root-&#x3E;left == NULL)
+        {
+            Node *temp = root-&#x3E;right;
+            free(root);
+            return temp;
+        }
+        else if (root-&#x3E;right == NULL)
+        {
+            Node *temp = root-&#x3E;left;
+            free(root);
+            return temp;
+        }
+        // Node with two children
+        Node *temp = min_value_node(root-&#x3E;right);
+        root-&#x3E;key = temp-&#x3E;key;
+        root-&#x3E;right = delete_node(root-&#x3E;right, temp-&#x3E;key);
+    }
+    return root;
+}
+
+// Free the tree
+void free_tree(Node *root)
+{
+    if (root != NULL)
+    {
+        free_tree(root-&#x3E;left);
+        free_tree(root-&#x3E;right);
+        free(root);
+    }
+}
+
+int main()
+{
+    Node *root = NULL;
+    int values[] = {50, 30, 70, 20, 40, 60, 80};
+
+    // Insert nodes
+    for (int i = 0; i &#x3C; 7; i++)
+        root = insert(root, values[i]);
+
+    printf(&#x22;Inorder traversal: &#x22;);
+    inorder(root);
+    printf(&#x22;\n&#x22;);
+
+    printf(&#x22;Preorder traversal: &#x22;);
+    preorder(root);
+    printf(&#x22;\n&#x22;);
+
+    printf(&#x22;Postorder traversal: &#x22;);
+    postorder(root);
+    printf(&#x22;\n&#x22;);
+
+    // Delete a node
+    printf(&#x22;Deleting 70...\n&#x22;);
+    root = delete_node(root, 70);
+
+    printf(&#x22;Inorder after deletion: &#x22;);
+    inorder(root);
+    printf(&#x22;\n&#x22;);
+
+    printf(&#x22;Postorder after deletion: &#x22;);
+    postorder(root);
+    printf(&#x22;\n&#x22;);
+
+    free_tree(root);
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Inorder traversal: 20 30 40 50 60 70 80 
+Preorder traversal: 50 30 20 40 70 60 80
+Postorder traversal: 20 40 30 60 80 70 50 
+Deleting 70...
+Inorder after deletion: 20 30 40 50 60 80
+Postorder after deletion: 20 40 30 60 80 50</pre
+        >
+      </section>
+
+      <section id="tree2">
+        <h4>Threaded Binary Tree</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+typedef struct Node
+{
+    int key;
+    struct Node *left, *right;
+    int lthread; // 1 if left pointer is a thread
+    int rthread; // 1 if right pointer is a thread
+} Node;
+
+// Create a new threaded node
+Node *create_node(int key)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode-&#x3E;key = key;
+    newNode-&#x3E;lthread = 1;
+    newNode-&#x3E;rthread = 1;
+    newNode-&#x3E;left = NULL;
+    newNode-&#x3E;right = NULL;
+    return newNode;
+}
+
+// Insert into threaded binary tree
+Node *insert(Node *root, int key)
+{
+    Node *parent = NULL;
+    Node *curr = root;
+
+    while (curr != NULL)
+    {
+        if (key == curr-&#x3E;key)
+        {
+            printf(&#x22;Duplicate key %d not inserted.\n&#x22;, key);
+            return root;
+        }
+        parent = curr;
+        if (key &#x3C; curr-&#x3E;key)
+        {
+            if (curr-&#x3E;lthread == 0)
+                curr = curr-&#x3E;left;
+            else
+                break;
+        }
+        else
+        {
+            if (curr-&#x3E;rthread == 0)
+                curr = curr-&#x3E;right;
+            else
+                break;
+        }
+    }
+
+    Node *newNode = create_node(key);
+
+    if (parent == NULL)
+    {
+        root = newNode;
+        newNode-&#x3E;left = NULL;
+        newNode-&#x3E;right = NULL;
+    }
+    else if (key &#x3C; parent-&#x3E;key)
+    {
+        newNode-&#x3E;left = parent-&#x3E;left;
+        newNode-&#x3E;right = parent;
+        parent-&#x3E;lthread = 0;
+        parent-&#x3E;left = newNode;
+    }
+    else
+    {
+        newNode-&#x3E;left = parent;
+        newNode-&#x3E;right = parent-&#x3E;right;
+        parent-&#x3E;rthread = 0;
+        parent-&#x3E;right = newNode;
+    }
+    return root;
+}
+
+// Find inorder successor in threaded binary tree
+Node *inorder_successor(Node *ptr)
+{
+    if (ptr-&#x3E;rthread == 1)
+        return ptr-&#x3E;right;
+
+    ptr = ptr-&#x3E;right;
+    while (ptr-&#x3E;lthread == 0)
+        ptr = ptr-&#x3E;left;
+    return ptr;
+}
+
+// Inorder traversal
+void inorder(Node *root)
+{
+    if (root == NULL)
+    {
+        printf(&#x22;Tree is empty.\n&#x22;);
+        return;
+    }
+
+    Node *curr = root;
+    while (curr-&#x3E;lthread == 0)
+        curr = curr-&#x3E;left;
+
+    while (curr != NULL)
+    {
+        printf(&#x22;%d &#x22;, curr-&#x3E;key);
+        curr = inorder_successor(curr);
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+int main()
+{
+    Node *root = NULL;
+
+    root = insert(root, 50);
+    root = insert(root, 30);
+    root = insert(root, 70);
+    root = insert(root, 20);
+    root = insert(root, 40);
+    root = insert(root, 60);
+    root = insert(root, 80);
+
+    printf(&#x22;Inorder traversal (threaded): &#x22;);
+    inorder(root);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">Inorder traversal (threaded): 20 30 40 50 60 70 80</pre>
+      </section>
+
+      <section id="tree3">
+        <h4>Max Heap and Heap-Sort</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+
+// Swap two integers
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Heapify a subtree rooted at index i
+void heapify(int arr[], int n, int i)
+{
+    int largest = i;       // Initialize largest as root
+    int left = 2 * i + 1;  // Left child
+    int right = 2 * i + 2; // Right child
+
+    // If left child exists and is greater than root
+    if (left &#x3C; n &#x26;&#x26; arr[left] &#x3E; arr[largest])
+        largest = left;
+
+    // If right child exists and is greater than largest so far
+    if (right &#x3C; n &#x26;&#x26; arr[right] &#x3E; arr[largest])
+        largest = right;
+
+    // If largest is not root
+    if (largest != i)
+    {
+        swap(&#x26;arr[i], &#x26;arr[largest]);
+        heapify(arr, n, largest); // Recursively heapify affected subtree
+    }
+}
+
+// Build a max heap from array
+void build_max_heap(int arr[], int n)
+{
+    // Start from the last non-leaf node and go upwards
+    for (int i = n / 2 - 1; i &#x3E;= 0; i--)
+        heapify(arr, n, i);
+}
+
+// Heap sort
+void heap_sort(int arr[], int n)
+{
+    build_max_heap(arr, n);
+
+    for (int i = n - 1; i &#x3E; 0; i--)
+    {
+        // Move current root to end
+        swap(&#x26;arr[0], &#x26;arr[i]);
+        // Heapify the reduced heap
+        heapify(arr, i, 0);
+    }
+}
+
+void print_array(int arr[], int n)
+{
+    for (int i = 0; i &#x3C; n; i++)
+        printf(&#x22;%d &#x22;, arr[i]);
+    printf(&#x22;\n&#x22;);
+}
+
+int main()
+{
+    int arr[] = {3, 5, 9, 6, 8, 20, 10, 12, 18, 9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf(&#x22;Original array:\n&#x22;);
+    print_array(arr, n);
+
+    heap_sort(arr, n);
+
+    printf(&#x22;Sorted array (Heap Sort):\n&#x22;);
+    print_array(arr, n);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Original array:
+3 5 9 6 8 20 10 12 18 9 
+Sorted array (Heap Sort):
+3 5 6 8 9 9 10 12 18 20</pre
+        >
+      </section>
+
+      <section id="tree4">
+        <h4>Invert Tree Iterative BFS</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int key;
+    struct Node *left, *right;
+} Node;
+
+// Queue structure for BFS
+typedef struct
+{
+    Node **data;
+    int front, rear, capacity;
+} Queue;
+
+// Create a new queue
+Queue *create_queue(int capacity)
+{
+    Queue *q = malloc(sizeof(Queue));
+    q-&#x3E;data = malloc(capacity * sizeof(Node *));
+    q-&#x3E;front = 0;
+    q-&#x3E;rear = 0;
+    q-&#x3E;capacity = capacity;
+    return q;
+}
+
+// Check if queue is empty
+int is_empty(Queue *q)
+{
+    return q-&#x3E;front == q-&#x3E;rear;
+}
+
+// Enqueue node
+void enqueue(Queue *q, Node *node)
+{
+    q-&#x3E;data[q-&#x3E;rear++] = node;
+}
+
+// Dequeue node
+Node *dequeue(Queue *q)
+{
+    return q-&#x3E;data[q-&#x3E;front++];
+}
+
+// Free queue memory
+void free_queue(Queue *q)
+{
+    free(q-&#x3E;data);
+    free(q);
+}
+
+// Create new node
+Node *create_node(int key)
+{
+    Node *newNode = malloc(sizeof(Node));
+    newNode-&#x3E;key = key;
+    newNode-&#x3E;left = newNode-&#x3E;right = NULL;
+    return newNode;
+}
+
+// Insert into BST (for demo)
+Node *insert(Node *root, int key)
+{
+    if (root == NULL)
+        return create_node(key);
+    if (key &#x3C; root-&#x3E;key)
+        root-&#x3E;left = insert(root-&#x3E;left, key);
+    else
+        root-&#x3E;right = insert(root-&#x3E;right, key);
+    return root;
+}
+
+// Inorder traversal
+void inorder(Node *root)
+{
+    if (root != NULL)
+    {
+        inorder(root-&#x3E;left);
+        printf(&#x22;%d &#x22;, root-&#x3E;key);
+        inorder(root-&#x3E;right);
+    }
+}
+
+// Iterative inversion using BFS
+Node *invert_tree_iterative(Node *root)
+{
+    if (root == NULL)
+        return NULL;
+
+    Queue *q = create_queue(100); // Capacity for demo
+    enqueue(q, root);
+
+    while (!is_empty(q))
+    {
+        Node *current = dequeue(q);
+
+        // Swap children
+        Node *temp = current-&#x3E;left;
+        current-&#x3E;left = current-&#x3E;right;
+        current-&#x3E;right = temp;
+
+        if (current-&#x3E;left != NULL)
+            enqueue(q, current-&#x3E;left);
+        if (current-&#x3E;right != NULL)
+            enqueue(q, current-&#x3E;right);
+    }
+
+    free_queue(q);
+    return root;
+}
+
+// Free tree memory
+void free_tree(Node *root)
+{
+    if (root != NULL)
+    {
+        free_tree(root-&#x3E;left);
+        free_tree(root-&#x3E;right);
+        free(root);
+    }
+}
+
+int main()
+{
+    Node *root = NULL;
+    int values[] = {4, 2, 7, 1, 3, 6, 9};
+    int n = sizeof(values) / sizeof(values[0]);
+
+    // Create BST
+    for (int i = 0; i &#x3C; n; i++)
+        root = insert(root, values[i]);
+
+    printf(&#x22;Original tree (inorder): &#x22;);
+    inorder(root);
+    printf(&#x22;\n&#x22;);
+
+    root = invert_tree_iterative(root);
+
+    printf(&#x22;Inverted tree (inorder): &#x22;);
+    inorder(root);
+    printf(&#x22;\n&#x22;);
+
+    free_tree(root);
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Original tree (inorder): 1 2 3 4 6 7 9 
+Inverted tree (inorder): 9 7 6 4 3 2 1</pre
+        >
+      </section>
+
+      <section id="tree5">
+        <h4>Tries with AutoComplete</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;stdbool.h&#x3E;
+#include &#x3C;string.h&#x3E;
+
+#define ALPHABET_SIZE 26
+
+// Trie node structure
+typedef struct TrieNode
+{
+    struct TrieNode *children[ALPHABET_SIZE];
+    bool isEndOfWord;
+} TrieNode;
+
+// Create a new Trie node
+TrieNode *create_node()
+{
+    TrieNode *node = (TrieNode *)malloc(sizeof(TrieNode));
+    node-&#x3E;isEndOfWord = false;
+    for (int i = 0; i &#x3C; ALPHABET_SIZE; i++)
+        node-&#x3E;children[i] = NULL;
+    return node;
+}
+
+// Insert word into Trie
+void insert(TrieNode *root, const char *word)
+{
+    TrieNode *crawler = root;
+    for (int i = 0; word[i] != &#x27;\0&#x27;; i++)
+    {
+        int index = word[i] - &#x27;a&#x27;;
+        if (index &#x3C; 0 || index &#x3E;= ALPHABET_SIZE)
+            continue; // ignore non a-z
+        if (crawler-&#x3E;children[index] == NULL)
+            crawler-&#x3E;children[index] = create_node();
+        crawler = crawler-&#x3E;children[index];
+    }
+    crawler-&#x3E;isEndOfWord = true;
+}
+
+// Search word in Trie
+bool search(TrieNode *root, const char *word)
+{
+    TrieNode *crawler = root;
+    for (int i = 0; word[i] != &#x27;\0&#x27;; i++)
+    {
+        int index = word[i] - &#x27;a&#x27;;
+        if (index &#x3C; 0 || index &#x3E;= ALPHABET_SIZE)
+            return false;
+        if (crawler-&#x3E;children[index] == NULL)
+            return false;
+        crawler = crawler-&#x3E;children[index];
+    }
+    return crawler-&#x3E;isEndOfWord;
+}
+
+// Check if prefix exists
+bool startsWith(TrieNode *root, const char *prefix)
+{
+    TrieNode *crawler = root;
+    for (int i = 0; prefix[i] != &#x27;\0&#x27;; i++)
+    {
+        int index = prefix[i] - &#x27;a&#x27;;
+        if (index &#x3C; 0 || index &#x3E;= ALPHABET_SIZE)
+            return false;
+        if (crawler-&#x3E;children[index] == NULL)
+            return false;
+        crawler = crawler-&#x3E;children[index];
+    }
+    return true;
+}
+
+// Print all words in the Trie from a given node
+void print_words(TrieNode *root, char *buffer, int depth)
+{
+    if (root-&#x3E;isEndOfWord)
+    {
+        buffer[depth] = &#x27;\0&#x27;;
+        printf(&#x22;%s\n&#x22;, buffer);
+    }
+    for (int i = 0; i &#x3C; ALPHABET_SIZE; i++)
+    {
+        if (root-&#x3E;children[i] != NULL)
+        {
+            buffer[depth] = &#x27;a&#x27; + i;
+            print_words(root-&#x3E;children[i], buffer, depth + 1);
+        }
+    }
+}
+
+// Print words starting with a prefix
+void autocomplete(TrieNode *root, const char *prefix)
+{
+    TrieNode *crawler = root;
+    for (int i = 0; prefix[i] != &#x27;\0&#x27;; i++)
+    {
+        int index = prefix[i] - &#x27;a&#x27;;
+        if (crawler-&#x3E;children[index] == NULL)
+        {
+            printf(&#x22;No words found with prefix \&#x22;%s\&#x22;\n&#x22;, prefix);
+            return;
+        }
+        crawler = crawler-&#x3E;children[index];
+    }
+    char buffer[100];
+    strcpy(buffer, prefix);
+    print_words(crawler, buffer, strlen(prefix));
+}
+
+// Free memory
+void freeTrie(TrieNode *root)
+{
+    if (root == NULL)
+        return;
+    for (int i = 0; i &#x3C; ALPHABET_SIZE; i++)
+        freeTrie(root-&#x3E;children[i]);
+    free(root);
+}
+
+int main()
+{
+    TrieNode *root = create_node();
+
+    insert(root, &#x22;hello&#x22;);
+    insert(root, &#x22;hell&#x22;);
+    insert(root, &#x22;heaven&#x22;);
+    insert(root, &#x22;heavy&#x22;);
+    insert(root, &#x22;heat&#x22;);
+    insert(root, &#x22;heap&#x22;);
+
+    printf(&#x22;Search &#x27;hello&#x27;: %s\n&#x22;, search(root, &#x22;hello&#x22;) ? &#x22;Found&#x22; : &#x22;Not Found&#x22;);
+    printf(&#x22;Search &#x27;hero&#x27;: %s\n&#x22;, search(root, &#x22;hero&#x22;) ? &#x22;Found&#x22; : &#x22;Not Found&#x22;);
+
+    printf(&#x22;\nAll words in Trie:\n&#x22;);
+    char buffer[100];
+    print_words(root, buffer, 0);
+
+    printf(&#x22;\nAutocomplete for &#x27;he&#x27;:\n&#x22;);
+    autocomplete(root, &#x22;he&#x22;);
+
+    printf(&#x22;\nAutocomplete for &#x27;hea&#x27;:\n&#x22;);
+    autocomplete(root, &#x22;hea&#x22;);
+
+    freeTrie(root);
+    return 0;
+}
+</code></pre>
+<pre class="shell">Search 'hello': Found
+Search 'hero': Not Found
+
+All words in Trie:
+heap
+heat
+heaven
+heavy
+hell
+hello
+
+Autocomplete for 'he':
+heap
+heat
+heaven
+heavy
+hell
+hello
+
+Autocomplete for 'hea':
+heap
+heat
+heaven
+heavy</pre>
+      </section>
+
+      <section id="tree6">
+        <h4>General Tree DFS and BFS traversal</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;stdbool.h&#x3E;
+#include &#x3C;string.h&#x3E;
+
+// Structure for a general tree node
+typedef struct Node
+{
+    char value[50];
+    struct Node *firstChild;
+    struct Node *nextSibling;
+} Node;
+
+// Queue for BFS
+typedef struct
+{
+    Node **data;
+    int front, rear, capacity;
+} Queue;
+
+Queue *createQueue(int capacity)
+{
+    Queue *q = (Queue *)malloc(sizeof(Queue));
+    q-&#x3E;data = (Node **)malloc(sizeof(Node *) * capacity);
+    q-&#x3E;front = q-&#x3E;rear = 0;
+    q-&#x3E;capacity = capacity;
+    return q;
+}
+
+bool isEmpty(Queue *q)
+{
+    return q-&#x3E;front == q-&#x3E;rear;
+}
+
+void enqueue(Queue *q, Node *node)
+{
+    q-&#x3E;data[q-&#x3E;rear++] = node;
+}
+
+Node *dequeue(Queue *q)
+{
+    return q-&#x3E;data[q-&#x3E;front++];
+}
+
+void freeQueue(Queue *q)
+{
+    free(q-&#x3E;data);
+    free(q);
+}
+
+// Create a new node
+Node *createNode(const char *value)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    strcpy(newNode-&#x3E;value, value);
+    newNode-&#x3E;firstChild = NULL;
+    newNode-&#x3E;nextSibling = NULL;
+    return newNode;
+}
+
+// Add a child to a parent node
+void addChild(Node *parent, Node *child)
+{
+    if (parent-&#x3E;firstChild == NULL)
+    {
+        parent-&#x3E;firstChild = child;
+    }
+    else
+    {
+        Node *temp = parent-&#x3E;firstChild;
+        while (temp-&#x3E;nextSibling != NULL)
+        {
+            temp = temp-&#x3E;nextSibling;
+        }
+        temp-&#x3E;nextSibling = child;
+    }
+}
+
+// Depth-first traversal (DFS)
+void traverseDFS(Node *root, int depth)
+{
+    if (root == NULL)
+        return;
+    for (int i = 0; i &#x3C; depth; i++)
+        printf(&#x22;  &#x22;);
+    printf(&#x22;%s\n&#x22;, root-&#x3E;value);
+
+    traverseDFS(root-&#x3E;firstChild, depth + 1);
+    traverseDFS(root-&#x3E;nextSibling, depth);
+}
+
+// Breadth-first traversal (BFS)
+void traverseBFS(Node *root)
+{
+    if (root == NULL)
+        return;
+    Queue *q = createQueue(100);
+    enqueue(q, root);
+
+    while (!isEmpty(q))
+    {
+        Node *current = dequeue(q);
+        printf(&#x22;%s &#x22;, current-&#x3E;value);
+
+        Node *child = current-&#x3E;firstChild;
+        while (child != NULL)
+        {
+            enqueue(q, child);
+            child = child-&#x3E;nextSibling;
+        }
+    }
+    printf(&#x22;\n&#x22;);
+    freeQueue(q);
+}
+
+// Search node by value (DFS)
+Node *search(Node *root, const char *value)
+{
+    if (root == NULL)
+        return NULL;
+    if (strcmp(root-&#x3E;value, value) == 0)
+        return root;
+
+    Node *found = search(root-&#x3E;firstChild, value);
+    if (found)
+        return found;
+
+    return search(root-&#x3E;nextSibling, value);
+}
+
+// Free an entire subtree recursively
+void freeSubtree(Node *node)
+{
+    if (node == NULL)
+        return;
+    freeSubtree(node-&#x3E;firstChild);
+    freeSubtree(node-&#x3E;nextSibling);
+    free(node);
+}
+
+// Delete a node and its subtree (optimized)
+bool deleteNode(Node *parent, const char *value)
+{
+    if (parent == NULL)
+        return false;
+
+    Node *prev = NULL;
+    Node *curr = parent-&#x3E;firstChild;
+
+    while (curr != NULL)
+    {
+        if (strcmp(curr-&#x3E;value, value) == 0)
+        {
+            // Remove from sibling chain
+            if (prev == NULL)
+            {
+                parent-&#x3E;firstChild = curr-&#x3E;nextSibling;
+            }
+            else
+            {
+                prev-&#x3E;nextSibling = curr-&#x3E;nextSibling;
+            }
+            // Free entire subtree
+            freeSubtree(curr);
+            return true;
+        }
+        prev = curr;
+        curr = curr-&#x3E;nextSibling;
+    }
+
+    // Search in children
+    curr = parent-&#x3E;firstChild;
+    while (curr != NULL)
+    {
+        if (deleteNode(curr, value))
+            return true;
+        curr = curr-&#x3E;nextSibling;
+    }
+
+    return false;
+}
+
+int main()
+{
+    // Create root
+    Node *root = createNode(&#x22;root&#x22;);
+
+    // Create children
+    Node *a = createNode(&#x22;A&#x22;);
+    Node *b = createNode(&#x22;B&#x22;);
+    Node *c = createNode(&#x22;C&#x22;);
+
+    addChild(root, a);
+    addChild(root, b);
+    addChild(root, c);
+
+    // Add grandchildren
+    addChild(a, createNode(&#x22;A1&#x22;));
+    addChild(a, createNode(&#x22;A2&#x22;));
+    addChild(b, createNode(&#x22;B1&#x22;));
+    addChild(c, createNode(&#x22;C1&#x22;));
+    addChild(c, createNode(&#x22;C2&#x22;));
+
+    printf(&#x22;DFS Traversal:\n&#x22;);
+    traverseDFS(root, 0);
+
+    printf(&#x22;\nBFS Traversal:\n&#x22;);
+    traverseBFS(root);
+
+    // Search
+    const char *key = &#x22;B1&#x22;;
+    Node *found = search(root, key);
+    printf(&#x22;\nSearch for &#x27;%s&#x27;: %s\n&#x22;, key, found ? &#x22;Found&#x22; : &#x22;Not Found&#x22;);
+
+    // Delete a node
+    printf(&#x22;\nDeleting &#x27;C&#x27;...\n&#x22;);
+    deleteNode(root, &#x22;C&#x22;);
+
+    printf(&#x22;\nDFS After Deletion:\n&#x22;);
+    traverseDFS(root, 0);
+
+    printf(&#x22;\nBFS After Deletion:\n&#x22;);
+    traverseBFS(root);
+
+    // Cleanup remaining tree
+    freeSubtree(root);
+
+    return 0;
+}</code></pre>
+<pre class="shell">DFS Traversal:
+root
+  A
+    A1
+    A2
+  B
+    B1
+  C
+    C1
+    C2
+
+BFS Traversal:
+root A B C A1 A2 B1 C1 C2 
+
+Search for 'B1': Found
+
+Deleting 'C'...
+
+DFS After Deletion:
+root
+  A
+    A1
+    A2
+  B
+    B1
+
+BFS After Deletion:
+root A B A1 A2 B1</pre>
+      </section>
+
+      <section id="tree7">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+
+      <section id="tree8">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+
+      <section id="tree9">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
+  </body>
+  <script>
+    hljs.highlightAll();
+
+    const createTabs = () => {
+      let arr = [];
+
+      arr.forEach((tab) => {
+        new VanillaTabs({
+          selector: tab,
+          type: "horizontal",
+          responsiveBreak: 840,
+          activeIndex: 0,
+        });
+      });
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createTabs();
+    });
+  </script>
+</html>
