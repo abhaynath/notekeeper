@@ -19,14 +19,614 @@
       <a href="../../index.html"><i class="fa fa-home"></i></a>
       <a href="c_index.html">C</a>
     </nav>
-    <div class="content"></div>
+    <div class="content">
+      <section id="graph1">
+        <h4>Graph with DFS and BFS traversal</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;stdbool.h&#x3E;
+
+// Node in adjacency list
+typedef struct Node
+{
+    int vertex;
+    struct Node *next;
+} Node;
+
+// Graph structure
+typedef struct
+{
+    int numVertices;
+    Node **adjLists;
+    bool *visited;
+} Graph;
+
+// Queue for BFS
+typedef struct
+{
+    int *items;
+    int front, rear;
+} Queue;
+
+Queue *createQueue(int size)
+{
+    Queue *q = (Queue *)malloc(sizeof(Queue));
+    q-&#x3E;items = (int *)malloc(size * sizeof(int));
+    q-&#x3E;front = q-&#x3E;rear = -1;
+    return q;
+}
+
+bool isEmpty(Queue *q)
+{
+    return q-&#x3E;rear == -1;
+}
+
+void enqueue(Queue *q, int value)
+{
+    if (q-&#x3E;rear == -1)
+    {
+        q-&#x3E;front = q-&#x3E;rear = 0;
+    }
+    else
+    {
+        q-&#x3E;rear++;
+    }
+    q-&#x3E;items[q-&#x3E;rear] = value;
+}
+
+int dequeue(Queue *q)
+{
+    if (isEmpty(q))
+        return -1;
+    int item = q-&#x3E;items[q-&#x3E;front];
+    if (q-&#x3E;front == q-&#x3E;rear)
+    {
+        q-&#x3E;front = q-&#x3E;rear = -1;
+    }
+    else
+    {
+        q-&#x3E;front++;
+    }
+    return item;
+}
+
+void freeQueue(Queue *q)
+{
+    free(q-&#x3E;items);
+    free(q);
+}
+
+// Create a new adjacency list node
+Node *createNode(int vertex)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode-&#x3E;vertex = vertex;
+    newNode-&#x3E;next = NULL;
+    return newNode;
+}
+
+// Create a graph
+Graph *createGraph(int vertices)
+{
+    Graph *graph = (Graph *)malloc(sizeof(Graph));
+    graph-&#x3E;numVertices = vertices;
+    graph-&#x3E;adjLists = (Node **)malloc(vertices * sizeof(Node *));
+    graph-&#x3E;visited = (bool *)malloc(vertices * sizeof(bool));
+
+    for (int i = 0; i &#x3C; vertices; i++)
+    {
+        graph-&#x3E;adjLists[i] = NULL;
+        graph-&#x3E;visited[i] = false;
+    }
+    return graph;
+}
+
+// Add edge (undirected)
+void addEdge(Graph *graph, int src, int dest)
+{
+    // Add edge from src to dest
+    Node *newNode = createNode(dest);
+    newNode-&#x3E;next = graph-&#x3E;adjLists[src];
+    graph-&#x3E;adjLists[src] = newNode;
+
+    // Add edge from dest to src (for undirected graph)
+    newNode = createNode(src);
+    newNode-&#x3E;next = graph-&#x3E;adjLists[dest];
+    graph-&#x3E;adjLists[dest] = newNode;
+}
+
+// DFS recursive
+void DFS(Graph *graph, int vertex)
+{
+    graph-&#x3E;visited[vertex] = true;
+    printf(&#x22;%d &#x22;, vertex);
+
+    Node *temp = graph-&#x3E;adjLists[vertex];
+    while (temp != NULL)
+    {
+        int adjVertex = temp-&#x3E;vertex;
+        if (!graph-&#x3E;visited[adjVertex])
+        {
+            DFS(graph, adjVertex);
+        }
+        temp = temp-&#x3E;next;
+    }
+}
+
+// BFS
+void BFS(Graph *graph, int startVertex)
+{
+    Queue *q = createQueue(graph-&#x3E;numVertices);
+
+    graph-&#x3E;visited[startVertex] = true;
+    enqueue(q, startVertex);
+
+    while (!isEmpty(q))
+    {
+        int currentVertex = dequeue(q);
+        printf(&#x22;%d &#x22;, currentVertex);
+
+        Node *temp = graph-&#x3E;adjLists[currentVertex];
+        while (temp != NULL)
+        {
+            int adjVertex = temp-&#x3E;vertex;
+            if (!graph-&#x3E;visited[adjVertex])
+            {
+                graph-&#x3E;visited[adjVertex] = true;
+                enqueue(q, adjVertex);
+            }
+            temp = temp-&#x3E;next;
+        }
+    }
+    freeQueue(q);
+}
+
+int main()
+{
+    Graph *graph = createGraph(6);
+
+    addEdge(graph, 0, 1);
+    addEdge(graph, 0, 2);
+    addEdge(graph, 1, 3);
+    addEdge(graph, 1, 4);
+    addEdge(graph, 2, 4);
+    addEdge(graph, 3, 4);
+    addEdge(graph, 3, 5);
+
+    printf(&#x22;DFS starting from vertex 0:\n&#x22;);
+    DFS(graph, 0);
+
+    // Reset visited for BFS
+    for (int i = 0; i &#x3C; graph-&#x3E;numVertices; i++)
+        graph-&#x3E;visited[i] = false;
+
+    printf(&#x22;\nBFS starting from vertex 0:\n&#x22;);
+    BFS(graph, 0);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+DFS starting from vertex 0:
+0 2 4 3 5 1 
+BFS starting from vertex 0:
+0 2 1 4 3 5</pre
+        >
+      </section>
+
+      <section id="graph2">
+        <h4>Minimum Spanning Tree Kruskal&#x2019;s algorithm</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Structure to represent an edge
+typedef struct
+{
+    int src, dest, weight;
+} Edge;
+
+// Structure to represent a subset for union-find
+typedef struct
+{
+    int parent;
+    int rank;
+} Subset;
+
+// Function to compare edges by weight for qsort
+int compareEdges(const void *a, const void *b)
+{
+    return ((Edge *)a)-&#x3E;weight - ((Edge *)b)-&#x3E;weight;
+}
+
+// Find set of an element (uses path compression)
+int find(Subset subsets[], int i)
+{
+    if (subsets[i].parent != i)
+        subsets[i].parent = find(subsets, subsets[i].parent);
+    return subsets[i].parent;
+}
+
+// Union of two sets (uses union by rank)
+void unionSets(Subset subsets[], int x, int y)
+{
+    int xroot = find(subsets, x);
+    int yroot = find(subsets, y);
+
+    if (subsets[xroot].rank &#x3C; subsets[yroot].rank)
+        subsets[xroot].parent = yroot;
+    else if (subsets[xroot].rank &#x3E; subsets[yroot].rank)
+        subsets[yroot].parent = xroot;
+    else
+    {
+        subsets[yroot].parent = xroot;
+        subsets[xroot].rank++;
+    }
+}
+
+// Function to construct MST using Kruskal&#x27;s algorithm
+void kruskalMST(int V, int E, Edge edges[])
+{
+    // Step 1: Sort edges by weight
+    qsort(edges, E, sizeof(Edge), compareEdges);
+
+    // Allocate memory for subsets
+    Subset *subsets = (Subset *)malloc(V * sizeof(Subset));
+    for (int v = 0; v &#x3C; V; v++)
+    {
+        subsets[v].parent = v;
+        subsets[v].rank = 0;
+    }
+
+    Edge *result = (Edge *)malloc((V - 1) * sizeof(Edge));
+    int e = 0; // index for result[]
+    int i = 0; // index for sorted edges
+
+    // Step 2: Pick edges one by one
+    while (e &#x3C; V - 1 &#x26;&#x26; i &#x3C; E)
+    {
+        Edge next_edge = edges[i++];
+
+        int x = find(subsets, next_edge.src);
+        int y = find(subsets, next_edge.dest);
+
+        // If including this edge doesn&#x27;t cause cycle
+        if (x != y)
+        {
+            result[e++] = next_edge;
+            unionSets(subsets, x, y);
+        }
+    }
+
+    // Step 3: Print MST result
+    printf(&#x22;Edges in the Minimum Spanning Tree:\n&#x22;);
+    int totalWeight = 0;
+    for (i = 0; i &#x3C; e; i++)
+    {
+        printf(&#x22;%d -- %d == %d\n&#x22;, result[i].src, result[i].dest, result[i].weight);
+        totalWeight += result[i].weight;
+    }
+    printf(&#x22;Total weight of MST: %d\n&#x22;, totalWeight);
+
+    free(subsets);
+    free(result);
+}
+
+int main()
+{
+    int V = 4; // Number of vertices
+    int E = 5; // Number of edges
+
+    Edge edges[] = {
+        {0, 1, 10},
+        {0, 2, 6},
+        {0, 3, 5},
+        {1, 3, 15},
+        {2, 3, 4}};
+
+    kruskalMST(V, E, edges);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Edges in the Minimum Spanning Tree:
+2 -- 3 == 4
+0 -- 3 == 5
+0 -- 1 == 10
+Total weight of MST: 19</pre
+        >
+      </section>
+
+      <section id="graph3">
+        <h4>Minimum Spanning Tree (MST) using Prim&#x2019;s algorithm</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;limits.h&#x3E;
+#include &#x3C;stdbool.h&#x3E;
+
+#define V 5 // Number of vertices
+
+// Find the vertex with the minimum key value not yet included in MST
+int minKey(int key[], bool mstSet[])
+{
+    int min = INT_MAX, min_index;
+    for (int v = 0; v &#x3C; V; v++)
+        if (!mstSet[v] &#x26;&#x26; key[v] &#x3C; min)
+        {
+            min = key[v];
+            min_index = v;
+        }
+    return min_index;
+}
+
+// Print the MST
+void printMST(int parent[], int graph[V][V])
+{
+    printf(&#x22;Edge \tWeight\n&#x22;);
+    int totalWeight = 0;
+    for (int i = 1; i &#x3C; V; i++)
+    {
+        printf(&#x22;%d - %d \t%d \n&#x22;, parent[i], i, graph[i][parent[i]]);
+        totalWeight += graph[i][parent[i]];
+    }
+    printf(&#x22;Total weight of MST: %d\n&#x22;, totalWeight);
+}
+
+// Construct MST using Prim&#x27;s algorithm
+void primMST(int graph[V][V])
+{
+    int parent[V];  // Array to store MST
+    int key[V];     // Key values to pick minimum weight edge
+    bool mstSet[V]; // Track vertices included in MST
+
+    // Initialize all keys as infinite
+    for (int i = 0; i &#x3C; V; i++)
+    {
+        key[i] = INT_MAX;
+        mstSet[i] = false;
+    }
+
+    // Start from vertex 0
+    key[0] = 0;
+    parent[0] = -1; // First node is root of MST
+
+    for (int count = 0; count &#x3C; V - 1; count++)
+    {
+        // Pick the vertex with the minimum key
+        int u = minKey(key, mstSet);
+        mstSet[u] = true;
+
+        // Update key values of adjacent vertices
+        for (int v = 0; v &#x3C; V; v++)
+            if (graph[u][v] &#x26;&#x26; !mstSet[v] &#x26;&#x26; graph[u][v] &#x3C; key[v])
+            {
+                parent[v] = u;
+                key[v] = graph[u][v];
+            }
+    }
+
+    printMST(parent, graph);
+}
+
+int main()
+{
+    int graph[V][V] = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0}};
+
+    primMST(graph);
+
+    return 0;
+}
+</code></pre>
+        <pre class="shell">
+Edge    Weight
+0 - 1   2 
+1 - 2   3
+0 - 3   6
+1 - 4   5
+Total weight of MST: 16</pre
+        >
+      </section>
+
+      <section id="graph4">
+        <h4>Dijkstra&#x27;s Shortest Path Algorithm</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;limits.h&#x3E;
+#include &#x3C;stdbool.h&#x3E;
+
+#define V 6 // Number of vertices
+
+// Function to find the vertex with the minimum distance value
+int minDistance(int dist[], bool sptSet[])
+{
+    int min = INT_MAX, min_index;
+    for (int v = 0; v &#x3C; V; v++)
+        if (!sptSet[v] &#x26;&#x26; dist[v] &#x3C;= min)
+        {
+            min = dist[v];
+            min_index = v;
+        }
+    return min_index;
+}
+
+// Function to print the path from source to a vertex
+void printPath(int parent[], int j)
+{
+    if (parent[j] == -1)
+    {
+        printf(&#x22;%d&#x22;, j);
+        return;
+    }
+    printPath(parent, parent[j]);
+    printf(&#x22; -&#x3E; %d&#x22;, j);
+}
+
+// Function to print distances and paths
+void printSolution(int dist[], int parent[], int src)
+{
+    printf(&#x22;Vertex\tDistance\tPath&#x22;);
+    for (int i = 0; i &#x3C; V; i++)
+    {
+        printf(&#x22;\n%d -&#x3E; %d\t%d\t\t&#x22;, src, i, dist[i]);
+        printPath(parent, i);
+    }
+}
+
+// Dijkstra&#x27;s algorithm
+void dijkstra(int graph[V][V], int src)
+{
+    int dist[V];    // dist[i] will hold the shortest distance from src to i
+    bool sptSet[V]; // sptSet[i] will be true if vertex i is processed
+    int parent[V];  // To store the shortest path tree
+
+    // Initialization
+    for (int i = 0; i &#x3C; V; i++)
+    {
+        dist[i] = INT_MAX;
+        sptSet[i] = false;
+        parent[i] = -1;
+    }
+
+    dist[src] = 0;
+
+    // Main loop
+    for (int count = 0; count &#x3C; V - 1; count++)
+    {
+        int u = minDistance(dist, sptSet);
+        sptSet[u] = true;
+
+        for (int v = 0; v &#x3C; V; v++)
+        {
+            if (!sptSet[v] &#x26;&#x26; graph[u][v] &#x26;&#x26; dist[u] != INT_MAX &#x26;&#x26;
+                dist[u] + graph[u][v] &#x3C; dist[v])
+            {
+                dist[v] = dist[u] + graph[u][v];
+                parent[v] = u;
+            }
+        }
+    }
+
+    // Print the results
+    printSolution(dist, parent, src);
+}
+
+int main()
+{
+    int graph[V][V] = {
+        {0, 4, 0, 0, 0, 0},
+        {4, 0, 8, 0, 0, 0},
+        {0, 8, 0, 7, 0, 4},
+        {0, 0, 7, 0, 9, 14},
+        {0, 0, 0, 9, 0, 10},
+        {0, 0, 4, 14, 10, 0}};
+
+    int source = 0;
+    dijkstra(graph, source);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Vertex  Distance        Path
+0 -> 0  0               0
+0 -> 1  4               0 -> 1
+0 -> 2  12              0 -> 1 -> 2
+0 -> 3  19              0 -> 1 -> 2 -> 3
+0 -> 4  26              0 -> 1 -> 2 -> 5 -> 4
+0 -> 5  16              0 -> 1 -> 2 -> 5</pre
+        >
+      </section>
+
+      <section id="graph5">
+        <h4>Topological Sorting using Kahn&#x2019;s Algorithm (BFS) for a Directed Acyclic Graph</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Function to perform topological sort
+void topologicalSort(int V, int adj[V][V])
+{
+    int inDegree[V];
+    for (int i = 0; i &#x3C; V; i++)
+        inDegree[i] = 0;
+
+    // Compute in-degree for each vertex
+    for (int u = 0; u &#x3C; V; u++)
+        for (int v = 0; v &#x3C; V; v++)
+            if (adj[u][v])
+                inDegree[v]++;
+
+    // Queue for BFS
+    int queue[V], front = 0, rear = 0;
+
+    // Enqueue vertices with 0 in-degree
+    for (int i = 0; i &#x3C; V; i++)
+        if (inDegree[i] == 0)
+            queue[rear++] = i;
+
+    int count = 0; // Count visited vertices
+    int topoOrder[V];
+
+    while (front &#x3C; rear)
+    {
+        int u = queue[front++];
+        topoOrder[count++] = u;
+
+        // Reduce in-degree of neighbors
+        for (int v = 0; v &#x3C; V; v++)
+        {
+            if (adj[u][v])
+            {
+                inDegree[v]--;
+                if (inDegree[v] == 0)
+                    queue[rear++] = v;
+            }
+        }
+    }
+
+    // Check for cycle
+    if (count != V)
+    {
+        printf(&#x22;Graph contains a cycle! Topological sort not possible.\n&#x22;);
+        return;
+    }
+
+    // Print topological order
+    printf(&#x22;Topological Order: &#x22;);
+    for (int i = 0; i &#x3C; V; i++)
+        printf(&#x22;%d &#x22;, topoOrder[i]);
+    printf(&#x22;\n&#x22;);
+}
+
+int main()
+{
+    int V = 6;
+    int adj[6][6] = {
+        {0, 1, 1, 0, 0, 0},
+        {0, 0, 0, 1, 1, 0},
+        {0, 0, 0, 1, 0, 0},
+        {0, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 0, 1},
+        {0, 0, 0, 0, 0, 0}};
+
+    topologicalSort(V, adj);
+
+    return 0;
+}
+</code></pre>
+        <pre class="shell">Topological Order: 0 1 2 4 3 5</pre>
+      </section>
+
+      <section id="graph6">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
   </body>
   <script>
     hljs.highlightAll();
 
     const createTabs = () => {
       let arr = [];
-      
 
       arr.forEach((tab) => {
         new VanillaTabs({
