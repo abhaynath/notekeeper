@@ -121,6 +121,9 @@ int main()
 
     return 0;
 }</code></pre>
+<pre class="shell">Linked List: 10 -> 20 -> 30 -> NULL
+Deleting 20...
+Linked List after deletion: 10 -> 30 -> NULL</pre>
       </section>
 
       <section id="ll2">
@@ -243,6 +246,11 @@ int main()
 
     return 0;
 }</code></pre>
+<pre class="shell">Forward: 10 -> 20 -> 30 -> NULL
+Backward: 30 -> 20 -> 10 -> NULL
+Deleting 20...
+Forward: 10 -> 30 -> NULL
+Backward: 30 -> 10 -> NULL</pre>
       </section>
 
       <section id="ll3">
@@ -415,9 +423,122 @@ int main()
 
     return 0;
 }</code></pre>
-      </section>
+<pre class="shell">Forward: 10 -> 20 -> 30 -> NULL
+Backward: 30 -> 20 -> 10 -> NULL
 
-   
+Inserting 5 at beginning...
+Forward: 5 -> 10 -> 20 -> 30 -> NULL
+
+Inserting 15 at position 3...
+Forward: 5 -> 10 -> 15 -> 20 -> 30 -> NULL
+
+Deleting value 20...
+Forward: 5 -> 10 -> 15 -> 30 -> NULL
+Backward: 30 -> 15 -> 10 -> 5 -> NULL</pre>
+      </section>
+      <section id="ll4">
+        <h4>Linked List with structure</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;string.h&#x3E;
+
+// User struct
+typedef struct
+{
+    int id;
+    char name[50];
+} User;
+
+// Node for linked list
+typedef struct Node
+{
+    User data;
+    struct Node *next;
+} Node;
+
+// Create a new user
+User create_user(int id, const char *name)
+{
+    User u;
+    u.id = id;
+    strncpy(u.name, name, sizeof(u.name) - 1);
+    u.name[sizeof(u.name) - 1] = &#x27;\0&#x27;;
+    return u;
+}
+
+// Create a new node
+Node *create_node(User user)
+{
+    Node *newNode = malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed\n&#x22;);
+        exit(1);
+    }
+    newNode-&#x3E;data = user;
+    newNode-&#x3E;next = NULL;
+    return newNode;
+}
+
+// Add a user to the end of the list
+void append(Node **head, User user)
+{
+    Node *newNode = create_node(user);
+    if (*head == NULL)
+    {
+        *head = newNode;
+        return;
+    }
+    Node *temp = *head;
+    while (temp-&#x3E;next != NULL)
+    {
+        temp = temp-&#x3E;next;
+    }
+    temp-&#x3E;next = newNode;
+}
+
+// Print all users
+void print_users(Node *head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        printf(&#x22;ID: %d, Name: %s\n&#x22;, temp-&#x3E;data.id, temp-&#x3E;data.name);
+        temp = temp-&#x3E;next;
+    }
+}
+
+// Free all nodes
+void free_list(Node *head)
+{
+    Node *temp;
+    while (head != NULL)
+    {
+        temp = head;
+        head = head-&#x3E;next;
+        free(temp);
+    }
+}
+
+int main()
+{
+    Node *head = NULL;
+
+    append(&#x26;head, create_user(1, &#x22;Alice&#x22;));
+    append(&#x26;head, create_user(2, &#x22;Bob&#x22;));
+    append(&#x26;head, create_user(3, &#x22;Charlie&#x22;));
+
+    printf(&#x22;List of users:\n&#x22;);
+    print_users(head);
+
+    free_list(head);
+    return 0;
+}</code></pre>
+<pre class="shell">List of users:
+ID: 1, Name: Alice
+ID: 2, Name: Bob
+ID: 3, Name: Charlie</pre>
+      </section>
     </div>
   </body>
   <script>
