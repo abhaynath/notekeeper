@@ -19,7 +19,1022 @@
       <a href="../../index.html"><i class="fa fa-home"></i></a>
       <a href="c_index.html">C</a>
     </nav>
-    <div class="content"></div>
+    <div class="content">
+      <section id="queue1">
+        <h4>Queue using Array</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#define MAX 5
+
+typedef struct
+{
+    int items[MAX];
+    int front;
+    int rear;
+} Queue;
+
+// Initialize queue
+void initQueue(Queue *q)
+{
+    q-&#x3E;front = -1;
+    q-&#x3E;rear = -1;
+}
+
+// Check if queue is empty
+int isEmpty(Queue *q)
+{
+    return (q-&#x3E;front == -1);
+}
+
+// Check if queue is full
+int isFull(Queue *q)
+{
+    return ((q-&#x3E;rear + 1) % MAX == q-&#x3E;front);
+}
+
+// Enqueue operation
+void enqueue(Queue *q, int value)
+{
+    if (isFull(q))
+    {
+        printf(&#x22;Queue is full! Cannot enqueue %d\n&#x22;, value);
+        return;
+    }
+    if (isEmpty(q))
+    {
+        q-&#x3E;front = 0;
+    }
+    q-&#x3E;rear = (q-&#x3E;rear + 1) % MAX;
+    q-&#x3E;items[q-&#x3E;rear] = value;
+    printf(&#x22;Enqueued: %d\n&#x22;, value);
+}
+
+// Dequeue operation
+int dequeue(Queue *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty! Cannot dequeue.\n&#x22;);
+        return -1;
+    }
+    int value = q-&#x3E;items[q-&#x3E;front];
+    if (q-&#x3E;front == q-&#x3E;rear)
+    {
+        q-&#x3E;front = q-&#x3E;rear = -1; // Queue becomes empty
+    }
+    else
+    {
+        q-&#x3E;front = (q-&#x3E;front + 1) % MAX;
+    }
+    printf(&#x22;Dequeued: %d\n&#x22;, value);
+    return value;
+}
+
+// Display queue
+void display(Queue *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty!\n&#x22;);
+        return;
+    }
+    printf(&#x22;Queue: &#x22;);
+    int i = q-&#x3E;front;
+    while (1)
+    {
+        printf(&#x22;%d &#x22;, q-&#x3E;items[i]);
+        if (i == q-&#x3E;rear)
+            break;
+        i = (i + 1) % MAX;
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+int main()
+{
+    Queue q;
+    initQueue(&#x26;q);
+
+    enqueue(&#x26;q, 10);
+    enqueue(&#x26;q, 20);
+    enqueue(&#x26;q, 30);
+    display(&#x26;q);
+
+    dequeue(&#x26;q);
+    display(&#x26;q);
+
+    enqueue(&#x26;q, 40);
+    enqueue(&#x26;q, 50);
+    enqueue(&#x26;q, 60); // Should show full
+    display(&#x26;q);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Enqueued: 10
+Enqueued: 20
+Enqueued: 30
+Queue: 10 20 30
+Dequeued: 10
+Queue: 20 30
+Enqueued: 40
+Enqueued: 50
+Enqueued: 60
+Queue: 20 30 40 50 60</pre
+        >
+      </section>
+
+      <section id="queue2">
+        <h4>Queue using Linked List</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+} Node;
+
+// Queue structure
+typedef struct
+{
+    Node *front;
+    Node *rear;
+} Queue;
+
+// Initialize queue
+void initQueue(Queue *q)
+{
+    q-&#x3E;front = q-&#x3E;rear = NULL;
+}
+
+// Check if queue is empty
+int isEmpty(Queue *q)
+{
+    return (q-&#x3E;front == NULL);
+}
+
+// Enqueue operation
+void enqueue(Queue *q, int value)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        return;
+    }
+    newNode-&#x3E;data = value;
+    newNode-&#x3E;next = NULL;
+
+    if (isEmpty(q))
+    {
+        q-&#x3E;front = q-&#x3E;rear = newNode;
+    }
+    else
+    {
+        q-&#x3E;rear-&#x3E;next = newNode;
+        q-&#x3E;rear = newNode;
+    }
+    printf(&#x22;Enqueued: %d\n&#x22;, value);
+}
+
+// Dequeue operation
+int dequeue(Queue *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty! Cannot dequeue.\n&#x22;);
+        return -1;
+    }
+    Node *temp = q-&#x3E;front;
+    int value = temp-&#x3E;data;
+    q-&#x3E;front = q-&#x3E;front-&#x3E;next;
+
+    if (q-&#x3E;front == NULL)
+    {
+        q-&#x3E;rear = NULL; // Queue becomes empty
+    }
+    free(temp);
+    printf(&#x22;Dequeued: %d\n&#x22;, value);
+    return value;
+}
+
+// Display queue
+void display(Queue *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty!\n&#x22;);
+        return;
+    }
+    Node *current = q-&#x3E;front;
+    printf(&#x22;Queue: &#x22;);
+    while (current)
+    {
+        printf(&#x22;%d &#x22;, current-&#x3E;data);
+        current = current-&#x3E;next;
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+// Free all nodes
+void freeQueue(Queue *q)
+{
+    Node *current = q-&#x3E;front;
+    while (current)
+    {
+        Node *temp = current;
+        current = current-&#x3E;next;
+        free(temp);
+    }
+    q-&#x3E;front = q-&#x3E;rear = NULL;
+}
+
+int main()
+{
+    Queue q;
+    initQueue(&#x26;q);
+
+    enqueue(&#x26;q, 10);
+    enqueue(&#x26;q, 20);
+    enqueue(&#x26;q, 30);
+    display(&#x26;q);
+
+    dequeue(&#x26;q);
+    display(&#x26;q);
+
+    enqueue(&#x26;q, 40);
+    enqueue(&#x26;q, 50);
+    display(&#x26;q);
+
+    freeQueue(&#x26;q); // Free memory at the end
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Enqueued: 10
+Enqueued: 20
+Enqueued: 30
+Queue: 10 20 30
+Dequeued: 10
+Queue: 20 30
+Enqueued: 40
+Enqueued: 50
+Queue: 20 30 40 50</pre
+        >
+      </section>
+
+      <section id="queue3">
+        <h4>Priority Queue using Liked List</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure for Priority Queue
+typedef struct Node
+{
+    int data;
+    int priority;
+    struct Node *next;
+} Node;
+
+// Priority Queue structure
+typedef struct
+{
+    Node *front;
+} PriorityQueue;
+
+// Initialize priority queue
+void initQueue(PriorityQueue *pq)
+{
+    pq-&#x3E;front = NULL;
+}
+
+// Check if queue is empty
+int isEmpty(PriorityQueue *pq)
+{
+    return (pq-&#x3E;front == NULL);
+}
+
+// Enqueue with priority
+void enqueue(PriorityQueue *pq, int value, int priority)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        return;
+    }
+    newNode-&#x3E;data = value;
+    newNode-&#x3E;priority = priority;
+    newNode-&#x3E;next = NULL;
+
+    // If queue is empty OR new node has higher priority than front
+    if (isEmpty(pq) || priority &#x3C; pq-&#x3E;front-&#x3E;priority)
+    {
+        newNode-&#x3E;next = pq-&#x3E;front;
+        pq-&#x3E;front = newNode;
+    }
+    else
+    {
+        // Traverse and insert in correct position
+        Node *current = pq-&#x3E;front;
+        while (current-&#x3E;next != NULL &#x26;&#x26; current-&#x3E;next-&#x3E;priority &#x3C;= priority)
+        {
+            current = current-&#x3E;next;
+        }
+        newNode-&#x3E;next = current-&#x3E;next;
+        current-&#x3E;next = newNode;
+    }
+    printf(&#x22;Enqueued: %d (Priority %d)\n&#x22;, value, priority);
+}
+
+// Dequeue (highest priority first)
+int dequeue(PriorityQueue *pq)
+{
+    if (isEmpty(pq))
+    {
+        printf(&#x22;Priority Queue is empty! Cannot dequeue.\n&#x22;);
+        return -1;
+    }
+    Node *temp = pq-&#x3E;front;
+    int value = temp-&#x3E;data;
+    pq-&#x3E;front = pq-&#x3E;front-&#x3E;next;
+    free(temp);
+    printf(&#x22;Dequeued: %d\n&#x22;, value);
+    return value;
+}
+
+// Display priority queue
+void display(PriorityQueue *pq)
+{
+    if (isEmpty(pq))
+    {
+        printf(&#x22;Priority Queue is empty!\n&#x22;);
+        return;
+    }
+    Node *current = pq-&#x3E;front;
+    printf(&#x22;Priority Queue: &#x22;);
+    while (current)
+    {
+        printf(&#x22;[%d, P%d] &#x22;, current-&#x3E;data, current-&#x3E;priority);
+        current = current-&#x3E;next;
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+// Free memory
+void freeQueue(PriorityQueue *pq)
+{
+    Node *current = pq-&#x3E;front;
+    while (current)
+    {
+        Node *temp = current;
+        current = current-&#x3E;next;
+        free(temp);
+    }
+    pq-&#x3E;front = NULL;
+}
+
+int main()
+{
+    PriorityQueue pq;
+    initQueue(&#x26;pq);
+
+    enqueue(&#x26;pq, 30, 3);
+    enqueue(&#x26;pq, 10, 1);
+    enqueue(&#x26;pq, 20, 2);
+    enqueue(&#x26;pq, 5, 0);
+    display(&#x26;pq);
+
+    dequeue(&#x26;pq);
+    display(&#x26;pq);
+
+    enqueue(&#x26;pq, 40, 2);
+    display(&#x26;pq);
+
+    freeQueue(&#x26;pq);
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Enqueued: 30 (Priority 3)
+Enqueued: 10 (Priority 1)
+Enqueued: 20 (Priority 2)
+Enqueued: 5 (Priority 0)
+Priority Queue: [5, P0] [10, P1] [20, P2] [30, P3]
+Dequeued: 5
+Priority Queue: [10, P1] [20, P2] [30, P3] 
+Enqueued: 40 (Priority 2)
+Priority Queue: [10, P1] [20, P2] [40, P2] [30, P3]</pre
+        >
+      </section>
+
+      <section id="queue4">
+        <h4>Double-Ended Priority Queue</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int data;
+    int priority;
+    struct Node *prev;
+    struct Node *next;
+} Node;
+
+// DEPQ structure
+typedef struct
+{
+    Node *front;
+    Node *rear;
+} DEPQ;
+
+// Initialize DEPQ
+void initQueue(DEPQ *q)
+{
+    q-&#x3E;front = q-&#x3E;rear = NULL;
+}
+
+// Check if empty
+int isEmpty(DEPQ *q)
+{
+    return (q-&#x3E;front == NULL);
+}
+
+// Insert in sorted order (ascending by priority)
+void insert(DEPQ *q, int value, int priority)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        return;
+    }
+    newNode-&#x3E;data = value;
+    newNode-&#x3E;priority = priority;
+    newNode-&#x3E;prev = newNode-&#x3E;next = NULL;
+
+    if (isEmpty(q))
+    {
+        q-&#x3E;front = q-&#x3E;rear = newNode;
+    }
+    else if (priority &#x3C; q-&#x3E;front-&#x3E;priority)
+    {
+        // Insert at front
+        newNode-&#x3E;next = q-&#x3E;front;
+        q-&#x3E;front-&#x3E;prev = newNode;
+        q-&#x3E;front = newNode;
+    }
+    else if (priority &#x3E;= q-&#x3E;rear-&#x3E;priority)
+    {
+        // Insert at rear
+        newNode-&#x3E;prev = q-&#x3E;rear;
+        q-&#x3E;rear-&#x3E;next = newNode;
+        q-&#x3E;rear = newNode;
+    }
+    else
+    {
+        // Insert in middle
+        Node *current = q-&#x3E;front;
+        while (current-&#x3E;next &#x26;&#x26; current-&#x3E;next-&#x3E;priority &#x3C;= priority)
+        {
+            current = current-&#x3E;next;
+        }
+        newNode-&#x3E;next = current-&#x3E;next;
+        newNode-&#x3E;prev = current;
+        if (current-&#x3E;next)
+            current-&#x3E;next-&#x3E;prev = newNode;
+        current-&#x3E;next = newNode;
+    }
+    printf(&#x22;Inserted: %d (Priority %d)\n&#x22;, value, priority);
+}
+
+// Delete min priority (highest importance)
+void deleteMin(DEPQ *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty! Cannot delete min.\n&#x22;);
+        return;
+    }
+    Node *temp = q-&#x3E;front;
+    printf(&#x22;Deleted Min: %d (P%d)\n&#x22;, temp-&#x3E;data, temp-&#x3E;priority);
+    q-&#x3E;front = q-&#x3E;front-&#x3E;next;
+    if (q-&#x3E;front)
+        q-&#x3E;front-&#x3E;prev = NULL;
+    else
+        q-&#x3E;rear = NULL;
+    free(temp);
+}
+
+// Delete max priority (lowest importance)
+void deleteMax(DEPQ *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty! Cannot delete max.\n&#x22;);
+        return;
+    }
+    Node *temp = q-&#x3E;rear;
+    printf(&#x22;Deleted Max: %d (P%d)\n&#x22;, temp-&#x3E;data, temp-&#x3E;priority);
+    q-&#x3E;rear = q-&#x3E;rear-&#x3E;prev;
+    if (q-&#x3E;rear)
+        q-&#x3E;rear-&#x3E;next = NULL;
+    else
+        q-&#x3E;front = NULL;
+    free(temp);
+}
+
+// Display queue
+void display(DEPQ *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty!\n&#x22;);
+        return;
+    }
+    Node *current = q-&#x3E;front;
+    printf(&#x22;DEPQ: &#x22;);
+    while (current)
+    {
+        printf(&#x22;[%d, P%d] &#x22;, current-&#x3E;data, current-&#x3E;priority);
+        current = current-&#x3E;next;
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+// Free memory
+void freeQueue(DEPQ *q)
+{
+    Node *current = q-&#x3E;front;
+    while (current)
+    {
+        Node *temp = current;
+        current = current-&#x3E;next;
+        free(temp);
+    }
+    q-&#x3E;front = q-&#x3E;rear = NULL;
+}
+
+int main()
+{
+    DEPQ q;
+    initQueue(&#x26;q);
+
+    insert(&#x26;q, 50, 5);
+    insert(&#x26;q, 10, 1);
+    insert(&#x26;q, 30, 3);
+    insert(&#x26;q, 70, 7);
+    insert(&#x26;q, 20, 2);
+    display(&#x26;q);
+
+    deleteMin(&#x26;q);
+    display(&#x26;q);
+
+    deleteMax(&#x26;q);
+    display(&#x26;q);
+
+    insert(&#x26;q, 40, 4);
+    display(&#x26;q);
+
+    freeQueue(&#x26;q);
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Inserted: 50 (Priority 5)
+Inserted: 10 (Priority 1)
+Inserted: 30 (Priority 3)
+Inserted: 70 (Priority 7)
+Inserted: 20 (Priority 2)
+DEPQ: [10, P1] [20, P2] [30, P3] [50, P5] [70, P7] 
+Deleted Min: 10 (P1)
+DEPQ: [20, P2] [30, P3] [50, P5] [70, P7] 
+Deleted Max: 70 (P7)
+DEPQ: [20, P2] [30, P3] [50, P5]
+Inserted: 40 (Priority 4)
+DEPQ: [20, P2] [30, P3] [40, P4] [50, P5]</pre
+        >
+      </section>
+
+      <section id="queue5">
+        <h4>Double-Ended Priority Queue (DEPQ) implemented with a Min-Max Heap</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;math.h&#x3E;
+
+#define MAX 100
+
+typedef struct
+{
+    int data;
+    int priority;
+} Element;
+
+typedef struct
+{
+    Element heap[MAX];
+    int size;
+} MinMaxHeap;
+
+// Helper to get level of node
+int getLevel(int index)
+{
+    return (int)floor(log2(index + 1));
+}
+
+// Swap two elements
+void swap(Element *a, Element *b)
+{
+    Element temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Compare functions
+int less(Element a, Element b) { return a.priority &#x3C; b.priority; }
+int greater(Element a, Element b) { return a.priority &#x3E; b.priority; }
+
+// Bubble up helpers
+void bubbleUpMin(MinMaxHeap *h, int i)
+{
+    if (i &#x3E; 2 &#x26;&#x26; less(h-&#x3E;heap[i], h-&#x3E;heap[(i - 3) / 4]))
+    {
+        swap(&#x26;h-&#x3E;heap[i], &#x26;h-&#x3E;heap[(i - 3) / 4]);
+        bubbleUpMin(h, (i - 3) / 4);
+    }
+}
+
+void bubbleUpMax(MinMaxHeap *h, int i)
+{
+    if (i &#x3E; 2 &#x26;&#x26; greater(h-&#x3E;heap[i], h-&#x3E;heap[(i - 3) / 4]))
+    {
+        swap(&#x26;h-&#x3E;heap[i], &#x26;h-&#x3E;heap[(i - 3) / 4]);
+        bubbleUpMax(h, (i - 3) / 4);
+    }
+}
+
+// Insert into heap
+void insert(MinMaxHeap *h, Element e)
+{
+    h-&#x3E;heap[h-&#x3E;size] = e;
+    int i = h-&#x3E;size++;
+    int level = getLevel(i);
+
+    if (level % 2 == 0)
+    { // Min level
+        if (i &#x3E; 0 &#x26;&#x26; greater(h-&#x3E;heap[i], h-&#x3E;heap[(i - 1) / 2]))
+        {
+            swap(&#x26;h-&#x3E;heap[i], &#x26;h-&#x3E;heap[(i - 1) / 2]);
+            bubbleUpMax(h, (i - 1) / 2);
+        }
+        else
+        {
+            bubbleUpMin(h, i);
+        }
+    }
+    else
+    { // Max level
+        if (i &#x3E; 0 &#x26;&#x26; less(h-&#x3E;heap[i], h-&#x3E;heap[(i - 1) / 2]))
+        {
+            swap(&#x26;h-&#x3E;heap[i], &#x26;h-&#x3E;heap[(i - 1) / 2]);
+            bubbleUpMin(h, (i - 1) / 2);
+        }
+        else
+        {
+            bubbleUpMax(h, i);
+        }
+    }
+}
+
+// Find min &#x26; max
+Element findMin(MinMaxHeap *h) { return h-&#x3E;heap[0]; }
+Element findMax(MinMaxHeap *h)
+{
+    if (h-&#x3E;size == 1)
+        return h-&#x3E;heap[0];
+    if (h-&#x3E;size == 2)
+        return h-&#x3E;heap[1];
+    return greater(h-&#x3E;heap[1], h-&#x3E;heap[2]) ? h-&#x3E;heap[1] : h-&#x3E;heap[2];
+}
+
+// Helpers for deletion
+int minChildGrandchild(MinMaxHeap *h, int i)
+{
+    int smallest = -1;
+    for (int k = 2 * i + 1; k &#x3C;= 2 * i + 2; k++)
+        if (k &#x3C; h-&#x3E;size &#x26;&#x26; (smallest == -1 || less(h-&#x3E;heap[k], h-&#x3E;heap[smallest])))
+            smallest = k;
+    for (int k = 4 * i + 3; k &#x3C;= 4 * i + 6; k++)
+        if (k &#x3C; h-&#x3E;size &#x26;&#x26; (smallest == -1 || less(h-&#x3E;heap[k], h-&#x3E;heap[smallest])))
+            smallest = k;
+    return smallest;
+}
+
+int maxChildGrandchild(MinMaxHeap *h, int i)
+{
+    int largest = -1;
+    for (int k = 2 * i + 1; k &#x3C;= 2 * i + 2; k++)
+        if (k &#x3C; h-&#x3E;size &#x26;&#x26; (largest == -1 || greater(h-&#x3E;heap[k], h-&#x3E;heap[largest])))
+            largest = k;
+    for (int k = 4 * i + 3; k &#x3C;= 4 * i + 6; k++)
+        if (k &#x3C; h-&#x3E;size &#x26;&#x26; (largest == -1 || greater(h-&#x3E;heap[k], h-&#x3E;heap[largest])))
+            largest = k;
+    return largest;
+}
+
+// Trickle down
+void trickleDownMin(MinMaxHeap *h, int i)
+{
+    int m = minChildGrandchild(h, i);
+    if (m == -1)
+        return;
+    if (m &#x3E;= 4 * i + 3)
+    { // Grandchild
+        if (less(h-&#x3E;heap[m], h-&#x3E;heap[i]))
+        {
+            swap(&#x26;h-&#x3E;heap[m], &#x26;h-&#x3E;heap[i]);
+            if (greater(h-&#x3E;heap[m], h-&#x3E;heap[(m - 1) / 2]))
+                swap(&#x26;h-&#x3E;heap[m], &#x26;h-&#x3E;heap[(m - 1) / 2]);
+            trickleDownMin(h, m);
+        }
+    }
+    else
+    { // Child
+        if (less(h-&#x3E;heap[m], h-&#x3E;heap[i]))
+            swap(&#x26;h-&#x3E;heap[m], &#x26;h-&#x3E;heap[i]);
+    }
+}
+
+void trickleDownMax(MinMaxHeap *h, int i)
+{
+    int m = maxChildGrandchild(h, i);
+    if (m == -1)
+        return;
+    if (m &#x3E;= 4 * i + 3)
+    { // Grandchild
+        if (greater(h-&#x3E;heap[m], h-&#x3E;heap[i]))
+        {
+            swap(&#x26;h-&#x3E;heap[m], &#x26;h-&#x3E;heap[i]);
+            if (less(h-&#x3E;heap[m], h-&#x3E;heap[(m - 1) / 2]))
+                swap(&#x26;h-&#x3E;heap[m], &#x26;h-&#x3E;heap[(m - 1) / 2]);
+            trickleDownMax(h, m);
+        }
+    }
+    else
+    { // Child
+        if (greater(h-&#x3E;heap[m], h-&#x3E;heap[i]))
+            swap(&#x26;h-&#x3E;heap[m], &#x26;h-&#x3E;heap[i]);
+    }
+}
+
+// Delete min &#x26; max
+Element deleteMin(MinMaxHeap *h)
+{
+    Element minElem = h-&#x3E;heap[0];
+    h-&#x3E;heap[0] = h-&#x3E;heap[--h-&#x3E;size];
+    trickleDownMin(h, 0);
+    return minElem;
+}
+
+Element deleteMax(MinMaxHeap *h)
+{
+    int maxIndex;
+    if (h-&#x3E;size == 1)
+        maxIndex = 0;
+    else if (h-&#x3E;size == 2)
+        maxIndex = 1;
+    else
+        maxIndex = greater(h-&#x3E;heap[1], h-&#x3E;heap[2]) ? 1 : 2;
+
+    Element maxElem = h-&#x3E;heap[maxIndex];
+    h-&#x3E;heap[maxIndex] = h-&#x3E;heap[--h-&#x3E;size];
+    if (maxIndex == 1 || maxIndex == 2)
+        trickleDownMax(h, maxIndex);
+    return maxElem;
+}
+
+// Display heap as tree
+void printHeapAsTree(MinMaxHeap *h)
+{
+    int level = 0;
+    int count = 0;
+    int nodesInLevel = 1;
+
+    printf(&#x22;\nHeap as Tree:\n&#x22;);
+    for (int i = 0; i &#x3C; h-&#x3E;size; i++)
+    {
+        printf(&#x22;[%d,P%d] &#x22;, h-&#x3E;heap[i].data, h-&#x3E;heap[i].priority);
+        count++;
+        if (count == nodesInLevel)
+        {
+            printf(&#x22;\n&#x22;);
+            level++;
+            count = 0;
+            nodesInLevel *= 2;
+        }
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+int main()
+{
+    MinMaxHeap h = {.size = 0};
+
+    insert(&#x26;h, (Element){50, 5});
+    insert(&#x26;h, (Element){10, 1});
+    insert(&#x26;h, (Element){30, 3});
+    insert(&#x26;h, (Element){70, 7});
+    insert(&#x26;h, (Element){20, 2});
+    insert(&#x26;h, (Element){40, 4});
+
+    printHeapAsTree(&#x26;h);
+
+    printf(&#x22;Min: [%d,P%d]\n&#x22;, findMin(&#x26;h).data, findMin(&#x26;h).priority);
+    printf(&#x22;Max: [%d,P%d]\n&#x22;, findMax(&#x26;h).data, findMax(&#x26;h).priority);
+
+    Element minDeleted = deleteMin(&#x26;h);
+    printf(&#x22;Deleted Min: [%d,P%d]\n&#x22;, minDeleted.data, minDeleted.priority);
+    printHeapAsTree(&#x26;h);
+
+    Element maxDeleted = deleteMax(&#x26;h);
+    printf(&#x22;Deleted Max: [%d,P%d]\n&#x22;, maxDeleted.data, maxDeleted.priority);
+    printHeapAsTree(&#x26;h);
+
+    return 0;
+}</code></pre>
+<pre class="shell">Heap as Tree:
+[10,P1] 
+[70,P7] [40,P4]
+[50,P5] [20,P2] [30,P3]
+Min: [10,P1]
+Max: [70,P7]
+Deleted Min: [10,P1]
+
+Heap as Tree:
+[20,P2] 
+[70,P7] [40,P4]
+[50,P5] [30,P3]
+Deleted Max: [70,P7]
+
+Heap as Tree:
+[20,P2] 
+[50,P5] [40,P4]
+[30,P3]</pre>
+      </section>
+
+      <section id="queue6">
+        <h4>Circular Queue using Linked List</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+} Node;
+
+// Circular Queue structure
+typedef struct
+{
+    Node *front;
+    Node *rear;
+} CircularQueue;
+
+// Initialize queue
+void initQueue(CircularQueue *q)
+{
+    q-&#x3E;front = q-&#x3E;rear = NULL;
+}
+
+// Check if queue is empty
+int isEmpty(CircularQueue *q)
+{
+    return (q-&#x3E;front == NULL);
+}
+
+// Enqueue operation
+void enqueue(CircularQueue *q, int value)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        return;
+    }
+    newNode-&#x3E;data = value;
+    newNode-&#x3E;next = NULL;
+
+    if (isEmpty(q))
+    {
+        q-&#x3E;front = q-&#x3E;rear = newNode;
+        q-&#x3E;rear-&#x3E;next = q-&#x3E;front; // make circular
+    }
+    else
+    {
+        q-&#x3E;rear-&#x3E;next = newNode;
+        q-&#x3E;rear = newNode;
+        q-&#x3E;rear-&#x3E;next = q-&#x3E;front; // maintain circular link
+    }
+    printf(&#x22;Enqueued: %d\n&#x22;, value);
+}
+
+// Dequeue operation
+int dequeue(CircularQueue *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty! Cannot dequeue.\n&#x22;);
+        return -1;
+    }
+    int value;
+    if (q-&#x3E;front == q-&#x3E;rear)
+    { // only one element
+        value = q-&#x3E;front-&#x3E;data;
+        free(q-&#x3E;front);
+        q-&#x3E;front = q-&#x3E;rear = NULL;
+    }
+    else
+    {
+        Node *temp = q-&#x3E;front;
+        value = temp-&#x3E;data;
+        q-&#x3E;front = q-&#x3E;front-&#x3E;next;
+        q-&#x3E;rear-&#x3E;next = q-&#x3E;front; // keep circular
+        free(temp);
+    }
+    printf(&#x22;Dequeued: %d\n&#x22;, value);
+    return value;
+}
+
+// Display queue
+void display(CircularQueue *q)
+{
+    if (isEmpty(q))
+    {
+        printf(&#x22;Queue is empty!\n&#x22;);
+        return;
+    }
+    Node *temp = q-&#x3E;front;
+    printf(&#x22;Circular Queue: &#x22;);
+    do
+    {
+        printf(&#x22;%d &#x22;, temp-&#x3E;data);
+        temp = temp-&#x3E;next;
+    } while (temp != q-&#x3E;front);
+    printf(&#x22;\n&#x22;);
+}
+
+// Free memory
+void freeQueue(CircularQueue *q)
+{
+    if (isEmpty(q))
+        return;
+    Node *temp = q-&#x3E;front;
+    Node *nextNode;
+    do
+    {
+        nextNode = temp-&#x3E;next;
+        free(temp);
+        temp = nextNode;
+    } while (temp != q-&#x3E;front);
+    q-&#x3E;front = q-&#x3E;rear = NULL;
+}
+
+int main()
+{
+    CircularQueue q;
+    initQueue(&#x26;q);
+
+    enqueue(&#x26;q, 10);
+    enqueue(&#x26;q, 20);
+    enqueue(&#x26;q, 30);
+    enqueue(&#x26;q, 40);
+    display(&#x26;q);
+
+    dequeue(&#x26;q);
+    display(&#x26;q);
+
+    enqueue(&#x26;q, 50);
+    display(&#x26;q);
+
+    freeQueue(&#x26;q);
+    return 0;
+}</code></pre>
+<pre class="shell">Enqueued: 10
+Enqueued: 20
+Enqueued: 30
+Enqueued: 40
+Circular Queue: 10 20 30 40
+Dequeued: 10
+Circular Queue: 20 30 40
+Enqueued: 50
+Circular Queue: 20 30 40 50</pre>
+      </section>
+
+      <section id="queue7">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
   </body>
   <script>
     hljs.highlightAll();
