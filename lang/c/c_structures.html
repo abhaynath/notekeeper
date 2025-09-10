@@ -107,8 +107,118 @@ void display(const struct employee *e)
       </section>
 
        <section id="str3">
-        <h4></h4>
-        <pre><code class="language-c"></code></pre>
+        <h4>Vector Operations using structures</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;math.h&#x3E;
+
+typedef struct
+{
+    double x;
+    double y;
+    double z; // Supports 3D vectors, set z = 0 for 2D
+} Vector;
+
+// Function to display a vector
+void printVector(Vector v)
+{
+    printf(&#x22;(%.3f, %.3f, %.3f)\n&#x22;, v.x, v.y, v.z);
+}
+
+// Vector addition
+Vector add(Vector a, Vector b)
+{
+    Vector result = {a.x + b.x, a.y + b.y, a.z + b.z};
+    return result;
+}
+
+// Vector subtraction
+Vector subtract(Vector a, Vector b)
+{
+    Vector result = {a.x - b.x, a.y - b.y, a.z - b.z};
+    return result;
+}
+
+// Scalar multiplication
+Vector scalarMultiply(Vector v, double scalar)
+{
+    Vector result = {v.x * scalar, v.y * scalar, v.z * scalar};
+    return result;
+}
+
+// Dot product
+double dotProduct(Vector a, Vector b)
+{
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+// Cross product (only valid for 3D)
+Vector crossProduct(Vector a, Vector b)
+{
+    Vector result = {
+        a.y * b.z - a.z * b.y,
+        a.z * b.x - a.x * b.z,
+        a.x * b.y - a.y * b.x};
+    return result;
+}
+
+// Magnitude
+double magnitude(Vector v)
+{
+    return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+// Normalization
+Vector normalize(Vector v)
+{
+    double mag = magnitude(v);
+    if (mag == 0)
+        return v; // Avoid division by zero
+    return scalarMultiply(v, 1.0 / mag);
+}
+
+int main()
+{
+    Vector v1 = {3, 4, 0}; // 2D vector (z=0)
+    Vector v2 = {1, 2, 0};
+
+    printf(&#x22;Vector 1: &#x22;);
+    printVector(v1);
+    printf(&#x22;Vector 2: &#x22;);
+    printVector(v2);
+
+    printf(&#x22;\nAddition: &#x22;);
+    printVector(add(v1, v2));
+
+    printf(&#x22;Subtraction: &#x22;);
+    printVector(subtract(v1, v2));
+
+    printf(&#x22;Scalar Multiplication (v1 &#xD7; 2): &#x22;);
+    printVector(scalarMultiply(v1, 2));
+
+    printf(&#x22;Dot Product: %.3f\n&#x22;, dotProduct(v1, v2));
+
+    printf(&#x22;Magnitude of v1: %.3f\n&#x22;, magnitude(v1));
+
+    printf(&#x22;Normalized v1: &#x22;);
+    printVector(normalize(v1));
+
+    // Example for cross product (3D)
+    Vector v3 = {1, 0, 0};
+    Vector v4 = {0, 1, 0};
+    printf(&#x22;\nCross Product of v3 and v4: &#x22;);
+    printVector(crossProduct(v3, v4));
+
+    return 0;
+}</code></pre>
+<pre class="shell">Vector 1: (3.000, 4.000, 0.000)
+Vector 2: (1.000, 2.000, 0.000)
+
+Addition: (4.000, 6.000, 0.000)
+Subtraction: (2.000, 2.000, 0.000)
+Scalar Multiplication (v1 × 2): (6.000, 8.000, 0.000)
+Dot Product: 11.000
+Magnitude of v1: 5.000
+Normalized v1: (0.600, 0.800, 0.000)</pre>
       </section>
 
        <section id="str4">

@@ -19,14 +19,522 @@
       <a href="../../index.html"><i class="fa fa-home"></i></a>
       <a href="c_index.html">C</a>
     </nav>
-    <div class="content"></div>
+    <div class="content">
+      <section id="array1">
+        <h4>Array Operations Deletion, Sorting, Reverse, Merge</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+
+// Function to display array
+void display(int arr[], int n)
+{
+    for (int i = 0; i &#x3C; n; i++)
+        printf(&#x22;%d &#x22;, arr[i]);
+    printf(&#x22;\n&#x22;);
+}
+
+// Insertion at position (0-based index)
+void insert(int arr[], int *n, int pos, int value)
+{
+    for (int i = *n; i &#x3E; pos; i--)
+        arr[i] = arr[i - 1];
+    arr[pos] = value;
+    (*n)++;
+}
+
+// Deletion at position
+void delete(int arr[], int *n, int pos)
+{
+    for (int i = pos; i &#x3C; *n - 1; i++)
+        arr[i] = arr[i + 1];
+    (*n)--;
+}
+
+// Sorting (ascending)
+void sort(int arr[], int n)
+{
+    for (int i = 0; i &#x3C; n - 1; i++)
+    {
+        for (int j = i + 1; j &#x3C; n; j++)
+        {
+            if (arr[i] &#x3E; arr[j])
+            {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+
+// Reverse array
+void reverse(int arr[], int n)
+{
+    for (int i = 0; i &#x3C; n / 2; i++)
+    {
+        int temp = arr[i];
+        arr[i] = arr[n - i - 1];
+        arr[n - i - 1] = temp;
+    }
+}
+
+// Merge two sorted arrays
+void merge(int arr1[], int n1, int arr2[], int n2, int result[])
+{
+    int i = 0, j = 0, k = 0;
+    while (i &#x3C; n1 &#x26;&#x26; j &#x3C; n2)
+    {
+        if (arr1[i] &#x3C; arr2[j])
+            result[k++] = arr1[i++];
+        else
+            result[k++] = arr2[j++];
+    }
+    while (i &#x3C; n1)
+        result[k++] = arr1[i++];
+    while (j &#x3C; n2)
+        result[k++] = arr2[j++];
+}
+
+int main()
+{
+    int arr[20] = {5, 3, 8, 1, 2};
+    int n = 5;
+
+    printf(&#x22;Original array: &#x22;);
+    display(arr, n);
+
+    // Insertion
+    insert(arr, &#x26;n, 2, 10);
+    printf(&#x22;After insertion at position 2 (value=10): &#x22;);
+    display(arr, n);
+
+    // Deletion
+    delete(arr, &#x26;n, 4);
+    printf(&#x22;After deletion at position 4: &#x22;);
+    display(arr, n);
+
+    // Sorting
+    sort(arr, n);
+    printf(&#x22;After sorting: &#x22;);
+    display(arr, n);
+
+    // Reversing
+    reverse(arr, n);
+    printf(&#x22;After reversing: &#x22;);
+    display(arr, n);
+
+    // Merging
+    int arr2[5] = {0, 4, 6, 9, 12};
+    int n2 = 5;
+    int merged[50];
+    sort(arr, n); // sort before merging
+    merge(arr, n, arr2, n2, merged);
+    printf(&#x22;Merged array: &#x22;);
+    display(merged, n + n2);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Original array: 5 3 8 1 2
+After insertion at position 2 (value=10): 5 3 10 8 1 2 
+After deletion at position 4: 5 3 10 8 2
+After sorting: 2 3 5 8 10
+After reversing: 10 8 5 3 2
+Merged array: 0 2 3 4 5 6 8 9 10 12</pre
+        >
+      </section>
+
+      <section id="array2">
+        <h4>Matrix Operations with 2D Arrays</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+
+#define SIZE 10
+
+// Function to display a matrix
+void displayMatrix(float mat[SIZE][SIZE], int row, int col)
+{
+    for (int i = 0; i &#x3C; row; i++)
+    {
+        for (int j = 0; j &#x3C; col; j++)
+            printf(&#x22;%8.3f &#x22;, mat[i][j]);
+        printf(&#x22;\n&#x22;);
+    }
+}
+
+// Matrix addition
+void addMatrix(float A[SIZE][SIZE], float B[SIZE][SIZE], float C[SIZE][SIZE], int row, int col)
+{
+    for (int i = 0; i &#x3C; row; i++)
+        for (int j = 0; j &#x3C; col; j++)
+            C[i][j] = A[i][j] + B[i][j];
+}
+
+// Matrix subtraction
+void subtractMatrix(float A[SIZE][SIZE], float B[SIZE][SIZE], float C[SIZE][SIZE], int row, int col)
+{
+    for (int i = 0; i &#x3C; row; i++)
+        for (int j = 0; j &#x3C; col; j++)
+            C[i][j] = A[i][j] - B[i][j];
+}
+
+// Matrix multiplication
+void multiplyMatrix(float A[SIZE][SIZE], float B[SIZE][SIZE], float C[SIZE][SIZE], int row1, int col1, int col2)
+{
+    for (int i = 0; i &#x3C; row1; i++)
+        for (int j = 0; j &#x3C; col2; j++)
+        {
+            C[i][j] = 0;
+            for (int k = 0; k &#x3C; col1; k++)
+                C[i][j] += A[i][k] * B[k][j];
+        }
+}
+
+// Transpose
+void transposeMatrix(float A[SIZE][SIZE], float T[SIZE][SIZE], int row, int col)
+{
+    for (int i = 0; i &#x3C; row; i++)
+        for (int j = 0; j &#x3C; col; j++)
+            T[j][i] = A[i][j];
+}
+
+// Inverse using Gauss-Jordan method
+int inverseMatrix(float A[SIZE][SIZE], float inverse[SIZE][SIZE], int n)
+{
+    float aug[SIZE][2 * SIZE];
+
+    // Creating augmented matrix [A | I]
+    for (int i = 0; i &#x3C; n; i++)
+        for (int j = 0; j &#x3C; n; j++)
+        {
+            aug[i][j] = A[i][j];
+            aug[i][j + n] = (i == j) ? 1 : 0;
+        }
+
+    // Gauss-Jordan elimination
+    for (int i = 0; i &#x3C; n; i++)
+    {
+        if (aug[i][i] == 0)
+        {
+            int swapRow = i + 1;
+            while (swapRow &#x3C; n &#x26;&#x26; aug[swapRow][i] == 0)
+                swapRow++;
+            if (swapRow == n)
+                return 0; // Singular matrix
+            for (int k = 0; k &#x3C; 2 * n; k++)
+            {
+                float temp = aug[i][k];
+                aug[i][k] = aug[swapRow][k];
+                aug[swapRow][k] = temp;
+            }
+        }
+
+        float diag = aug[i][i];
+        for (int k = 0; k &#x3C; 2 * n; k++)
+            aug[i][k] /= diag;
+
+        for (int r = 0; r &#x3C; n; r++)
+        {
+            if (r != i)
+            {
+                float factor = aug[r][i];
+                for (int k = 0; k &#x3C; 2 * n; k++)
+                    aug[r][k] -= factor * aug[i][k];
+            }
+        }
+    }
+
+    // Extracting inverse matrix
+    for (int i = 0; i &#x3C; n; i++)
+        for (int j = 0; j &#x3C; n; j++)
+            inverse[i][j] = aug[i][j + n];
+
+    return 1; // Success
+}
+
+// Division: A / B = A &#xD7; inverse(B)
+int divideMatrix(float A[SIZE][SIZE], float B[SIZE][SIZE], float result[SIZE][SIZE], int n)
+{
+    float invB[SIZE][SIZE];
+    if (!inverseMatrix(B, invB, n))
+        return 0;
+    multiplyMatrix(A, invB, result, n, n, n);
+    return 1;
+}
+
+int main()
+{
+    int n = 3;
+    float A[SIZE][SIZE] = {
+        {2, 1, 1},
+        {1, 3, 2},
+        {1, 0, 0}};
+    float B[SIZE][SIZE] = {
+        {1, 0, 2},
+        {0, 1, 0},
+        {2, 0, 1}};
+    float C[SIZE][SIZE];
+
+    printf(&#x22;Matrix A:\n&#x22;);
+    displayMatrix(A, n, n);
+
+    printf(&#x22;Matrix B:\n&#x22;);
+    displayMatrix(B, n, n);
+
+    // Addition
+    addMatrix(A, B, C, n, n);
+    printf(&#x22;\nA + B:\n&#x22;);
+    displayMatrix(C, n, n);
+
+    // Subtraction
+    subtractMatrix(A, B, C, n, n);
+    printf(&#x22;\nA - B:\n&#x22;);
+    displayMatrix(C, n, n);
+
+    // Multiplication
+    multiplyMatrix(A, B, C, n, n, n);
+    printf(&#x22;\nA &#xD7; B:\n&#x22;);
+    displayMatrix(C, n, n);
+
+    // Transpose
+    transposeMatrix(A, C, n, n);
+    printf(&#x22;\nTranspose of A:\n&#x22;);
+    displayMatrix(C, n, n);
+
+    // Inverse
+    if (inverseMatrix(A, C, n))
+    {
+        printf(&#x22;\nInverse of A:\n&#x22;);
+        displayMatrix(C, n, n);
+    }
+    else
+    {
+        printf(&#x22;\nMatrix A is singular, no inverse.\n&#x22;);
+    }
+
+    // Division
+    if (divideMatrix(A, B, C, n))
+    {
+        printf(&#x22;\nA / B (A &#xD7; inverse(B)):\n&#x22;);
+        displayMatrix(C, n, n);
+    }
+    else
+    {
+        printf(&#x22;\nMatrix B is singular, cannot divide.\n&#x22;);
+    }
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Matrix A:
+   2.000    1.000    1.000 
+   1.000    3.000    2.000
+   1.000    0.000    0.000
+Matrix B:
+   1.000    0.000    2.000 
+   0.000    1.000    0.000
+   2.000    0.000    1.000
+
+A + B:
+   3.000    1.000    3.000 
+   1.000    4.000    2.000
+   3.000    0.000    1.000
+
+A - B:
+   1.000    1.000   -1.000
+   1.000    2.000    2.000
+  -1.000    0.000   -1.000 
+
+A × B:
+   4.000    1.000    5.000
+   5.000    3.000    4.000 
+   1.000    0.000    2.000
+
+Transpose of A:
+   2.000    1.000    1.000
+   1.000    3.000    0.000 
+   1.000    2.000    0.000
+
+Inverse of A:
+   0.000    0.000    1.000
+  -2.000    1.000    3.000
+   3.000   -1.000   -5.000 
+
+A / B (A × inverse(B)):
+  -0.000    1.000    1.000
+   1.000    3.000    0.000
+  -0.333    0.000    0.667</pre
+        >
+      </section>
+
+      <section id="array3">
+        <h4>Polynomial Operations using Multi-Dimensional Arrays</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+
+#define MAX_TERMS 50
+
+// Function to display a polynomial
+void displayPoly(int poly[][2], int terms)
+{
+    for (int i = 0; i &#x3C; terms; i++)
+    {
+        printf(&#x22;%dx^%d&#x22;, poly[i][0], poly[i][1]);
+        if (i != terms - 1)
+            printf(&#x22; + &#x22;);
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+// Addition of two polynomials
+int addPoly(int poly1[][2], int t1, int poly2[][2], int t2, int result[][2])
+{
+    int i = 0, j = 0, k = 0;
+
+    while (i &#x3C; t1 &#x26;&#x26; j &#x3C; t2)
+    {
+        if (poly1[i][1] &#x3E; poly2[j][1])
+        {
+            result[k][0] = poly1[i][0];
+            result[k][1] = poly1[i][1];
+            i++;
+        }
+        else if (poly1[i][1] &#x3C; poly2[j][1])
+        {
+            result[k][0] = poly2[j][0];
+            result[k][1] = poly2[j][1];
+            j++;
+        }
+        else
+        {
+            result[k][0] = poly1[i][0] + poly2[j][0];
+            result[k][1] = poly1[i][1];
+            i++;
+            j++;
+        }
+        k++;
+    }
+
+    while (i &#x3C; t1)
+    {
+        result[k][0] = poly1[i][0];
+        result[k][1] = poly1[i][1];
+        i++;
+        k++;
+    }
+
+    while (j &#x3C; t2)
+    {
+        result[k][0] = poly2[j][0];
+        result[k][1] = poly2[j][1];
+        j++;
+        k++;
+    }
+
+    return k;
+}
+
+// Subtraction of two polynomials
+int subtractPoly(int poly1[][2], int t1, int poly2[][2], int t2, int result[][2])
+{
+    for (int i = 0; i &#x3C; t2; i++)
+        poly2[i][0] = -poly2[i][0];
+    return addPoly(poly1, t1, poly2, t2, result);
+}
+
+// Multiplication of two polynomials
+int multiplyPoly(int poly1[][2], int t1, int poly2[][2], int t2, int result[][2])
+{
+    int k = 0;
+
+    for (int i = 0; i &#x3C; t1; i++)
+    {
+        for (int j = 0; j &#x3C; t2; j++)
+        {
+            int coeff = poly1[i][0] * poly2[j][0];
+            int exp = poly1[i][1] + poly2[j][1];
+
+            // Check if exponent already exists
+            int found = 0;
+            for (int m = 0; m &#x3C; k; m++)
+            {
+                if (result[m][1] == exp)
+                {
+                    result[m][0] += coeff;
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                result[k][0] = coeff;
+                result[k][1] = exp;
+                k++;
+            }
+        }
+    }
+    return k;
+}
+
+int main()
+{
+    // Polynomial 1: 5x^3 + 4x^2 + 2x^0
+    int poly1[][2] = {{5, 3}, {4, 2}, {2, 0}};
+    int t1 = 3;
+
+    // Polynomial 2: 3x^2 + 1x^1 + 7x^0
+    int poly2[][2] = {{3, 2}, {1, 1}, {7, 0}};
+    int t2 = 3;
+
+    int result[MAX_TERMS][2];
+    int res_terms;
+
+    printf(&#x22;Polynomial 1: &#x22;);
+    displayPoly(poly1, t1);
+
+    printf(&#x22;Polynomial 2: &#x22;);
+    displayPoly(poly2, t2);
+
+    // Addition
+    res_terms = addPoly(poly1, t1, poly2, t2, result);
+    printf(&#x22;\nAddition: &#x22;);
+    displayPoly(result, res_terms);
+
+    // Subtraction
+    int poly2_copy[][2] = {{3, 2}, {1, 1}, {7, 0}}; // fresh copy for subtraction
+    res_terms = subtractPoly(poly1, t1, poly2_copy, t2, result);
+    printf(&#x22;Subtraction: &#x22;);
+    displayPoly(result, res_terms);
+
+    // Multiplication
+    res_terms = multiplyPoly(poly1, t1, poly2, t2, result);
+    printf(&#x22;Multiplication: &#x22;);
+    displayPoly(result, res_terms);
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+Polynomial 1: 5x^3 + 4x^2 + 2x^0
+Polynomial 2: 3x^2 + 1x^1 + 7x^0
+
+Addition: 5x^3 + 7x^2 + 1x^1 + 9x^0
+Subtraction: 5x^3 + 1x^2 + -1x^1 + -5x^0
+Multiplication: 15x^5 + 17x^4 + 39x^3 + 34x^2 + 2x^1 + 14x^0</pre
+        >
+      </section>
+
+      <section id="array4">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+      <section id="array5">
+        <h4></h4>
+        <pre><code class="language-c"></code></pre>
+      </section>
+    </div>
   </body>
   <script>
     hljs.highlightAll();
 
     const createTabs = () => {
       let arr = [];
-      
 
       arr.forEach((tab) => {
         new VanillaTabs({
