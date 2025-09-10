@@ -19,14 +19,771 @@
       <a href="../../index.html"><i class="fa fa-home"></i></a>
       <a href="c_index.html">C</a>
     </nav>
-    <div class="content"></div>
+    <div class="content">
+      <section id="stack1">
+        <h4>Stack using Array</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#define MAX 100
+
+// Stack structure
+typedef struct {
+    int arr[MAX];
+    int top;
+} Stack;
+
+// Initialize stack
+void initStack(Stack *s) {
+    s-&#x3E;top = -1;
+}
+
+// Check if stack is empty
+int isEmpty(Stack *s) {
+    return s-&#x3E;top == -1;
+}
+
+// Check if stack is full
+int isFull(Stack *s) {
+    return s-&#x3E;top == MAX - 1;
+}
+
+// Push operation
+void push(Stack *s, int value) {
+    if (isFull(s)) {
+        printf(&#x22;Stack overflow! Cannot push %d\n&#x22;, value);
+        return;
+    }
+    s-&#x3E;arr[++s-&#x3E;top] = value;
+    printf(&#x22;Pushed: %d\n&#x22;, value);
+}
+
+// Pop operation
+int pop(Stack *s) {
+    if (isEmpty(s)) {
+        printf(&#x22;Stack underflow! Cannot pop.\n&#x22;);
+        return -1;
+    }
+    int value = s-&#x3E;arr[s-&#x3E;top--];
+    printf(&#x22;Popped: %d\n&#x22;, value);
+    return value;
+}
+
+// Peek (top element)
+int peek(Stack *s) {
+    if (isEmpty(s)) {
+        printf(&#x22;Stack is empty!\n&#x22;);
+        return -1;
+    }
+    return s-&#x3E;arr[s-&#x3E;top];
+}
+
+// Display stack
+void display(Stack *s) {
+    if (isEmpty(s)) {
+        printf(&#x22;Stack is empty!\n&#x22;);
+        return;
+    }
+    printf(&#x22;Stack: &#x22;);
+    for (int i = s-&#x3E;top; i &#x3E;= 0; i--) {
+        printf(&#x22;%d &#x22;, s-&#x3E;arr[i]);
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+int main() {
+    Stack s;
+    initStack(&#x26;s);
+
+    push(&#x26;s, 10);
+    push(&#x26;s, 20);
+    push(&#x26;s, 30);
+    display(&#x26;s);
+
+    printf(&#x22;Peek: %d\n&#x22;, peek(&#x26;s));
+
+    pop(&#x26;s);
+    display(&#x26;s);
+
+    return 0;
+}</code></pre>
+<pre class="shell">Pushed: 10
+Pushed: 20
+Pushed: 30
+Stack: 30 20 10
+Peek: 30
+Popped: 30
+Stack: 20 10</pre>
+      </section>
+
+      <section id="stack2">
+        <h4>Stack using Linked List</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+// Node structure
+typedef struct Node
+{
+    int data;
+    struct Node *next;
+} Node;
+
+// Stack structure
+typedef struct
+{
+    Node *top;
+} Stack;
+
+// Initialize stack
+void initStack(Stack *s)
+{
+    s-&#x3E;top = NULL;
+}
+
+// Check if stack is empty
+int isEmpty(Stack *s)
+{
+    return s-&#x3E;top == NULL;
+}
+
+// Push operation
+void push(Stack *s, int value)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+    {
+        printf(&#x22;Memory allocation failed!\n&#x22;);
+        return;
+    }
+    newNode-&#x3E;data = value;
+    newNode-&#x3E;next = s-&#x3E;top;
+    s-&#x3E;top = newNode;
+    printf(&#x22;Pushed: %d\n&#x22;, value);
+}
+
+// Pop operation
+int pop(Stack *s)
+{
+    if (isEmpty(s))
+    {
+        printf(&#x22;Stack underflow! Cannot pop.\n&#x22;);
+        return -1;
+    }
+    Node *temp = s-&#x3E;top;
+    int value = temp-&#x3E;data;
+    s-&#x3E;top = temp-&#x3E;next;
+    free(temp);
+    printf(&#x22;Popped: %d\n&#x22;, value);
+    return value;
+}
+
+// Peek (top element)
+int peek(Stack *s)
+{
+    if (isEmpty(s))
+    {
+        printf(&#x22;Stack is empty!\n&#x22;);
+        return -1;
+    }
+    return s-&#x3E;top-&#x3E;data;
+}
+
+// Display stack
+void display(Stack *s)
+{
+    if (isEmpty(s))
+    {
+        printf(&#x22;Stack is empty!\n&#x22;);
+        return;
+    }
+    printf(&#x22;Stack: &#x22;);
+    Node *current = s-&#x3E;top;
+    while (current)
+    {
+        printf(&#x22;%d &#x22;, current-&#x3E;data);
+        current = current-&#x3E;next;
+    }
+    printf(&#x22;\n&#x22;);
+}
+
+// Free stack memory
+void freeStack(Stack *s)
+{
+    while (!isEmpty(s))
+    {
+        pop(s);
+    }
+}
+
+int main()
+{
+    Stack s;
+    initStack(&#x26;s);
+
+    push(&#x26;s, 10);
+    push(&#x26;s, 20);
+    push(&#x26;s, 30);
+    display(&#x26;s);
+
+    printf(&#x22;Peek: %d\n&#x22;, peek(&#x26;s));
+
+    pop(&#x26;s);
+    display(&#x26;s);
+
+    freeStack(&#x26;s);
+    return 0;
+}</code></pre>
+<pre class="shell">Pushed: 10
+Pushed: 20
+Pushed: 30
+Stack: 30 20 10
+Peek: 30
+Popped: 30
+Stack: 20 10
+Popped: 20
+Popped: 10</pre>
+      </section>
+
+      <section id="stack3">
+        <h4>Infix to Postfix (Single Digit) Evaluation </h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;ctype.h&#x3E;
+#include &#x3C;math.h&#x3E;
+
+#define MAX 100
+
+// Stack for characters (operators)
+typedef struct
+{
+    char arr[MAX];
+    int top;
+} CharStack;
+
+// Stack for integers (operands)
+typedef struct
+{
+    int arr[MAX];
+    int top;
+} IntStack;
+
+// ---- Character Stack Functions ----
+void initCharStack(CharStack *s) { s-&#x3E;top = -1; }
+int isCharEmpty(CharStack *s) { return s-&#x3E;top == -1; }
+void pushChar(CharStack *s, char c) { s-&#x3E;arr[++s-&#x3E;top] = c; }
+char popChar(CharStack *s) { return s-&#x3E;arr[s-&#x3E;top--]; }
+char peekChar(CharStack *s) { return s-&#x3E;arr[s-&#x3E;top]; }
+
+// ---- Integer Stack Functions ----
+void initIntStack(IntStack *s) { s-&#x3E;top = -1; }
+int isIntEmpty(IntStack *s) { return s-&#x3E;top == -1; }
+void pushInt(IntStack *s, int val) { s-&#x3E;arr[++s-&#x3E;top] = val; }
+int popInt(IntStack *s) { return s-&#x3E;arr[s-&#x3E;top--]; }
+
+// ---- Helper: Operator Precedence ----
+int precedence(char op)
+{
+    if (op == &#x27;^&#x27;)
+        return 3;
+    if (op == &#x27;*&#x27; || op == &#x27;/&#x27;)
+        return 2;
+    if (op == &#x27;+&#x27; || op == &#x27;-&#x27;)
+        return 1;
+    return 0;
+}
+
+// ---- Infix to Postfix Conversion ----
+void infixToPostfix(char *infix, char *postfix)
+{
+    CharStack s;
+    initCharStack(&#x26;s);
+    int i = 0, k = 0;
+    char c;
+
+    while ((c = infix[i++]) != &#x27;\0&#x27;)
+    {
+        if (isalnum(c))
+        { // Operand
+            postfix[k++] = c;
+        }
+        else if (c == &#x27;(&#x27;)
+        {
+            pushChar(&#x26;s, c);
+        }
+        else if (c == &#x27;)&#x27;)
+        {
+            while (!isCharEmpty(&#x26;s) &#x26;&#x26; peekChar(&#x26;s) != &#x27;(&#x27;)
+            {
+                postfix[k++] = popChar(&#x26;s);
+            }
+            popChar(&#x26;s); // Remove &#x27;(&#x27;
+        }
+        else
+        { // Operator
+            while (!isCharEmpty(&#x26;s) &#x26;&#x26; precedence(peekChar(&#x26;s)) &#x3E;= precedence(c))
+            {
+                postfix[k++] = popChar(&#x26;s);
+            }
+            pushChar(&#x26;s, c);
+        }
+    }
+    while (!isCharEmpty(&#x26;s))
+    {
+        postfix[k++] = popChar(&#x26;s);
+    }
+    postfix[k] = &#x27;\0&#x27;;
+}
+
+// ---- Evaluate Postfix Expression ----
+int evaluatePostfix(char *postfix)
+{
+    IntStack s;
+    initIntStack(&#x26;s);
+    int i = 0;
+    char c;
+
+    while ((c = postfix[i++]) != &#x27;\0&#x27;)
+    {
+        if (isdigit(c))
+        {
+            pushInt(&#x26;s, c - &#x27;0&#x27;); // Convert char digit to int
+        }
+        else
+        {
+            int val2 = popInt(&#x26;s);
+            int val1 = popInt(&#x26;s);
+            switch (c)
+            {
+            case &#x27;+&#x27;:
+                pushInt(&#x26;s, val1 + val2);
+                break;
+            case &#x27;-&#x27;:
+                pushInt(&#x26;s, val1 - val2);
+                break;
+            case &#x27;*&#x27;:
+                pushInt(&#x26;s, val1 * val2);
+                break;
+            case &#x27;/&#x27;:
+                pushInt(&#x26;s, val1 / val2);
+                break;
+            case &#x27;^&#x27;:
+                pushInt(&#x26;s, pow(val1, val2));
+                break;
+            }
+        }
+    }
+    return popInt(&#x26;s);
+}
+
+int main()
+{
+    char infix[MAX], postfix[MAX];
+
+    printf(&#x22;Enter infix expression (single-digit numbers): &#x22;);
+    scanf(&#x22;%s&#x22;, infix);
+
+    infixToPostfix(infix, postfix);
+    printf(&#x22;Postfix expression: %s\n&#x22;, postfix);
+
+    int result = evaluatePostfix(postfix);
+    printf(&#x22;Evaluation result: %d\n&#x22;, result);
+
+    return 0;
+}</code></pre>
+<pre class="shell">Enter infix expression (single-digit numbers): 3+(2*5)-9
+Postfix expression: 325*+9-
+Evaluation result: 4</pre>
+      </section>
+
+      <section id="stack4">
+        <h4>Infix to Postfix (Multi-Digit) + Evaluation</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;ctype.h&#x3E;
+#include &#x3C;string.h&#x3E;
+#include &#x3C;math.h&#x3E;
+
+#define MAX 200
+
+// Integer stack for evaluation
+typedef struct
+{
+    int arr[MAX];
+    int top;
+} IntStack;
+
+// Char stack for operators
+typedef struct
+{
+    char arr[MAX];
+    int top;
+} CharStack;
+
+// ----- Integer Stack Functions -----
+void initIntStack(IntStack *s) { s-&#x3E;top = -1; }
+int isEmptyInt(IntStack *s) { return s-&#x3E;top == -1; }
+void pushInt(IntStack *s, int val) { s-&#x3E;arr[++s-&#x3E;top] = val; }
+int popInt(IntStack *s) { return s-&#x3E;arr[s-&#x3E;top--]; }
+
+// ----- Char Stack Functions -----
+void initCharStack(CharStack *s) { s-&#x3E;top = -1; }
+int isEmptyChar(CharStack *s) { return s-&#x3E;top == -1; }
+void pushChar(CharStack *s, char c) { s-&#x3E;arr[++s-&#x3E;top] = c; }
+char popChar(CharStack *s) { return s-&#x3E;arr[s-&#x3E;top--]; }
+char peekChar(CharStack *s) { return s-&#x3E;arr[s-&#x3E;top]; }
+
+// ----- Precedence -----
+int precedence(char op)
+{
+    if (op == &#x27;^&#x27;)
+        return 3;
+    if (op == &#x27;*&#x27; || op == &#x27;/&#x27;)
+        return 2;
+    if (op == &#x27;+&#x27; || op == &#x27;-&#x27;)
+        return 1;
+    return 0;
+}
+
+// ----- Check if Operator -----
+int isOperator(char c)
+{
+    return (c == &#x27;+&#x27; || c == &#x27;-&#x27; || c == &#x27;*&#x27; || c == &#x27;/&#x27; || c == &#x27;^&#x27;);
+}
+
+// ----- Infix to Postfix Conversion -----
+void infixToPostfix(char *infix, char *postfix)
+{
+    CharStack opStack;
+    initCharStack(&#x26;opStack);
+
+    int i = 0, k = 0;
+    while (infix[i] != &#x27;\0&#x27;)
+    {
+        if (isdigit(infix[i]))
+        { // Multi-digit numbers
+            while (isdigit(infix[i]))
+            {
+                postfix[k++] = infix[i++];
+            }
+            postfix[k++] = &#x27; &#x27;; // Separator
+            continue;
+        }
+        else if (infix[i] == &#x27;(&#x27;)
+        {
+            pushChar(&#x26;opStack, infix[i]);
+        }
+        else if (infix[i] == &#x27;)&#x27;)
+        {
+            while (!isEmptyChar(&#x26;opStack) &#x26;&#x26; peekChar(&#x26;opStack) != &#x27;(&#x27;)
+            {
+                postfix[k++] = popChar(&#x26;opStack);
+                postfix[k++] = &#x27; &#x27;;
+            }
+            popChar(&#x26;opStack); // Remove &#x27;(&#x27;
+        }
+        else if (isOperator(infix[i]))
+        {
+            while (!isEmptyChar(&#x26;opStack) &#x26;&#x26; isOperator(peekChar(&#x26;opStack)) &#x26;&#x26;
+                   precedence(peekChar(&#x26;opStack)) &#x3E;= precedence(infix[i]))
+            {
+                postfix[k++] = popChar(&#x26;opStack);
+                postfix[k++] = &#x27; &#x27;;
+            }
+            pushChar(&#x26;opStack, infix[i]);
+        }
+        i++;
+    }
+
+    // Pop remaining operators
+    while (!isEmptyChar(&#x26;opStack))
+    {
+        postfix[k++] = popChar(&#x26;opStack);
+        postfix[k++] = &#x27; &#x27;;
+    }
+    postfix[k] = &#x27;\0&#x27;;
+}
+
+// ----- Evaluate Postfix -----
+int evaluatePostfix(char *postfix)
+{
+    IntStack valStack;
+    initIntStack(&#x26;valStack);
+
+    int i = 0;
+    while (postfix[i] != &#x27;\0&#x27;)
+    {
+        if (isdigit(postfix[i]))
+        {
+            int num = 0;
+            while (isdigit(postfix[i]))
+            {
+                num = num * 10 + (postfix[i] - &#x27;0&#x27;);
+                i++;
+            }
+            pushInt(&#x26;valStack, num);
+        }
+        else if (isOperator(postfix[i]))
+        {
+            int b = popInt(&#x26;valStack);
+            int a = popInt(&#x26;valStack);
+            switch (postfix[i])
+            {
+            case &#x27;+&#x27;:
+                pushInt(&#x26;valStack, a + b);
+                break;
+            case &#x27;-&#x27;:
+                pushInt(&#x26;valStack, a - b);
+                break;
+            case &#x27;*&#x27;:
+                pushInt(&#x26;valStack, a * b);
+                break;
+            case &#x27;/&#x27;:
+                pushInt(&#x26;valStack, a / b);
+                break;
+            case &#x27;^&#x27;:
+                pushInt(&#x26;valStack, (int)pow(a, b));
+                break;
+            }
+        }
+        i++;
+    }
+    return popInt(&#x26;valStack);
+}
+
+int main()
+{
+    char infix[MAX], postfix[MAX];
+
+    printf(&#x22;Enter infix expression (e.g., 12+3*(5-2)):\n&#x22;);
+    fgets(infix, MAX, stdin);
+    infix[strcspn(infix, &#x22;\n&#x22;)] = &#x27;\0&#x27;; // Remove newline
+
+    infixToPostfix(infix, postfix);
+    printf(&#x22;Postfix expression: %s\n&#x22;, postfix);
+
+    int result = evaluatePostfix(postfix);
+    printf(&#x22;Evaluation result: %d\n&#x22;, result);
+
+    return 0;
+}</code></pre>
+<pre class="shell">Enter infix expression (e.g., 12+3*(5-2)):
+12+3*(5-2)
+Postfix expression: 12 3 5 2 - * + 
+Evaluation result: 21</pre>
+      </section>
+
+      <section id="stack5">
+        <h4>Infix to Postfix Evaluation (Float-Compatible)</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;ctype.h&#x3E;
+#include &#x3C;string.h&#x3E;
+#include &#x3C;math.h&#x3E;
+
+#define MAX 500
+
+// Stack for doubles
+typedef struct
+{
+    double arr[MAX];
+    int top;
+} DoubleStack;
+
+// Stack for chars
+typedef struct
+{
+    char arr[MAX];
+    int top;
+} CharStack;
+
+// -------- Double Stack Functions --------
+void initDoubleStack(DoubleStack *s) { s-&#x3E;top = -1; }
+int isEmptyDouble(DoubleStack *s) { return s-&#x3E;top == -1; }
+void pushDouble(DoubleStack *s, double val) { s-&#x3E;arr[++s-&#x3E;top] = val; }
+double popDouble(DoubleStack *s) { return s-&#x3E;arr[s-&#x3E;top--]; }
+
+// -------- Char Stack Functions --------
+void initCharStack(CharStack *s) { s-&#x3E;top = -1; }
+int isEmptyChar(CharStack *s) { return s-&#x3E;top == -1; }
+void pushChar(CharStack *s, char c) { s-&#x3E;arr[++s-&#x3E;top] = c; }
+char popChar(CharStack *s) { return s-&#x3E;arr[s-&#x3E;top--]; }
+char peekChar(CharStack *s) { return s-&#x3E;arr[s-&#x3E;top]; }
+
+// -------- Precedence --------
+int precedence(char op)
+{
+    if (op == &#x27;~&#x27;)
+        return 4; // unary minus
+    if (op == &#x27;^&#x27;)
+        return 3;
+    if (op == &#x27;*&#x27; || op == &#x27;/&#x27;)
+        return 2;
+    if (op == &#x27;+&#x27; || op == &#x27;-&#x27;)
+        return 1;
+    return 0;
+}
+
+// -------- Check if Operator --------
+int isOperator(char c)
+{
+    return (c == &#x27;+&#x27; || c == &#x27;-&#x27; || c == &#x27;*&#x27; || c == &#x27;/&#x27; || c == &#x27;^&#x27; || c == &#x27;~&#x27;);
+}
+
+// -------- Infix to Postfix Conversion --------
+void infixToPostfix(char *infix, char *postfix)
+{
+    CharStack opStack;
+    initCharStack(&#x26;opStack);
+
+    int i = 0, k = 0;
+    char prev = &#x27;(&#x27;; // for unary detection
+
+    while (infix[i] != &#x27;\0&#x27;)
+    {
+        if (isdigit(infix[i]) || infix[i] == &#x27;.&#x27;)
+        { // number (int or float)
+            while (isdigit(infix[i]) || infix[i] == &#x27;.&#x27;)
+            {
+                postfix[k++] = infix[i++];
+            }
+            postfix[k++] = &#x27; &#x27;; // separator
+            prev = &#x27;n&#x27;;
+            continue;
+        }
+        else if (infix[i] == &#x27;(&#x27;)
+        {
+            pushChar(&#x26;opStack, &#x27;(&#x27;);
+            prev = &#x27;(&#x27;;
+        }
+        else if (infix[i] == &#x27;)&#x27;)
+        {
+            while (!isEmptyChar(&#x26;opStack) &#x26;&#x26; peekChar(&#x26;opStack) != &#x27;(&#x27;)
+            {
+                postfix[k++] = popChar(&#x26;opStack);
+                postfix[k++] = &#x27; &#x27;;
+            }
+            popChar(&#x26;opStack); // remove &#x27;(&#x27;
+            prev = &#x27;)&#x27;;
+        }
+        else if (infix[i] == &#x27;-&#x27;)
+        {
+            if (prev == &#x27;(&#x27; || prev == &#x27;+&#x27; || prev == &#x27;-&#x27; || prev == &#x27;*&#x27; || prev == &#x27;/&#x27; || prev == &#x27;^&#x27;)
+            {
+                pushChar(&#x26;opStack, &#x27;~&#x27;); // unary minus
+            }
+            else
+            {
+                while (!isEmptyChar(&#x26;opStack) &#x26;&#x26; isOperator(peekChar(&#x26;opStack)) &#x26;&#x26;
+                       precedence(peekChar(&#x26;opStack)) &#x3E;= precedence(&#x27;-&#x27;))
+                {
+                    postfix[k++] = popChar(&#x26;opStack);
+                    postfix[k++] = &#x27; &#x27;;
+                }
+                pushChar(&#x26;opStack, &#x27;-&#x27;);
+            }
+            prev = &#x27;-&#x27;;
+        }
+        else if (isOperator(infix[i]))
+        {
+            while (!isEmptyChar(&#x26;opStack) &#x26;&#x26; isOperator(peekChar(&#x26;opStack)) &#x26;&#x26;
+                   precedence(peekChar(&#x26;opStack)) &#x3E;= precedence(infix[i]))
+            {
+                postfix[k++] = popChar(&#x26;opStack);
+                postfix[k++] = &#x27; &#x27;;
+            }
+            pushChar(&#x26;opStack, infix[i]);
+            prev = infix[i];
+        }
+        i++;
+    }
+
+    while (!isEmptyChar(&#x26;opStack))
+    {
+        postfix[k++] = popChar(&#x26;opStack);
+        postfix[k++] = &#x27; &#x27;;
+    }
+    postfix[k] = &#x27;\0&#x27;;
+}
+
+// -------- Evaluate Postfix --------
+double evaluatePostfix(char *postfix)
+{
+    DoubleStack valStack;
+    initDoubleStack(&#x26;valStack);
+
+    int i = 0;
+    while (postfix[i] != &#x27;\0&#x27;)
+    {
+        if (isdigit(postfix[i]) || postfix[i] == &#x27;.&#x27;)
+        {
+            char numStr[50];
+            int k = 0;
+            while (isdigit(postfix[i]) || postfix[i] == &#x27;.&#x27;)
+            {
+                numStr[k++] = postfix[i++];
+            }
+            numStr[k] = &#x27;\0&#x27;;
+            pushDouble(&#x26;valStack, atof(numStr));
+        }
+        else if (postfix[i] == &#x27;~&#x27;)
+        { // unary minus
+            double a = popDouble(&#x26;valStack);
+            pushDouble(&#x26;valStack, -a);
+        }
+        else if (isOperator(postfix[i]))
+        {
+            double b = popDouble(&#x26;valStack);
+            double a = popDouble(&#x26;valStack);
+            switch (postfix[i])
+            {
+            case &#x27;+&#x27;:
+                pushDouble(&#x26;valStack, a + b);
+                break;
+            case &#x27;-&#x27;:
+                pushDouble(&#x26;valStack, a - b);
+                break;
+            case &#x27;*&#x27;:
+                pushDouble(&#x26;valStack, a * b);
+                break;
+            case &#x27;/&#x27;:
+                pushDouble(&#x26;valStack, a / b);
+                break;
+            case &#x27;^&#x27;:
+                pushDouble(&#x26;valStack, pow(a, b));
+                break;
+            }
+        }
+        i++;
+    }
+    return popDouble(&#x26;valStack);
+}
+
+int main()
+{
+    char infix[MAX], postfix[MAX];
+
+    printf(&#x22;Enter infix expression (supports floats and unary minus, e.g., -3.5+2*4.1):\n&#x22;);
+    fgets(infix, MAX, stdin);
+    infix[strcspn(infix, &#x22;\n&#x22;)] = &#x27;\0&#x27;; // remove newline
+
+    infixToPostfix(infix, postfix);
+    printf(&#x22;Postfix expression: %s\n&#x22;, postfix);
+
+    double result = evaluatePostfix(postfix);
+    printf(&#x22;Evaluation result: %.6f\n&#x22;, result);
+
+    return 0;
+}</code></pre>
+<pre class="shell">Enter infix expression (supports floats and unary minus, e.g., -3.5+2*4.1):
+-3.5+2*4.1
+Postfix expression: 3.5 ~ 2 4.1 * + 
+Evaluation result: 4.700000</pre>
+      </section>
+    </div>
   </body>
   <script>
     hljs.highlightAll();
 
     const createTabs = () => {
       let arr = [];
-      
 
       arr.forEach((tab) => {
         new VanillaTabs({
