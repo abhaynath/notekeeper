@@ -160,14 +160,368 @@ int main()
     print_tree(start_path, 0);
     return 0;
 }</code></pre>
+        <pre class="shell">
+F:\My Data\Books\new books\pdfs
+├── assembly pdfs
+    ├── But how do it know.pdf
+    ├── Microcomputer algebra.pdf
+    ├── X86 assembly from groundup using Nasm.pdf
+├── C
+    ├── C How to Program (2022).pdf
+    ├── C Programming Cookbook (2020).pdf
+    ├── Computing Fundamentals and C Programming (2018).pdf
+    ├── Let Us C (2022).pdf
+    ├── Understanding and Using C Pointers (2013).pdf
+    ├── X86 Assembly Language and C Fundamentals (2013).pdf
+├── C++
+    ├── C++ Programming Fundamentals (2023).pdf
+    ├── Data Structure and Algorithms Using C++ (2021).pdf
+    ├── Programming Principles and Practice Using C++(2024).pdf
+    ├── Readings from Programming with C++ (2021).pdf
+├── Compilers
+    ├── Crafting a compiler.pdf
+    ├── Practical compiler construction.pdf
+    ├── Zero to mastery in compilers.pdf
+├── GCC
+    ├── An Introduction to GCC (2004).pdf
+    ├── GCC The Complete Reference (2002).pdf</pre
+        >
       </section>
 
       <section id="file4">
+        <h4>Binary format writing and reading from a file</h4>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+
+typedef struct
+{
+    int id;
+    char name[50];
+    int age;
+} Person;
+
+int main()
+{
+    // Sample data
+    Person people[] = {
+        {1, &#x22;Alice&#x22;, 30},
+        {2, &#x22;Bob&#x22;, 25},
+        {3, &#x22;Charlie&#x22;, 35}};
+    int count = sizeof(people) / sizeof(people[0]);
+
+    // 1. Write structures to binary file
+    FILE *fout = fopen(&#x22;people.dat&#x22;, &#x22;wb&#x22;);
+    if (!fout)
+    {
+        perror(&#x22;Error opening file for writing&#x22;);
+        return 1;
+    }
+    fwrite(people, sizeof(Person), count, fout);
+    fclose(fout);
+
+    // 2. Read structures back from binary file
+    FILE *fin = fopen(&#x22;people.dat&#x22;, &#x22;rb&#x22;);
+    if (!fin)
+    {
+        perror(&#x22;Error opening file for reading&#x22;);
+        return 1;
+    }
+
+    Person buffer[count];
+    size_t readCount = fread(buffer, sizeof(Person), count, fin);
+    fclose(fin);
+
+    if (readCount != count)
+    {
+        fprintf(stderr, &#x22;Error: expected %d records, but read %zu\n&#x22;, count, readCount);
+        return 1;
+    }
+
+    // 3. Print data as text
+    printf(&#x22;People from file:\n&#x22;);
+    for (int i = 0; i &#x3C; count; i++)
+    {
+        printf(&#x22;ID: %d, Name: %s, Age: %d\n&#x22;,
+               buffer[i].id, buffer[i].name, buffer[i].age);
+    }
+
+    return 0;
+}</code></pre>
+        <pre class="shell">
+People from file:
+ID: 1, Name: Alice, Age: 30
+ID: 2, Name: Bob, Age: 25
+ID: 3, Name: Charlie, Age: 35</pre
+        >
+      </section>
+
+      <section id="file5">
+        <h4>Custom binary file format</h4>
+        <pre><code>[FileHeader]
+  magic[4] = "PDB3"
+  int32_t count   (total records including deleted)
+
+[Records...]
+  int32_t deleted   (0 = active, 1 = deleted)
+  int32_t id
+  int32_t age
+  int32_t nameLength
+  char name[nameLength]
+</code></pre>
+        <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
+#include &#x3C;stdlib.h&#x3E;
+#include &#x3C;string.h&#x3E;
+#include &#x3C;stdint.h&#x3E;
+#include &#x3C;stdbool.h&#x3E;
+
+#pragma pack(push, 1)
+
+typedef struct
+{
+    char magic[4]; // File identifier
+    int32_t count; // Total records (including deleted)
+} FileHeader;
+
+#pragma pack(pop)
+
+typedef struct
+{
+    int32_t deleted; // 0 = active, 1 = deleted
+    int32_t id;
+    int32_t age;
+    char *name;
+} PersonRecord;
+
+// --- Utility: create new file ---
+void createFile(const char *filename)
+{
+    FILE *f = fopen(filename, &#x22;wb&#x22;);
+    if (!f)
+    {
+        perror(&#x22;createFile&#x22;);
+        exit(1);
+    }
+    FileHeader header = {&#x22;PDB3&#x22;, 0};
+    fwrite(&#x26;header, sizeof(FileHeader), 1, f);
+    fclose(f);
+}
+
+// --- Append record ---
+void appendRecord(const char *filename, PersonRecord person)
+{
+    FILE *f = fopen(filename, &#x22;rb+&#x22;);
+    if (!f)
+    {
+        perror(&#x22;appendRecord&#x22;);
+        exit(1);
+    }
+
+    FileHeader header;
+    fread(&#x26;header, sizeof(FileHeader), 1, f);
+
+    fseek(f, 0, SEEK_END);
+
+    int32_t deleted = 0;
+    int32_t nameLen = (int32_t)strlen(person.name);
+
+    fwrite(&#x26;deleted, sizeof(int32_t), 1, f);
+    fwrite(&#x26;person.id, sizeof(int32_t), 1, f);
+    fwrite(&#x26;person.age, sizeof(int32_t), 1, f);
+    fwrite(&#x26;nameLen, sizeof(int32_t), 1, f);
+    fwrite(person.name, sizeof(char), nameLen, f);
+
+    header.count++;
+    fseek(f, 0, SEEK_SET);
+    fwrite(&#x26;header, sizeof(FileHeader), 1, f);
+
+    fclose(f);
+}
+
+// --- List all records ---
+void listRecords(const char *filename)
+{
+    FILE *f = fopen(filename, &#x22;rb&#x22;);
+    if (!f)
+    {
+        perror(&#x22;listRecords&#x22;);
+        exit(1);
+    }
+
+    FileHeader header;
+    fread(&#x26;header, sizeof(FileHeader), 1, f);
+
+    printf(&#x22;File contains %d records (including deleted):\n&#x22;, header.count);
+
+    for (int i = 0; i &#x3C; header.count; i++)
+    {
+        int32_t deleted, id, age, nameLen;
+        fread(&#x26;deleted, sizeof(int32_t), 1, f);
+        fread(&#x26;id, sizeof(int32_t), 1, f);
+        fread(&#x26;age, sizeof(int32_t), 1, f);
+        fread(&#x26;nameLen, sizeof(int32_t), 1, f);
+
+        char *name = (char *)malloc(nameLen + 1);
+        fread(name, sizeof(char), nameLen, f);
+        name[nameLen] = &#x27;\0&#x27;;
+
+        if (!deleted)
+            printf(&#x22;ID: %d, Name: %s, Age: %d\n&#x22;, id, name, age);
+        else
+            printf(&#x22;ID: %d (deleted)\n&#x22;, id);
+
+        free(name);
+    }
+
+    fclose(f);
+}
+
+// --- Mark record deleted ---
+bool deleteRecord(const char *filename, int idToDelete)
+{
+    FILE *f = fopen(filename, &#x22;rb+&#x22;);
+    if (!f)
+    {
+        perror(&#x22;deleteRecord&#x22;);
+        exit(1);
+    }
+
+    FileHeader header;
+    fread(&#x26;header, sizeof(FileHeader), 1, f);
+
+    for (int i = 0; i &#x3C; header.count; i++)
+    {
+        long pos = ftell(f);
+
+        int32_t deleted, id, age, nameLen;
+        fread(&#x26;deleted, sizeof(int32_t), 1, f);
+        fread(&#x26;id, sizeof(int32_t), 1, f);
+        fread(&#x26;age, sizeof(int32_t), 1, f);
+        fread(&#x26;nameLen, sizeof(int32_t), 1, f);
+
+        fseek(f, nameLen, SEEK_CUR);
+
+        if (id == idToDelete &#x26;&#x26; !deleted)
+        {
+            fseek(f, pos, SEEK_SET);
+            int32_t flag = 1;
+            fwrite(&#x26;flag, sizeof(int32_t), 1, f);
+            fclose(f);
+            return true;
+        }
+    }
+
+    fclose(f);
+    return false;
+}
+
+// --- Compact file (remove deleted records) ---
+void compactFile(const char *filename)
+{
+    FILE *fin = fopen(filename, &#x22;rb&#x22;);
+    if (!fin)
+    {
+        perror(&#x22;compactFile-read&#x22;);
+        exit(1);
+    }
+
+    FileHeader header;
+    fread(&#x26;header, sizeof(FileHeader), 1, fin);
+
+    FILE *fout = fopen(&#x22;temp.pdb&#x22;, &#x22;wb&#x22;);
+    if (!fout)
+    {
+        perror(&#x22;compactFile-write&#x22;);
+        exit(1);
+    }
+
+    FileHeader newHeader = {&#x22;PDB3&#x22;, 0};
+    fwrite(&#x26;newHeader, sizeof(FileHeader), 1, fout);
+
+    for (int i = 0; i &#x3C; header.count; i++)
+    {
+        int32_t deleted, id, age, nameLen;
+        fread(&#x26;deleted, sizeof(int32_t), 1, fin);
+        fread(&#x26;id, sizeof(int32_t), 1, fin);
+        fread(&#x26;age, sizeof(int32_t), 1, fin);
+        fread(&#x26;nameLen, sizeof(int32_t), 1, fin);
+
+        char *name = (char *)malloc(nameLen);
+        fread(name, sizeof(char), nameLen, fin);
+
+        if (!deleted)
+        {
+            int32_t flag = 0;
+            fwrite(&#x26;flag, sizeof(int32_t), 1, fout);
+            fwrite(&#x26;id, sizeof(int32_t), 1, fout);
+            fwrite(&#x26;age, sizeof(int32_t), 1, fout);
+            fwrite(&#x26;nameLen, sizeof(int32_t), 1, fout);
+            fwrite(name, sizeof(char), nameLen, fout);
+            newHeader.count++;
+        }
+
+        free(name);
+    }
+
+    fseek(fout, 0, SEEK_SET);
+    fwrite(&#x26;newHeader, sizeof(FileHeader), 1, fout);
+
+    fclose(fin);
+    fclose(fout);
+
+    // replace old file with compacted one
+    remove(filename);
+    rename(&#x22;temp.pdb&#x22;, filename);
+
+    printf(&#x22;Compaction done. New record count: %d\n&#x22;, newHeader.count);
+}
+
+// --- Demo ---
+int main()
+{
+    createFile(&#x22;people3.pdb&#x22;);
+
+    appendRecord(&#x22;people3.pdb&#x22;, (PersonRecord){0, 1, 30, &#x22;Alice&#x22;});
+    appendRecord(&#x22;people3.pdb&#x22;, (PersonRecord){0, 2, 25, &#x22;Bob&#x22;});
+    appendRecord(&#x22;people3.pdb&#x22;, (PersonRecord){0, 3, 35, &#x22;Charlie&#x22;});
+
+    printf(&#x22;Initial records:\n&#x22;);
+    listRecords(&#x22;people3.pdb&#x22;);
+
+    printf(&#x22;\nDeleting Bob...\n&#x22;);
+    deleteRecord(&#x22;people3.pdb&#x22;, 2);
+    listRecords(&#x22;people3.pdb&#x22;);
+
+    printf(&#x22;\nCompacting file...\n&#x22;);
+    compactFile(&#x22;people3.pdb&#x22;);
+    listRecords(&#x22;people3.pdb&#x22;);
+
+    return 0;
+}</code></pre>
+<pre class="shell">Initial records:
+File contains 3 records (including deleted):
+ID: 1, Name: Alice, Age: 30
+ID: 2, Name: Bob, Age: 25
+ID: 3, Name: Charlie, Age: 35
+
+Deleting Bob...
+File contains 3 records (including deleted):
+ID: 1, Name: Alice, Age: 30
+ID: 2 (deleted)
+ID: 3, Name: Charlie, Age: 35
+
+Compacting file...
+Compaction done. New record count: 2
+File contains 2 records (including deleted):
+ID: 1, Name: Alice, Age: 30
+ID: 3, Name: Charlie, Age: 35</pre>
+      </section>
+
+      <section id="file6">
         <h4></h4>
         <pre><code class="language-c"></code></pre>
       </section>
 
-      <section id="file5">
+      <section id="file7">
         <h4></h4>
         <pre><code class="language-c"></code></pre>
       </section>

@@ -21,188 +21,512 @@
     </nav>
     <div class="content">
       <section id="alg1">
-        <h4>Arithmatic Expression Evaluation - Shunting Yard algorithm</h4>
+        <h4>XML Parser</h4>
         <pre><code class="language-c">#include &#x3C;stdio.h&#x3E;
 #include &#x3C;stdlib.h&#x3E;
-#include &#x3C;ctype.h&#x3E;
 #include &#x3C;string.h&#x3E;
+#include &#x3C;ctype.h&#x3E;
 
-#define MAX 100
+/* Simple XML parser (no external libraries)
+   Builds a minimal tree and prints it.
+*/
 
-// Stack for numbers
-typedef struct
+typedef struct Attr
 {
-    double data[MAX];
-    int top;
-} NumStack;
+    char *name;
+    char *value;
+    struct Attr *next;
+} Attr;
 
-void push_num(NumStack *s, double val)
+typedef struct Node
 {
-    s-&#x3E;data[++(s-&#x3E;top)] = val;
+    char *name; // element name; NULL for text node
+    char *text; // text content for text node or text inside element (trimmed)
+    Attr *attrs;
+    struct Node *child;
+    struct Node *sibling;
+} Node;
+
+/* Utility functions */
+char *strndup_local(const char *s, size_t n)
+{
+    char *p = malloc(n + 1);
+    if (!p)
+        return NULL;
+    memcpy(p, s, n);
+    p[n] = &#x27;\0&#x27;;
+    return p;
 }
 
-double pop_num(NumStack *s)
+void skip_ws(const char *s, size_t *i)
 {
-    return s-&#x3E;data[(s-&#x3E;top)--];
+    while (isspace((unsigned char)s[*i]))
+        (*i)++;
 }
 
-// Stack for operators
-typedef struct
+int starts_with(const char *s, size_t i, const char *pat)
 {
-    char data[MAX];
-    int top;
-} OpStack;
-
-void push_op(OpStack *s, char op)
-{
-    s-&#x3E;data[++(s-&#x3E;top)] = op;
+    return strncmp(s + i, pat, strlen(pat)) == 0;
 }
 
-char pop_op(OpStack *s)
+/* Attribute parsing: assumes pointer at start of attribute name */
+Attr *parse_attributes(const char *s, size_t *i)
 {
-    return s-&#x3E;data[(s-&#x3E;top)--];
-}
-
-char peek_op(OpStack *s)
-{
-    return s-&#x3E;data[s-&#x3E;top];
-}
-
-int precedence(char op)
-{
-    if (op == &#x27;+&#x27; || op == &#x27;-&#x27;)
-        return 1;
-    if (op == &#x27;*&#x27; || op == &#x27;/&#x27;)
-        return 2;
-    return 0;
-}
-
-int is_operator(char c)
-{
-    return c == &#x27;+&#x27; || c == &#x27;-&#x27; || c == &#x27;*&#x27; || c == &#x27;/&#x27;;
-}
-
-// Convert infix to postfix using shunting-yard algorithm
-void infix_to_postfix(const char *expr, char output[][MAX], int *out_size)
-{
-    OpStack ops = {.top = -1};
-    int k = 0;
-
-    for (int i = 0; expr[i]; i++)
+    Attr *head = NULL, *tail = NULL;
+    skip_ws(s, i);
+    while (s[*i] &#x26;&#x26; s[*i] != &#x27;&#x3E;&#x27; &#x26;&#x26; !(s[*i] == &#x27;/&#x27; &#x26;&#x26; s[*i + 1] == &#x27;&#x3E;&#x27;))
     {
-        if (isspace(expr[i]))
+        skip_ws(s, i);
+        if (s[*i] == &#x27;&#x3E;&#x27; || (s[*i] == &#x27;/&#x27; &#x26;&#x26; s[*i + 1] == &#x27;&#x3E;&#x27;))
+            break;
+        // parse name
+        size_t start = *i;
+        while (s[*i] &#x26;&#x26; (isalnum((unsigned char)s[*i]) || s[*i] == &#x27;_&#x27; || s[*i] == &#x27;-&#x27; || s[*i] == &#x27;:&#x27;))
+            (*i)++;
+        size_t namelen = *i - start;
+        if (namelen == 0)
+            break;
+        char *aname = strndup_local(s + start, namelen);
+        skip_ws(s, i);
+        if (s[*i] != &#x27;=&#x27;)
+        {
+            free(aname);
+            break;
+        }
+        (*i)++; // skip =
+        skip_ws(s, i);
+        if (s[*i] != &#x27;\&#x22;&#x27;)
+        {
+            free(aname);
+            break;
+        }
+        (*i)++; // skip opening quote
+        start = *i;
+        while (s[*i] &#x26;&#x26; s[*i] != &#x27;\&#x22;&#x27;)
+            (*i)++;
+        size_t valuelen = *i - start;
+        char *avalue = strndup_local(s + start, valuelen);
+        if (s[*i] == &#x27;\&#x22;&#x27;)
+            (*i)++; // skip closing quote
+
+        Attr *a = malloc(sizeof(Attr));
+        a-&#x3E;name = aname;
+        a-&#x3E;value = avalue;
+        a-&#x3E;next = NULL;
+        if (!head)
+            head = tail = a;
+        else
+        {
+            tail-&#x3E;next = a;
+            tail = a;
+        }
+        skip_ws(s, i);
+    }
+    return head;
+}
+
+/* Create node helpers */
+Node *new_element_node(const char *name)
+{
+    Node *n = malloc(sizeof(Node));
+    n-&#x3E;name = strdup(name);
+    n-&#x3E;text = NULL;
+    n-&#x3E;attrs = NULL;
+    n-&#x3E;child = n-&#x3E;sibling = NULL;
+    return n;
+}
+Node *new_text_node(const char *txt, size_t len)
+{
+    Node *n = malloc(sizeof(Node));
+    // trim leading/trailing whitespace
+    size_t a = 0, b = len;
+    while (a &#x3C; len &#x26;&#x26; isspace((unsigned char)txt[a]))
+        a++;
+    while (b &#x3E; a &#x26;&#x26; isspace((unsigned char)txt[b - 1]))
+        b--;
+    size_t trimmed = b - a;
+    if (trimmed == 0)
+    {
+        free(n);
+        return NULL; // ignore empty text nodes
+    }
+    n-&#x3E;name = NULL;
+    n-&#x3E;text = strndup_local(txt + a, trimmed);
+    n-&#x3E;attrs = NULL;
+    n-&#x3E;child = n-&#x3E;sibling = NULL;
+    return n;
+}
+
+/* Forward declaration */
+Node *parse_element(const char *s, size_t *i);
+
+/* Parse text until next &#x27;&#x3C;&#x27; */
+Node *parse_text(const char *s, size_t *i)
+{
+    size_t start = *i;
+    while (s[*i] &#x26;&#x26; s[*i] != &#x27;&#x3C;&#x27;)
+        (*i)++;
+    size_t len = *i - start;
+    return new_text_node(s + start, len);
+}
+
+/* Parse children until matching end tag */
+Node *parse_children(const char *s, size_t *i)
+{
+    Node *first = NULL, *last = NULL;
+    while (s[*i])
+    {
+        skip_ws(s, i);
+        if (!s[*i])
+            break;
+        if (starts_with(s, *i, &#x22;&#x3C;/&#x22;))
+        {
+            // end tag for parent; caller will consume it
+            break;
+        }
+        else if (starts_with(s, *i, &#x22;&#x3C;!--&#x22;))
+        {
+            // comment: skip until --&#x3E;
+            *i += 4;
+            while (s[*i] &#x26;&#x26; !starts_with(s, *i, &#x22;--&#x3E;&#x22;))
+                (*i)++;
+            if (starts_with(s, *i, &#x22;--&#x3E;&#x22;))
+                *i += 3;
             continue;
-
-        if (isdigit(expr[i]))
-        {
-            int j = 0;
-            while (isdigit(expr[i]) || expr[i] == &#x27;.&#x27;)
-            {
-                output[k][j++] = expr[i++];
-            }
-            output[k][j] = &#x27;\0&#x27;;
-            k++;
-            i--;
         }
-        else if (expr[i] == &#x27;(&#x27;)
+        else if (starts_with(s, *i, &#x22;&#x3C;?&#x22;))
         {
-            push_op(&#x26;ops, expr[i]);
+            // processing instruction: skip until ?&#x3E;
+            *i += 2;
+            while (s[*i] &#x26;&#x26; !starts_with(s, *i, &#x22;?&#x3E;&#x22;))
+                (*i)++;
+            if (starts_with(s, *i, &#x22;?&#x3E;&#x22;))
+                *i += 2;
+            continue;
         }
-        else if (expr[i] == &#x27;)&#x27;)
+        else if (s[*i] == &#x27;&#x3C;&#x27;)
         {
-            while (ops.top != -1 &#x26;&#x26; peek_op(&#x26;ops) != &#x27;(&#x27;)
+            Node *child = parse_element(s, i);
+            if (child)
             {
-                output[k][0] = pop_op(&#x26;ops);
-                output[k][1] = &#x27;\0&#x27;;
-                k++;
-            }
-            pop_op(&#x26;ops); // remove &#x27;(&#x27;
-        }
-        else if (is_operator(expr[i]))
-        {
-            while (ops.top != -1 &#x26;&#x26; precedence(peek_op(&#x26;ops)) &#x3E;= precedence(expr[i]))
-            {
-                output[k][0] = pop_op(&#x26;ops);
-                output[k][1] = &#x27;\0&#x27;;
-                k++;
-            }
-            push_op(&#x26;ops, expr[i]);
-        }
-    }
-
-    while (ops.top != -1)
-    {
-        output[k][0] = pop_op(&#x26;ops);
-        output[k][1] = &#x27;\0&#x27;;
-        k++;
-    }
-
-    *out_size = k;
-}
-
-// Evaluate postfix expression
-double eval_postfix(char tokens[][MAX], int size)
-{
-    NumStack nums = {.top = -1};
-
-    for (int i = 0; i &#x3C; size; i++)
-    {
-        if (is_operator(tokens[i][0]) &#x26;&#x26; strlen(tokens[i]) == 1)
-        {
-            double b = pop_num(&#x26;nums);
-            double a = pop_num(&#x26;nums);
-            switch (tokens[i][0])
-            {
-            case &#x27;+&#x27;:
-                push_num(&#x26;nums, a + b);
-                break;
-            case &#x27;-&#x27;:
-                push_num(&#x26;nums, a - b);
-                break;
-            case &#x27;*&#x27;:
-                push_num(&#x26;nums, a * b);
-                break;
-            case &#x27;/&#x27;:
-                push_num(&#x26;nums, a / b);
-                break;
+                if (!first)
+                    first = last = child;
+                else
+                {
+                    last-&#x3E;sibling = child;
+                    last = child;
+                }
             }
         }
         else
         {
-            push_num(&#x26;nums, atof(tokens[i]));
+            Node *txt = parse_text(s, i);
+            if (txt)
+            {
+                if (!first)
+                    first = last = txt;
+                else
+                {
+                    last-&#x3E;sibling = txt;
+                    last = txt;
+                }
+            }
         }
     }
-    return pop_num(&#x26;nums);
+    return first;
 }
 
-int main()
+/* Parse a single element starting at &#x27;&#x3C;&#x27; */
+Node *parse_element(const char *s, size_t *i)
 {
-    char expr[MAX];
-    char postfix[MAX][MAX];
-    int size;
+    if (s[*i] != &#x27;&#x3C;&#x27;)
+        return NULL;
+    // handle comments or declarations callers already do, but be safe here
+    if (starts_with(s, *i, &#x22;&#x3C;!--&#x22;))
+    {
+        *i += 4;
+        while (s[*i] &#x26;&#x26; !starts_with(s, *i, &#x22;--&#x3E;&#x22;))
+            (*i)++;
+        if (starts_with(s, *i, &#x22;--&#x3E;&#x22;))
+            *i += 3;
+        return NULL;
+    }
+    if (starts_with(s, *i, &#x22;&#x3C;?&#x22;))
+    {
+        *i += 2;
+        while (s[*i] &#x26;&#x26; !starts_with(s, *i, &#x22;?&#x3E;&#x22;))
+            (*i)++;
+        if (starts_with(s, *i, &#x22;?&#x3E;&#x22;))
+            *i += 2;
+        return NULL;
+    }
 
-    printf(&#x22;Enter an expression: &#x22;);
-    fgets(expr, sizeof(expr), stdin);
-    expr[strcspn(expr, &#x22;\n&#x22;)] = &#x27;\0&#x27;; // remove newline
+    (*i)++; // skip &#x27;&#x3C;&#x27;
+    skip_ws(s, i);
+    // parse name
+    size_t start = *i;
+    while (s[*i] &#x26;&#x26; (isalnum((unsigned char)s[*i]) || s[*i] == &#x27;_&#x27; || s[*i] == &#x27;-&#x27; || s[*i] == &#x27;:&#x27;))
+        (*i)++;
+    size_t namelen = *i - start;
+    if (namelen == 0)
+        return NULL;
+    char *name = strndup_local(s + start, namelen);
+    Node *node = new_element_node(name);
+    free(name);
 
-    infix_to_postfix(expr, postfix, &#x26;size);
+    // parse attributes
+    skip_ws(s, i);
+    node-&#x3E;attrs = parse_attributes(s, i);
+    skip_ws(s, i);
 
-    double result = eval_postfix(postfix, size);
-    printf(&#x22;Result: %.2f\n&#x22;, result);
+    // check for self-closing
+    if (starts_with(s, *i, &#x22;/&#x3E;&#x22;))
+    {
+        *i += 2;
+        return node;
+    }
+    if (s[*i] != &#x27;&#x3E;&#x27;)
+    {
+        // malformed; try to recover
+        while (s[*i] &#x26;&#x26; s[*i] != &#x27;&#x3E;&#x27;)
+            (*i)++;
+        if (s[*i] == &#x27;&#x3E;&#x27;)
+            (*i)++;
+    }
+    else
+    {
+        (*i)++; // skip &#x27;&#x3E;&#x27;
+    }
 
+    // parse children/text until &#x3C;/name&#x3E;
+    node-&#x3E;child = parse_children(s, i);
+
+    // consume end tag
+    if (starts_with(s, *i, &#x22;&#x3C;/&#x22;))
+    {
+        *i += 2;
+        skip_ws(s, i);
+        // parse end name
+        start = *i;
+        while (s[*i] &#x26;&#x26; (isalnum((unsigned char)s[*i]) || s[*i] == &#x27;_&#x27; || s[*i] == &#x27;-&#x27; || s[*i] == &#x27;:&#x27;))
+            (*i)++;
+        // endname could be checked against node-&#x3E;name but skip for simplicity
+        // skip until &#x27;&#x3E;&#x27;
+        while (s[*i] &#x26;&#x26; s[*i] != &#x27;&#x3E;&#x27;)
+            (*i)++;
+        if (s[*i] == &#x27;&#x3E;&#x27;)
+            (*i)++;
+    }
+    else
+    {
+        // missing end tag: fine, continue
+    }
+
+    return node;
+}
+
+/* Free tree */
+void free_attrs(Attr *a)
+{
+    while (a)
+    {
+        Attr *n = a-&#x3E;next;
+        free(a-&#x3E;name);
+        free(a-&#x3E;value);
+        free(a);
+        a = n;
+    }
+}
+void free_node(Node *n)
+{
+    if (!n)
+        return;
+    free(n-&#x3E;name);
+    free(n-&#x3E;text);
+    free_attrs(n-&#x3E;attrs);
+    // free children siblings
+    Node *c = n-&#x3E;child;
+    while (c)
+    {
+        Node *nextc = c-&#x3E;sibling;
+        free_node(c);
+        c = nextc;
+    }
+    free(n);
+}
+
+/* Print tree */
+void print_indent(int depth)
+{
+    for (int k = 0; k &#x3C; depth; k++)
+        putchar(&#x27; &#x27;);
+}
+void print_node(Node *n, int depth)
+{
+    for (; n; n = n-&#x3E;sibling)
+    {
+        if (n-&#x3E;name)
+        {
+            print_indent(depth);
+            printf(&#x22;&#x3C;%s&#x22;, n-&#x3E;name);
+            for (Attr *a = n-&#x3E;attrs; a; a = a-&#x3E;next)
+            {
+                printf(&#x22; %s=\&#x22;%s\&#x22;&#x22;, a-&#x3E;name, a-&#x3E;value);
+            }
+            printf(&#x22;&#x3E;\n&#x22;);
+            if (n-&#x3E;text)
+            {
+                print_indent(depth + 2);
+                printf(&#x22;TEXT: %s\n&#x22;, n-&#x3E;text);
+            }
+            if (n-&#x3E;child)
+                print_node(n-&#x3E;child, depth + 2);
+            print_indent(depth);
+            printf(&#x22;&#x3C;/%s&#x3E;\n&#x22;, n-&#x3E;name);
+        }
+        else if (n-&#x3E;text)
+        {
+            print_indent(depth);
+            printf(&#x22;TEXT: %s\n&#x22;, n-&#x3E;text);
+        }
+    }
+}
+
+/* Read entire file into buffer */
+char *read_file_all(const char *path)
+{
+    FILE *f = fopen(path, &#x22;rb&#x22;);
+    if (!f)
+        return NULL;
+    fseek(f, 0, SEEK_END);
+    long sz = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    char *buf = malloc(sz + 1);
+    if (!buf)
+    {
+        fclose(f);
+        return NULL;
+    }
+    if (fread(buf, 1, sz, f) != (size_t)sz)
+    {
+        // allow partial reads
+    }
+    buf[sz] = &#x27;\0&#x27;;
+    fclose(f);
+    return buf;
+}
+
+/* Top-level parse: skip prolog and parse top-level elements */
+Node *parse_document(const char *s)
+{
+    size_t i = 0;
+    // skip BOM if present
+    if ((unsigned char)s[0] == 0xEF &#x26;&#x26; (unsigned char)s[1] == 0xBB &#x26;&#x26; (unsigned char)s[2] == 0xBF)
+        i = 3;
+    // skip whitespace
+    skip_ws(s, &#x26;i);
+    // skip xml declaration if any
+    if (starts_with(s, i, &#x22;&#x3C;?xml&#x22;))
+    {
+        i += 5;
+        while (s[i] &#x26;&#x26; !starts_with(s, i, &#x22;?&#x3E;&#x22;))
+            i++;
+        if (starts_with(s, i, &#x22;?&#x3E;&#x22;))
+            i += 2;
+    }
+    // parse top-level children
+    Node *root_children = parse_children(s, &#x26;i);
+    return root_children;
+}
+
+/* Example usage: print tree */
+int main(int argc, char **argv)
+{
+    if (argc &#x3C; 2)
+    {
+        fprintf(stderr, &#x22;Usage: %s file.xml\n&#x22;, argv[0]);
+        return 1;
+    }
+    char *buf = read_file_all(argv[1]);
+    if (!buf)
+    {
+        fprintf(stderr, &#x22;Could not open &#x27;%s&#x27;\n&#x22;, argv[1]);
+        return 1;
+    }
+    Node *doc = parse_document(buf);
+    if (!doc)
+    {
+        printf(&#x22;No content parsed.\n&#x22;);
+    }
+    else
+    {
+        print_node(doc, 0);
+        // free nodes
+        // doc is a linked list of top-level nodes; free each
+        Node *p = doc;
+        while (p)
+        {
+            Node *next = p-&#x3E;sibling;
+            free_node(p);
+            p = next;
+        }
+    }
+    free(buf);
     return 0;
 }</code></pre>
+        <pre><code class="language-xml">&#x3C;?xml version=&#x22;1.0&#x22;?&#x3E;
+&#x3C;bookstore&#x3E;
+    &#x3C;book category=&#x22;children&#x22;&#x3E;
+        &#x3C;title lang=&#x22;en&#x22;&#x3E;Harry Potter&#x3C;/title&#x3E;
+        &#x3C;author&#x3E;J K. Rowling&#x3C;/author&#x3E;
+        &#x3C;year&#x3E;2005&#x3C;/year&#x3E;
+        &#x3C;price&#x3E;29.99&#x3C;/price&#x3E;
+    &#x3C;/book&#x3E;
+    &#x3C;book category=&#x22;web&#x22;&#x3E;
+        &#x3C;title lang=&#x22;en&#x22;&#x3E;Learning XML&#x3C;/title&#x3E;
+        &#x3C;author&#x3E;Erik T. Ray&#x3C;/author&#x3E;
+        &#x3C;year&#x3E;2003&#x3C;/year&#x3E;
+        &#x3C;price&#x3E;39.95&#x3C;/price&#x3E;
+    &#x3C;/book&#x3E;
+&#x3C;/bookstore&#x3E;</code></pre>
         <pre class="shell">
-Enter an expression: 5*(3+2)
-Result: 25.00</pre
+F:\My Data\Work\Learning\C\Test&#x3E;xmlparser example.xml
+&#x3C;bookstore&#x3E;
+  &#x3C;book category=&#x22;children&#x22;&#x3E;
+    &#x3C;title lang=&#x22;en&#x22;&#x3E;       
+      TEXT: Harry Potter
+    &#x3C;/title&#x3E;
+    &#x3C;author&#x3E;
+      TEXT: J K. Rowling
+    &#x3C;/author&#x3E;
+    &#x3C;year&#x3E;
+      TEXT: 2005
+    &#x3C;/year&#x3E;
+    &#x3C;price&#x3E;
+      TEXT: 29.99
+    &#x3C;/price&#x3E;
+  &#x3C;/book&#x3E;
+  &#x3C;book category=&#x22;web&#x22;&#x3E;
+    &#x3C;title lang=&#x22;en&#x22;&#x3E;
+      TEXT: Learning XML
+    &#x3C;/title&#x3E;
+    &#x3C;author&#x3E;
+      TEXT: Erik T. Ray
+    &#x3C;/author&#x3E;
+    &#x3C;year&#x3E;
+      TEXT: 2003
+    &#x3C;/year&#x3E;
+    &#x3C;price&#x3E;
+      TEXT: 39.95
+    &#x3C;/price&#x3E;
+  &#x3C;/book&#x3E;
+&#x3C;/bookstore&#x3E;</pre
         >
       </section>
-
       <section id="alg2">
         <h4></h4>
         <pre><code class="language-c"></code></pre>
       </section>
-
       <section id="alg3">
         <h4></h4>
         <pre><code class="language-c"></code></pre>
