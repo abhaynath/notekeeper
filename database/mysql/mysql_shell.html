@@ -18,14 +18,36 @@
   <body>
     <div class="content">
       <section id="setup">
-        <h4>MySQL Shell</h4>
-        <details>
-          <summary>Shell</summary>
-          <ol class="steps">
-            <li><pre class="shell">mysql -u root -p -P 4306</pre></li>
-            <li><pre class="shell">show databases;</pre></li>
-          </ol>
-        </details>
+        <h4>Connect to MySQL Shell</h4>
+        <pre class="shell">mysql -h localhost -P 4306 -u root -p</pre>
+        <pre class="shell">show databases;</pre>
+      </section>
+
+      <section id="export">
+        <h4>Export Database</h4>
+        <pre class="shell">mysqldump -h localhost -P 4306 -u root -p source_database_name  > "C:\Users\DELL\Desktop\destination_database_name.sql"</pre>
+      </section>
+
+      <section id="export_data">
+        <h4>Export Data-Only</h4>
+        <pre class="shell">
+mysqldump -h localhost -P 4306 -u root -p  --no-create-info source_database_name > "C:\Users\DELL\Desktop\destination_database_name.sql"</pre
+        >
+      </section>
+
+      <section id="export_schema">
+        <h4>Export Schema-Only</h4>
+        <pre class="shell">
+mysqldump -h localhost -P 4306 -u root -p  --no-data --routines --triggers --events source_database_name > "C:\Users\DELL\Desktop\destination_database_name.sql"</pre
+        >
+      </section>
+
+      <section id="restore_db">
+        <h4>Restore Database</h4>
+        <h5>Create an empty database first</h5>
+        <pre class="shell">mysql -h localhost -P 4306 -u root -p -e "CREATE DATABASE destination_database_name;"</pre>
+        <h5>Restore the database from sql file</h5>
+        <pre class="shell">mysql -h localhost -P 4306 -u root -p destination_database_name < "C:\Users\DELL\Desktop\source_database_name.sql"</pre>
       </section>
     </div>
   </body>
