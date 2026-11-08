@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
+     <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <link rel="shortcut icon" type="image/svg" href="../../css/svg/linux/ubuntu.svg" />
+       <script src="../../js/libs/highlight/highlight.min.js"></script>
+    <script src="../../js/libs/jquery.min.js"></script>
     <title>Bash</title>
   </head>
 
@@ -18,8 +21,41 @@
       </nav>
 
       <section id="sec_01">
-        <h4></h4>
+        <h4>functions in bash</h4>
+         <pre><code class="language-bash">
+#!/bin/bash
+# shellcheck disable=SC2162
+
+# 1. Prompt the user for input using &#x27;read&#x27; (-p allows adding a prompt message inline)
+read -p &#x22;Enter your name: &#x22; user_name
+read -p &#x22;Enter your age: &#x22; user_age
+
+echo &#x22;----------------------------------------&#x22;
+echo &#x22;Hello, $user_name! Let&#x27;s check your category.&#x22;
+
+# 2. Conditional statement (if-elif-else)
+# In Bash, numeric comparisons use flags like:
+# -ge (greater than or equal)
+# -lt (less than)
+# -eq (equal to)
+# Note the spaces inside the double brackets [[ ... ]] !
+
+if [[ $user_age -ge 18 ]]; then
+    echo &#x22;Status: You are an adult.&#x22;
+elif [[ $user_age -ge 13 ]]; then
+    echo &#x22;Status: You are a teenager.&#x22;
+else
+    echo &#x22;Status: You are a child.&#x22;
+fi
+
+echo &#x22;----------------------------------------&#x22;
+  </code></pre>
+  <pre class="shell">chmod +x hello.sh</pre>
+  <pre class="shell">bash hello.sh</pre>
       </section>
     </div>
   </body>
+   <script>
+    hljs.highlightAll();
+  </script>
 </html>
