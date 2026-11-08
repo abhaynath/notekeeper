@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,10 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <link rel="stylesheet" href="../../css/font-awesome/css/all.min.css" />
-    <link
-      rel="stylesheet"
-      href="../../js/libs/highlight/styles/devibeans.min.css"
-    />
+    <link rel="stylesheet" href="../../js/libs/highlight/styles/devibeans.min.css" />
     <script src="../../js/libs/highlight/highlight.min.js"></script>
 
     <script src="../../js/libs/jquery.min.js"></script>
@@ -29,11 +26,7 @@
           <ol class="steps">
             <li>
               Download
-              <a
-                href="https://github.com/JetBrains/kotlin/releases/tag/v1.6.10"
-                target="_blank"
-                >kotlin-compiler.zip</a
-              >
+              <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.6.10" target="_blank">kotlin-compiler.zip</a>
               and extract it any folder.
             </li>
             <li>
@@ -41,9 +34,8 @@
               <b>F:\Programs\kotlin-compiler\kotlinc\bin</b>
             </li>
             <li>
-              Create a empty folder 'test'. Create new folder 'src' to hold all
-              source code. Add a new file <span class="keyword">App.kt</span> in
-              src folder with following code
+              Create a empty folder 'test'. Create new folder 'src' to hold all source code. Add a new file <span class="keyword">App.kt</span> in src folder
+              with following code
               <pre><code class="language-kt">/* 
 test/src/App.kt 
 */
@@ -59,8 +51,7 @@ abhay.show()
 
             <li>
               Create a new folder 'models' inside src folder. Add a new file
-              <span class="keyword">Person.kt</span> in models folder with
-              following code
+              <span class="keyword">Person.kt</span> in models folder with following code
 
               <pre><code class="language-kt">
 /*
@@ -81,9 +72,7 @@ fun show() {
             </li>
             <li>
               To compile the 'src' folder, use kotlinc command.
-              <pre class="shell">
-kotlinc src src/App.kt -include-runtime -d test.jar</pre
-              >
+              <pre class="shell">kotlinc src src/App.kt -include-runtime -d test.jar</pre>
 
               This will create a new jar file 'test.jar'
             </li>
@@ -93,9 +82,7 @@ kotlinc src src/App.kt -include-runtime -d test.jar</pre
             </li>
             <li>
               To compile and run at one command
-              <pre class="shell">
-kotlinc src src/App.kt -include-runtime -d test.jar &#x26;&#x26; java -jar test.jar</pre
-              >
+              <pre class="shell">kotlinc src src/App.kt -include-runtime -d test.jar &#x26;&#x26; java -jar test.jar</pre>
             </li>
           </ol>
         </details>
@@ -105,14 +92,11 @@ kotlinc src src/App.kt -include-runtime -d test.jar &#x26;&#x26; java -jar test.
         <details>
           <summary></summary>
           <ol class="steps">
-            <li>
-              Make sure gradle is installed and <b>GRADLE_HOME</b> is set.
-            </li>
+            <li>Make sure gradle is installed and <b>GRADLE_HOME</b> is set.</li>
             <li>
               Create empty folder and run following command inside the folder
               <pre class="shell">gradle init</pre>
-              Select the options as per your requirements. It will generate the
-              project.
+              Select the options as per your requirements. It will generate the project.
             </li>
             <li>
               Run app
@@ -133,10 +117,7 @@ kotlinc src src/App.kt -include-runtime -d test.jar &#x26;&#x26; java -jar test.
             <li>Run Intellij Idea. Select 'New Project -> Kotlin'</li>
             <li>Type the Project name in the input box.</li>
             <li>Intellij will create a 'src' folder.</li>
-            <li>
-              Right click on src folder, select 'New->Kotlin file/class'. File
-              name is 'app.kt'
-            </li>
+            <li>Right click on src folder, select 'New->Kotlin file/class'. File name is 'app.kt'</li>
 
             <li>
               Add following code snippet in 'app.kt'
@@ -147,10 +128,7 @@ println("Hello World Kotlin !")
 }
 </code></pre>
             </li>
-            <li>
-              Build and run application by pressing on green arrow against main
-              function
-            </li>
+            <li>Build and run application by pressing on green arrow against main function</li>
           </ol>
         </details>
       </section>
@@ -159,11 +137,7 @@ println("Hello World Kotlin !")
         <details>
           <summary></summary>
           <div>
-            <p>
-              Add following task inside <b>build.gradle.kts</b> and run
-              <span class="keyword">jar</span> task from Gradle palette. Then
-              rebuild project.
-            </p>
+            <p>Add following task inside <b>build.gradle.kts</b> and run <span class="keyword">jar</span> task from Gradle palette. Then rebuild project.</p>
             <pre><code>tasks.jar {
         manifest {
             attributes[&#x22;Main-Class&#x22;] = &#x22;MainKt&#x22;
